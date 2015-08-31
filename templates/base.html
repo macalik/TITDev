@@ -1,0 +1,19 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}TiT - EVE{% endblock title %}
+
+{% block styles %}
+{{super()}}
+    <link rel="stylesheet" href="{{url_for('static', filename='base.css')}}">
+{% endblock styles %}
+
+{% block navbar %}
+{% if name == "hi": %}
+{{nav.anon.render()}}
+{% elif name == "hello": %}
+{{nav.tit.render()}}
+{% endif %}
+{% endblock navbar %}
+
+{% block content %}
+<h1>NOTHING IS ON THIS PAGE</h1>
+{% endblock content %}
