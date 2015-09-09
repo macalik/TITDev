@@ -7,10 +7,10 @@ def init(app):
 
     @nav.navigation('anon')
     def nav_anon():
-        return Navbar('TiT', View('Home', 'hello'), View('Empty', 'other'))
+        return Navbar('TiT', View('Home', 'home'), View('Log In', 'auth.sso_redirect'))
 
     @nav.navigation('tit')
     def nav_tit():
-        return Navbar('TiT', View('Home', 'hello'), View('Empty', 'other'))
+        return Navbar('TiT', View('Home', 'home'))
 
     nav.init_app(app)
