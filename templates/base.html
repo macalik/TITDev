@@ -7,7 +7,7 @@
 {% endblock styles %}
 
 {% block navbar %}
-{% if username: %}
+{% if session.UI_Corporation: %}
 {{nav.tit.render()}}
 {% else: %}
 {{nav.anon.render()}}

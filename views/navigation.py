@@ -11,6 +11,6 @@ def init(app):
 
     @nav.navigation('tit')
     def nav_tit():
-        return Navbar('TiT', View('Home', 'home'))
+        return Navbar('TiT', View('Home', 'home'), View('Log Out', 'auth.log_out'))
 
     nav.init_app(app)

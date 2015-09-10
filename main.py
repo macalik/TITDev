@@ -6,12 +6,13 @@ from flask_bootstrap import Bootstrap
 from flask_pymongo import PyMongo
 
 from views import navigation
-from views.auth import auth_blueprint
+from views.auth import auth, requires_sso
 
 app = Flask(__name__)
 Bootstrap(app)
 navigation.init(app)
 
+app.secret_key = os.urandom(24)
 if os.environ.get("HEROKU"):
     app.config["MONGO_URI"] = os.environ["MONGOLAB_URI"]
 else:
@@ -24,7 +25,7 @@ else:
     app.config["MONGO_PORT"] = secrets["mongo-port"]
 app_mongo = PyMongo(app)
 
-app.register_blueprint(auth_blueprint, url_prefix="/login")
+app.register_blueprint(auth, url_prefix="/auth")
 
 
 @app.before_request
@@ -38,6 +39,7 @@ def home():
 
 
 @app.route('/something')
+@requires_sso("corporation")
 def other():
     return render_template("base.html", name="hello")
 
