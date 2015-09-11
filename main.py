@@ -5,12 +5,13 @@ from flask import Flask, render_template, g
 from flask_bootstrap import Bootstrap
 from flask_pymongo import PyMongo
 
-from views import navigation
+from views.navigation import Navigation
 from views.auth import auth, requires_sso
+from views.jump_freighter import jf
 
 app = Flask(__name__)
 Bootstrap(app)
-navigation.init(app)
+Navigation(app)
 
 app.secret_key = os.urandom(24)
 if os.environ.get("HEROKU"):
@@ -26,11 +27,15 @@ else:
 app_mongo = PyMongo(app)
 
 app.register_blueprint(auth, url_prefix="/auth")
+app.register_blueprint(jf, url_prefix="/jf")
 
 
 @app.before_request
 def db_init():
     g.mongo = app_mongo
+    # Load statics into memory
+    with open("resources/staStations.json", "r") as staStations_file:
+        g.staStations = json.load(staStations_file)
 
 
 @app.route('/')
