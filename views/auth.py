@@ -1,5 +1,3 @@
-import random
-import string
 import json
 import os
 import base64
@@ -13,7 +11,7 @@ import requests
 
 auth = Blueprint("auth", __name__, template_folder="templates")
 
-state = "".join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(18))
+state = "TiTEveWebV1"
 
 if os.environ.get("HEROKU"):
     secrets = {
@@ -167,6 +165,9 @@ def sso_response():
                                      "cached_until": int(calendar.timegm(time.strptime(xml_tree[2].text,
                                                                                        xml_time_pattern)))
                                      }, upsert=True)
+
+            # Refresh current user
+            db_user = g.mongo.db.users.find_one({"_id": crest_char["CharacterOwnerHash"]})
 
         # Update Session
         session["CharacterName"] = crest_char["CharacterName"]
