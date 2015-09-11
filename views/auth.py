@@ -168,6 +168,9 @@ def sso_response():
                                                                                        xml_time_pattern)))
                                      }, upsert=True)
 
+            # Refresh current user
+            db_user = g.mongo.db.users.find_one({"_id": crest_char["CharacterOwnerHash"]})
+
         # Update Session
         session["CharacterName"] = crest_char["CharacterName"]
         session["CharacterOwnerHash"] = crest_char["CharacterOwnerHash"]
