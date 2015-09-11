@@ -13,7 +13,7 @@ import requests
 
 auth = Blueprint("auth", __name__, template_folder="templates")
 
-state = "".join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(18))
+state = "TiTEveWebV1"
 
 if os.environ.get("HEROKU"):
     secrets = {
