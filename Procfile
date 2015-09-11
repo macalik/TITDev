@@ -1,1 +1,1 @@
-web: gunicorn main:app --log-file=-
+web: env PYTHONPATH=$PYTHONPATH:$PWD/views:$PWD/resources:$PWD/helpers gunicorn main:app --log-file=-
