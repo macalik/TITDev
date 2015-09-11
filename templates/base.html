@@ -7,10 +7,10 @@
 {% endblock styles %}
 
 {% block navbar %}
-{% if name == "hi": %}
-{{nav.anon.render()}}
-{% elif name == "hello": %}
+{% if session.UI_Corporation: %}
 {{nav.tit.render()}}
+{% else: %}
+{{nav.anon.render()}}
 {% endif %}
 {% endblock navbar %}
 

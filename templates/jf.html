@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="jf-form">
+                    <form>
+                        <select class="form-control" style="width:auto;" name="route">
+                            {% for route in route_list %}
+                            <option value="{{route[0]}}">{{route[1]}}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="input-group">
+                            {% if result: %}
+                            <input type="number" class="form-control" placeholder="Total M3" name="volume" value="{{volume}}" >
+                            {% else: %}
+                            <input type="number" class="form-control" placeholder="Total M3" name="volume">
+                            {% endif %}
+                            <span class="input-group-addon">m3</span>
+                        </div>
+                        <button type="submit" class="btn btn-default">Calculate</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <ul class="list-group">
+                    <li class="list-group-item">Price/M3: {{m3}}</li>
+                    <li class="list-group-item">Misc Cost: {{extra}}</li>
+                    <li class="list-group-item">Total Cost: {{price}}</li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <p>Next Update: {{next_update}} UTC</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped">
+                    <tr>
+                        {% for header in contract_list[0] %}
+                        <th>{{header}}</th>
+                        {% endfor %}
+                    </tr>
+                {% for contract in contract_list[1:] %}
+                    <tr>
+                        {% for info in contract %}
+                        <td>{{info}}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
