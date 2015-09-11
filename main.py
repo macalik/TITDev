@@ -14,9 +14,9 @@ app.debug = True  # REMOVE ASAP
 Bootstrap(app)
 Navigation(app)
 
-app.secret_key = os.urandom(24)
 if os.environ.get("HEROKU"):
     app.config["MONGO_URI"] = os.environ["MONGOLAB_URI"]
+    app.secret_key = os.environ["random_key"]
 else:
     with open("../Other-Secrets/TITDev.json") as secrets_file:
         secrets = json.load(secrets_file)
@@ -25,6 +25,7 @@ else:
     app.config["MONGO_USERNAME"] = secrets["mongo-user"]
     app.config["MONGO_PASSWORD"] = secrets["mongo-password"]
     app.config["MONGO_PORT"] = secrets["mongo-port"]
+    app.secret_key = secrets["random_key"]
 app_mongo = PyMongo(app)
 
 app.register_blueprint(auth, url_prefix="/auth")
