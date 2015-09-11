@@ -54,7 +54,8 @@ def home():
     contract_list = [["Contract ID", "Issuer", "Assignee", "Acceptor", "Start", "End", "Status", "Date Issued",
                      "Date Expired", "Date Accepted"]]
     # Final output
-    next_update = g.mongo.db.contracts.find_one({"_id": "cached_until"})["str_time"]
+    next_update_query = g.mongo.db.contracts.find_one({"_id": "cached_until"})
+    next_update = next_update_query["str_time"] if next_update_query else "Unknown"
     for contract in g.mongo.db.contracts.find():
         if contract["_id"] != "cached_until":
             # Check for non-static stations
@@ -71,11 +72,15 @@ def home():
             if contract["acceptor_id"] == "0":
                 acceptor = "None"
             else:
-                acceptor = g.mongo.db.characters.find_one({"_id": contract["acceptor_id"]})["name"]
+                acceptor_query = g.mongo.db.characters.find_one({"_id": contract["acceptor_id"]})
+                acceptor = acceptor_query["name"] if acceptor_query else ""
+
+            issuer_query = g.mongo.db.characters.find_one({"_id": contract["issuer_id"]})
+            assignee_query = g.mongo.db.characters.find_one({"_id": contract["assignee_id"]})
             contract_list.append([
                 contract["_id"],
-                g.mongo.db.characters.find_one({"_id": contract["issuer_id"]})["name"],
-                g.mongo.db.characters.find_one({"_id": contract["assignee_id"]})["name"],
+                issuer_query["name"] if issuer_query else "",
+                assignee_query["name"] if assignee_query else "",
                 acceptor,
                 start_station,
                 end_station,

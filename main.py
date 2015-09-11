@@ -10,7 +10,6 @@ from views.auth import auth, requires_sso
 from views.jump_freighter import jf
 
 app = Flask(__name__)
-app.debug = True  # REMOVE ASAP
 Bootstrap(app)
 Navigation(app)
 

@@ -1,5 +1,3 @@
-import random
-import string
 import json
 import os
 import base64
@@ -128,7 +126,6 @@ def sso_response():
             auth_token = auth_response.json()
         except ValueError:
             auth_token = None
-            print(auth_response.text)
             abort(400)
 
         # CREST Authentication
@@ -186,7 +183,6 @@ def sso_response():
         return redirect(url_for("home"))
 
     else:
-        print("wrong state")
         abort(400)
 
 
