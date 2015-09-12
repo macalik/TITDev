@@ -43,7 +43,7 @@ def requires_sso(level):
                 # Refresh character if cache expires.
                 # XML Character
                 xml_char_payload = {
-                    "characterID": session["CharacterID"]
+                    "characterID": db_user["character_id"]
                 }
                 xml_char_headers = {
                     "User-Agent": "TiT Corp Website by Kazuki Ishikawa"
@@ -63,7 +63,23 @@ def requires_sso(level):
                                                 "cached_until": int(calendar.timegm(time.strptime(xml_tree[2].text,
                                                                                                   xml_time_pattern)))
                                             }})
+                # Refresh db_user
+                db_user = g.mongo.db.users.find_one({"_id": session["CharacterOwnerHash"]})
 
+                # Update UI
+                # !!Warning: Use these variables for UI ONLY. Not to be used for page auth!! #
+                with open("configs/base.json", "r") as base_config_file:
+                    base_config = json.load(base_config_file)
+                if db_user["corporation_id"] == base_config["corporation_id"]:
+                    session["UI_Corporation"] = True
+                else:
+                    session["UI_Corporation"] = False
+                if db_user["alliance_id"] == base_config["alliance_id"]:
+                    session["UI_Alliance"] = True
+                else:
+                    session["UI_Alliance"] = False
+
+            # Auth check after checking if user exists and updating cache if necessary
             if not auth_check(level):
                 abort(403)
 
@@ -85,7 +101,7 @@ def auth_check(level):
         if db_user["alliance_id"] == base_config["alliance_id"]:
             return True
     elif db_eve_auth:  # Database Groups
-        if db_user["character_id"] in db_eve_auth["users"]:
+        if db_user["_id"] in db_eve_auth["users"]:
             return True
     elif level is None:
         return True
