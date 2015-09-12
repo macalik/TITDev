@@ -1,4 +1,8 @@
 {% extends "base.html" %}
+{% block head %}
+{{super()}}
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon_jf.ico') }}">
+{% endblock head %}
 {% block content %}
     <div class="container">
         <div class="row">
@@ -35,13 +39,13 @@
                         </div>
                         <div class="form-group">
                             <div class="input-group">
-                                <input type="number" class="form-control" placeholder="Total M3" name="volume" value="{{volume}}" step="0.01" min ="0" >
+                                <input type="number" class="form-control" placeholder="Total M3" name="volume" value="{{volume}}" step="0.01" min="0" max="300000">
                                 <span class="input-group-addon">m3</span>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="input-group">
-                                <input type="number" class="form-control" placeholder="Collateral" name="collateral" value="{{collateral}}" step="0.01" min ="0" >
+                                <input type="number" class="form-control" placeholder="Collateral" name="collateral" value="{{collateral}}" step="0.01" min="0" >
                                 <span class="input-group-addon">Isk</span>
                             </div>
                         </div>
@@ -66,13 +70,13 @@
                         <h3 class="panel-title">Legend</h3>
                     </div>
                     <div class="panel-body">
-                        <ul>
-                            <li>White: Outstanding (Valid Contract)</li>
-                            <li>Red: Failed/Canceled/Rejected/Deleted</li>
-                            <li>Yellow: In Progress</li>
-                            <li>Green: Completed</li>
-                            <li>Grey: No valid route found</li>
-                            <li>Blue: Contract Invalid (See Rules)</li>
+                        <ul class="list-group">
+                            <li class="list-group-item">White: Outstanding (Valid Contract)</li>
+                            <li class="list-group-item list-group-item-danger">Red: Failed/Canceled/Rejected/Deleted</li>
+                            <li class="list-group-item list-group-item-warning">Yellow: In Progress</li>
+                            <li class="list-group-item list-group-item-success">Green: Completed</li>
+                            <li class="list-group-item disabled">Grey: No valid route found</li>
+                            <li class="list-group-item list-group-item-info">Blue: Contract Invalid (See Rules)</li>
                         </ul>
                     </div>
                 </div>
@@ -113,6 +117,26 @@
         </div>
         <div class="row">
             <div class="col-md-12">
+                <h2>Personal Contracts</h2>
+                <table class="table table-hover table-condensed">
+                    <tr>
+                        {% for header in personal_contract_list[0] %}
+                        <th>{{header}}</th>
+                        {% endfor %}
+                    </tr>
+                {% for contract in personal_contract_list[1:] %}
+                    <tr>
+                        {% for info in personal_contract_list[1:] %}
+                        <td class="{{contract[0]}}">{{info}}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h2>All History</h2>
                 <table class="table table-hover table-condensed">
                     <tr>
                         {% for header in contract_list[0] %}
