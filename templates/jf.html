@@ -126,7 +126,7 @@
                     </tr>
                 {% for contract in personal_contract_list[1:] %}
                     <tr>
-                        {% for info in personal_contract_list[1:] %}
+                        {% for info in contract[1:] %}
                         <td class="{{contract[0]}}">{{info}}</td>
                         {% endfor %}
                     </tr>
