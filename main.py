@@ -6,8 +6,9 @@ from flask_bootstrap import Bootstrap
 from flask_pymongo import PyMongo
 
 from views.navigation import Navigation
-from views.auth import auth, requires_sso
+from views.auth import auth
 from views.jump_freighter import jf
+from views.admin import admin
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -29,6 +30,7 @@ app_mongo = PyMongo(app)
 
 app.register_blueprint(auth, url_prefix="/auth")
 app.register_blueprint(jf, url_prefix="/jf")
+app.register_blueprint(admin, url_prefix="/admin")
 
 
 @app.before_request
@@ -41,13 +43,8 @@ def db_init():
 
 @app.route('/')
 def home():
-    return render_template("index.html", name="hi")
+    return render_template("index.html")
 
-
-@app.route('/something')
-@requires_sso("corporation")
-def other():
-    return render_template("base.html", name="hello")
 
 if not os.environ.get("HEROKU") and __name__ == "__main__":
     app.debug = True

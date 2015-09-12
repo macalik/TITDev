@@ -34,7 +34,7 @@ def home():
 
         volume = request.args.get("volume")
         collateral = request.args.get("collateral")
-        volume = 0 if not volume else volume
+        volume = 0 if not volume else float(volume)
         collateral = 0 if not collateral else collateral
 
         volume_cost = m3 * float(volume)
@@ -90,9 +90,9 @@ def home():
             color = ""  # Default color, used for outstanding
 
             if validation_query:
-                validation_calc = (float(validation_query["m3"]) * float(contract["volume"]) +
-                                   float(validation_query["extra"]) + float(contract["collateral"]) * 0.1)
-                if float(contract["reward"]) < validation_calc:
+                validation_calc = max(float(validation_query["m3"]) * float(contract["volume"]) +
+                                      float(validation_query["extra"]) + float(contract["collateral"]) * 0.1, 1000000)
+                if float(contract["reward"]) < validation_calc or volume > 300000:
                     color = "info"
             else:
                 color = "active"
@@ -123,18 +123,26 @@ def home():
     if collateral == 0:
         collateral = ""
 
+    # Warnings
+    warning_list = []
+    if price < 1000000:
+        warning_list.append("Rewards must be at least 1M Isk")
+
     # Formatting
     extra = "{:0,.2f}".format(extra)
     volume_cost = "{:0,.2f}".format(volume_cost)
     collateral_cost = "{:0,.2f}".format(collateral_cost)
     price = "{:0,.2f}".format(price)
+    volume = "{:0.2f}".format(float(volume)) if volume else volume
+    collateral = "{:0,.2f}".format(float(collateral)) if collateral else collateral
 
     # Check admin
     jf_admin = auth_check("jf_admin")
 
     return render_template("jf.html", route_list=route_list, m3=m3, extra=extra, price=price,
                            volume=volume, contract_list=contract_list, next_update=next_update, admin=jf_admin,
-                           collateral=collateral, volume_cost=volume_cost, collateral_cost=collateral_cost)
+                           collateral=collateral, volume_cost=volume_cost, collateral_cost=collateral_cost,
+                           warning_list=warning_list)
 
 
 @jf.route('/admin', methods=["GET", "POST"])

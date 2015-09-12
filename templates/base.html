@@ -7,8 +7,12 @@
 {% endblock styles %}
 
 {% block navbar %}
-{% if session.UI_Corporation: %}
-{{nav.tit.render()}}
+{% if session.UI_Roles: %}
+{{nav.admin.render()}}
+{% elif session.UI_Corporation: %}
+{{nav.corporation.render()}}
+{% elif session.UI_Alliance: %}
+{{nav.alliance.render()}}
 {% else: %}
 {{nav.anon.render()}}
 {% endif %}

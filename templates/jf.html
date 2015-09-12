@@ -27,6 +27,9 @@
                     <li class="list-group-item">Collateral Cost: {{collateral_cost}} Isk</li>
                     <li class="list-group-item">Total Cost: {{price}} Isk</li>
                 </ul>
+                {% for warning in warning_list %}
+                <div class="alert alert-warning" role="alert">Warning!: {{warning}}</div>
+                {% endfor %}
             </div>
             <div class="col-md-4">
                 <div class="panel panel-default">
@@ -35,12 +38,12 @@
                     </div>
                     <div class="panel-body">
                         <ul>
-                            <li>White: Outstanding</li>
+                            <li>White: Outstanding (Valid Contract)</li>
                             <li>Red: Failed/Canceled/Rejected/Deleted</li>
                             <li>Yellow: In Progress</li>
                             <li>Green: Completed</li>
                             <li>Grey: No valid route found</li>
-                            <li>Blue: Contract Invalid (Reward is too small)</li>
+                            <li>Blue: Contract Invalid (See Rules)</li>
                         </ul>
                     </div>
                 </div>
@@ -64,6 +67,8 @@
                             <li>!!NO CANS!!</li>
                             <li>Collateral: Add 10% of Collateral to reward (Ex. 100m collateral = +10m to reward)</li>
                             <li>Keep contracts below 1 Billion Isk</li>
+                            <li>Contracts must be less than 300k M3</li>
+                            <li>Minimum reward must be 1M Isk</li>
                         </ul>
                     </div>
                 </div>

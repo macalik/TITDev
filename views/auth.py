@@ -24,7 +24,7 @@ else:
         secrets = json.load(secrets_file)
 
 
-def requires_sso(level):
+def requires_sso(role):
     def decorator(function):
         @wraps(function)
         def decorated_function(*args, **kwargs):
@@ -59,7 +59,9 @@ def requires_sso(level):
                                         {"$set":
                                             {
                                                 "corporation_id": int(xml_tree[1][7].text),
+                                                "corporation_name": xml_tree[1][8].text,
                                                 "alliance_id": int(xml_tree[1][10].text),
+                                                "alliance_name": xml_tree[1][11].text,
                                                 "cached_until": int(calendar.timegm(time.strptime(xml_tree[2].text,
                                                                                                   xml_time_pattern)))
                                             }})
@@ -79,8 +81,20 @@ def requires_sso(level):
                 else:
                     session["UI_Alliance"] = False
 
+            # Update UI after cache check
+            session["UI_Roles"] = []
+            for role_ui in g.mongo.db.eve_auth.find():
+                if session["CharacterOwnerHash"] in role_ui["users"]:
+                    session["UI_Roles"].append(role_ui["_id"])
+            # Super User
+            db_super_admins = g.mongo.db.eve_auth.find_one({"_id": "super_admin"})
+            if db_super_admins and session["CharacterOwnerHash"] in db_super_admins["users"]:
+                session["UI_Roles"] = []
+                for role_ui in g.mongo.db.eve_auth.find():
+                    session["UI_Roles"].append(role_ui["_id"])
+
             # Auth check after checking if user exists and updating cache if necessary
-            if not auth_check(level):
+            if not auth_check(role):
                 abort(403)
 
             return function(*args, **kwargs)
@@ -88,22 +102,25 @@ def requires_sso(level):
     return decorator
 
 
-def auth_check(level):
+def auth_check(role):
     db_user = g.mongo.db.users.find_one({"_id": session["CharacterOwnerHash"]})  # User must exist before auth check
-    db_eve_auth = g.mongo.db.eve_auth.find_one({"_id": level})
+    db_eve_auth = g.mongo.db.eve_auth.find_one({"_id": role})
+    db_super_admins = g.mongo.db.eve_auth.find_one({"_id": "super_admin"})
 
     with open("configs/base.json", "r") as base_config_file:
         base_config = json.load(base_config_file)
-    if level == "corporation":
+    if db_super_admins and db_user["_id"] in db_super_admins["users"]:
+        return True
+    elif role == "corporation":
         if db_user["corporation_id"] == base_config["corporation_id"]:
             return True
-    elif level == "alliance":
+    elif role == "alliance":
         if db_user["alliance_id"] == base_config["alliance_id"]:
             return True
     elif db_eve_auth:  # Database Groups
         if db_user["_id"] in db_eve_auth["users"]:
             return True
-    elif level is None:
+    elif role is None:
         return True
 
     return False
@@ -176,7 +193,9 @@ def sso_response():
                                     {"character_id": crest_char["CharacterID"],
                                      "character_name": crest_char["CharacterName"],
                                      "corporation_id": int(xml_tree[1][7].text),
+                                     "corporation_name": xml_tree[1][8].text.strip(),
                                      "alliance_id": int(xml_tree[1][10].text),
+                                     "alliance_name": xml_tree[1][11].text.strip(),
                                      "refresh_token": auth_token["refresh_token"],
                                      "cached_until": int(calendar.timegm(time.strptime(xml_tree[2].text,
                                                                                        xml_time_pattern)))
@@ -195,6 +214,16 @@ def sso_response():
             session["UI_Corporation"] = True
         if db_user["alliance_id"] == base_config["alliance_id"]:
             session["UI_Alliance"] = True
+        session["UI_Roles"] = []
+        for role in g.mongo.db.eve_auth.find():
+            if session["CharacterOwnerHash"] in role["users"]:
+                session["UI_Roles"].append(role["_id"])
+        # Super User
+        db_super_admins = g.mongo.db.eve_auth.find_one({"_id": "super_admin"})
+        if db_super_admins and session["CharacterOwnerHash"] in db_super_admins["users"]:
+            session["UI_Roles"] = []
+            for role_ui in g.mongo.db.eve_auth.find():
+                session["UI_Roles"].append(role_ui["_id"])
 
         return redirect(url_for("home"))
 
