@@ -31,8 +31,13 @@
                             <span class="input-group-addon">End</span>
                             <input class="form-control" placeholder="Station End" name="end" value="{{end}}">
                         </div>
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="submit" class="btn btn-primary" name="action" value="single">Save</button>
                         <a class="btn btn-danger" href="{{url_for('jf.admin')}}">Cancel</a>
+                    </form>
+                    <form method="post">
+                        <label for="stations">Initialize Multiple</label>
+                        <textarea id="stations" class="form-control" rows="5" name="stations" placeholder="Station"></textarea>
+                        <button type="submit" class="btn btn-warning" name="action" value="multiple">Save</button>
                     </form>
                 </div>
             </div>
@@ -47,6 +52,8 @@
                             <li>If the route field is disabled, you are editing a route. Hit cancel to save a new route instead.</li>
                             <li>To edit or delete a route, hit the corresponding button in the table below.</li>
                             <li>Start and end station names must be EXACTLY as shown in-game. (Case sensitive with correct spaces)</li>
+                            <li>Use the "initialize multiple" box to "spider" chain all stations.</li>
+                            <li>Use this <a href="{{url_for('static', filename='staStations.json')}}">list of stations</a>. It is shown as "stationID":"Name". Do NOT include quotes.</li>
                         </ul>
                     </div>
                 </div>
