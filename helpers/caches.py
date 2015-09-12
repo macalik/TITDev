@@ -84,8 +84,17 @@ def contracts():
                                             "acceptor_id": contract.attrib["acceptorID"],
                                             "start_station_id": contract.attrib["startStationID"],
                                             "end_station_id": contract.attrib["endStationID"],
+                                            "type": contract.attrib["type"],
                                             "status": contract.attrib["status"],
+                                            "title": contract.attrib["title"],
+                                            "for_corp": contract.attrib["forCorp"],
                                             "date_issued": contract.attrib["dateIssued"],
                                             "date_expired": contract.attrib["dateExpired"],
-                                            "date_accepted": contract.attrib["dateAccepted"]
+                                            "date_accepted": contract.attrib["dateAccepted"],
+                                            "num_days": contract.attrib["numDays"],
+                                            "date_completed": contract.attrib["dateCompleted"],
+                                            "price": contract.attrib["price"],
+                                            "reward": contract.attrib["reward"],
+                                            "collateral": contract.attrib["collateral"],
+                                            "volume": contract.attrib["volume"]
                                        }, upsert=True)

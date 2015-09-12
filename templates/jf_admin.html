@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="jf-form">
+                    <form method="post">
+                        <input class="form-control" name="_id" type="hidden" value="{{_id}}">
+                        <div class="input-group">
+                            <span class="input-group-addon">Route</span>
+                            {% if edit %}
+                            <input class="form-control" placeholder="{{name}}" disabled>
+                            <input type="hidden" class="form-control" value="{{name}}" name="name">
+                            {% else %}
+                            <input class="form-control" placeholder="Description" name="name">
+                            {% endif %}
+                        </div>
+                        <div class="input-group">
+                            <input type="number" class="form-control" placeholder="Isk/M3" name="m3" value="{{m3}}" step="0.01" min ="0">
+                            <span class="input-group-addon">isk/m3</span>
+                        </div>
+                        <div class="input-group">
+                            <input type="number" class="form-control" placeholder="Misc Flat Cost" name="extra" value="{{extra}}" step="0.01" min ="0">
+                            <span class="input-group-addon">isk</span>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">Start</span>
+                            <input class="form-control" placeholder="Station Start" name="start" value="{{start}}">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">End</span>
+                            <input class="form-control" placeholder="Station End" name="end" value="{{end}}">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <a class="btn btn-danger" href="{{url_for('jf.admin')}}">Cancel</a>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Instructions</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <li>If the route field is editable, then you can save a new route.</li>
+                            <li>If the route field is disabled, you are editing a route. Hit cancel to save a new route instead.</li>
+                            <li>To edit or delete a route, hit the corresponding button in the table below.</li>
+                            <li>Start and end station names must be EXACTLY as shown in-game. (Case sensitive with correct spaces)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped">
+                    <tr>
+                        <th>Description</th>
+                        <th>Isk/M3</th>
+                        <th>Misc Flat Cost</th>
+                        <th>Station Start</th>
+                        <th>Station End</th>
+                        <th>Action</th>
+                    </tr>
+                    {% for route in route_list %}
+                    <tr>
+                        <td>{{route[1]}}</td>
+                        <td>{{route[2]}}</td>
+                        <td>{{route[3]}}</td>
+                        <td>{{route[4]}}</td>
+                        <td>{{route[5]}}</td>
+                        <td>
+                            <form class="form-inline" method="get">
+                                <input class="form-control" name="_id" type="hidden" value="{{route[0]}}">
+                                <button name="action" type="submit" class="btn btn-warning" value="edit">Edit</button>
+                                <button name="action" type="submit" class="btn btn-danger" value="delete">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
