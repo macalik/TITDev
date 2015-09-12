@@ -25,25 +25,42 @@ def home():
     start_list = []
     end_list = []
     for station in g.mongo.db.jfroutes.distinct("start"):
-        start_list.append(station)
+        if request.args.get("start") == station:
+            start_list.append([station, True])
+        else:
+            start_list.append([station, False])
     for station in g.mongo.db.jfroutes.distinct("end"):
-        end_list.append(station)
+        if request.args.get("end") == station:
+            end_list.append([station, True])
+        else:
+            end_list.append([station, False])
+    start_list.sort()
+    end_list.sort()
 
     # Contract Calculations
     if request.args.get("start") and request.args.get("end"):
         selected_route = g.mongo.db.jfroutes.find_one({"start": request.args.get("start"),
                                                        "end": request.args.get("end")})
-        m3 = selected_route["m3"]
-        extra = selected_route["extra"]
+        if selected_route:
+            m3 = selected_route["m3"]
+            extra = selected_route["extra"]
 
-        volume = request.args.get("volume")
-        collateral = request.args.get("collateral")
-        volume = 0 if not volume else float(volume)
-        collateral = 0 if not collateral else collateral
+            volume = request.args.get("volume")
+            collateral = request.args.get("collateral")
+            volume = 0 if not volume else float(volume)
+            collateral = 0 if not collateral else collateral
 
-        volume_cost = m3 * float(volume)
-        collateral_cost = float(collateral) * 0.1
-        price = extra + volume_cost + collateral_cost
+            volume_cost = m3 * float(volume)
+            collateral_cost = float(collateral) * 0.1
+            price = extra + volume_cost + collateral_cost
+        else:
+            m3 = 0
+            extra = 0
+            volume = 0
+            volume_cost = 0
+            collateral = 0
+            collateral_cost = 0
+            price = 0
     else:
         m3 = 0
         extra = 0
