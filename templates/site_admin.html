@@ -22,15 +22,15 @@
                                 </form>
                             </li>
                             {% endfor %}
-                            {% if role[0] != "super_admin" %}
-                            <form class="form-inline" method="post">
-                                <input class="form-control" name="role" type="hidden" value="{{role[0]}}">
-                                <label>Add:</label>
-                                <input class="form-control" name="_id">
-                                <button name="action" type="submit" class="btn btn-primary" value="submit">Submit</button>
-                            </form>
-                            {% endif %}
                         </ul>
+                        {% if role[0] != "super_admin" %}
+                        <form class="form-inline" method="post">
+                            <input class="form-control" name="role" type="hidden" value="{{role[0]}}">
+                            <label>Add:</label>
+                            <input class="form-control" name="_id">
+                            <button name="action" type="submit" class="btn btn-primary" value="submit">Submit</button>
+                        </form>
+                        {% endif %}
                     </div>
                 </div>
                 {% endfor %}
