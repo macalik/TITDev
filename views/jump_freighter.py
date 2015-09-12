@@ -1,7 +1,7 @@
 import os
 import json
 
-from flask import Blueprint, render_template, g, request
+from flask import Blueprint, render_template, g, request, session
 from bson.objectid import ObjectId
 
 from helpers import caches
@@ -74,15 +74,16 @@ def home():
     # Find all users
     for contract in g.mongo.db.contracts.find():
         if contract["_id"] != "cached_until":
-            users_set.update([contract["issuer_id"]])
+            users_set.update([contract["issuer_id"], contract["acceptor_id"]])
 
     # Check Caches
     caches.stations()
     caches.contracts()
     caches.character(users_set)
 
-    contract_list = [["Issuer", "Start", "End", "Status", "Date Issued", "Expiration Date",
-                      "Reward", "Collateral", "Volume"]]
+    contract_list = [["Issuer", "Acceptor", "Start", "End", "Status", "Date Issued", "Expiration Date", "Volume"]]
+    personal_contract_list = [["Acceptor", "Start", "End", "Status", "Date Issued", "Expiration Date", "Volume",
+                               "Reward", "Collateral"]]
 
     next_update_query = g.mongo.db.contracts.find_one({"_id": "cached_until"})
     next_update = next_update_query["str_time"] if next_update_query else "Unknown"
@@ -101,6 +102,7 @@ def home():
                 end_station = end_station["name"]
 
             issuer_query = g.mongo.db.characters.find_one({"_id": contract["issuer_id"]})
+            acceptor_query = g.mongo.db.characters.find_one({"_id": contract["acceptor_id"]})
 
             # Check if contract is valid
             validation_query = g.mongo.db.jfroutes.find_one({
@@ -125,29 +127,56 @@ def home():
             elif contract["status"] in validation_completed:
                 color = "success"
 
+            # Fix no acceptor
+            if acceptor_query["name"] == "Unknown Item":
+                acceptor = "None"
+            elif acceptor_query:
+                acceptor = acceptor_query["name"]
+            else:
+                acceptor = ""
+
+            issuer = issuer_query["name"] if issuer_query else ""
+
             contract_list.append([
                 color,
-                issuer_query["name"] if issuer_query else "",
+                issuer,
+                acceptor,
                 start_station,
                 end_station,
                 contract["status"],
                 contract["date_issued"],
                 contract["date_expired"],
-                "{:0,.2f}".format(float(contract["reward"])),
-                "{:0,.2f}".format(float(contract["collateral"])),
                 "{:0,.2f}".format(float(contract["volume"]))
             ])
+
+            if issuer == session["CharacterName"]:
+                personal_contract_list.append([
+                    color,
+                    acceptor,
+                    start_station,
+                    end_station,
+                    contract["status"],
+                    contract["date_issued"],
+                    contract["date_expired"],
+                    "{:0,.2f}".format(float(contract["volume"])),
+                    "{:0,.2f}".format(float(contract["reward"])),
+                    "{:0,.2f}".format(float(contract["collateral"]))
+                ])
+
+    # Warnings
+    warning_list = []
+    if price < 1000000:
+        warning_list.append("Rewards must be at least 1M Isk")
+    if volume > 300000:
+        warning_list.append("Contracts must be less than 300k M3")
+    if price > 1000000000:
+        warning_list.append("Contracts should be below 1B isk")
 
     # Empty volume if volume is 0
     if volume == 0:
         volume = ""
     if collateral == 0:
         collateral = ""
-
-    # Warnings
-    warning_list = []
-    if price < 1000000:
-        warning_list.append("Rewards must be at least 1M Isk")
 
     # Formatting
     extra = "{:0,.2f}".format(extra)
@@ -163,7 +192,7 @@ def home():
     return render_template("jf.html", start_list=start_list, end_list=end_list, m3=m3, extra=extra, price=price,
                            volume=volume, contract_list=contract_list, next_update=next_update, admin=jf_admin,
                            collateral=collateral, volume_cost=volume_cost, collateral_cost=collateral_cost,
-                           warning_list=warning_list)
+                           warning_list=warning_list, personal_contract_list=personal_contract_list)
 
 
 @jf.route('/admin', methods=["GET", "POST"])
