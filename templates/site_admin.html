@@ -38,20 +38,24 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <table class="table table-hover table-condensed">
-                    <tr>
-                        <th>Character</th>
-                        <th>CharacterOwnerHash</th>
-                        <th>Corporation</th>
-                        <th>Alliance</th>
-                    </tr>
-                {% for user in user_list %}
-                    <tr>
-                        {% for info in user %}
-                        <td>{{info}}</td>
-                        {% endfor %}
-                    </tr>
-                {% endfor %}
+                <table class="table table-hover table-condensed datatables">
+                    <thead>
+                        <tr>
+                            <th>Character</th>
+                            <th>CharacterOwnerHash</th>
+                            <th>Corporation</th>
+                            <th>Alliance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in user_list %}
+                        <tr>
+                            {% for info in user %}
+                            <td>{{info}}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
                 </table>
             </div>
         </div>
