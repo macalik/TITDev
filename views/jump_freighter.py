@@ -167,6 +167,7 @@ def home():
     warning_list = []
     if price < 1000000:
         warning_list.append("Rewards must be at least 1M Isk")
+        price = 1000000
     if volume > 300000:
         warning_list.append("Contracts must be less than 300k M3")
     if price > 1000000000:
