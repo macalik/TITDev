@@ -65,31 +65,35 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <table class="table table-striped">
-                    <tr>
-                        <th>Description</th>
-                        <th>Isk/M3</th>
-                        <th>Misc Flat Cost</th>
-                        <th>Station Start</th>
-                        <th>Station End</th>
-                        <th>Action</th>
-                    </tr>
-                    {% for route in route_list %}
-                    <tr>
-                        <td>{{route[1]}}</td>
-                        <td>{{route[2]}}</td>
-                        <td>{{route[3]}}</td>
-                        <td>{{route[4]}}</td>
-                        <td>{{route[5]}}</td>
-                        <td>
-                            <form class="form-inline" method="get">
-                                <input class="form-control" name="_id" type="hidden" value="{{route[0]}}">
-                                <button name="action" type="submit" class="btn btn-warning" value="edit">Edit</button>
-                                <button name="action" type="submit" class="btn btn-danger" value="delete">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                    {% endfor %}
+                <table class="table table-striped datatables">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Isk/M3</th>
+                            <th>Misc Flat Cost</th>
+                            <th>Station Start</th>
+                            <th>Station End</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for route in route_list %}
+                        <tr>
+                            <td>{{route[1]}}</td>
+                            <td>{{route[2]}}</td>
+                            <td>{{route[3]}}</td>
+                            <td>{{route[4]}}</td>
+                            <td>{{route[5]}}</td>
+                            <td>
+                                <form class="form-inline" method="get">
+                                    <input class="form-control" name="_id" type="hidden" value="{{route[0]}}">
+                                    <button name="action" type="submit" class="btn btn-warning" value="edit">Edit</button>
+                                    <button name="action" type="submit" class="btn btn-danger" value="delete">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
                 </table>
             </div>
         </div>
