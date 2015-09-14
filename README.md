@@ -54,8 +54,10 @@ def page():
   * heleprs.caches.character(char_ids): Gets character names for those not found in the collection.
     * char_ids is a array containing all character ids to check.
     * Tied to characters collection
-  * helpers.caches.contracts(): Pulls all contracts for the jump freighter service [WILL BE RENAMED]
+  * helpers.caches.contracts(keys): Pulls all contracts for the jump freighter service
     * Tied to contracts collection
+    * Keys is array of tuples of ("service name", "keyID", "vCode").
+    * Defaults to updating all contracts.
 
 ### SDE Extraction
 * resources.sde_extract is to be run separately on a development computer.
