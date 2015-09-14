@@ -3,6 +3,10 @@
 {{super()}}
 <link rel="shortcut icon" href="{{ url_for('static', filename='favicon_jf.ico') }}">
 {% endblock head %}
+{% block scripts %}
+{{super()}}
+<script src="{{url_for('static', filename='datatables-jf.js')}}"></script>
+{% endblock scripts %}
 {% block content %}
     <div class="container">
         <div class="row">
@@ -61,7 +65,7 @@
                     <li class="list-group-item">Total Cost: {{price}} Isk</li>
                 </ul>
                 {% for warning in warning_list %}
-                <div class="alert alert-warning" role="alert">Warning!: {{warning}}</div>
+                <div class="alert alert-warning" role="alert">Warning: {{warning}}</div>
                 {% endfor %}
             </div>
             <div class="col-md-4">
@@ -72,7 +76,7 @@
                     <div class="panel-body">
                         <ul class="list-group">
                             <li class="list-group-item">White: Outstanding (Valid Contract)</li>
-                            <li class="list-group-item list-group-item-danger">Red: Failed/Canceled/Rejected/Deleted</li>
+                            <li class="list-group-item list-group-item-danger">Red: Failed/Rejected</li>
                             <li class="list-group-item list-group-item-warning">Yellow: In Progress</li>
                             <li class="list-group-item list-group-item-success">Green: Completed</li>
                             <li class="list-group-item disabled">Grey: No valid route found</li>
@@ -80,12 +84,17 @@
                         </ul>
                     </div>
                 </div>
-                {% if admin %}
+                {% if admin or pilot %}
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Admins</h3>
+                        <h3 class="panel-title">Authenticated Pages</h3>
                     </div>
+                    {% if pilot %}
+                    <a class="btn btn-warning" href="{{url_for('jf.pilot')}}">Pilot Page</a>
+                    {% endif %}
+                    {% if admin %}
                     <a class="btn btn-danger" href="{{url_for('jf.admin')}}">Edit Routes</a>
+                    {% endif %}
                 </div>
                 {% endif %}
             </div>
@@ -118,7 +127,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h2>Personal Contracts</h2>
-                <table class="table table-hover table-condensed datatables">
+                <table id="jf-personal" class="table table-hover table-condensed">
                     <thead>
                         <tr>
                             {% for header in personal_contract_list[0] %}
@@ -141,7 +150,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h2>All History</h2>
-                <table class="table table-hover table-condensed datatables">
+                <table id="jf-all" class="table table-hover table-condensed">
                     <thead>
                         <tr>
                             {% for header in contract_list[0] %}

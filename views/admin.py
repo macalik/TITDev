@@ -14,7 +14,8 @@ def roles():
         # Validate inputted id
         id_validation = g.mongo.db.users.find_one({"_id": request.form.get("_id")})
         if id_validation and request.form.get("action") == "submit":
-            g.mongo.db.eve_auth.update({"_id": request.form.get("role").strip()},
+            g.mongo.db.eve_auth.update({"_id": request.form.get("role").strip(),
+                                        "users": {"$nin": [request.form.get("_id")]}},
                                        {
                                            "$push":
                                                {
@@ -36,4 +37,7 @@ def roles():
         role_list.append([role["_id"], [(x, g.mongo.db.users.find_one({"_id": x}).get("character_name"))
                                         for x in role["users"] if g.mongo.db.users.find_one({"_id": x})]])
 
-    return render_template("site_admin.html", user_list=user_list, role_list=role_list)
+    role_list1 = role_list[:int(len(role_list)/2)]
+    role_list2 = role_list[int(len(role_list)/2):]
+
+    return render_template("site_admin.html", user_list=user_list, role_list1=role_list1, role_list2=role_list2)

@@ -27,6 +27,8 @@ class Navigation:
                     admin_elements.append(View('JF Service', "jf.admin"))
                 elif role == "user_admin":
                     admin_elements.append(View('User Roles', "admin.roles"))
+                elif role == "jf_pilot":
+                    admin_elements.append(View('JF Pilot', "jf.pilot"))
 
             return Navbar('TiT', View('Home', 'home'), View('JF Service', "jf.home"),
                           Subgroup('Admin Pages', *admin_elements),
