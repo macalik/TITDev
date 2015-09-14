@@ -3,7 +3,45 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                {% for role in role_list %}
+                <div class="alert alert-info" role="alert">Use the CharacterOwnerHash of a character to give roles.</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                {% for role in role_list1 %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{role[0]}}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            {% for user in role[1] %}
+                            <li>
+                                <form class="form-inline" method="post">
+                                    <label>{{user[1]}}</label>
+                                    <input class="form-control" name="role" type="hidden" value="{{role[0]}}">
+                                    <input class="form-control" name="_id" type="hidden" value="{{user[0]}}">
+                                    {% if role[0] != "super_admin" %}
+                                    <button name="action" type="submit" class="btn btn-danger" value="delete">Delete</button>
+                                    {% endif %}
+                                </form>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% if role[0] != "super_admin" %}
+                        <form class="form-inline" method="post">
+                            <input class="form-control" name="role" type="hidden" value="{{role[0]}}">
+                            <label>Add:</label>
+                            <input class="form-control" name="_id">
+                            <button name="action" type="submit" class="btn btn-primary" value="submit">Submit</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="col-md-6">
+                {% for role in role_list2 %}
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">{{role[0]}}</h3>
