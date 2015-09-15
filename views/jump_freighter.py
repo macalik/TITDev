@@ -304,6 +304,10 @@ def pilot():
     optimized_collateral = 0
     optimized_volume = 0
     optimized_ids = []
+    reserved_reward = 0
+    reserved_collateral = 0
+    reserved_volume = 0
+    reserved_ids = []
 
     for contract in contract_list:
         # Check for non-static stations
@@ -332,8 +336,12 @@ def pilot():
             total_volume += contract["volume"]
             optimized_ids.append(str(contract["_id"]))
         if contract.get("reserved_by") == session["CharacterName"]:
+            reserved_reward += contract["reward"]
+            reserved_collateral += contract["collateral"]
+            reserved_volume += contract["volume"]
             reserved_contracts.append([
                 color,
+                contract["_id"],
                 issuer,
                 start_station,
                 end_station,
@@ -344,6 +352,7 @@ def pilot():
                 "{:0,.2f}".format(contract["collateral"]),
                 "{:0,.2f}".format(contract["volume"])
             ])
+            reserved_ids.append(str(contract["_id"]))
         all_history.append([
             color,
             contract["_id"],
@@ -363,10 +372,16 @@ def pilot():
     optimized_volume = "{:0,.2f}".format(optimized_volume)
     optimized_collateral = "{:0,.2f}".format(optimized_collateral)
     optimized_reward = "{:0,.2f}".format(optimized_reward)
+    reserved_volume = "{:0,.2f}".format(reserved_volume)
+    reserved_collateral = "{:0,.2f}".format(reserved_collateral)
+    reserved_reward = "{:0,.2f}".format(reserved_reward)
 
     optimized_return = ",".join(optimized_ids)
+    reserved_return = ",".join(reserved_ids)
 
     return render_template("jf_pilot.html", contract_list=contract_list, optimized_run=optimized_run,
                            reserved_contracts=reserved_contracts, all_history=all_history,
                            optimized_reward=optimized_reward, optimized_collateral=optimized_collateral,
-                           optimized_volume=optimized_volume, optimized_return=optimized_return)
+                           optimized_volume=optimized_volume, optimized_return=optimized_return,
+                           reserved_reward=reserved_reward, reserved_collateral=reserved_collateral,
+                           reserved_volume=reserved_volume, reserved_return=reserved_return)
