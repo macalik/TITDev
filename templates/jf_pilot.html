@@ -52,18 +52,36 @@
                             {% for header in reserved_contracts[0] %}
                             <th>{{header}}</th>
                             {% endfor %}
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                     {% for contract in reserved_contracts[1:] %}
-                        <tr>
-                            {% for info in contract[1:] %}
-                            <td class="{{contract[0]}}">{{info}}</td>
+                        <tr class="{{contract[0]}}">
+                            {% for info in contract[2:] %}
+                            <td>{{info}}</td>
                             {% endfor %}
+                            <td>
+                                <form method="post">
+                                    <button name="remove" type="submit" class="btn btn-danger" value="{{contract[1]}}">Un-Reserve</button>
+                                </form>
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>
                 </table>
+            </div>
+            <div class="col-md-12">
+                <ul class="list-inline list-group">
+                    <li class="list-group-item">Total Volume: {{reserved_volume}}</li>
+                    <li class="list-group-item">Collateral: {{reserved_collateral}}</li>
+                    <li class="list-group-item">Reward: {{reserved_reward}}</li>
+                    <li>
+                        <form method="post">
+                            <button name="remove" type="submit" class="btn btn-danger" value="{{reserved_return}}">Un-Reserve All</button>
+                        </form>
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="row">
@@ -80,9 +98,9 @@
                     </thead>
                     <tbody>
                     {% for contract in all_history[1:] %}
-                        <tr>
+                        <tr class="{{contract[0]}}">
                             {% for info in contract[2:] %}
-                            <td class="{{contract[0]}}">{{info}}</td>
+                            <td>{{info}}</td>
                             {% endfor %}
                             <td>
                                 <form method="post">
