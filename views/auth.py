@@ -225,7 +225,7 @@ def sso_response():
             for role_ui in g.mongo.db.eve_auth.find():
                 session["UI_Roles"].append(role_ui["_id"])
 
-        return redirect(url_for("home"))
+        return redirect(url_for("account.home"))
 
     else:
         abort(400)
