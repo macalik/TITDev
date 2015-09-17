@@ -6,6 +6,7 @@ from flask_bootstrap import Bootstrap
 from flask_pymongo import PyMongo
 
 from views.navigation import Navigation
+
 from views.auth import auth
 from views.jump_freighter import jf
 from views.admin import admin
