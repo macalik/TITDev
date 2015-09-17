@@ -45,8 +45,6 @@ class Navigation:
             else:
                 items = ['TiT', View('Home', 'home'), View('Log In', 'auth.sso_redirect')]
 
-            print(items)
-
             return Navbar(*items)
 
         nav.init_app(app)
