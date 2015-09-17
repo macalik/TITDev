@@ -4,6 +4,11 @@ from flask import session
 
 
 class Navigation:
+
+    base = ['TiT', View('Home', 'home'),  View('Account', "account.home")]
+    alliance = base + [View('JF Service', "jf.home")]
+    corp = base + [View('Corp Main', "corp.home"), View('JF Service', "jf.home")]
+
     def __init__(self, app):
         nav = Nav()
 
@@ -13,11 +18,13 @@ class Navigation:
 
         @nav.navigation('corporation')
         def nav_corp():
-            return Navbar('TiT', View('Home', 'home'), View('JF Service', "jf.home"), View('Log Out', 'auth.log_out'))
+            items = Navigation.corp + [View('Log Out', 'auth.log_out')]
+            return Navbar(*items)
 
         @nav.navigation('alliance')
         def nav_alliance():
-            return Navbar('TiT', View('Home', 'home'), View('JF Service', "jf.home"), View('Log Out', 'auth.log_out'))
+            items = Navigation.alliance + [View('Log Out', 'auth.log_out')]
+            return Navbar(*items)
 
         @nav.navigation('admin')
         def nav_admin():
@@ -29,9 +36,17 @@ class Navigation:
                     admin_elements.append(View('User Roles', "admin.roles"))
                 elif role == "jf_pilot":
                     admin_elements.append(View('JF Pilot', "jf.pilot"))
+            if session["UI_Corporation"]:
+                items = Navigation.corp + [Subgroup('Admin Pages', *admin_elements),
+                                           View('Log Out', 'auth.log_out')]
+            elif session["UI_Alliance"]:
+                items = Navigation.alliance + [Subgroup('Admin Pages', *admin_elements),
+                                               View('Log Out', 'auth.log_out')]
+            else:
+                items = ['TiT', View('Home', 'home'), View('Log In', 'auth.sso_redirect')]
 
-            return Navbar('TiT', View('Home', 'home'), View('JF Service', "jf.home"),
-                          Subgroup('Admin Pages', *admin_elements),
-                          View('Log Out', 'auth.log_out'))
+            print(items)
+
+            return Navbar(*items)
 
         nav.init_app(app)

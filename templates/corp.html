@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block head %}
+{{super()}}
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon_jf.ico') }}">
+{% endblock head %}
+{% block scripts %}
+{{super()}}
+<script src="{{url_for('static', filename='datatables.js')}}"></script>
+{% endblock scripts %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Players Away From EVE</h2>
+                <table class="table table-hover table-condensed datatables">
+                    <thead>
+                        <tr>
+                            <th>Character</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in away_from_eve %}
+                        <tr>
+                            <td>{{user[0]}}</td>
+                            <td>{{user[1]}}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

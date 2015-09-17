@@ -9,6 +9,8 @@ from views.navigation import Navigation
 from views.auth import auth
 from views.jump_freighter import jf
 from views.admin import admin
+from views.account import account
+from views.corp import corp
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -31,6 +33,8 @@ app_mongo = PyMongo(app)
 app.register_blueprint(auth, url_prefix="/auth")
 app.register_blueprint(jf, url_prefix="/jf")
 app.register_blueprint(admin, url_prefix="/admin")
+app.register_blueprint(account, url_prefix="/account")
+app.register_blueprint(corp, url_prefix="/corp")
 
 
 @app.before_request
