@@ -11,6 +11,7 @@ from views.jump_freighter import jf
 from views.admin import admin
 from views.account import account
 from views.corp import corp
+from views.security import security
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -35,6 +36,7 @@ app.register_blueprint(jf, url_prefix="/jf")
 app.register_blueprint(admin, url_prefix="/admin")
 app.register_blueprint(account, url_prefix="/account")
 app.register_blueprint(corp, url_prefix="/corp")
+app.register_blueprint(security, url_prefix="/security")
 
 
 @app.before_request
