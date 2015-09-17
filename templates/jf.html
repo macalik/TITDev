@@ -166,15 +166,7 @@
                             {% endfor %}
                         </tr>
                     </thead>
-                    <tbody>
-                    {% for contract in contract_list[1:] %}
-                        <tr>
-                            {% for info in contract[1:] %}
-                            <td class="{{contract[0]}}">{{info}}</td>
-                            {% endfor %}
-                        </tr>
-                    {% endfor %}
-                    </tbody>
+
                 </table>
             </div>
         </div>
