@@ -14,8 +14,6 @@ security = Blueprint("security", __name__, template_folder="templates")
 
 def load():
 
-
-    caches.character()
     pilot_list = []
     # All Users List
     for pilot in g.mongo.db.characters.find():
