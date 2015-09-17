@@ -57,11 +57,19 @@
                             <textarea class="form-control" rows="10" name="text" disabled>{{vacation_text}}</textarea>
                         </div>
                         <div class="form-group">
+                            <label for="date">Estimated Return Date</label>
+                            <input id="date" name="date" type="date" value="{{vacation_date}}" disabled/>
+                        </div>
+                        <div class="form-group">
                             <button name="action" type="submit" class="btn btn-danger" value="disable">Disable</button>
                         </div>
                         {% else %}
                         <div class="form-group">
                             <textarea class="form-control" rows="10" name="text"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="date2">Estimated Return Date: (MM/DD/YYYY)</label>
+                            <input id="date2" name="date" type="date" />
                         </div>
                         <div class="form-group">
                             <button name="action" type="submit" class="btn btn-warning" value="enable">Enable</button>
@@ -71,7 +79,7 @@
                 </div>
                 <div>
                     <form method="post">
-                        <label>Add New API</label>
+                        <label>Add New API: <a href="http://community.eveonline.com/support/api-key/CreatePredefined?accessMask={{access_mask}}">Predefined Link</a></label>
                         <div class="form-group">
                             <div class="input-group">
                                 <span class="input-group-addon">Key ID</span>

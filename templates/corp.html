@@ -17,13 +17,15 @@
                         <tr>
                             <th>Character</th>
                             <th>Description</th>
+                            <th>Estimated Return Date</th>
                         </tr>
                     </thead>
                     <tbody>
                     {% for user in away_from_eve %}
                         <tr>
-                            <td>{{user[0]}}</td>
-                            <td>{{user[1]}}</td>
+                            {% for info in user %}
+                            <td>{{info}}</td>
+                            {% endfor %}
                         </tr>
                     {% endfor %}
                     </tbody>

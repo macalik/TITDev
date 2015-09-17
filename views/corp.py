@@ -17,6 +17,6 @@ def home():
     away_from_eve = []
     for character in db_vacation:
         if character["corporation_id"] == base_config["corporation_id"]:
-            away_from_eve.append([character["character_name"], character["vacation"]])
+            away_from_eve.append([character["character_name"], character["vacation"], character["vacation_date"]])
 
     return render_template("corp.html", away_from_eve=away_from_eve)

@@ -181,15 +181,15 @@ def api_keys(api_key_list):
                 errors.append("Key with id {} expires. Must be a non-expiring API key.".format(key_id))
                 continue
 
+            # If same character is input, remove old keys first
+            bulk_op.find({"_id": session["CharacterOwnerHash"]}).upsert().update(
+                {
+                    "$pull": {
+                        "keys": {"key_id": int(key_id)}
+                    }
+                })
             for api_character in xml_api_key_tree[1][0][0]:
                 bulk_run = True
-                # If same character is input, remove old keys first
-                bulk_op.find({"_id": session["CharacterOwnerHash"]}).upsert().update(
-                    {
-                        "$pull": {
-                            "keys": {"key_id": int(key_id)}
-                        }
-                    })
                 update_request = {"$push": {"keys": {
                                       "key_id": int(key_id),
                                       "vcode": vcode,
