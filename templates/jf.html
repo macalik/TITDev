@@ -11,6 +11,31 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Rules</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <li>Contract to: Designated Drivers</li>
+                            <li>!!NO CANS!!</li>
+                            <li>Collateral: Add 10% of Collateral to reward (Ex. 100m collateral = +10m to reward)</li>
+                            <li>Keep contracts below 1 Billion Isk</li>
+                            <li>Contracts must be less than 300k M3</li>
+                            <li>Minimum reward must be 1M Isk</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Next API Update</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p><b>{{next_update}} UTC</b></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
                 <div class="jf-form">
                     <form>
                         <div class="form-group">
@@ -59,10 +84,18 @@
                     </form>
                 </div>
                 <ul class="list-group">
-                    <li class="list-group-item">Volume Cost: {{volume_cost}} Isk [@{{m3}} Isk/M3]</li>
-                    <li class="list-group-item">Misc Cost: {{extra}} Isk</li>
+                    {% if session.UI_Corporation %}
+                    <li class="list-group-item">Volume Cost: {{corp_volume_cost}} Isk [@{{corp_m3}} Isk/M3]</li>
+                    {% else %}
+                    <li class="list-group-item">Volume Cost: {{volume_cost}} Isk [@{{corp_m3}} Isk/M3]</li>
+                    {% endif %}
                     <li class="list-group-item">Collateral Cost: {{collateral_cost}} Isk</li>
+                    {% if session.UI_Corporation %}
+                    <li class="list-group-item">Total Cost: {{corp_price}} Isk</li>
+                    {% else %}
                     <li class="list-group-item">Total Cost: {{price}} Isk</li>
+                    {% endif %}
+                    <li class="list-group-item list-group-item-danger">Contract to: Designated Drivers</li>
                 </ul>
                 {% for warning in warning_list %}
                 <div class="alert alert-warning" role="alert">Warning: {{warning}}</div>
@@ -97,31 +130,6 @@
                     {% endif %}
                 </div>
                 {% endif %}
-            </div>
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Rules</h3>
-                    </div>
-                    <div class="panel-body">
-                        <ul>
-                            <li>Contract to: Designated Drivers</li>
-                            <li>!!NO CANS!!</li>
-                            <li>Collateral: Add 10% of Collateral to reward (Ex. 100m collateral = +10m to reward)</li>
-                            <li>Keep contracts below 1 Billion Isk</li>
-                            <li>Contracts must be less than 300k M3</li>
-                            <li>Minimum reward must be 1M Isk</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Next API Update</h3>
-                    </div>
-                    <div class="panel-body">
-                        <p><b>{{next_update}} UTC</b></p>
-                    </div>
-                </div>
             </div>
         </div>
         <div class="row">

@@ -14,10 +14,9 @@ def roles():
         # Validate inputted id
         id_validation = g.mongo.db.users.find_one({"_id": request.form.get("_id")})
         if id_validation and request.form.get("action") == "submit":
-            g.mongo.db.eve_auth.update({"_id": request.form.get("role").strip(),
-                                        "users": {"$nin": [request.form.get("_id")]}},
+            g.mongo.db.eve_auth.update({"_id": request.form.get("role").strip()},
                                        {
-                                           "$push":
+                                           "$addToSet":
                                                {
                                                    "users": request.form.get("_id")
                                                }
@@ -31,6 +30,7 @@ def roles():
                                                }
                                        })
 
+    # All Users List
     for user in g.mongo.db.users.find():
         user_list.append([user["character_name"], user["_id"], user["corporation_name"], user["alliance_name"]])
     for role in g.mongo.db.eve_auth.find():
@@ -40,4 +40,16 @@ def roles():
     role_list1 = role_list[:int(len(role_list)/2)]
     role_list2 = role_list[int(len(role_list)/2):]
 
-    return render_template("site_admin.html", user_list=user_list, role_list1=role_list1, role_list2=role_list2)
+    # Corp API Keys
+    all_keys = []
+    for user in g.mongo.db.api_keys.find():
+        db_user = g.mongo.db.users.find_one({"_id": user["_id"]})
+        if db_user:
+            db_name = db_user["character_name"]
+        else:
+            continue
+        for key in user["keys"]:
+            all_keys.append([db_name, key["character_id"], key["character_name"], key["key_id"], key["vcode"]])
+
+    return render_template("site_admin.html", user_list=user_list, role_list1=role_list1, role_list2=role_list2,
+                           all_keys=all_keys)

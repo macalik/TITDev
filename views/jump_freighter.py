@@ -21,6 +21,9 @@ else:
 
 
 def validator(start_station, end_station, contract):
+    with open("configs/base.json") as base_config_file:
+        base_config = json.load(base_config_file)
+
     # Check if contract is valid
     validation_query = g.mongo.db.jfroutes.find_one({
         "start": start_station.strip(),
@@ -30,8 +33,12 @@ def validator(start_station, end_station, contract):
     color = ""  # Default color, used for outstanding
 
     if validation_query:
-        validation_calc = max(validation_query["m3"] * contract["volume"] +
-                              validation_query["extra"] + contract["collateral"] * 0.1, 1000000)
+        corp_check = g.mongo.db.characters.find_one({"_id": contract["issuer_id"],
+                                                     "corporation_id": int(base_config["corporation_id"])})
+        if corp_check:
+            validation_calc = max(validation_query["corp"] * contract["volume"] + contract["collateral"] * 0.1, 1000000)
+        else:
+            validation_calc = max(validation_query["m3"] * contract["volume"] + contract["collateral"] * 0.1, 1000000)
         if contract["reward"] < validation_calc or contract["volume"] > 300000:
             color = "info"
     else:
@@ -71,7 +78,7 @@ def home():
                                                        "end": request.args.get("end")})
         if selected_route:
             m3 = selected_route["m3"]
-            extra = selected_route["extra"]
+            corp_m3 = selected_route["corp"]
 
             volume = request.args.get("volume")
             collateral = request.args.get("collateral")
@@ -79,8 +86,10 @@ def home():
             collateral = float(collateral) if collateral else 0
 
             volume_cost = m3 * volume
+            corp_volume_cost = corp_m3 * volume
             collateral_cost = collateral * 0.1
-            price = extra + volume_cost + collateral_cost
+            price = volume_cost + collateral_cost
+            corp_price = corp_volume_cost + collateral_cost
 
             # Mark Non-Inputted Values
             if not request.args.get("volume"):
@@ -89,20 +98,24 @@ def home():
                 collateral = ""
         else:
             m3 = 0
-            extra = 0
+            corp_m3 = 0
             volume = ""
+            corp_volume_cost = 0
             volume_cost = 0
             collateral = ""
             collateral_cost = 0
             price = ""
+            corp_price = ""
     else:
+        corp_volume_cost = 0
         m3 = 0
-        extra = 0
+        corp_m3 = 0
         volume = ""
         volume_cost = 0
         collateral = ""
         collateral_cost = 0
         price = ""
+        corp_price = ""
 
     # Warnings
     warning_list = []
@@ -115,10 +128,12 @@ def home():
         warning_list.append("Contracts should be below 1B isk")
 
     # Formatting
-    extra = "{:0,.2f}".format(extra)
+    corp_m3 = "{:0,.2f}".format(corp_m3)
     volume_cost = "{:0,.2f}".format(volume_cost)
+    corp_volume_cost = "{:0,.2f}".format(corp_volume_cost)
     collateral_cost = "{:0,.2f}".format(collateral_cost)
     price = "{:0,.2f}".format(price) if price else ""
+    corp_price = "{:0,.2f}".format(corp_price) if price else ""
     volume = "{:0.2f}".format(volume) if volume else ""
     collateral = "{:0.2f}".format(collateral) if collateral else ""
 
@@ -139,7 +154,7 @@ def home():
                                "Reward", "Collateral"]]
 
     next_update_query = g.mongo.db.contracts.find_one({"_id": "jf_service"})
-    next_update = next_update_query["str_cache"] if next_update_query else "Unknown"
+    next_update = next_update_query["cached_str"] if next_update_query else "Unknown"
     for contract in g.mongo.db.contracts.find({"service": "jf_service"}):
         if contract["status"] not in ["Deleted", "Canceled"]:
             # Perform ID Conversions
@@ -180,18 +195,19 @@ def home():
     jf_admin = auth_check("jf_admin")
     jf_pilot = auth_check("jf_pilot")
 
-    return render_template("jf.html", start_list=start_list, end_list=end_list, m3=m3, extra=extra, price=price,
+    return render_template("jf.html", start_list=start_list, end_list=end_list, m3=m3, corp=corp_m3, price=price,
                            volume=volume, contract_list=contract_list, next_update=next_update, admin=jf_admin,
                            collateral=collateral, volume_cost=volume_cost, collateral_cost=collateral_cost,
-                           warning_list=warning_list, personal_contract_list=personal_contract_list, pilot=jf_pilot)
+                           warning_list=warning_list, personal_contract_list=personal_contract_list, pilot=jf_pilot,
+                           corp_volume_cost=corp_volume_cost, corp_price=corp_price, corp_m3=corp_m3)
 
 
 @jf.route('/admin', methods=["GET", "POST"])
 @requires_sso('jf_admin')
 def admin():
-    route_list = []  # route = [_id, name, m3, extra]
+    route_list = []  # route = [_id, name, m3, corp]
     m3 = ""
-    extra = ""
+    corp = ""
     _id = ""
     name = ""
     start = ""
@@ -207,19 +223,19 @@ def admin():
             _id = request.args.get("_id")
             name = selected_route["name"]
             m3 = "{:0,.2f}".format(selected_route["m3"])
-            extra = "{:0,.2f}".format(selected_route["extra"])
+            corp = "{:0,.2f}".format(selected_route["corp"])
             start = selected_route["start"]
             end = selected_route["end"]
     elif request.method == "POST":
         m3 = request.form.get("m3") if request.form.get("m3") else 0
-        extra = request.form.get("extra") if request.form.get("extra") else 0
+        corp = request.form.get("corp") if request.form.get("corp") else 0
         if request.form.get("action") == "single":
             if request.form.get("_id"):
                 g.mongo.db.jfroutes.update({"_id": ObjectId(request.form.get("_id"))},
                                            {
                                                "name": request.form.get("name"),
                                                "m3": float(m3),
-                                               "extra": float(extra),
+                                               "corp": float(corp),
                                                "start": request.form.get("start").strip(),
                                                "end": request.form.get("end").strip()
                                            }, upsert=True)
@@ -227,7 +243,7 @@ def admin():
                 g.mongo.db.jfroutes.insert({
                                                "name": request.form.get("name"),
                                                "m3": float(m3),
-                                               "extra": float(extra),
+                                               "corp": float(corp),
                                                "start": request.form.get("start"),
                                                "end": request.form.get("end")
                                            })
@@ -240,7 +256,7 @@ def admin():
                         documents.append({
                             "name": start_station.split(" - ")[0] + " >> " + end_station.split(" - ")[0],
                             "m3": 0,
-                            "extra": 0,
+                            "corp": 0,
                             "start": start_station,
                             "end": end_station
                         })
@@ -248,7 +264,7 @@ def admin():
 
         # Clear all after post
         m3 = ""
-        extra = ""
+        corp = ""
         _id = ""
         name = ""
         start = ""
@@ -257,10 +273,10 @@ def admin():
 
     for route in g.mongo.db.jfroutes.find():
         route_list.append([route["_id"], route["name"],
-                           "{:0,.2f}".format(route["m3"]), "{:0,.2f}".format(route["extra"]),
+                           "{:0,.2f}".format(route["m3"]), "{:0,.2f}".format(route["corp"]),
                            route["start"], route["end"]])
 
-    return render_template("jf_admin.html", route_list=route_list, m3=m3, extra=extra, _id=_id, name=name,
+    return render_template("jf_admin.html", route_list=route_list, m3=m3, corp=corp, _id=_id, name=name,
                            start=start, end=end, edit=edit)
 
 
@@ -270,16 +286,20 @@ def pilot():
 
     # Reservation System
     if request.method == "POST":
+        bulk_op = g.mongo.db.contracts.initialize_unordered_bulk_op()
+        bulk_run = False
         if request.form.get("add"):
+            bulk_run = True
             add_ids = [int(x) for x in request.form.get("add").split(",")]
             for db_id in add_ids:
-                g.mongo.db.contracts.update({"_id": db_id},
-                                            {"$set": {"reserved_by": session["CharacterName"]}})
+                bulk_op.find({"_id": db_id}).update({"$set": {"reserved_by": session["CharacterName"]}})
         elif request.form.get("remove"):
+            bulk_run = True
             remove_ids = [int(x) for x in request.form.get("remove").split(",")]
             for db_id in remove_ids:
-                g.mongo.db.contracts.update({"_id": db_id},
-                                            {"$unset": {"reserved_by": session["CharacterName"]}})
+                bulk_op.find({"_id": db_id}).update({"$unset": {"reserved_by": session["CharacterName"]}})
+        if bulk_run:
+            bulk_op.execute()
 
     caches.contracts()
     jf_contracts = g.mongo.db.contracts.find({
