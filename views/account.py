@@ -1,3 +1,5 @@
+import json
+
 from flask import Blueprint, render_template, session, request, g
 
 from views.auth import requires_sso
@@ -45,10 +47,11 @@ def home():
                  db_user_info["alliance_name"]]
 
     # Images
-    image_server = "https://imageserver.eveonline.com/"
-    image_list = [image_server + "Character/" + str(db_user_info["character_id"]) + "_256.jpg",
-                  image_server + "Corporation/" + str(db_user_info["corporation_id"]) + "_128.png",
-                  image_server + "Alliance/" + str(db_user_info["alliance_id"]) + "_128.png"]
+    with open("configs/base.json", "r") as base_config_file:
+        base_config = json.load(base_config_file)
+    image_list = [base_config["image_server"] + "Character/" + str(db_user_info["character_id"]) + "_256.jpg",
+                  base_config["image_server"] + "Corporation/" + str(db_user_info["corporation_id"]) + "_128.png",
+                  base_config["image_server"] + "Alliance/" + str(db_user_info["alliance_id"]) + "_128.png"]
 
     # Away from EVE
     if request.method == "GET":
