@@ -14,7 +14,13 @@ class Navigation:
 
         @nav.navigation('anon')
         def nav_anon():
-            return Navbar('TiT', View('Home', 'home'), View('Log In', 'auth.sso_redirect'))
+            return Navbar('TiT', View('Home', 'home'), View('JF Service', "jf.home"),
+                          View('Log In', 'auth.sso_redirect'))
+
+        @nav.navigation('neut')
+        def nav_neut():
+            return Navbar('TiT', View('Home', 'home'), View('JF Service', "jf.home"),
+                          View('Log Out', 'auth.log_out'))
 
         @nav.navigation('corporation')
         def nav_corp():
@@ -44,7 +50,7 @@ class Navigation:
                 items = Navigation.alliance + [Subgroup('Admin Pages', *admin_elements),
                                                View('Log Out', 'auth.log_out')]
             else:
-                items = ['TiT', View('Home', 'home'), View('Log In', 'auth.sso_redirect')]
+                items = ['TiT', View('Home', 'home'), View('Log Out', 'auth.log_out')]
 
             return Navbar(*items)
 

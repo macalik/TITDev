@@ -102,7 +102,11 @@
                 {% endfor %}
             </div>
             <div class="col-md-4">
+                {% if not session.UI_Alliance %}
+                <div class="alert alert-warning" role="alert">Log in as an alliance member to see all contract history.</div>
+                {% endif %}
                 <div class="panel panel-default">
+                    {% if session.UI_Alliance %}
                     <div class="panel-heading">
                         <h3 class="panel-title">Legend</h3>
                     </div>
@@ -116,6 +120,15 @@
                             <li class="list-group-item list-group-item-info">Blue: Contract Invalid (See Rules)</li>
                         </ul>
                     </div>
+                    {% else %}
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Brought to you by:</h3>
+                    </div>
+                    <div class="panel-body">
+                        <img src="{{corporation_logo}}" alt="Corporation">
+                        <img src="{{alliance_logo}}" alt="Alliance">
+                    </div>
+                    {% endif %}
                 </div>
                 {% if admin or pilot %}
                 <div class="panel panel-default">
@@ -132,6 +145,7 @@
                 {% endif %}
             </div>
         </div>
+        {% if session.UI_Alliance %}
         <div class="row">
             <div class="col-md-12">
                 <h2>Personal Contracts</h2>
@@ -170,5 +184,6 @@
                 </table>
             </div>
         </div>
+        {% endif %}
     </div>
 {% endblock content %}
