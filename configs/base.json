@@ -1,5 +1,6 @@
 {
   "corporation_id": 98117593,
   "alliance_id": 151380924,
-  "access_mask": 1073741823
+  "access_mask": 1073741823,
+  "image_server": "https://imageserver.eveonline.com/"
 }

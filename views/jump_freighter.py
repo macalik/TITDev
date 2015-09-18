@@ -55,7 +55,6 @@ def validator(start_station, end_station, contract):
 
 
 @jf.route("/")
-@requires_sso("alliance")
 def home():
     start_list = []
     end_list = []
@@ -153,8 +152,9 @@ def home():
     personal_contract_list = [["Acceptor", "Start", "End", "Status", "Date Issued", "Expiration Date", "Volume",
                                "Reward", "Collateral"]]
 
-    next_update_query = g.mongo.db.contracts.find_one({"_id": "jf_service"})
+    next_update_query = g.mongo.db.caches.find_one({"_id": "jf_service"})
     next_update = next_update_query["cached_str"] if next_update_query else "Unknown"
+
     for contract in g.mongo.db.contracts.find({"service": "jf_service"}):
         if contract["status"] not in ["Deleted", "Canceled"]:
             # Perform ID Conversions
@@ -177,7 +177,7 @@ def home():
                 "{:0,.2f}".format(contract["volume"])
             ])
 
-            if issuer == session["CharacterName"]:
+            if session.get("CharacterOwnerHash") and issuer == session["CharacterName"]:
                 personal_contract_list.append([
                     color,
                     acceptor,
@@ -192,14 +192,25 @@ def home():
                 ])
 
     # Check auth
-    jf_admin = auth_check("jf_admin")
-    jf_pilot = auth_check("jf_pilot")
+    if session.get("CharacterOwnerHash"):
+        jf_admin = auth_check("jf_admin")
+        jf_pilot = auth_check("jf_pilot")
+    else:
+        jf_admin = None
+        jf_pilot = None
+
+    # Images
+    with open("configs/base.json", "r") as base_config_file:
+        base_config = json.load(base_config_file)
+    corporation_logo = base_config["image_server"] + "Corporation/" + str(base_config["corporation_id"]) + "_128.png"
+    alliance_logo = base_config["image_server"] + "Alliance/" + str(base_config["alliance_id"]) + "_128.png"
 
     return render_template("jf.html", start_list=start_list, end_list=end_list, m3=m3, corp=corp_m3, price=price,
                            volume=volume, contract_list=contract_list, next_update=next_update, admin=jf_admin,
                            collateral=collateral, volume_cost=volume_cost, collateral_cost=collateral_cost,
                            warning_list=warning_list, personal_contract_list=personal_contract_list, pilot=jf_pilot,
-                           corp_volume_cost=corp_volume_cost, corp_price=corp_price, corp_m3=corp_m3)
+                           corp_volume_cost=corp_volume_cost, corp_price=corp_price, corp_m3=corp_m3,
+                           corporation_logo=corporation_logo, alliance_logo=alliance_logo)
 
 
 @jf.route('/admin', methods=["GET", "POST"])
@@ -250,17 +261,18 @@ def admin():
         elif request.form.get("action") == "multiple":
             documents = []
             station_list = [x.strip() for x in request.form.get("stations").split("\n")]
-            for start_station in station_list:
-                for end_station in station_list:
-                    if start_station != end_station:
-                        documents.append({
-                            "name": start_station.split(" - ")[0] + " >> " + end_station.split(" - ")[0],
-                            "m3": 0,
-                            "corp": 0,
-                            "start": start_station,
-                            "end": end_station
-                        })
-            g.mongo.db.jfroutes.insert(documents)
+            if station_list:  # Ensure there are stations to parse
+                for start_station in station_list:
+                    for end_station in station_list:
+                        if start_station != end_station:
+                            documents.append({
+                                "name": start_station.split(" - ")[0] + " >> " + end_station.split(" - ")[0],
+                                "m3": 0,
+                                "corp": 0,
+                                "start": start_station,
+                                "end": end_station
+                            })
+                g.mongo.db.jfroutes.insert(documents)
 
         # Clear all after post
         m3 = ""
