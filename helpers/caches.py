@@ -22,10 +22,10 @@ else:
 
 
 def stations():
-    db_stations_cache = g.mongo.db.stations.find_one({"_id": "cached_until"})
+    db_stations_cache = g.mongo.db.caches.find_one({"_id": "stations"})
     bulk_op = g.mongo.db.stations.initialize_unordered_bulk_op()
     bulk_run = False
-    if not db_stations_cache or db_stations_cache["time"] < time.time():
+    if not db_stations_cache or db_stations_cache["cached_until"] < time.time():
         bulk_run = True
         xml_stations_response = requests.get("https://api.eveonline.com/eve/ConquerableStationList.xml.aspx",
                                              headers=xml_headers)
@@ -33,8 +33,8 @@ def stations():
         xml_stations_tree = ElementTree.fromstring(xml_stations_response.text)
         # Store in database
         xml_time_pattern = "%Y-%m-%d %H:%M:%S"
-        bulk_op.find({"_id": "cached_until"}).upsert().update({"$set": {"time": int(calendar.timegm(time.strptime(
-            xml_stations_tree[2].text, xml_time_pattern)))}})
+        g.mongo.db.caches.update({"_id": "stations"}, {"cached_until": int(calendar.timegm(time.strptime(
+            xml_stations_tree[2].text, xml_time_pattern)))}, upsert=True)
         for station in xml_stations_tree[1][0]:
             bulk_op.find({"_id": int(station.attrib["stationID"])}).upsert().update(
                 {"$set": {"name": station.attrib["stationName"]}})
@@ -49,12 +49,12 @@ def character(char_ids):
         if not db_character:
             missing_names.append(char_id)
 
-    db_characters_cache = g.mongo.db.characters.find_one({"_id": "cached_until"})
+    db_characters_cache = g.mongo.db.caches.find_one({"_id": "characters"})
     bulk_op = g.mongo.db.characters.initialize_unordered_bulk_op()
     bulk_run = False
-    if missing_names or not db_characters_cache or db_characters_cache["time"] < time.time():
+    if missing_names or not db_characters_cache or db_characters_cache["cached_until"] < time.time():
         bulk_run = True
-        if db_characters_cache and db_characters_cache["time"] > time.time():
+        if db_characters_cache and db_characters_cache["cached_until"] > time.time():
             character_payload = {
                 "ids": ",".join([str(x) for x in missing_names])
             }
@@ -62,15 +62,14 @@ def character(char_ids):
             character_payload = {
                 "ids": ",".join([str(x) for x in char_ids])
             }
-        print(character_payload["ids"])
 
         xml_character_response = requests.get("https://api.eveonline.com/eve/CharacterAffiliation.xml.aspx",
                                               data=character_payload, headers=xml_headers)
         # XML Parse
         xml_character_tree = ElementTree.fromstring(xml_character_response.text)
         xml_time_pattern = "%Y-%m-%d %H:%M:%S"
-        bulk_op.find({"_id": "cached_until"}).upsert().update({"$set": {"time": int(calendar.timegm(time.strptime(
-            xml_character_tree[2].text, xml_time_pattern)))}})
+        g.mongo.db.caches.update({"_id": "characters"}, {"cached_until": int(calendar.timegm(time.strptime(
+            xml_character_tree[2].text, xml_time_pattern)))}, upsert=True)
 
         if xml_character_tree[1].tag == "error":
             print(xml_character_tree[1].attrib["code"], xml_character_tree[1].text)
@@ -95,7 +94,7 @@ def contracts(keys=None):
     bulk_op = g.mongo.db.contracts.initialize_unordered_bulk_op()
     bulk_run = False
     for service in keys:
-        db_contracts_cache = g.mongo.db.contracts.find_one({"_id": service[0]})
+        db_contracts_cache = g.mongo.db.caches.find_one({"_id": service[0]})
         if not db_contracts_cache or db_contracts_cache.get("cached_until", 0) < time.time():
             bulk_run = True
             xml_contracts_payload = {
@@ -108,9 +107,9 @@ def contracts(keys=None):
             xml_contracts_tree = ElementTree.fromstring(xml_contracts_response.text)
             # Store in database
             xml_time_pattern = "%Y-%m-%d %H:%M:%S"
-            bulk_op.find({"_id": service[0]}).upsert().update({"$set": {"cached_until": int(calendar.timegm(
+            g.mongo.db.caches.update({"_id": service[0]}, {"cached_until": int(calendar.timegm(
                 time.strptime(xml_contracts_tree[2].text, xml_time_pattern))),
-                "cached_str": xml_contracts_tree[2].text}})
+                "cached_str": xml_contracts_tree[2].text}, upsert=True)
             for contract in xml_contracts_tree[1][0]:
                 bulk_op.find({"_id": int(contract.attrib["contractID"]), "service": service[0]}).upsert().update(
                     {

@@ -21,6 +21,8 @@
 {{nav.corporation.render()}}
 {% elif session.UI_Alliance: %}
 {{nav.alliance.render()}}
+{% elif session.CharacterOwnerHash %}
+{{nav.neut.render()}}
 {% else: %}
 {{nav.anon.render()}}
 {% endif %}
