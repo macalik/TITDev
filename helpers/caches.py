@@ -138,6 +138,53 @@ def contracts(keys=None):
         bulk_op.execute()
 
 
+def character_balances():
+
+    api_keys = []
+    for key in g.mongo.db.api_keys.find():
+        api_keys += [key]
+    # Pull data from cache collection
+
+    bulk_op = g.mongo.db.char_transactions.initialize_unordered_bulk_op()
+    bulk_run = False
+
+    db_char_transactions_cache = g.mongo.db.caches.find_one({"characterID": "char_balances"})
+
+    # If there is a missing name or the cache doesn't exist or the until value is less than current time then query
+    for api in api_keys:
+        for item in api["keys"]:
+
+            if not db_char_transactions_cache or db_char_transactions_cache.get("cached_until", 0) < time.time():
+                bulk_run = True
+
+            character_payload = {
+                "keyID": item["key_id"],
+                "vCode": item["vcode"],
+                "characterID": item["character_id"]
+            }
+
+            xml_char_transaction_response = requests.get("https://api.eveonline.com/char/AccountBalance.xml.aspx",
+                                                      data=character_payload, headers=xml_headers)
+            # XML Parse
+            xml_char_transaction_tree = ElementTree.fromstring(xml_char_transaction_response.text)
+            xml_time_pattern = "%Y-%m-%d %H:%M:%S"
+            g.mongo.db.caches.update({"characterID": "char_balances"}, {"cached_until": int(calendar.timegm(time.strptime(
+                xml_char_transaction_tree[2].text, xml_time_pattern)))}, upsert=True)
+
+            if xml_char_transaction_tree[1].tag == "error":
+                print(xml_char_transaction_tree[1].attrib["code"], xml_char_transaction_tree[1].text)
+            else:
+                for name in xml_char_transaction_tree[1][0]:
+                    bulk_op.find({"characterID": item["character_id"]}).upsert().update({"$set": {
+                        "accountID": name.attrib["accountID"],
+                        "accountKey": int(name.attrib["accountKey"]),
+                        "balance": name.attrib["balance"]
+                    }})
+
+    if bulk_run:
+        bulk_op.execute()
+
+
 def api_keys(api_key_list):
     with open("configs/base.json", "r") as base_config_file:
         base_config = json.load(base_config_file)

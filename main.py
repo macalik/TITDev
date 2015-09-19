@@ -12,7 +12,8 @@ from views.jump_freighter import jf
 from views.admin import admin
 from views.account import account
 from views.corp import corp
-from views.security import security
+from views.security.dashboard import security_dashboard
+from views.security.api_manager import api_manager
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -37,12 +38,15 @@ app.register_blueprint(jf, url_prefix="/jf")
 app.register_blueprint(admin, url_prefix="/admin")
 app.register_blueprint(account, url_prefix="/account")
 app.register_blueprint(corp, url_prefix="/corp")
-app.register_blueprint(security, url_prefix="/security")
+app.register_blueprint(security_dashboard, url_prefix="/security")
+app.register_blueprint(api_manager, url_prefix="/security/api_manager")
 
 
 @app.before_request
 def db_init():
+
     g.mongo = app_mongo
+
     # Load statics into memory
     with open("resources/staStations.json", "r") as staStations_file:
         g.staStations = json.load(staStations_file)
@@ -55,4 +59,4 @@ def home():
 
 if not os.environ.get("HEROKU") and __name__ == "__main__":
     app.debug = True
-    app.run()
+    app.run(host="0.0.0.0")

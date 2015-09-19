@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block head %}
+{{super()}}
+
+{% endblock head %}
+{% block scripts %}
+{{super()}}
+<script src="{{url_for('static', filename='datatables.js')}}"></script>
+{% endblock scripts %}
+{% block content %}
+
+    <div class="container">
+        <h2>TIT Security Panel: API Manager</h2>
+
+        <h3>Add New API</h3>
+        <div class="row">
+             <div class="col-md-4">
+                 <div class="panel panel-default">
+                    <div class="panel-heading">
+                         <div>
+                            <form method="post">
+                                <label>Add New API: <a href="http://community.eveonline.com/support/api-key/CreatePredefined?accessMask={{access_mask}}">Predefined Link</a></label>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Key ID</span>
+                                        <input class="form-control" placeholder="Key ID" name="key_id">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">vCode</span>
+                                        <input class="form-control" placeholder="vCode" name="vcode">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button name="action" type="submit" class="btn btn-primary" value="add">Add</button>
+                                </div>
+                            </form>
+                        </div>
+                     </div>
+                 </div>
+            </div>
+        </div>
+
+        <h3>All API Keys</h3>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover table-condensed datatables">
+                    <thead>
+                        <tr>
+                            <th>Owner</th>
+                            <th>Char ID</th>
+                            <th>Char Name</th>
+                            <th>Key ID</th>
+                            <th>vCode</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for key in all_keys %}
+                        <tr>
+                            {% for info in key %}
+                            <td>{{info}}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

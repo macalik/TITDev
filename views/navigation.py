@@ -40,7 +40,7 @@ class Navigation:
                     admin_elements.append(View('JF Service', "jf.admin"))
                 elif role == "user_admin":
                     admin_elements.append(View('User Roles', "admin.roles"))
-                    admin_elements.append(View('Security', "security.load"))
+                    admin_elements.append(View('Security Dashboard', "security_dashboard.load"))
                 elif role == "jf_pilot":
                     admin_elements.append(View('JF Pilot', "jf.pilot"))
             if session["UI_Corporation"]:

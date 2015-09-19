@@ -8,8 +8,11 @@
 <script src="{{url_for('static', filename='datatables.js')}}"></script>
 {% endblock scripts %}
 {% block content %}
+<div>Test</div><div>Test</div><div>Test</div><div>Test</div><div>Test</div>
+
+<a href="{{url_for('api_manager.load')}}">API MANAGER</a>
     <div class="container">
-        <h2>TIT Security Panel</h2>
+        <h2>TIT Security Panel: Dashboard</h2>
         <div class="row">
              <div class="col-md-4">
                  <div class="panel panel-default">
@@ -18,17 +21,32 @@
                         <table class="table table-hover" width="500px">
                             <thead>
                             <tr>
-                                {% for header in pilot_list[0] %}
-                                <th>{{header}}</th>
-                                {% endfor %}
+                                <th>Pilot</th>
+                                <th>Corp</th>
+                                <th>Balance</th>
                             </tr>
                           </thead>
                             <tbody>
+                                {% for pilot in pilot_balances %}
                                 <tr>
-                                    {% for _id in pilot_list[0] %}
-                                    <td>{{_id}}</td>
+                                    {% for char_name in pilot_list %}
+                                    <td>
+                                        Pilot_Balance Array: {{pilot["characterID"]}}
+                                        Pilot_List Array: {{char_name["character_name"]}}
+                                        {% if pilot["characterID"] == char_name["character_id"] %}
+                                            There is a match
+                                            {{pilot["characterID"]}}
+                                            {{char_name["character_name"]}}
+                                        {% endif %}
+                                    </td>
                                     {% endfor %}
+                                    <td>
+                                        {{pilot["balance"]}}
+                                    </td>
                                 </tr>
+                                {% endfor %}
+
+
                             </tbody>
                         </table>
                     </div>
