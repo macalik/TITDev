@@ -8,190 +8,198 @@
 <script src="{{url_for('static', filename='datatables-jf.js')}}"></script>
 {% endblock scripts %}
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Rules</h3>
-                    </div>
-                    <div class="panel-body">
-                        <ul>
-                            <li>Contract to: Designated Drivers</li>
-                            <li>!!NO CANS!!</li>
-                            <li>Collateral: Add 10% of Collateral to reward (Ex. 100m collateral = +10m to reward)</li>
-                            <li>Keep contracts below 1 Billion Isk</li>
-                            <li>Contracts must be less than 300k M3</li>
-                            <li>Minimum reward must be 1M Isk</li>
-                        </ul>
-                    </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Rules</h3>
                 </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Next API Update</h3>
-                    </div>
-                    <div class="panel-body">
-                        <p><b>{{next_update}} UTC</b></p>
-                    </div>
+                <div class="panel-body">
+                    <ul>
+                        <li>Contract to: Designated Drivers</li>
+                        <li>!!NO CANS!!</li>
+                        <li>Keep contracts below 1 Billion Isk</li>
+                        <li>Contracts must be less than 300k M3</li>
+                        <li>Minimum reward must be 1M Isk</li>
+                    </ul>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="jf-form">
-                    <form>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon">Start</span>
-                                <select class="form-control" name="start">
-                                    {% for start in start_list %}
-                                    {% if start[1] %}
-                                    <option value="{{start[0]}}" selected>{{start[0]}}</option>
-                                    {% else %}
-                                    <option value="{{start[0]}}">{{start[0]}}</option>
-                                    {% endif %}
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon">End</span>
-                                <select class="form-control" name="end">
-                                    {% for end in end_list %}
-                                    {% if end[1] %}
-                                    <option value="{{end[0]}}" selected>{{end[0]}}</option>
-                                    {% else %}
-                                    <option value="{{end[0]}}">{{end[0]}}</option>
-                                    {% endif %}
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <input type="number" class="form-control" placeholder="Total M3" name="volume" value="{{volume}}" step="0.01" min="0" max="300000">
-                                <span class="input-group-addon">m3</span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <input type="number" class="form-control" placeholder="Collateral" name="collateral" value="{{collateral}}" step="0.01" min="0" >
-                                <span class="input-group-addon">Isk</span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Calculate</button>
-                        </div>
-                    </form>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Next API Update</h3>
                 </div>
-                <ul class="list-group">
-                    {% if session.UI_Corporation %}
-                    <li class="list-group-item">Volume Cost: {{corp_volume_cost}} Isk [@{{corp_m3}} Isk/M3]</li>
-                    {% else %}
-                    <li class="list-group-item">Volume Cost: {{volume_cost}} Isk [@{{m3}} Isk/M3]</li>
-                    {% endif %}
-                    <li class="list-group-item">Collateral Cost: {{collateral_cost}} Isk</li>
-                    {% if session.UI_Corporation %}
-                    <li class="list-group-item">Total Cost: {{corp_price}} Isk</li>
-                    {% else %}
-                    <li class="list-group-item">Total Cost: {{price}} Isk</li>
-                    {% endif %}
-                    <li class="list-group-item list-group-item-danger">Contract to: Designated Drivers</li>
-                </ul>
-                {% for warning in warning_list %}
-                <div class="alert alert-warning" role="alert">Warning: {{warning}}</div>
-                {% endfor %}
+                <div class="panel-body">
+                    <p><b>{{next_update}} UTC</b></p>
+                </div>
             </div>
-            <div class="col-md-4">
-                {% if not session.UI_Alliance %}
-                <div class="alert alert-warning" role="alert">Log in as an alliance member to see all contract history.</div>
+        </div>
+        <div class="col-md-4">
+            <div class="jf-form">
+                <form>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon">Start</span>
+                            <select class="form-control" name="start">
+                                {% for start in start_list %}
+                                {% if start[1] %}
+                                <option value="{{start[0]}}" selected>{{start[0]}}</option>
+                                {% else %}
+                                <option value="{{start[0]}}">{{start[0]}}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon">End</span>
+                            <select class="form-control" name="end">
+                                {% for end in end_list %}
+                                {% if end[1] %}
+                                <option value="{{end[0]}}" selected>{{end[0]}}</option>
+                                {% else %}
+                                <option value="{{end[0]}}">{{end[0]}}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="number" class="form-control" placeholder="Total M3" name="volume"
+                                   value="{{volume}}" step="0.01" min="0" max="300000">
+                            <span class="input-group-addon">m3</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="number" class="form-control" placeholder="Collateral" name="collateral"
+                                   value="{{collateral}}" step="0.01" min="0">
+                            <span class="input-group-addon">Isk</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Calculate</button>
+                    </div>
+                </form>
+            </div>
+            <ul class="list-group">
+                {% if session.UI_Corporation %}
+                <li class="list-group-item">Volume Cost: {{corp_volume_cost}} Isk [@{{corp_rate}} Isk/M3]</li>
+                {% else %}
+                <li class="list-group-item">Volume Cost: {{volume_cost}} Isk [@{{general_rate}} Isk/M3]</li>
                 {% endif %}
-                <div class="panel panel-default">
-                    {% if session.UI_Alliance %}
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Legend</h3>
-                    </div>
-                    <div class="panel-body">
-                        <ul class="list-group">
-                            <li class="list-group-item">White: Outstanding (Valid Contract)</li>
-                            <li class="list-group-item list-group-item-danger">Red: Failed/Rejected</li>
-                            <li class="list-group-item list-group-item-warning">Yellow: In Progress</li>
-                            <li class="list-group-item list-group-item-success">Green: Completed</li>
-                            <li class="list-group-item disabled">Grey: No valid route found</li>
-                            <li class="list-group-item list-group-item-info">Blue: Contract Invalid (See Rules)</li>
-                        </ul>
-                    </div>
-                    {% else %}
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Brought to you by:</h3>
-                    </div>
-                    <div class="panel-body">
-                        <img src="{{corporation_logo}}" alt="Corporation">
-                        <img src="{{alliance_logo}}" alt="Alliance">
-                    </div>
-                    {% endif %}
+                <li class="list-group-item">Collateral Cost: {{collateral_cost}} Isk [@{{collateral_rate}} %]</li>
+                {% if session.UI_Corporation %}
+                <li class="list-group-item">Total Cost: {{corp_price}} Isk</li>
+                {% else %}
+                <li class="list-group-item">Total Cost: {{price}} Isk</li>
+                {% endif %}
+                <li class="list-group-item list-group-item-danger">Contract to: Designated Drivers</li>
+            </ul>
+            {% if session.UI_Corporation %}
+            {% for warning in warning_list %}
+            <div class="alert alert-warning" role="alert">Warning: {{warning}}</div>
+            {% endfor %}
+            {% else %}
+            {% for warning in corp_warning_list %}
+            <div class="alert alert-warning" role="alert">Warning: {{warning}}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div class="col-md-4">
+            {% if not session.UI_Alliance %}
+            <div class="alert alert-warning" role="alert">Log in as an alliance member to see all contract history.
+            </div>
+            {% endif %}
+            <div class="panel panel-default">
+                {% if session.UI_Alliance %}
+                <div class="panel-heading">
+                    <h3 class="panel-title">Legend</h3>
                 </div>
-                {% if admin or pilot %}
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Authenticated Pages</h3>
-                    </div>
-                    {% if pilot %}
-                    <a class="btn btn-warning" href="{{url_for('jf.pilot')}}">Pilot Page</a>
-                    {% endif %}
-                    {% if admin %}
-                    <a class="btn btn-danger" href="{{url_for('jf.admin')}}">Edit Routes</a>
-                    {% endif %}
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">White: Outstanding (Valid Contract)</li>
+                        <li class="list-group-item list-group-item-danger">Red: Failed/Rejected</li>
+                        <li class="list-group-item list-group-item-warning">Yellow: In Progress</li>
+                        <li class="list-group-item list-group-item-success">Green: Completed</li>
+                        <li class="list-group-item disabled">Grey: No valid route found</li>
+                        <li class="list-group-item list-group-item-info">Blue: Contract Invalid (See Rules)</li>
+                    </ul>
+                </div>
+                {% else %}
+                <div class="panel-heading">
+                    <h3 class="panel-title">Brought to you by:</h3>
+                </div>
+                <div class="panel-body">
+                    <img src="{{corporation_logo}}" alt="Corporation">
+                    <img src="{{alliance_logo}}" alt="Alliance">
                 </div>
                 {% endif %}
             </div>
-        </div>
-        {% if session.UI_Alliance %}
-        <div class="row">
-            <div class="col-md-12">
-                <h2>Personal Contracts</h2>
-                <table id="jf-personal" class="table table-hover table-condensed">
-                    <thead>
-                        <tr>
-                            {% for header in personal_contract_list[0] %}
-                            <th>{{header}}</th>
-                            {% endfor %}
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for contract in personal_contract_list[1:] %}
-                        <tr>
-                            {% for info in contract[1:] %}
-                            <td class="{{contract[0]}}">{{info}}</td>
-                            {% endfor %}
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+            {% if admin or pilot %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Authenticated Pages</h3>
+                </div>
+                {% if pilot %}
+                <a class="btn btn-warning" href="{{url_for('jf.pilot')}}">Pilot Page</a>
+                {% endif %}
+                {% if admin %}
+                <a class="btn btn-danger" href="{{url_for('jf.admin')}}">Edit Routes</a>
+                {% endif %}
             </div>
+            {% endif %}
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h2>All History</h2>
-                <table id="jf-all" class="table table-hover table-condensed">
-                    <thead>
-                        <tr>
-                            {% for header in contract_list[0] %}
-                            <th>{{header}}</th>
-                            {% endfor %}
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for contract in contract_list[1:] %}
-                        <tr>
-                            {% for info in contract[1:] %}
-                            <td class="{{contract[0]}}">{{info}}</td>
-                            {% endfor %}
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        {% endif %}
     </div>
+    {% if session.UI_Alliance %}
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Personal Contracts</h2>
+            <table id="jf-personal" class="table table-hover table-condensed">
+                <thead>
+                <tr>
+                    {% for header in personal_contract_list[0] %}
+                    <th>{{header}}</th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for contract in personal_contract_list[1:] %}
+                <tr>
+                    {% for info in contract[1:] %}
+                    <td class="{{contract[0]}}">{{info}}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>All History</h2>
+            <table id="jf-all" class="table table-hover table-condensed">
+                <thead>
+                <tr>
+                    {% for header in contract_list[0] %}
+                    <th>{{header}}</th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for contract in contract_list[1:] %}
+                <tr>
+                    {% for info in contract[1:] %}
+                    <td class="{{contract[0]}}">{{info}}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+</div>
 {% endblock content %}
