@@ -37,12 +37,19 @@ app.register_blueprint(account, url_prefix="/account")
 app.register_blueprint(corp, url_prefix="/corp")
 
 
+@app.before_first_request
+def app_init():
+    db_check = app_mongo.db.stations.find_one({"_id": 60003760})
+    if not db_check:
+        # Load statics into memory
+        with open("resources/staStations.json", "r") as staStations_file:
+            stations_list = json.load(staStations_file)
+        app_mongo.db.stations.insert([{"_id": int(key), "name": value} for key, value in stations_list.items()])
+
+
 @app.before_request
 def db_init():
     g.mongo = app_mongo
-    # Load statics into memory
-    with open("resources/staStations.json", "r") as staStations_file:
-        g.staStations = json.load(staStations_file)
 
 
 @app.route('/')
