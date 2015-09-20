@@ -204,3 +204,47 @@ def api_keys(api_key_list):
         bulk_op.execute()
 
     return errors
+
+
+def wallet_journal(keys=None):
+    with open("configs/base.json", "r") as base_config_file:
+        base_config = json.load(base_config_file)
+    if not keys:
+        # Default Refreshes
+        keys = [("jf_wallet", secrets["jf_key_id"], secrets["jf_vcode"])]
+    bulk_op = g.mongo.db.wallet_journal.initialize_unordered_bulk_op()
+    bulk_run = False
+    for service in keys:
+        db_wallet_journal_cache = g.mongo.db.caches.find_one({"_id": service[0]})
+        if not db_wallet_journal_cache or db_wallet_journal_cache.get("cached_until", 0) < time.time():
+            bulk_run = True
+            xml_wallet_journal_payload = {
+                "keyID": service[1],
+                "vCode": service[2],
+                "accountKey": base_config["jf_account_key"]
+            }
+            xml_wallet_journal_response = requests.get("https://api.eveonline.com/corp/WalletJournal.xml.aspx",
+                                                       data=xml_wallet_journal_payload, headers=xml_headers)
+            # XML Parse
+            xml_wallet_journal_tree = ElementTree.fromstring(xml_wallet_journal_response.text)
+            # Store in database
+            xml_time_pattern = "%Y-%m-%d %H:%M:%S"
+            g.mongo.db.caches.update({"_id": service[0]}, {"cached_until": int(calendar.timegm(
+                time.strptime(xml_wallet_journal_tree[2].text, xml_time_pattern))),
+                "cached_str": xml_wallet_journal_tree[2].text}, upsert=True)
+            for transaction in xml_wallet_journal_tree[1][0]:
+                bulk_op.find({"_id": int(transaction.attrib["refID"]), "service": service[0]}).upsert().update(
+                    {
+                        "$set": {
+                            "ref_type_id": int(transaction.attrib["refTypeID"]),
+                            "owner_name_1": transaction.attrib["ownerName1"],
+                            "owner_id_1": int(transaction.attrib["ownerID1"]),
+                            "owner_name_2": transaction.attrib["ownerName2"],
+                            "owner_id_2": int(transaction.attrib["ownerID2"]),
+                            "amount": float(transaction.attrib["amount"]),
+                            "reason": transaction.attrib["reason"]
+                        }
+                    })
+
+    if bulk_run:
+        bulk_op.execute()
