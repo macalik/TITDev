@@ -49,9 +49,11 @@ def validator(contract):
         corp_check = g.mongo.db.characters.find_one({"_id": contract["issuer_id"],
                                                      "corporation_id": int(base_config["corporation_id"])})
         if corp_check:
-            validation_calc = max(corp_price * contract["volume"] + contract["collateral"] * collateral_rate, 1000000)
+            validation_calc = max(corp_price * contract["volume"] + contract["collateral"] * collateral_rate / 100,
+                                  1000000)
         else:
-            validation_calc = max(gen_price * contract["volume"] + contract["collateral"] * collateral_rate, 1000000)
+            validation_calc = max(gen_price * contract["volume"] + contract["collateral"] * collateral_rate / 100,
+                                  1000000)
         if contract["reward"] < validation_calc or contract["volume"] > 300000:
             color = "info"
     else:
@@ -530,53 +532,53 @@ def pilot():
     reserved_return = ",".join(reserved_ids)
 
     # Personal Contracts
+    personal_history = [["Assignee", "Issuer", "Start Station", "End Station", "Date Issued", "Date Expired",
+                         "Days", "Reward", "Collateral", "Volume"]]
     personal_api_keys = g.mongo.db.api_keys.find_one({"_id": session["CharacterOwnerHash"]})
     if personal_api_keys:
         invalid_apis = caches.contracts([("personal", api_key["key_id"], api_key["vcode"],
                                           api_key["character_id"]) for api_key in personal_api_keys["keys"]])
-    if invalid_apis:
-        return redirect(url_for("account.home", keys=",".join([str(x) for x in invalid_apis])))
-    personal_character_ids = [x["character_id"] for x in personal_api_keys["keys"]]
-    personal_contracts = g.mongo.db.contracts.find({
-        "service": "personal",
-        "status": "Outstanding",
-        "type": "Courier",
-        "assignee_id": {"$in": personal_character_ids}
-    })
-    users_set = set()
-    for contract in personal_contracts:
-        users_set.update([contract["issuer_id"], contract["assignee_id"]])
-    caches.character(users_set)
+        if invalid_apis:
+            return redirect(url_for("account.home", keys=",".join([str(x) for x in invalid_apis])))
+        personal_character_ids = [x["character_id"] for x in personal_api_keys["keys"]]
+        personal_contracts = g.mongo.db.contracts.find({
+            "service": "personal",
+            "status": "Outstanding",
+            "type": "Courier",
+            "assignee_id": {"$in": personal_character_ids}
+        })
+        users_set = set()
+        for contract in personal_contracts:
+            users_set.update([contract["issuer_id"], contract["assignee_id"]])
+        caches.character(users_set)
 
-    # Call db again because query has ended when updating cache
-    personal_contracts = g.mongo.db.contracts.find({
-        "service": "personal",
-        "status": "Outstanding",
-        "type": "Courier",
-        "assignee_id": {"$in": personal_character_ids}
-    })
-    personal_history = [["Assignee", "Issuer", "Start Station", "End Station", "Date Issued", "Date Expired", "Days",
-                         "Reward", "Collateral", "Volume"]]
-    for contract in personal_contracts:
-        start_station = g.mongo.db.stations.find_one({"_id": contract["start_station_id"]})["name"]
-        end_station = g.mongo.db.stations.find_one({"_id": contract["end_station_id"]})["name"]
-        issuer = conversions.character(contract["issuer_id"])
-        assignee = conversions.character(contract["assignee_id"])
-        color = validator(contract)
+        # Call db again because query has ended when updating cache
+        personal_contracts = g.mongo.db.contracts.find({
+            "service": "personal",
+            "status": "Outstanding",
+            "type": "Courier",
+            "assignee_id": {"$in": personal_character_ids}
+        })
+        for contract in personal_contracts:
+            start_station = g.mongo.db.stations.find_one({"_id": contract["start_station_id"]})["name"]
+            end_station = g.mongo.db.stations.find_one({"_id": contract["end_station_id"]})["name"]
+            issuer = conversions.character(contract["issuer_id"])
+            assignee = conversions.character(contract["assignee_id"])
+            color = validator(contract)
 
-        personal_history.append([
-            color,
-            assignee,
-            issuer,
-            start_station,
-            end_station,
-            contract["date_issued"],
-            contract["date_expired"],
-            contract["num_days"],
-            "{:0,.2f}".format(contract["reward"]),
-            "{:0,.2f}".format(contract["collateral"]),
-            "{:0,.2f}".format(contract["volume"])
-        ])
+            personal_history.append([
+                color,
+                assignee,
+                issuer,
+                start_station,
+                end_station,
+                contract["date_issued"],
+                contract["date_expired"],
+                contract["num_days"],
+                "{:0,.2f}".format(contract["reward"]),
+                "{:0,.2f}".format(contract["collateral"]),
+                "{:0,.2f}".format(contract["volume"])
+            ])
 
     return render_template("jf_pilot.html", contract_list=contract_list, optimized_run=optimized_run,
                            reserved_contracts=reserved_contracts, all_history=all_history,
