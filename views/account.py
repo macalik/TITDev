@@ -83,6 +83,10 @@ def home():
         vacation = False
         vacation_text = ""
 
+    keys = request.args.get("keys")
+    if keys:
+        keys = keys.split(",")
+
     return render_template("account.html", error_list=error_list, given_roles=given_roles,
                            associated_keys=associated_keys, user_info=user_info, image_list=image_list,
-                           vacation=vacation, vacation_text=vacation_text)
+                           vacation=vacation, vacation_text=vacation_text, keys=keys)

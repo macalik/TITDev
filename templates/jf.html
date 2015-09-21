@@ -33,6 +33,18 @@
                     <p><b>{{next_update}} UTC</b></p>
                 </div>
             </div>
+            {% if warning_list %}
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Warnings:</h3>
+                </div>
+                <div class="panel-body">
+                    {% for warning in warning_list %}
+                    <p><b>{{warning}}</b></p>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
         </div>
         <div class="col-md-4">
             <div class="jf-form">
@@ -98,14 +110,8 @@
                 {% endif %}
                 <li class="list-group-item list-group-item-danger">Contract to: Designated Drivers</li>
             </ul>
-            {% if session.UI_Corporation %}
-            {% for warning in warning_list %}
-            <div class="alert alert-warning" role="alert">Warning: {{warning}}</div>
-            {% endfor %}
-            {% else %}
-            {% for warning in corp_warning_list %}
-            <div class="alert alert-warning" role="alert">Warning: {{warning}}</div>
-            {% endfor %}
+            {% if warning_list %}
+            <div class="alert alert-warning" role="alert">Warning: See warnings to the left.</div>
             {% endif %}
         </div>
         <div class="col-md-4">

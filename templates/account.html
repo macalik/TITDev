@@ -14,6 +14,11 @@
                 {% if vacation %}
                 <div class="alert alert-danger" role="alert">You currently have "Away from EVE" mode enabled.</div>
                 {% endif %}
+                {% if keys %}
+                <div class="alert alert-danger" role="alert">
+                    Key(s) with ID {{keys}} has an error. It has been deleted. Please input a new key.
+                </div>
+                {% endif %}
             </div>
         </div>
         <div class="row">
