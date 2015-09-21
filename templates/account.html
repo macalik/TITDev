@@ -8,129 +8,135 @@
 <script src="{{url_for('static', filename='datatables.js')}}"></script>
 {% endblock scripts %}
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                {% if vacation %}
-                <div class="alert alert-danger" role="alert">You currently have "Away from EVE" mode enabled.</div>
-                {% endif %}
-                {% if keys %}
-                <div class="alert alert-danger" role="alert">
-                    Key(s) with ID {{keys}} has an error. It has been deleted. Please input a new key.
-                </div>
-                {% endif %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            {% if vacation %}
+            <div class="alert alert-danger" role="alert">You currently have "Away from EVE" mode enabled.</div>
+            {% endif %}
+            {% if keys %}
+            <div class="alert alert-danger" role="alert">
+                Key(s) with ID {{keys}} has an error. It has been deleted. Please input a new key.
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <img src="{{image_list[0]}}" alt="Character">
-                    </li>
-                    <li class="list-group-item">Site ID: {{user_info[0]}}</li>
-                    <li class="list-group-item">Character: {{user_info[1]}}</li>
-                    <li class="list-group-item">
-                        <img src="{{image_list[1]}}" alt="Corporation">
-                        <img src="{{image_list[2]}}" alt="Alliance">
-                    </li>
-                    <li class="list-group-item">Corporation: {{user_info[2]}}</li>
-                    <li class="list-group-item">Alliance: {{user_info[3]}}</li>
-                </ul>
-            </div>
-            <div class="col-md-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Approved Roles</h3>
-                    </div>
-                    <div class="panel-body">
-                        <ul>
-                            {% if given_roles %}
-                            {% for role in given_roles %}
-                            <li>{{role}}</li>
-                            {% endfor %}
-                            {% else %}
-                            <li>None</li>
-                            {% endif %}
-                        </ul>
-                    </div>
-                </div>
-                <div>
-                    <form method="get">
-                        <label>Away From EVE</label>
-                        {% if vacation %}
-                        <div class="form-group">
-                            <textarea class="form-control" rows="10" name="text" disabled>{{vacation_text}}</textarea>
-                        </div>
-                        <div class="form-group">
-                            <button name="action" type="submit" class="btn btn-danger" value="disable">Disable</button>
-                        </div>
-                        {% else %}
-                        <div class="form-group">
-                            <textarea class="form-control" rows="10" name="text"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <button name="action" type="submit" class="btn btn-warning" value="enable">Enable</button>
-                        </div>
-                        {% endif %}
-                    </form>
-                </div>
-                <div>
-                    <form method="post">
-                        <label>Add New API</label>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon">Key ID</span>
-                                <input class="form-control" placeholder="Key ID" name="key_id">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon">vCode</span>
-                                <input class="form-control" placeholder="vCode" name="vcode">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <button name="action" type="submit" class="btn btn-primary" value="add">Add</button>
-                        </div>
-                    </form>
-                </div>
-                {% for error in error_list %}
-                <div class="alert alert-danger" role="alert">{{error}}</div>
-                {% endfor %}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h2>All Valid APIs</h2>
-                <table class="table table-hover table-condensed datatables">
-                    <thead>
-                        <tr>
-                            <th>Char ID</th>
-                            <th>Char Name</th>
-                            <th>Key ID</th>
-                            <th>vCode</th>
-                            <th>Cached Until</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for key in associated_keys %}
-                        <tr>
-                            {% for info in key %}
-                            <td>{{info}}</td>
-                            {% endfor %}
-                            <td>
-                                <form method="post">
-                                    <input class="form-control" name="key_id" type="hidden" value="{{key[2]}}">
-                                    <input class="form-control" name="vcode" type="hidden" value="{{key[3]}}">
-                                    <button name="action" type="submit" class="btn btn-danger" value="remove">Remove</button>
-                                </form>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+            {% endif %}
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-6">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <img src="{{image_list[0]}}" alt="Character">
+                </li>
+                <li class="list-group-item">Site ID: {{user_info[0]}}</li>
+                <li class="list-group-item">Character: {{user_info[1]}}</li>
+                <li class="list-group-item">
+                    <img src="{{image_list[1]}}" alt="Corporation">
+                    <img src="{{image_list[2]}}" alt="Alliance">
+                </li>
+                <li class="list-group-item">Corporation: {{user_info[2]}}</li>
+                <li class="list-group-item">Alliance: {{user_info[3]}}</li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Approved Roles</h3>
+                </div>
+                <div class="panel-body">
+                    <ul>
+                        {% if given_roles %}
+                        {% for role in given_roles %}
+                        <li>{{role}}</li>
+                        {% endfor %}
+                        {% else %}
+                        <li>None</li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <form method="get">
+                    <label>Away From EVE</label>
+                    {% if vacation %}
+                    <div class="form-group">
+                        <textarea class="form-control" rows="10" name="text" disabled>{{vacation_text}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <button name="action" type="submit" class="btn btn-danger" value="disable">Disable</button>
+                    </div>
+                    {% else %}
+                    <div class="form-group">
+                        <textarea class="form-control" rows="10" name="text"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button name="action" type="submit" class="btn btn-warning" value="enable">Enable</button>
+                    </div>
+                    {% endif %}
+                </form>
+            </div>
+            <div>
+                <form method="post">
+                    <label> Add New API:
+                        <a href="http://community.eveonline.com/support/api-key/CreatePredefined?accessMask={{access_mask}}">
+                        Predefined Link
+                        </a>
+                        [Check No Expiry]
+                    </label>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon">Key ID</span>
+                            <input class="form-control" placeholder="Key ID" name="key_id">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon">vCode</span>
+                            <input class="form-control" placeholder="vCode" name="vcode">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button name="action" type="submit" class="btn btn-primary" value="add">Add</button>
+                    </div>
+                </form>
+            </div>
+            {% for error in error_list %}
+            <div class="alert alert-danger" role="alert">{{error}}</div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>All Valid APIs</h2>
+            <table class="table table-hover table-condensed datatables">
+                <thead>
+                <tr>
+                    <th>Char ID</th>
+                    <th>Char Name</th>
+                    <th>Key ID</th>
+                    <th>vCode</th>
+                    <th>Cached Until</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for key in associated_keys %}
+                <tr>
+                    {% for info in key %}
+                    <td>{{info}}</td>
+                    {% endfor %}
+                    <td>
+                        <form method="post">
+                            <input class="form-control" name="key_id" type="hidden" value="{{key[2]}}">
+                            <input class="form-control" name="vcode" type="hidden" value="{{key[3]}}">
+                            <button name="action" type="submit" class="btn btn-danger" value="remove">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 {% endblock content %}
