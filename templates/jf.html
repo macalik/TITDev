@@ -11,6 +11,21 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4">
+            {% if session.UI_Corporation %}
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Notes</h3>
+                </div>
+                <div class="panel-body">
+                    <ul>
+                        <li>
+                            You're contract will display blue (invalid)
+                            if you use an Out-Of-Corp alt to set up the contract with corp prices.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Rules</h3>
@@ -116,7 +131,16 @@
         </div>
         <div class="col-md-4">
             {% if not session.UI_Alliance %}
-            <div class="alert alert-warning" role="alert">Log in as an alliance member to see all contract history.
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Notes</h3>
+                </div>
+                <div class="panel-body">
+                    <ul>
+                        <li>Log in as an alliance member to see contract history.</li>
+                        <li>Log in as a corp member to see corp-member discounts.</li>
+                    </ul>
+                </div>
             </div>
             {% endif %}
             <div class="panel panel-default">
