@@ -62,8 +62,7 @@ def home():
                 "$set":
                     {
                         "corporation_id": db_user_info["corporation_id"],
-                        "vacation": request.args.get("text"),
-                        "vacation_date": request.args.get("date")
+                        "vacation": request.args.get("text")
                     }
             }, upsert=True)
         elif request.args.get("action") == "disable":
@@ -72,8 +71,7 @@ def home():
                                          "character_id": db_user_info["character_id"]}, {
                 "$unset":
                     {
-                        "vacation": request.args.get("text"),
-                        "vacation_date": request.args.get("date")
+                        "vacation": request.args.get("text")
                     }
             })
 
@@ -81,18 +79,14 @@ def home():
     if db_personal:
         vacation = True
         vacation_text = db_personal["vacation"]
-        vacation_date = db_personal["vacation_date"]
     else:
         vacation = False
         vacation_text = ""
-        vacation_date = ""
 
-    with open("configs/base.json", "r") as base_config_file:
-        base_config = json.load(base_config_file)
-
-    access_mask = base_config["access_mask"]
+    keys = request.args.get("keys")
+    if keys:
+        keys = keys.split(",")
 
     return render_template("account.html", error_list=error_list, given_roles=given_roles,
                            associated_keys=associated_keys, user_info=user_info, image_list=image_list,
-                           vacation=vacation, vacation_text=vacation_text, access_mask=access_mask,
-                           vacation_date=vacation_date)
+                           vacation=vacation, vacation_text=vacation_text, keys=keys)
