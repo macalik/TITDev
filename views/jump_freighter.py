@@ -4,7 +4,7 @@ from operator import itemgetter
 import time
 import calendar
 
-from flask import Blueprint, render_template, g, request, session
+from flask import Blueprint, render_template, g, request, session, redirect, url_for
 
 from helpers import caches, conversions
 from views.auth import requires_sso, auth_check
@@ -85,14 +85,14 @@ def home():
     for station in g.mongo.db.jf_routes.distinct("start"):
         if request.args.get("start") == station:
             start_list.append([station, True])
-        elif station == "3KNA-N II - We have top men working on it":
+        elif not request.args.get("start") and station == "Jita IV - Moon 4 - Caldari Navy Assembly Plant":
             start_list.append([station, True])
         else:
             start_list.append([station, False])
     for station in g.mongo.db.jf_routes.distinct("end"):
         if request.args.get("end") == station:
             end_list.append([station, True])
-        elif station == "Jita IV - Moon 4 - Caldari Navy Assembly Plant":
+        elif not request.args.get("end") and station == "3KNA-N II - We have top men working on it":
             end_list.append([station, True])
         else:
             end_list.append([station, False])
@@ -100,6 +100,8 @@ def home():
     end_list.sort()
 
     # Contract Calculations
+    selected_route = "Not selected."
+    input_error = False
     if request.args.get("start") and request.args.get("end"):
         start_station_id = g.mongo.db.stations.find_one({"name": request.args.get("start").strip()})["_id"]
         end_station_id = g.mongo.db.stations.find_one({"name": request.args.get("end").strip()})["_id"]
@@ -109,57 +111,66 @@ def home():
             corp_rate = 0
             collateral_rate = 0
             general_rate = 0
-            for price in selected_route["prices"]:
-                if price["valid_after"] > last_time:
-                    corp_rate = price["corp"]
-                    general_rate = price["general"]
-                    collateral_rate = price["collateral"]
-                    last_time = price["valid_after"]
+            for price_history in selected_route["prices"]:
+                if price_history["valid_after"] > last_time:
+                    corp_rate = price_history["corp"]
+                    general_rate = price_history["general"]
+                    collateral_rate = price_history["collateral"]
+                    last_time = price_history["valid_after"]
 
-            volume = float(request.args.get("volume", 0) if request.args.get("volume", 0) else 0)
-            collateral = float(request.args.get("collateral", 0) if request.args.get("collateral", 0) else 0)
+            try:
+                volume = request.args.get("volume")
+                volume = float(volume.replace(",", "") if volume else 0)
+                collateral = request.args.get("collateral")
+                collateral = float(collateral.replace(",", "") if collateral else 0)
+            except ValueError:
+                input_error = True
+            else:
+                volume_cost = general_rate * volume
+                corp_volume_cost = corp_rate * volume
+                collateral_cost = collateral * collateral_rate / 100.0
+                price = volume_cost + collateral_cost
+                corp_price = corp_volume_cost + collateral_cost
 
-            volume_cost = general_rate * volume
-            corp_volume_cost = corp_rate * volume
-            collateral_cost = collateral * collateral_rate / 100.0
-            price = volume_cost + collateral_cost
-            corp_price = corp_volume_cost + collateral_cost
-
-            # Mark Non-Inputted Values
-            if not request.args.get("volume"):
-                volume = ""
-            if not request.args.get("collateral"):
-                collateral = ""
+                # Mark Non-Inputted Values
+                if not request.args.get("volume"):
+                    volume = ""
+                if not request.args.get("collateral"):
+                    collateral = ""
 
     # Warnings
     warning_list = []
-    if price and price < 1000000:
-        warning_list.append("Rewards must be at least 1M Isk")
-        price = 1000000
-    if volume and volume > 300000:
-        warning_list.append("Contracts must be less than 300k M3")
-    if price and price > 1000000000:
-        warning_list.append("Contracts should be below 1B isk")
+    if session.get("UI_Corporation"):
+        compare_price = corp_price
+    else:
+        compare_price = price
 
-    corp_warning_list = []
-    if corp_price and corp_price < 1000000:
-        corp_warning_list.append("Rewards must be at least 1M Isk")
-        corp_price = 1000000
-    if volume and volume > 300000:
-        corp_warning_list.append("Contracts must be less than 300k M3")
-    if corp_price and corp_price > 1000000000:
-        corp_warning_list.append("Contracts should be below 1B isk")
+    if input_error:
+        warning_list.append("One of your inputs was not a number.")
+    else:
+        if compare_price and compare_price < 1000000:
+            warning_list.append("Rewards must be at least 1M Isk")
+            if session.get("UI_Corporation"):
+                corp_price = 1000000
+            else:
+                price = 1000000
+        if volume and volume > 300000:
+            warning_list.append("Contracts must be less than 300k M3")
+        if compare_price and compare_price > 1000000000:
+            warning_list.append("Contracts should be below 1B isk")
+        if not selected_route:
+            warning_list.append("We do not service this route.")
 
-    # Formatting
-    corp_rate = "{:0,.2f}".format(corp_rate)
-    volume_cost = "{:0,.2f}".format(volume_cost)
-    corp_volume_cost = "{:0,.2f}".format(corp_volume_cost)
-    collateral_cost = "{:0,.2f}".format(collateral_cost)
-    collateral_rate = "{:0,.2f}".format(collateral_rate)
-    price = "{:0,.2f}".format(price) if price else ""
-    corp_price = "{:0,.2f}".format(corp_price) if price else ""
-    volume = "{:0.2f}".format(volume) if volume else ""
-    collateral = "{:0.2f}".format(collateral) if collateral else ""
+        # Formatting
+        corp_rate = "{:0,.2f}".format(corp_rate)
+        volume_cost = "{:0,.2f}".format(volume_cost)
+        corp_volume_cost = "{:0,.2f}".format(corp_volume_cost)
+        collateral_cost = "{:0,.2f}".format(collateral_cost)
+        collateral_rate = "{:0,.2f}".format(collateral_rate)
+        price = "{:0,.2f}".format(price) if price else ""
+        corp_price = "{:0,.2f}".format(corp_price) if price else ""
+        volume = "{:0.2f}".format(volume) if volume else ""
+        collateral = "{:0.2f}".format(collateral) if collateral else ""
 
     # Contract History
 
@@ -180,7 +191,7 @@ def home():
     next_update_query = g.mongo.db.caches.find_one({"_id": "jf_service"})
     next_update = next_update_query["cached_str"] if next_update_query else "Unknown"
 
-    for contract in g.mongo.db.contracts.find({"service": "jf_service"}):
+    for contract in g.mongo.db.contracts.find({"service": "jf_service", "type": "Courier"}):
         if contract["status"] not in ["Deleted", "Canceled"]:
             # Perform ID Conversions
             start_station = g.mongo.db.stations.find_one({"_id": contract["start_station_id"]})
@@ -418,10 +429,12 @@ def pilot():
         if bulk_run:
             bulk_op.execute()
 
+    # JF Corporation Contracts
     caches.contracts()
     jf_contracts = g.mongo.db.contracts.find({
         "service": "jf_service",
-        "status": "Outstanding"
+        "status": "Outstanding",
+        "type": "Courier"
     })
     contract_list = sorted(jf_contracts, key=itemgetter("volume"), reverse=True)
 
@@ -516,9 +529,59 @@ def pilot():
     optimized_return = ",".join(optimized_ids)
     reserved_return = ",".join(reserved_ids)
 
+    # Personal Contracts
+    personal_api_keys = g.mongo.db.api_keys.find_one({"_id": session["CharacterOwnerHash"]})
+    if personal_api_keys:
+        invalid_apis = caches.contracts([("personal", api_key["key_id"], api_key["vcode"],
+                                          api_key["character_id"]) for api_key in personal_api_keys["keys"]])
+    if invalid_apis:
+        return redirect(url_for("account.home", keys=",".join([str(x) for x in invalid_apis])))
+    personal_character_ids = [x["character_id"] for x in personal_api_keys["keys"]]
+    personal_contracts = g.mongo.db.contracts.find({
+        "service": "personal",
+        "status": "Outstanding",
+        "type": "Courier",
+        "assignee_id": {"$in": personal_character_ids}
+    })
+    users_set = set()
+    for contract in personal_contracts:
+        users_set.update([contract["issuer_id"], contract["assignee_id"]])
+    caches.character(users_set)
+
+    # Call db again because query has ended when updating cache
+    personal_contracts = g.mongo.db.contracts.find({
+        "service": "personal",
+        "status": "Outstanding",
+        "type": "Courier",
+        "assignee_id": {"$in": personal_character_ids}
+    })
+    personal_history = [["Assignee", "Issuer", "Start Station", "End Station", "Date Issued", "Date Expired", "Days",
+                         "Reward", "Collateral", "Volume"]]
+    for contract in personal_contracts:
+        start_station = g.mongo.db.stations.find_one({"_id": contract["start_station_id"]})["name"]
+        end_station = g.mongo.db.stations.find_one({"_id": contract["end_station_id"]})["name"]
+        issuer = conversions.character(contract["issuer_id"])
+        assignee = conversions.character(contract["assignee_id"])
+        color = validator(contract)
+
+        personal_history.append([
+            color,
+            assignee,
+            issuer,
+            start_station,
+            end_station,
+            contract["date_issued"],
+            contract["date_expired"],
+            contract["num_days"],
+            "{:0,.2f}".format(contract["reward"]),
+            "{:0,.2f}".format(contract["collateral"]),
+            "{:0,.2f}".format(contract["volume"])
+        ])
+
     return render_template("jf_pilot.html", contract_list=contract_list, optimized_run=optimized_run,
                            reserved_contracts=reserved_contracts, all_history=all_history,
                            optimized_reward=optimized_reward, optimized_collateral=optimized_collateral,
                            optimized_volume=optimized_volume, optimized_return=optimized_return,
                            reserved_reward=reserved_reward, reserved_collateral=reserved_collateral,
-                           reserved_volume=reserved_volume, reserved_return=reserved_return)
+                           reserved_volume=reserved_volume, reserved_return=reserved_return,
+                           personal_history=personal_history)
