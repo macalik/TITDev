@@ -7,6 +7,9 @@ from flask import g, session
 from defusedxml import ElementTree
 import requests
 
+from pymongo.errors import BulkWriteError
+from pprint import pprint
+
 xml_headers = {
     "User-Agent": "TiT Corp Website by Kazuki Ishikawa"
 }
@@ -94,7 +97,7 @@ def contracts(keys=None):
     if not keys:
         # Default Refreshes
         keys = [("jf_service", secrets["jf_key_id"], secrets["jf_vcode"])]
-    bulk_op = g.mongo.db.contracts.initialize_ordered_bulk_op()
+    bulk_op = g.mongo.db.contracts.initialize_unordered_bulk_op()
     bulk_run = False
     for service in keys:
         if service[0] == "personal":
@@ -166,7 +169,10 @@ def contracts(keys=None):
                             }
                         })
     if bulk_run:
-        bulk_op.execute()
+        try:
+            bulk_op.execute()
+        except BulkWriteError as bulk_op_error:
+            pprint(bulk_op_error.details)
 
     return invalid_apis
 
