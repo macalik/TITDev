@@ -48,7 +48,13 @@ def validator(contract):
 
         corp_check = g.mongo.db.characters.find_one({"_id": contract["issuer_id"],
                                                      "corporation_id": int(base_config["corporation_id"])})
-        if corp_check:
+        ooc_check = g.mongo.db.api_keys.find_one({"keys.character_id": contract["issuer_id"]})
+        if ooc_check:
+            # Check if the user is in corp
+            ooc_check = g.mongo.db.users.find_one({"_id": ooc_check["_id"],
+                                                   "corporation_id": int(base_config["corporation_id"])})
+
+        if corp_check or ooc_check:
             validation_calc = max(corp_price * contract["volume"] + contract["collateral"] * collateral_rate / 100,
                                   1000000)
         else:
@@ -338,22 +344,20 @@ def admin():
                 db_start = g.mongo.db.stations.find_one({"name": request.form.get("start").strip()})
                 db_end = g.mongo.db.stations.find_one({"name": request.form.get("end").strip()})
                 if db_start and db_end:
-                    g.mongo.db.jf_routes.insert({
-                        "$set": {
-                            "_id": int(str(db_start["_id"] + str(db_end["_id"]))),
-                            "name": request.form.get("name"),
-                            "start": request.form.get("start").strip(),
-                            "end": request.form.get("end").strip()
-                        },
-                        "$push": {
-                            "prices": {
-                                "valid_after": int(time.time()),
-                                "corp": float(request.form.get("corp", 0)),
-                                "general": float(request.form.get("general", 0)),
-                                "collateral": float(request.form.get("collateral", 0))
-                            }
-                        }
-                    })
+                    g.mongo.db.jf_routes.update({"_id": int(str(db_start["_id"]) + str(db_end["_id"]))},
+                                                {
+                                                    "$setOnInsert": {
+                                                        "name": request.form.get("name"),
+                                                        "start": request.form.get("start").strip(),
+                                                        "end": request.form.get("end").strip(),
+                                                        "prices": [{
+                                                            "valid_after": int(time.time()),
+                                                            "corp": float(request.form.get("corp", 0)),
+                                                            "general": float(request.form.get("general", 0)),
+                                                            "collateral": float(request.form.get("collateral", 0))
+                                                        }]
+                                                    }
+                                                }, upsert=True)
         elif request.form.get("action") == "multiple":
             station_list = [g.mongo.db.stations.find_one({"name": x.strip()})
                             for x in request.form.get("stations").split("\n")]
