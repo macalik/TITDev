@@ -188,7 +188,7 @@ def home():
 
     users_set = set()
     # Find all users
-    for contract in g.mongo.db.contracts.find({"service": "jf_service"}):
+    for contract in g.mongo.db.contracts.find({"_id.service": "jf_service"}):
         users_set.update([contract["issuer_id"], contract["acceptor_id"]])
     caches.character(users_set)
 
@@ -199,7 +199,7 @@ def home():
     next_update_query = g.mongo.db.caches.find_one({"_id": "jf_service"})
     next_update = next_update_query["cached_str"] if next_update_query else "Unknown"
 
-    for contract in g.mongo.db.contracts.find({"service": "jf_service", "type": "Courier"}):
+    for contract in g.mongo.db.contracts.find({"_id.service": "jf_service", "type": "Courier"}):
         if contract["status"] not in ["Deleted", "Canceled"]:
             # Perform ID Conversions
             start_station = g.mongo.db.stations.find_one({"_id": contract["start_station_id"]})
@@ -426,19 +426,19 @@ def pilot():
             bulk_run = True
             add_ids = [int(x) for x in request.form.get("add").split(",")]
             for db_id in add_ids:
-                bulk_op.find({"_id": db_id}).update({"$set": {"reserved_by": session["CharacterName"]}})
+                bulk_op.find({"_id.id": db_id}).update({"$set": {"reserved_by": session["CharacterName"]}})
         elif request.form.get("remove"):
             bulk_run = True
             remove_ids = [int(x) for x in request.form.get("remove").split(",")]
             for db_id in remove_ids:
-                bulk_op.find({"_id": db_id}).update({"$unset": {"reserved_by": session["CharacterName"]}})
+                bulk_op.find({"_id.id": db_id}).update({"$unset": {"reserved_by": session["CharacterName"]}})
         if bulk_run:
             bulk_op.execute()
 
     # JF Corporation Contracts
     caches.contracts()
     jf_contracts = g.mongo.db.contracts.find({
-        "service": "jf_service",
+        "_id.service": "jf_service",
         "status": "Outstanding",
         "type": "Courier"
     })
@@ -490,14 +490,14 @@ def pilot():
                 "{:0,.2f}".format(contract["volume"])
             ])
             total_volume += contract["volume"]
-            optimized_ids.append(str(contract["_id"]))
+            optimized_ids.append(str(contract["_id"]["id"]))
         if contract.get("reserved_by") == session["CharacterName"]:
             reserved_reward += contract["reward"]
             reserved_collateral += contract["collateral"]
             reserved_volume += contract["volume"]
             reserved_contracts.append([
                 color,
-                contract["_id"],
+                contract["_id"]["id"],
                 issuer,
                 start_station,
                 end_station,
@@ -508,10 +508,10 @@ def pilot():
                 "{:0,.2f}".format(contract["collateral"]),
                 "{:0,.2f}".format(contract["volume"])
             ])
-            reserved_ids.append(str(contract["_id"]))
+            reserved_ids.append(str(contract["_id"]["id"]))
         all_history.append([
             color,
-            contract["_id"],
+            contract["_id"]["id"],
             issuer,
             start_station,
             end_station,
@@ -546,7 +546,7 @@ def pilot():
             return redirect(url_for("account.home", keys=",".join([str(x) for x in invalid_apis])))
         personal_character_ids = [x["character_id"] for x in personal_api_keys["keys"]]
         personal_contracts = g.mongo.db.contracts.find({
-            "service": "personal",
+            "_id.service": "personal",
             "status": "Outstanding",
             "type": "Courier",
             "assignee_id": {"$in": personal_character_ids}
@@ -558,7 +558,7 @@ def pilot():
 
         # Call db again because query has ended when updating cache
         personal_contracts = g.mongo.db.contracts.find({
-            "service": "personal",
+            "_id.service": "personal",
             "status": "Outstanding",
             "type": "Courier",
             "assignee_id": {"$in": personal_character_ids}
@@ -583,6 +583,15 @@ def pilot():
                 "{:0,.2f}".format(contract["collateral"]),
                 "{:0,.2f}".format(contract["volume"])
             ])
+
+    # Payment System
+
+    caches.wallet_journal()
+    payment_key_list = []
+    db_keys = g.mongo.db.api_keys.find_one({"_id": session["CharacterOwnerHash"]})
+    if db_keys:
+        for key in db_keys["keys"]:
+            payment_key_list.append(key["key_id"])
 
     return render_template("jf_pilot.html", contract_list=contract_list, optimized_run=optimized_run,
                            reserved_contracts=reserved_contracts, all_history=all_history,

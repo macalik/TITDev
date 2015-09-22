@@ -29,7 +29,6 @@ def stations():
     bulk_op = g.mongo.db.stations.initialize_unordered_bulk_op()
     bulk_run = False
     if not db_stations_cache or db_stations_cache["cached_until"] < time.time():
-        bulk_run = True
         xml_stations_response = requests.get("https://api.eveonline.com/eve/ConquerableStationList.xml.aspx",
                                              headers=xml_headers)
         # XML Parse
@@ -39,6 +38,7 @@ def stations():
         g.mongo.db.caches.update({"_id": "stations"}, {"cached_until": int(calendar.timegm(time.strptime(
             xml_stations_tree[2].text, xml_time_pattern)))}, upsert=True)
         for station in xml_stations_tree[1][0]:
+            bulk_run = True
             bulk_op.find({"_id": int(station.attrib["stationID"])}).upsert().update(
                 {"$set": {"name": station.attrib["stationName"]}})
     if bulk_run:
@@ -55,8 +55,9 @@ def character(char_ids):
     db_characters_cache = g.mongo.db.caches.find_one({"_id": "characters"})
     bulk_op = g.mongo.db.characters.initialize_unordered_bulk_op()
     bulk_run = False
+    print(missing_names)
+    print(char_ids)
     if missing_names or not db_characters_cache or db_characters_cache["cached_until"] < time.time():
-        bulk_run = True
         if db_characters_cache and db_characters_cache["cached_until"] > time.time():
             character_payload = {
                 "ids": ",".join([str(x) for x in missing_names])
@@ -78,6 +79,7 @@ def character(char_ids):
             print(xml_character_tree[1].attrib["code"], xml_character_tree[1].text)
         else:
             for name in xml_character_tree[1][0]:
+                bulk_run = True
                 bulk_op.find({"_id": int(name.attrib["characterID"])}).upsert().update({"$set": {
                     "name": name.attrib["characterName"],
                     "corporation_id": int(name.attrib["corporationID"]),
@@ -145,7 +147,9 @@ def contracts(keys=None):
             else:
                 for contract in xml_contracts_tree[1][0]:
                     bulk_run = True
-                    bulk_op.find({"_id": int(contract.attrib["contractID"]), "service": service[0]}).upsert().update(
+                    bulk_op.find({
+                        "_id": {"id": int(contract.attrib["contractID"]), "service": service[0]}
+                    }).upsert().update(
                         {
                             "$set": {
                                 "issuer_id": int(contract.attrib["issuerID"]),
@@ -256,7 +260,6 @@ def wallet_journal(keys=None):
     for service in keys:
         db_wallet_journal_cache = g.mongo.db.caches.find_one({"_id": service[0]})
         if not db_wallet_journal_cache or db_wallet_journal_cache.get("cached_until", 0) < time.time():
-            bulk_run = True
             xml_wallet_journal_payload = {
                 "keyID": service[1],
                 "vCode": service[2],
@@ -272,6 +275,7 @@ def wallet_journal(keys=None):
                 time.strptime(xml_wallet_journal_tree[2].text, xml_time_pattern))),
                 "cached_str": xml_wallet_journal_tree[2].text}, upsert=True)
             for transaction in xml_wallet_journal_tree[1][0]:
+                bulk_run = True
                 bulk_op.find({"_id": int(transaction.attrib["refID"]), "service": service[0]}).upsert().update(
                     {
                         "$set": {
