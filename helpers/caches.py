@@ -98,7 +98,9 @@ def contracts(keys=None):
         keys = [("jf_service", secrets["jf_key_id"], secrets["jf_vcode"])]
     bulk_op = g.mongo.db.contracts.initialize_unordered_bulk_op()
     bulk_run = False
+    print(keys)
     for service in keys:
+        print(service)
         if service[0] == "personal":
             db_cache = g.mongo.db.key_caches.find_one({"_id": service[1]})
             cache_time = db_cache.get("contracts", 0) if db_cache else 0
@@ -142,6 +144,7 @@ def contracts(keys=None):
                 g.mongo.db.api_keys.update({}, {"$pull": {"keys": {"key_id": service[1]}}}, multi=True)
                 invalid_apis.append(service[1])
             else:
+                print("no error")
                 for contract in xml_contracts_tree[1][0]:
                     bulk_run = True
                     print("Service: {}, Key: {}, Contract: {}, Type: {}".format(
