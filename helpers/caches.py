@@ -8,7 +8,6 @@ from defusedxml import ElementTree
 import requests
 
 from pymongo.errors import BulkWriteError
-from pprint import pprint
 
 xml_headers = {
     "User-Agent": "TiT Corp Website by Kazuki Ishikawa"
@@ -55,8 +54,6 @@ def character(char_ids):
     db_characters_cache = g.mongo.db.caches.find_one({"_id": "characters"})
     bulk_op = g.mongo.db.characters.initialize_unordered_bulk_op()
     bulk_run = False
-    print(missing_names)
-    print(char_ids)
     if missing_names or not db_characters_cache or db_characters_cache["cached_until"] < time.time():
         if db_characters_cache and db_characters_cache["cached_until"] > time.time():
             character_payload = {
@@ -148,7 +145,7 @@ def contracts(keys=None):
                 for contract in xml_contracts_tree[1][0]:
                     bulk_run = True
                     bulk_op.find({
-                        "_id": {"id": int(contract.attrib["contractID"]), "service": service[0]}
+                        "_id.id": int(contract.attrib["contractID"]), "_id.service": service[0]
                     }).upsert().update(
                         {
                             "$set": {
@@ -173,10 +170,15 @@ def contracts(keys=None):
                             }
                         })
     if bulk_run:
+        print("Contracts cache run for {}.".format(keys))
         try:
-            bulk_op.execute()
+            debug_print = bulk_op.execute()
+            print("Inserted: {}, Matched: {}, Modified: {}, Removed: {}, Upserted: {}".format(
+                debug_print["nInserted"], debug_print["nMatched"], debug_print["nModified"], debug_print["nRemoved"],
+                debug_print["nUpserted"]
+            ))
         except BulkWriteError as bulk_op_error:
-            pprint(bulk_op_error.details)
+            print("error", bulk_op_error.details)
 
     return invalid_apis
 
