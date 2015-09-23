@@ -125,6 +125,7 @@ def contracts(keys=None):
                 xml_contracts_response = requests.get("https://api.eveonline.com/Corp/Contracts.xml.aspx",
                                                       data=xml_contracts_payload, headers=xml_headers)
 
+            print(xml_contracts_response.text)
             # XML Parse
             xml_contracts_tree = ElementTree.fromstring(xml_contracts_response.text)
             # Store in database
