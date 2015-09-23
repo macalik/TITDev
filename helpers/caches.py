@@ -144,6 +144,8 @@ def contracts(keys=None):
             else:
                 for contract in xml_contracts_tree[1][0]:
                     bulk_run = True
+                    print("Service: {}, Key: {}, Contract: {}, Type: {}".format(
+                        service[0], service[1], contract.attrib["contractID"], contract.attrib["type"]))
                     bulk_op.find({
                         "_id.id": int(contract.attrib["contractID"]), "_id.service": service[0]
                     }).upsert().update(
