@@ -60,7 +60,7 @@ def validator(contract):
         else:
             validation_calc = max(gen_price * contract["volume"] + contract["collateral"] * collateral_rate / 100,
                                   1000000)
-        if contract["reward"] < validation_calc or contract["volume"] > 300000:
+        if (contract["reward"] < validation_calc or contract["volume"] > 300000) and contract["for_corp"] != 1:
             color = "info"
     else:
         color = "active"

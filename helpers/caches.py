@@ -100,7 +100,7 @@ def contracts(keys=None):
     bulk_run = False
     for service in keys:
         if service[0] == "personal":
-            db_cache = g.mongo.db.key_caches.find_one({"_id": service[1]})
+            db_cache = g.mongo.db.key_caches.find_one({"_id": service[3]})
             cache_time = db_cache.get("contracts", 0) if db_cache else 0
         else:
             db_cache = g.mongo.db.caches.find_one({"_id": service[0]})
@@ -129,9 +129,12 @@ def contracts(keys=None):
             xml_time_pattern = "%Y-%m-%d %H:%M:%S"
 
             if service[0] == "personal":
-                g.mongo.db.key_caches.update({"_id": service[1]}, {"$set": {"contracts": int(
-                    calendar.timegm(time.strptime(xml_contracts_tree[2].text, xml_time_pattern))),
-                    "contracts_str": xml_contracts_tree[2].text}}, upsert=True)
+                g.mongo.db.key_caches.update({"_id": int(service[3])}, {"$set": {
+                    "contracts": int(
+                        calendar.timegm(time.strptime(xml_contracts_tree[2].text, xml_time_pattern))),
+                    "contracts_str": xml_contracts_tree[2].text,
+                    "key": int(service[1])}
+                }, upsert=True)
             else:
                 g.mongo.db.caches.update({"_id": service[0]}, {"cached_until": int(
                     calendar.timegm(time.strptime(xml_contracts_tree[2].text, xml_time_pattern))),
@@ -170,13 +173,8 @@ def contracts(keys=None):
                             }
                         })
     if bulk_run:
-        print("Contracts cache run for {}.".format(keys))
         try:
-            debug_print = bulk_op.execute()
-            print("Inserted: {}, Matched: {}, Modified: {}, Removed: {}, Upserted: {}".format(
-                debug_print["nInserted"], debug_print["nMatched"], debug_print["nModified"], debug_print["nRemoved"],
-                debug_print["nUpserted"]
-            ))
+            bulk_op.execute()
         except BulkWriteError as bulk_op_error:
             print("error", bulk_op_error.details)
 
