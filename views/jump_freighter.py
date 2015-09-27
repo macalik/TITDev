@@ -362,6 +362,7 @@ def admin():
             station_list = [g.mongo.db.stations.find_one({"name": x.strip()})
                             for x in request.form.get("stations").split("\n")]
             if station_list:  # Ensure there are stations to parse
+                bulk_run = False
                 bulk_op = g.mongo.db.jf_routes.initialize_unordered_bulk_op()
                 for start_station in station_list:
                     for end_station in station_list:
@@ -369,6 +370,7 @@ def admin():
                             route_id = int(str(start_station["_id"]) + str(end_station["_id"]))
                             route_name_start = start_station["name"].split(" - ")[0]
                             route_name_end = end_station["name"].split(" - ")[0]
+                            bulk_run = True
                             bulk_op.find({"_id": route_id}).upsert().update({
                                 "$setOnInsert": {
                                     "name": route_name_start + " >> " + route_name_end,
@@ -382,7 +384,8 @@ def admin():
                                     }]
                                 }
                             })
-                bulk_op.execute()
+                if bulk_run:
+                    bulk_op.execute()
 
         # Clear all after post
         general = ""
@@ -586,12 +589,22 @@ def pilot():
 
     # Payment System
 
+    total_pay = 0
+
     caches.wallet_journal()
-    payment_key_list = []
+    payment_id_list = []
     db_keys = g.mongo.db.api_keys.find_one({"_id": session["CharacterOwnerHash"]})
     if db_keys:
         for key in db_keys["keys"]:
-            payment_key_list.append(key["key_id"])
+            payment_id_list.append(key["character_id"])
+
+    contract_ids = set()
+    corp_pay_list = g.mongo.db.contracts.find({"_id.service": "jf_service",
+                                               "acceptor_id": {"$in": payment_id_list}})
+
+    for corp_pay in corp_pay_list:
+        if corp_pay["collateral"] > 0:
+            total_pay += 0
 
     return render_template("jf_pilot.html", contract_list=contract_list, optimized_run=optimized_run,
                            reserved_contracts=reserved_contracts, all_history=all_history,
