@@ -62,7 +62,8 @@ def home():
                 "$set":
                     {
                         "corporation_id": db_user_info["corporation_id"],
-                        "vacation": request.args.get("text")
+                        "vacation": request.args.get("text"),
+                        "vacation_date": request.args.get("date")
                     }
             }, upsert=True)
         elif request.args.get("action") == "disable":
@@ -71,7 +72,8 @@ def home():
                                          "character_id": db_user_info["character_id"]}, {
                 "$unset":
                     {
-                        "vacation": request.args.get("text")
+                        "vacation": request.args.get("text"),
+                        "vacation_date": request.args.get("date")
                     }
             })
 
