@@ -81,9 +81,11 @@ def home():
     if db_personal:
         vacation = True
         vacation_text = db_personal["vacation"]
+        vacation_date = db_personal["vacation_date"]
     else:
         vacation = False
         vacation_text = ""
+        vacation_date = ""
 
     keys = request.args.get("keys")
     if keys:
@@ -91,4 +93,5 @@ def home():
 
     return render_template("account.html", error_list=error_list, given_roles=given_roles,
                            associated_keys=associated_keys, user_info=user_info, image_list=image_list,
-                           vacation=vacation, vacation_text=vacation_text, keys=keys, access_mask=access_mask)
+                           vacation=vacation, vacation_text=vacation_text, keys=keys, access_mask=access_mask,
+                           vacation_date=vacation_date)
