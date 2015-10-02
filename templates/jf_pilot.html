@@ -7,6 +7,29 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
+            <h2>Owed Taxes</h2>
+
+            <div class="progress">
+                <div class="progress-bar progress-bar-success" style="width: {{jf_percent[0]}}%">
+                    <span class="sr-only">{{jf_percent[0]}}% Complete (paid)</span>
+                </div>
+                <div class="progress-bar progress-bar-danger progress-bar-striped" style="width: {{jf_percent[1]}}%">
+                    <span class="sr-only">{{jf_percent[1]}}% Complete (owed)</span>
+                </div>
+            </div>
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <td>Paid: {{jf_taxes[0]}}</td>
+                    <td>Owed: {{jf_taxes[1]}}</td>
+                    <td>Reimbursement Threshold: {{jf_reimbursement}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
             <h2>Optimized Run</h2>
 
             <h3>Determines the most optimized run for valid contracts not reserved.</h3>

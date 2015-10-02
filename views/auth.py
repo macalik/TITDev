@@ -28,6 +28,8 @@ def requires_sso(role):
     def decorator(function):
         @wraps(function)
         def decorated_function(*args, **kwargs):
+            auth_check_start = time.time()
+            print("Auth check start: {}".format(auth_check_start))
             # Check session hash
             if session.get("CharacterOwnerHash", None):
                 db_user = g.mongo.db.users.find_one({"_id": session["CharacterOwnerHash"]})
@@ -96,6 +98,9 @@ def requires_sso(role):
             # Auth check after checking if user exists and updating cache if necessary
             if not auth_check(role):
                 abort(403)
+
+            auth_check_end = time.time()
+            print("Auth check end: {}, total: {}".format(auth_check_end, auth_check_end - auth_check_start))
 
             return function(*args, **kwargs)
         return decorated_function

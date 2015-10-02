@@ -75,6 +75,43 @@ def validator(contract):
     return color
 
 
+def jf_tax_calculator(character_owner_hash):
+    total_owed = 0
+    total_paid = 0
+
+    payment_id_list = []
+    db_keys = g.mongo.db.api_keys.find_one({"_id": character_owner_hash})
+    if db_keys:
+        for key in db_keys["keys"]:
+            payment_id_list.append(key["character_id"])
+
+    caches.wallet_journal()
+    db_wallet_payment_list = g.mongo.db.wallet_journal.find({"owner_id_1": {"$in": payment_id_list},
+                                                             "ref_type_id": 10})
+    for wallet_payment in db_wallet_payment_list:
+        total_paid += wallet_payment["amount"]
+
+    contract_ids = set()
+    corp_pay_list = g.mongo.db.contracts.find({"_id.service": "jf_service",
+                                               "acceptor_id": {"$in": payment_id_list},
+                                               "status": "Completed"})
+    db_jf_insurance = g.mongo.db.preferences.find_one({"_id": "jf_insurance"})
+    db_jf_tax = g.mongo.db.preferences.find_one({"_id": "jf_tax"})
+    if not db_jf_insurance:
+        db_jf_insurance = {"history": [{"valid_after": 0, "percentage": 0}]}
+    if not db_jf_tax:
+        db_jf_tax = {"history": [{"valid_after": 0, "percentage": 0}]}
+
+    for pay_contract in corp_pay_list:
+        contract_ids.add(pay_contract["_id"]["id"])
+        if pay_contract["collateral"] > 0:
+            jf_insurance = conversions.valid_value(db_jf_insurance["history"], pay_contract["date_accepted"])
+            jf_tax = conversions.valid_value(db_jf_tax["history"], pay_contract["date_accepted"])
+            total_owed += pay_contract["reward"] * (jf_insurance["percentage"] + jf_tax["percentage"]) / 100
+
+    return total_paid, total_owed
+
+
 @jf.route("/")
 def home():
     corp_rate = 0
@@ -320,6 +357,19 @@ def admin():
 
             if bulk_run:
                 bulk_op.execute()
+        elif request.args.get("action") == "tax":
+            g.mongo.db.preferences.update({"_id": "jf_insurance"},
+                                          {"$push": {
+                                               "history": {"valid_after": int(time.time()),
+                                                           "percentage": float(request.args.get("insurance"))}}},
+                                          upsert=True)
+            g.mongo.db.preferences.update({"_id": "jf_tax"},
+                                          {"$push": {
+                                               "history": {"valid_after": int(time.time()),
+                                                           "percentage": float(request.args.get("tax"))}}},
+                                          upsert=True)
+            g.mongo.db.preferences.update({"_id": "jf_reimbursement"}, {"amount": float(request.args.get("threshold"))},
+                                          upsert=True)
 
     elif request.method == "POST":
         if request.form.get("action") == "single":
@@ -414,8 +464,27 @@ def admin():
                            "{:0,.2f}".format(collateral_percent),
                            route["start"], route["end"]])
 
+    db_jf_insurance = g.mongo.db.preferences.find_one({"_id": "jf_insurance"})
+    db_jf_tax = g.mongo.db.preferences.find_one({"_id": "jf_tax"})
+    db_jf_reimbursement = g.mongo.db.preferences.find_one({"_id": "jf_reimbursement"})
+
+    if db_jf_insurance and db_jf_tax and db_jf_reimbursement:
+        jf_insurance = conversions.valid_value(db_jf_insurance["history"], time.time())
+        jf_tax = conversions.valid_value(db_jf_tax["history"], time.time())
+        jf_reimbursement = db_jf_reimbursement["amount"]
+
+        # Formatting
+        jf_insurance = "{:.02f}%".format(jf_insurance["percentage"])
+        jf_tax = "{:.02f}%".format(jf_tax["percentage"])
+        jf_reimbursement = "{:,.02f}".format(jf_reimbursement)
+    else:
+        jf_insurance = "0%"
+        jf_tax = "0%"
+        jf_reimbursement = "0.00"
+
     return render_template("jf_admin.html", route_list=route_list, general=general, corp=corp, _id=_id, name=name,
-                           start=start, end=end, edit=edit, collateral=collateral)
+                           start=start, end=end, edit=edit, collateral=collateral, jf_insurance=jf_insurance,
+                           jf_tax=jf_tax, jf_reimbursement=jf_reimbursement)
 
 
 @jf.route('/pilot', methods=["GET", "POST"])
@@ -588,23 +657,22 @@ def pilot():
             ])
 
     # Payment System
+    jf_paid, jf_tax_total = jf_tax_calculator(session["CharacterOwnerHash"])
+    db_jf_reimbursement = g.mongo.db.preferences.find_one({"_id": "jf_reimbursement"})
 
-    total_pay = 0
-
-    caches.wallet_journal()
-    payment_id_list = []
-    db_keys = g.mongo.db.api_keys.find_one({"_id": session["CharacterOwnerHash"]})
-    if db_keys:
-        for key in db_keys["keys"]:
-            payment_id_list.append(key["character_id"])
-
-    contract_ids = set()
-    corp_pay_list = g.mongo.db.contracts.find({"_id.service": "jf_service",
-                                               "acceptor_id": {"$in": payment_id_list}})
-
-    for corp_pay in corp_pay_list:
-        if corp_pay["collateral"] > 0:
-            total_pay += 0
+    if db_jf_reimbursement:
+        jf_reimbursement = db_jf_reimbursement["amount"]
+        jf_percent_paid = int(min(jf_paid / jf_reimbursement * 100, 100))
+        jf_percent_owed = max(int(min(jf_tax_total / jf_reimbursement * 100, 100)) - jf_percent_paid, 0)
+        jf_paid = "{:,.02f}".format(jf_paid)
+        jf_tax_total = "{:,.02f}".format(jf_tax_total)
+        jf_reimbursement = "{:,.02f}".format(jf_reimbursement)
+    else:
+        jf_reimbursement = "0.00"
+        jf_percent_paid = 0
+        jf_percent_owed = 0
+        jf_paid = "0.00"
+        jf_tax_total = "0.00"
 
     return render_template("jf_pilot.html", contract_list=contract_list, optimized_run=optimized_run,
                            reserved_contracts=reserved_contracts, all_history=all_history,
@@ -612,4 +680,5 @@ def pilot():
                            optimized_volume=optimized_volume, optimized_return=optimized_return,
                            reserved_reward=reserved_reward, reserved_collateral=reserved_collateral,
                            reserved_volume=reserved_volume, reserved_return=reserved_return,
-                           personal_history=personal_history)
+                           personal_history=personal_history, jf_percent=[jf_percent_paid, jf_percent_owed],
+                           jf_reimbursement=jf_reimbursement, jf_taxes=[jf_paid, jf_tax_total])

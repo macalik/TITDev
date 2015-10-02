@@ -83,6 +83,33 @@
                 </div>
                 <button type="submit" class="btn btn-danger" name="action" value="all">Save</button>
             </form>
+            <form>
+                <div class="input-group">
+                    <span class="input-group-addon">JF Insurance</span>
+                    <input class="form-control" placeholder="Insurance" name="insurance">
+                    <span class="input-group-addon">%</span>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">JF Tax</span>
+                    <input class="form-control" placeholder="Tax" name="tax">
+                    <span class="input-group-addon">%</span>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">JF Threshold</span>
+                    <input class="form-control" placeholder="Reimbursement Threshold" name="threshold">
+                    <span class="input-group-addon">Isk</span>
+                </div>
+                <button type="submit" class="btn btn-danger" name="action" value="tax">Save</button>
+            </form>
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <td>Insurance: {{jf_insurance}}</td>
+                    <td>Tax: {{jf_tax}}</td>
+                    <td>Threshold: {{jf_reimbursement}}</td>
+                </tr>
+                </tbody>
+            </table>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Instructions</h3>
