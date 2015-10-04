@@ -682,3 +682,31 @@ def pilot():
                            reserved_volume=reserved_volume, reserved_return=reserved_return,
                            personal_history=personal_history, jf_percent=[jf_percent_paid, jf_percent_owed],
                            jf_reimbursement=jf_reimbursement, jf_taxes=[jf_paid, jf_tax_total])
+
+
+@jf.route('/stats', methods=["GET", "POST"])
+@requires_sso('jf_admin')
+def stats():
+
+    # List jf pilots
+    jf_pilot_list = g.mongo.db.eve_auth.find_one({"_id": "jf_pilot"})
+    db_jf_reimbursement = g.mongo.db.preferences.find_one({"_id": "jf_reimbursement"})
+    jf_reimbursement = db_jf_reimbursement["amount"] if db_jf_reimbursement else 0
+
+    user_payment_info = []
+
+    if jf_pilot_list and jf_reimbursement > 0:
+        for jf_pilot in jf_pilot_list["users"]:
+            # Payment System
+            jf_paid, jf_tax_total = jf_tax_calculator(jf_pilot)
+            jf_percent_paid = int(min(jf_paid / jf_reimbursement * 100, 100))
+            jf_percent_owed = max(int(min(jf_tax_total / jf_reimbursement * 100, 100)) - jf_percent_paid, 0)
+            jf_paid = "{:,.02f}".format(jf_paid)
+            jf_tax_total = "{:,.02f}".format(jf_tax_total)
+            pilot_name = g.mongo.db.users.find_one({"_id": jf_pilot})["character_name"]
+
+            user_payment_info.append([pilot_name, jf_percent_owed, jf_percent_paid, jf_tax_total, jf_paid])
+
+    jf_reimbursement = "{:,.02f}".format(jf_reimbursement)
+
+    return render_template("jf_stats.html", user_payment_info=user_payment_info, jf_reimbursement=jf_reimbursement)

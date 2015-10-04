@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block head %}
+{{super()}}
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon_jf.ico') }}">
+{% endblock head %}
+{% block scripts %}
+{{super()}}
+<script src="{{url_for('static', filename='datatables.js')}}"></script>
+{% endblock scripts %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            {% for info in user_payment_info %}
+            <h3>{{info[0]}}</h3>
+            <div class="progress">
+                <div class="progress-bar progress-bar-success" style="width: {{info[2]}}%">
+                    <span class="sr-only">{{info[2]}}% Complete (paid)</span>
+                </div>
+                <div class="progress-bar progress-bar-danger progress-bar-striped" style="width: {{info[1]}}%">
+                    <span class="sr-only">{{info[1]}}% Complete (owed)</span>
+                </div>
+            </div>
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <td>Paid: {{info[4]}}</td>
+                    <td>Owed: {{info[3]}}</td>
+                    <td>Reimbursement Threshold: {{jf_reimbursement}}</td>
+                </tr>
+                </tbody>
+            </table>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock content %}
