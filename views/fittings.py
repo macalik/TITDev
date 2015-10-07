@@ -216,13 +216,17 @@ def fit(fit_id=None):
 
     # JF Calculations
     selected_route_info = g.mongo.db.jf_routes.find_one({"_id": selected_route})
-    rate_info = conversions.valid_value(selected_route_info["prices"], time.time())
-    if session.get("UI_Corporation"):
-        jf_rate = rate_info["corp"]
-    else:
-        jf_rate = rate_info["general"]
+    if selected_route_info:
+        rate_info = conversions.valid_value(selected_route_info["prices"], time.time())
+        if session.get("UI_Corporation"):
+            jf_rate = rate_info["corp"]
+        else:
+            jf_rate = rate_info["general"]
 
-    jf_total = jf_rate * total_volume
+        jf_total = jf_rate * total_volume
+    else:
+        jf_rate = 0
+        jf_total = 0
     order_total = jf_total + total_fit_isk
 
     # Formatting

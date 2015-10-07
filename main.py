@@ -66,7 +66,10 @@ def app_init():
 
 @app.before_request
 def db_init():
-    g.timings = False
+    if os.environ.get("TIMINGS"):
+        g.timings = True
+    else:
+        g.timings = False
     g.mongo = app_mongo
     g.start_time = time.time()
     print("Request start: {}".format(g.start_time)) if g.timings else None
