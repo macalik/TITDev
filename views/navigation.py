@@ -6,8 +6,9 @@ from flask import session
 class Navigation:
 
     base = ['TiT', View('Home', 'home'),  View('Account', "account.home")]
-    alliance = base + [View('JF Service', "jf.home")]
-    corp = base + [View('Corp Main', "corp.home"), View('JF Service', "jf.home")]
+    after_base = [View('JF Service', "jf.home"), View('Fittings', "fittings.home")]
+    alliance = base + after_base
+    corp = base + [View('Corp Main', "corp.home")] + after_base
 
     def __init__(self, app):
         nav = Nav()
@@ -19,7 +20,7 @@ class Navigation:
 
         @nav.navigation('neut')
         def nav_neut():
-            return Navbar('TiT', View('Home', 'home'), View('JF Service', "jf.home"),
+            return Navbar('TiT', View('Home', 'home'), View('Account', "account.home"), View('JF Service', "jf.home"),
                           View('Log Out', 'auth.log_out'))
 
         @nav.navigation('corporation')

@@ -1,0 +1,216 @@
+{% extends "base.html" %}
+{% block head %}
+{{super()}}
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon_jf.ico') }}">
+{% endblock head %}
+{% block scripts %}
+{{super()}}
+<script src="{{url_for('static', filename='datatables.js')}}"></script>
+{% endblock scripts %}
+{% block content %}
+<div class="container-fluid">
+    {% if error_string %}
+    <div class="row">
+        <div class="alert alert-danger">
+            {{error_string}}
+        </div>
+    </div>
+    {% endif %}
+    <div class="row">
+        <div class="col-lg-3">
+            <form method="post">
+                <div class="form-group">
+                    <label for="fit_string">EFT-Formatted Fit</label>
+                    <textarea class="form-control" rows="25" id="fit_string" name="fit_string"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="notes">Notes:</label>
+                    <input class="form-control" id="notes" name="notes" placeholder="Notes">
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input name="doctrine" type="checkbox" value="True">
+                        Mark as doctrine fit?
+                    </label>
+                </div>
+                <button type="reset" class="btn btn-danger" name="action" value="fit_submit">Clear</button>
+                <button type="submit" class="btn btn-primary" name="action" value="fit_submit">Submit to Site</button>
+                <button type="submit" class="btn btn-success" name="action" value="cart" disabled>
+                    Direct to Cart</button>
+            </form>
+        </div>
+        <div class="col-lg-9">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#personal">Personal</a></li>
+                <li><a data-toggle="tab" href="#doctrine">Doctrine</a></li>
+                <li><a data-toggle="tab" href="#corp">Corp</a></li>
+                <li><a data-toggle="tab" href="#alliance">Alliance</a></li>
+                <li><a data-toggle="tab" href="#all">All</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="personal" class="tab-pane active">
+                    <h3>Personal Fits</h3>
+                    <table class="table table-hover table-condensed datatables">
+                        <thead>
+                        <tr>
+                            {% for header in personal_fits[0] %}
+                            <th>{{header}}</th>
+                            {% endfor %}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in personal_fits[1:] %}
+                        <tr>
+                            {% for info in item[:-3] %}
+                            <td>{{info}}</td>
+                            {% endfor %}
+                            <td>
+                                <a class="btn btn-success" href="{{url_for('fittings.fit', fit_id=item[-2])}}" role="button">
+                                View</a>
+                                <button type="button" class="btn btn-primary"
+                                        onclick="CCPEVE.showFitting('{{item[-1]}}')">Fit</button>
+                                {% if item[-3] %}
+                                <form action="{{url_for('fittings.fit', fit_id=item[-2])}}" method="get">
+                                    <button type="submit" class="btn btn-danger" name="action" value="delete">Delete</button>
+                                </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div id="doctrine" class="tab-pane">
+                    <h3>Doctrine Fits</h3>
+                    <table class="table table-hover table-condensed datatables">
+                        <thead>
+                        <tr>
+                            {% for header in doctrine_fits[0] %}
+                            <th>{{header}}</th>
+                            {% endfor %}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in doctrine_fits[1:] %}
+                        <tr>
+                            {% for info in item[:-3] %}
+                            <td>{{info}}</td>
+                            {% endfor %}
+                            <td>
+                                <a class="btn btn-success" href="{{url_for('fittings.fit', fit_id=item[-2])}}" role="button">
+                                View</a>
+                                <button type="button" class="btn btn-primary"
+                                        onclick="CCPEVE.showFitting('{{item[-1]}}')">Fit</button>
+                                {% if item[-3] %}
+                                <form action="{{url_for('fittings.fit', fit_id=item[-2])}}" method="get">
+                                    <button type="submit" class="btn btn-danger" name="action" value="delete">Delete</button>
+                                </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div id="corp" class="tab-pane">
+                    <h3>Fits by Corporation Members</h3>
+                    <table class="table table-hover table-condensed datatables">
+                        <thead>
+                        <tr>
+                            {% for header in corporation_fits[0] %}
+                            <th>{{header}}</th>
+                            {% endfor %}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in corporation_fits[1:] %}
+                        <tr>
+                            {% for info in item[:-3] %}
+                            <td>{{info}}</td>
+                            {% endfor %}
+                            <td>
+                                <a class="btn btn-success" href="{{url_for('fittings.fit', fit_id=item[-2])}}" role="button">
+                                View</a>
+                                <button type="button" class="btn btn-primary"
+                                        onclick="CCPEVE.showFitting('{{item[-1]}}')">Fit</button>
+                                {% if item[-3] %}
+                                <form action="{{url_for('fittings.fit', fit_id=item[-2])}}" method="get">
+                                    <button type="submit" class="btn btn-danger" name="action" value="delete">Delete</button>
+                                </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div id="alliance" class="tab-pane">
+                    <h3>Fits by Alliance Members</h3>
+                    <table class="table table-hover table-condensed datatables">
+                        <thead>
+                        <tr>
+                            {% for header in alliance_fits[0] %}
+                            <th>{{header}}</th>
+                            {% endfor %}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in alliance_fits[1:] %}
+                        <tr>
+                            {% for info in item[:-3] %}
+                            <td>{{info}}</td>
+                            {% endfor %}
+                            <td>
+                                <a class="btn btn-success" href="{{url_for('fittings.fit', fit_id=item[-2])}}" role="button">
+                                View</a>
+                                <button type="button" class="btn btn-primary"
+                                        onclick="CCPEVE.showFitting('{{item[-1]}}')">Fit</button>
+                                {% if item[-3] %}
+                                <form action="{{url_for('fittings.fit', fit_id=item[-2])}}" method="get">
+                                    <button type="submit" class="btn btn-danger" name="action" value="delete">Delete</button>
+                                </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div id="all" class="tab-pane">
+                    <h3>All Fits</h3>
+                    <table class="table table-hover table-condensed datatables">
+                        <thead>
+                        <tr>
+                            {% for header in all_fits[0] %}
+                            <th>{{header}}</th>
+                            {% endfor %}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in all_fits[1:] %}
+                        <tr>
+                            {% for info in item[:-3] %}
+                            <td>{{info}}</td>
+                            {% endfor %}
+                            <td>
+                                <a class="btn btn-success" href="{{url_for('fittings.fit', fit_id=item[-2])}}" role="button">
+                                View</a>
+                                <button type="button" class="btn btn-primary"
+                                        onclick="CCPEVE.showFitting('{{item[-1]}}')">Fit</button>
+                                {% if item[-3] %}
+                                <form action="{{url_for('fittings.fit', fit_id=item[-2])}}" method="get">
+                                    <button type="submit" class="btn btn-danger" name="action" value="delete">Delete</button>
+                                </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
