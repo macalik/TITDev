@@ -1,16 +1,28 @@
 {% extends "base.html" %}
 {% block head %}
 {{super()}}
-
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='base.css')}}">
 {% endblock head %}
 {% block scripts %}
 {{super()}}
 <script src="{{url_for('static', filename='datatables.js')}}"></script>
 {% endblock scripts %}
 {% block content %}
-<div>Test</div><div>Test</div><div>Test</div><div>Test</div><div>Test</div>
-
-<a href="{{url_for('api_manager.load')}}">API MANAGER</a>
+<div class="sub-nav">
+  <ul>
+    <li><a href="{{url_for('api_manager.load')}}">API Manager</a></li>
+    <li><a href="#">Transactions</a></li>
+    <li><a href="#">Wallet Balances</a></li>
+    <li><a href="#">Emails</a></li>
+    <li><a href="#">Donations</a></li>
+    <li><a href="#">Killboards</a></li>
+    <li><a href="#">War Decks</a></li>
+    <li><a href="#">Movements</a></li>
+    <li><a href="#">Transfers</a></li>
+    <li><a href="#">Joins / Leaves</a></li>
+    <li><a href="#">API Status</a></li>
+  </ul>
+</div>
     <div class="container">
         <h2>TIT Security Panel: Dashboard</h2>
         <div class="row">
@@ -28,25 +40,24 @@
                           </thead>
                             <tbody>
                                 {% for pilot in pilot_balances %}
-                                <tr>
-                                    {% for char_name in pilot_list %}
-                                    <td>
-                                        Pilot_Balance Array: {{pilot["characterID"]}}
-                                        Pilot_List Array: {{char_name["character_name"]}}
-                                        {% if pilot["characterID"] == char_name["character_id"] %}
-                                            There is a match
-                                            {{pilot["characterID"]}}
-                                            {{char_name["character_name"]}}
-                                        {% endif %}
-                                    </td>
-                                    {% endfor %}
-                                    <td>
-                                        {{pilot["balance"]}}
-                                    </td>
-                                </tr>
+
+                                    <tr>
+                                        {% for char_name in pilot_list %}
+                                            {% if pilot["characterID"] == char_name["character_id"] %}
+                                                <td>
+                                                    {{char_name["character_name"]}}
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                                <td>
+                                                    {{pilot["balance"]}}
+                                                </td>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </tr>
+
                                 {% endfor %}
-
-
                             </tbody>
                         </table>
                     </div>
