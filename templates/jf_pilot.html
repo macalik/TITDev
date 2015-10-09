@@ -4,120 +4,178 @@
 <script src="{{url_for('static', filename='datatables-jf-pilot.js')}}"></script>
 {% endblock scripts %}
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h2>Optimized Run</h2>
-                <h3>Determines the most optimized run for valid contracts not reserved.</h3>
-                <table class="table table-hover table-condensed jf-pilot">
-                    <thead>
-                        <tr>
-                            {% for header in optimized_run[0] %}
-                            <th>{{header}}</th>
-                            {% endfor %}
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for contract in optimized_run[1:] %}
-                        <tr>
-                            {% for info in contract[1:] %}
-                            <td class="{{contract[0]}}">{{info}}</td>
-                            {% endfor %}
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Owed Taxes</h2>
+
+            <div class="progress">
+                <div class="progress-bar progress-bar-success" style="width: {{jf_percent[0]}}%">
+                    <span class="sr-only">{{jf_percent[0]}}% Complete (paid)</span>
+                </div>
+                <div class="progress-bar progress-bar-danger progress-bar-striped" style="width: {{jf_percent[1]}}%">
+                    <span class="sr-only">{{jf_percent[1]}}% Complete (owed)</span>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <ul class="list-inline list-group">
-                    <li class="list-group-item">Total Volume: {{optimized_volume}}</li>
-                    <li class="list-group-item">Collateral: {{optimized_collateral}}</li>
-                    <li class="list-group-item">Reward: {{optimized_reward}}</li>
-                    <li>
-                        <form method="post">
-                            <button name="add" type="submit" class="btn btn-success" value="{{optimized_return}}">Reserve All</button>
-                        </form>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h2>Personally Reserved Contracts</h2>
-                <table class="table table-hover table-condensed jf-pilot">
-                    <thead>
-                        <tr>
-                            {% for header in reserved_contracts[0] %}
-                            <th>{{header}}</th>
-                            {% endfor %}
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for contract in reserved_contracts[1:] %}
-                        <tr class="{{contract[0]}}">
-                            {% for info in contract[2:] %}
-                            <td>{{info}}</td>
-                            {% endfor %}
-                            <td>
-                                <form method="post">
-                                    <button name="remove" type="submit" class="btn btn-danger" value="{{contract[1]}}">Un-Reserve</button>
-                                </form>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-md-12">
-                <ul class="list-inline list-group">
-                    <li class="list-group-item">Total Volume: {{reserved_volume}}</li>
-                    <li class="list-group-item">Collateral: {{reserved_collateral}}</li>
-                    <li class="list-group-item">Reward: {{reserved_reward}}</li>
-                    <li>
-                        <form method="post">
-                            <button name="remove" type="submit" class="btn btn-danger" value="{{reserved_return}}">Un-Reserve All</button>
-                        </form>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h2>All Outstanding Contracts</h2>
-                <table class="table table-hover table-condensed jf-pilot">
-                    <thead>
-                        <tr>
-                            {% for header in all_history[0] %}
-                            <th>{{header}}</th>
-                            {% endfor %}
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for contract in all_history[1:] %}
-                        <tr class="{{contract[0]}}">
-                            {% for info in contract[2:] %}
-                            <td>{{info}}</td>
-                            {% endfor %}
-                            <td>
-                                <form method="post">
-                                    {% if contract[11] == session.CharacterName %}
-                                    <button name="remove" type="submit" class="btn btn-danger" value="{{contract[1]}}">Un-Reserve</button>
-                                    {% elif contract[11] == None %}
-                                    <button name="add" type="submit" class="btn btn-success" value="{{contract[1]}}">Reserve</button>
-                                    {% else %}
-                                    <button name="add" type="submit" class="btn btn-success" value="{{contract[1]}}" disabled>Reserve</button>
-                                    {% endif %}
-                                </form>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <td>Paid: {{jf_taxes[0]}}</td>
+                    <td>Owed: {{jf_taxes[1]}}</td>
+                    <td>Reimbursement Threshold: {{jf_reimbursement}}</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Optimized Run</h2>
+
+            <h3>Determines the most optimized run for valid contracts not reserved.</h3>
+            <table class="table table-hover table-condensed jf-pilot">
+                <thead>
+                <tr>
+                    {% for header in optimized_run[0] %}
+                    <th>{{header}}</th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for contract in optimized_run[1:] %}
+                <tr>
+                    {% for info in contract[1:] %}
+                    <td class="{{contract[0]}}">{{info}}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="list-inline list-group">
+                <li class="list-group-item">Total Volume: {{optimized_volume}}</li>
+                <li class="list-group-item">Collateral: {{optimized_collateral}}</li>
+                <li class="list-group-item">Reward: {{optimized_reward}}</li>
+                <li>
+                    <form method="post">
+                        <button name="add" type="submit" class="btn btn-success" value="{{optimized_return}}">
+                            Reserve All
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>All Personal Outstanding Courier Contracts</h2>
+            <table class="table table-hover table-condensed jf-pilot-personal">
+                <thead>
+                <tr>
+                    {% for header in personal_history[0] %}
+                    <th>{{header}}</th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for contract in personal_history[1:] %}
+                <tr class="{{contract[0]}}">
+                    {% for info in contract[1:] %}
+                    <td>{{info}}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Personally Reserved Contracts</h2>
+            <table class="table table-hover table-condensed jf-pilot">
+                <thead>
+                <tr>
+                    {% for header in reserved_contracts[0] %}
+                    <th>{{header}}</th>
+                    {% endfor %}
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for contract in reserved_contracts[1:] %}
+                <tr class="{{contract[0]}}">
+                    {% for info in contract[2:] %}
+                    <td>{{info}}</td>
+                    {% endfor %}
+                    <td>
+                        <form method="post">
+                            <button name="remove" type="submit" class="btn btn-danger" value="{{contract[1]}}">
+                                Un-Reserve
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-12">
+            <ul class="list-inline list-group">
+                <li class="list-group-item">Total Volume: {{reserved_volume}}</li>
+                <li class="list-group-item">Collateral: {{reserved_collateral}}</li>
+                <li class="list-group-item">Reward: {{reserved_reward}}</li>
+                <li>
+                    <form method="post">
+                        <button name="remove" type="submit" class="btn btn-danger" value="{{reserved_return}}">
+                            Un-Reserve All
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>All Outstanding Contracts</h2>
+            <table class="table table-hover table-condensed jf-pilot">
+                <thead>
+                <tr>
+                    {% for header in all_history[0] %}
+                    <th>{{header}}</th>
+                    {% endfor %}
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for contract in all_history[1:] %}
+                <tr class="{{contract[0]}}">
+                    {% for info in contract[2:] %}
+                    <td>{{info}}</td>
+                    {% endfor %}
+                    <td>
+                        <form method="post">
+                            {% if contract[11] == session.CharacterName %}
+                            <button name="remove" type="submit" class="btn btn-danger" value="{{contract[1]}}">
+                                Un-Reserve
+                            </button>
+                            {% elif contract[11] == None %}
+                            <button name="add" type="submit" class="btn btn-success" value="{{contract[1]}}">Reserve
+                            </button>
+                            {% else %}
+                            <button name="add" type="submit" class="btn btn-success" value="{{contract[1]}}" disabled>
+                                Reserve
+                            </button>
+                            {% endif %}
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 {% endblock content %}

@@ -6,8 +6,9 @@ from flask import session
 class Navigation:
 
     base = ['TiT', View('Home', 'home'),  View('Account', "account.home")]
-    alliance = base + [View('JF Service', "jf.home")]
-    corp = base + [View('Corp Main', "corp.home"), View('JF Service', "jf.home")]
+    after_base = [View('JF Service', "jf.home"), View('Fittings', "fittings.home")]
+    alliance = base + after_base
+    corp = base + [View('Corp Main', "corp.home")] + after_base
 
     def __init__(self, app):
         nav = Nav()
@@ -19,7 +20,7 @@ class Navigation:
 
         @nav.navigation('neut')
         def nav_neut():
-            return Navbar('TiT', View('Home', 'home'), View('JF Service', "jf.home"),
+            return Navbar('TiT', View('Home', 'home'), View('Account', "account.home"), View('JF Service', "jf.home"),
                           View('Log Out', 'auth.log_out'))
 
         @nav.navigation('corporation')
@@ -37,7 +38,7 @@ class Navigation:
             admin_elements = []
             for role in session.get("UI_Roles"):
                 if role == "jf_admin":
-                    admin_elements.append(View('JF Service', "jf.admin"))
+                    admin_elements += [View('JF Service', "jf.admin"), View('JF Stats', "jf.stats")]
                 elif role == "user_admin":
                     admin_elements.append(View('User Roles', "admin.roles"))
                     admin_elements.append(View('Security Dashboard', "security_dashboard.load"))

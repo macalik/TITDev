@@ -2,5 +2,10 @@
   "corporation_id": 98117593,
   "alliance_id": 151380924,
   "access_mask": 1073741823,
-  "image_server": "https://imageserver.eveonline.com/"
+  "image_server": "https://imageserver.eveonline.com/",
+  "jf_account_key": 1001,
+  "market_hub_region": 10000002,
+  "market_hub_station": 60003760,
+  "market_hub_name": "Jita",
+  "default_ship_to": "3KNA-N II - We have top men working on it"
 }

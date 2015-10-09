@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block head %}
+{{super()}}
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon_jf.ico') }}">
+{% endblock head %}
+{% block scripts %}
+{{super()}}
+<script src="{{url_for('static', filename='datatables-fit.js')}}"></script>
+{% endblock scripts %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <h3>{{fit_name}}</h3>
+            <button type="button" class="btn btn-primary"
+                    onclick="CCPEVE.showFitting('{{dna_string}}')">In-Game Fit</button>
+            <address>
+                <small>
+                {% for line in fit_string %}
+                {{line}}<br>
+                {% endfor %}
+                </small>
+            </address>
+            {% if can_delete %}
+            <form>
+                <button type="submit" class="btn btn-danger" name="action" value="delete">Delete Fit</button>
+            </form>
+            {% endif %}
+        </div>
+        <div class="col-md-8">
+            <table class="table table-hover table-condensed" id="datatables-fit">
+                <thead>
+                <tr>
+                    {% for header in item_table[0] %}
+                    <th>{{header}}</th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in item_table[1:] %}
+                <tr>
+                    {% for info in item %}
+                    <td>{{info}}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <table class="table table-condensed table-bordered">
+                <tr>
+                    <td>Qty:</td>
+                    <td>
+                        <form class="form-inline">
+                            <div class="input-group">
+                                <span class="input-group-addon" id="multi-txt">Qty</span>
+                                <input type="text" class="form-control" placeholder="Qty (Default: 1)" name="multiply"
+                                       aria-describedby="multi-txt" value="{{multiply}}">
+                            </div>
+                            <button type="submit" class="btn btn-warning" name="action" value="qty">Change</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Total volume of items:</td>
+                    <td>{{total_volume}}</td>
+                </tr>
+                <tr>
+                    <td>Total price of items in {{market_hub_name}}:</td>
+                    <td>{{total_fit_isk}}</td>
+                </tr>
+                <tr>
+                    <td>Ship to:</td>
+                    <td>
+                        <form class="form-inline" method="get">
+                            <div class="form-group">
+                                <select class="form-control" name="end">
+                                    {% for station in valid_stations %}
+                                    {% if station[2] %}
+                                    <option value="{{station[0]}}" selected>{{station[1]}}</option>
+                                    {% else %}
+                                    <option value="{{station[0]}}">{{station[1]}}</option>
+                                    {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        <button type="submit" class="btn btn-warning" name="action" value="station">Change</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Shipping Cost [@{{jf_rate}} Isk/M3]:</td>
+                    <td>{{jf_total}}</td>
+                </tr>
+                <tr>
+                    <td>Total Cost:</td>
+                    <td>{{order_total}}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><button class="btn btn-success" disabled>Add to Cart</button></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}

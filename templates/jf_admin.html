@@ -4,100 +4,171 @@
 <link rel="shortcut icon" href="{{ url_for('static', filename='favicon_jf.ico') }}">
 {% endblock head %}
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="jf-form">
-                    <form method="post">
-                        <input class="form-control" name="_id" type="hidden" value="{{_id}}">
-                        <div class="input-group">
-                            <span class="input-group-addon">Route</span>
-                            {% if edit %}
-                            <input class="form-control" placeholder="{{name}}" disabled>
-                            <input type="hidden" class="form-control" value="{{name}}" name="name">
-                            {% else %}
-                            <input class="form-control" placeholder="Description" name="name">
-                            {% endif %}
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon">Alliance</span>
-                            <input type="number" class="form-control" placeholder="Alliance Cost" name="m3" value="{{m3}}" step="0.01" min ="0">
-                            <span class="input-group-addon">isk/m3</span>
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon">Corp</span>
-                            <input type="number" class="form-control" placeholder="Corp Cost" name="corp" value="{{corp}}" step="0.01" min ="0">
-                            <span class="input-group-addon">isk/m3</span>
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon">Start</span>
-                            <input class="form-control" placeholder="Station Start" name="start" value="{{start}}">
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon">End</span>
-                            <input class="form-control" placeholder="Station End" name="end" value="{{end}}">
-                        </div>
-                        <button type="submit" class="btn btn-primary" name="action" value="single">Save</button>
-                        <a class="btn btn-danger" href="{{url_for('jf.admin')}}">Cancel</a>
-                    </form>
-                    <form method="post">
-                        <label for="stations">Initialize Multiple</label>
-                        <textarea id="stations" class="form-control" rows="5" name="stations" placeholder="Station"></textarea>
-                        <button type="submit" class="btn btn-warning" name="action" value="multiple">Save</button>
-                    </form>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Instructions</h3>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="jf-form">
+                <form method="post">
+                    <input class="form-control" name="_id" type="hidden" value="{{_id}}">
+
+                    <div class="input-group">
+                        <span class="input-group-addon">Route</span>
+                        {% if edit %}
+                        <input class="form-control" placeholder="{{name}}" disabled>
+                        <input type="hidden" class="form-control" value="{{name}}" name="name">
+                        {% else %}
+                        <input class="form-control" placeholder="Description" name="name">
+                        {% endif %}
                     </div>
-                    <div class="panel-body">
-                        <ul>
-                            <li>If the route field is editable, then you can save a new route.</li>
-                            <li>If the route field is disabled, you are editing a route. Hit cancel to save a new route instead.</li>
-                            <li>To edit or delete a route, hit the corresponding button in the table below.</li>
-                            <li>Start and end station names must be EXACTLY as shown in-game. (Case sensitive with correct spaces)</li>
-                            <li>Use the "initialize multiple" box to "spider" chain all stations.</li>
-                            <li>Use this <a href="{{url_for('static', filename='staStations.json')}}">list of stations</a>. It is shown as "stationID":"Name". Do NOT include quotes.</li>
-                        </ul>
+                    <div class="input-group">
+                        <span class="input-group-addon">Alliance</span>
+                        <input type="number" class="form-control" placeholder="Alliance Cost" name="general"
+                               value="{{general}}" step="0.01" min="0">
+                        <span class="input-group-addon">isk/m3</span>
                     </div>
-                </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">Corp</span>
+                        <input type="number" class="form-control" placeholder="Corp Cost" name="corp" value="{{corp}}"
+                               step="0.01" min="0">
+                        <span class="input-group-addon">isk/m3</span>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">Start</span>
+                        <input class="form-control" placeholder="Station Start" name="start" value="{{start}}">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">End</span>
+                        <input class="form-control" placeholder="Station End" name="end" value="{{end}}">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">Collateral</span>
+                        <input class="form-control" placeholder="Collateral" name="collateral" value="{{collateral}}">
+                        <span class="input-group-addon">%</span>
+                    </div>
+                    <button type="submit" class="btn btn-primary" name="action" value="single">Save</button>
+                    <a class="btn btn-danger" href="{{url_for('jf.admin')}}">Cancel</a>
+                </form>
+                <form method="post">
+                    <label for="stations">Initialize Multiple</label>
+                    <textarea id="stations" class="form-control" rows="5" name="stations"
+                              placeholder="Station"></textarea>
+
+                    <div class="input-group">
+                        <span class="input-group-addon">Alliance</span>
+                        <input type="number" class="form-control" placeholder="Alliance Cost" name="general" step="0.01"
+                               min="0">
+                        <span class="input-group-addon">isk/m3</span>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">Corp</span>
+                        <input type="number" class="form-control" placeholder="Corp Cost" name="corp" step="0.01"
+                               min="0">
+                        <span class="input-group-addon">isk/m3</span>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">Collateral</span>
+                        <input class="form-control" placeholder="Collateral" name="collateral">
+                        <span class="input-group-addon">%</span>
+                    </div>
+                    <button type="submit" class="btn btn-warning" name="action" value="multiple">Save</button>
+                </form>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <table class="table table-striped datatables">
-                    <thead>
-                        <tr>
-                            <th>Description</th>
-                            <th>Isk/M3</th>
-                            <th>Corp Cost</th>
-                            <th>Station Start</th>
-                            <th>Station End</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for route in route_list %}
-                        <tr>
-                            <td>{{route[1]}}</td>
-                            <td>{{route[2]}}</td>
-                            <td>{{route[3]}}</td>
-                            <td>{{route[4]}}</td>
-                            <td>{{route[5]}}</td>
-                            <td>
-                                <form class="form-inline" method="get">
-                                    <input class="form-control" name="_id" type="hidden" value="{{route[0]}}">
-                                    <button name="action" type="submit" class="btn btn-warning" value="edit">Edit</button>
-                                    <button name="action" type="submit" class="btn btn-danger" value="delete">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+        <div class="col-md-6">
+            <form>
+                <div class="input-group">
+                    <span class="input-group-addon">Change All Collateral</span>
+                    <input class="form-control" placeholder="Collateral" name="collateral">
+                    <span class="input-group-addon">%</span>
+                </div>
+                <button type="submit" class="btn btn-danger" name="action" value="all">Save</button>
+            </form>
+            <form>
+                <div class="input-group">
+                    <span class="input-group-addon">JF Insurance</span>
+                    <input class="form-control" placeholder="Insurance" name="insurance">
+                    <span class="input-group-addon">%</span>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">JF Tax</span>
+                    <input class="form-control" placeholder="Tax" name="tax">
+                    <span class="input-group-addon">%</span>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">JF Threshold</span>
+                    <input class="form-control" placeholder="Reimbursement Threshold" name="threshold">
+                    <span class="input-group-addon">Isk</span>
+                </div>
+                <button type="submit" class="btn btn-danger" name="action" value="tax">Save</button>
+            </form>
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <td>Insurance: {{jf_insurance}}</td>
+                    <td>Tax: {{jf_tax}}</td>
+                    <td>Threshold: {{jf_reimbursement}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Instructions</h3>
+                </div>
+                <div class="panel-body">
+                    <ul>
+                        <li>If the route field is editable, then you can save a new route.</li>
+                        <li>If the route field is disabled, you are editing a route. Hit cancel to save a new route
+                            instead.
+                        </li>
+                        <li>To edit or delete a route, hit the corresponding button in the table below.</li>
+                        <li>Start and end station names must be EXACTLY as shown in-game. (Case sensitive with correct
+                            spaces)
+                        </li>
+                        <li>Use the "initialize multiple" box to "spider" chain all stations.</li>
+                        <li>
+                            If the route exists when saving a new route or initializing multiple, it will not override
+                            any route that is already set.
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped datatables">
+                <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>General Rate</th>
+                    <th>Corp Rate</th>
+                    <th>Collateral %</th>
+                    <th>Station Start</th>
+                    <th>Station End</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for route in route_list %}
+                <tr>
+                    <td>{{route[1]}}</td>
+                    <td>{{route[2]}}</td>
+                    <td>{{route[3]}}</td>
+                    <td>{{route[4]}}</td>
+                    <td>{{route[5]}}</td>
+                    <td>{{route[6]}}</td>
+                    <td>
+                        <form class="form-inline" method="get">
+                            <input class="form-control" name="_id" type="hidden" value="{{route[0]}}">
+                            <button name="action" type="submit" class="btn btn-warning" value="edit">Edit</button>
+                            <button name="action" type="submit" class="btn btn-danger" value="delete">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 {% endblock content %}

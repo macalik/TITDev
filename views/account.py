@@ -18,8 +18,6 @@ def home():
         if request.form.get("action") == "add":
             error_list = caches.api_keys([(request.form.get("key_id"), request.form.get("vcode"))])
         elif request.form.get("action") == "remove":
-            print(request.form.get("key_id"))
-            print(session["CharacterOwnerHash"])
             g.mongo.db.api_keys.update({"_id": session["CharacterOwnerHash"]},
                                        {
                                            "$pull": {
@@ -52,6 +50,8 @@ def home():
     image_list = [base_config["image_server"] + "Character/" + str(db_user_info["character_id"]) + "_256.jpg",
                   base_config["image_server"] + "Corporation/" + str(db_user_info["corporation_id"]) + "_128.png",
                   base_config["image_server"] + "Alliance/" + str(db_user_info["alliance_id"]) + "_128.png"]
+
+    access_mask = base_config["access_mask"]
 
     # Away from EVE
     if request.method == "GET":
@@ -87,12 +87,11 @@ def home():
         vacation_text = ""
         vacation_date = ""
 
-    with open("configs/base.json", "r") as base_config_file:
-        base_config = json.load(base_config_file)
-
-    access_mask = base_config["access_mask"]
+    keys = request.args.get("keys")
+    if keys:
+        keys = keys.split(",")
 
     return render_template("account.html", error_list=error_list, given_roles=given_roles,
                            associated_keys=associated_keys, user_info=user_info, image_list=image_list,
-                           vacation=vacation, vacation_text=vacation_text, access_mask=access_mask,
+                           vacation=vacation, vacation_text=vacation_text, keys=keys, access_mask=access_mask,
                            vacation_date=vacation_date)
