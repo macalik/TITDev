@@ -49,6 +49,7 @@ def home():
                 if not split_item:
                     if new_slot:
                         fit_counter += 1
+                        fit_counter = min(fit_counter, 4)
                         new_slot = False
                 elif item_match:
                     new_slot = True

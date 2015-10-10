@@ -121,6 +121,7 @@ def character(char_ids):
 
 
 def contracts(keys=None):
+    # [("jf_service" or "personal", key_id, vcode), (), ...]
     contracts_start_time = time.time()
     print("Contracts start: {}".format(contracts_start_time)) if g.timings else None
 
@@ -233,6 +234,7 @@ def contracts(keys=None):
 
 
 def api_keys(api_key_list):
+    # [(key_id, vcode), (), ...]
     api_keys_start_time = time.time()
     print("api_keys start: {}".format(api_keys_start_time)) if g.timings else None
 
@@ -313,6 +315,7 @@ def api_keys(api_key_list):
 
 
 def wallet_journal(keys=None):
+    # ["personal", key_id, vcode] or None for jf_wallet
     wallet_journal_start_time = time.time()
     print("wallet journal start: {}".format(wallet_journal_start_time)) if g.timings else None
 
@@ -324,13 +327,22 @@ def wallet_journal(keys=None):
     bulk_op = g.mongo.db.wallet_journal.initialize_unordered_bulk_op()
     bulk_run = False
     for service in keys:
-        db_wallet_journal_cache = g.mongo.db.caches.find_one({"_id": service[0]})
+        if service[0] == "jf_wallet":
+            db_wallet_journal_cache = g.mongo.db.caches.find_one({"_id": service[0]})
+        else:
+            db_wallet_journal_cache = None  # # Replace
         if not db_wallet_journal_cache or db_wallet_journal_cache.get("cached_until", 0) < time.time():
-            xml_wallet_journal_payload = {
-                "keyID": service[1],
-                "vCode": service[2],
-                "accountKey": base_config["jf_account_key"]
-            }
+            if service[0] == "jf_wallet":
+                xml_wallet_journal_payload = {
+                    "keyID": service[1],
+                    "vCode": service[2],
+                    "accountKey": base_config["jf_account_key"]
+                }
+            else:
+                xml_wallet_journal_payload = {
+                    "keyID": service[1],
+                    "vCode": service[2]
+                }
             wallet_journal_api_start = time.time()
             print("wallet journal api start: {}".format(wallet_journal_api_start)) if g.timings else None
             xml_wallet_journal_response = requests.get("https://api.eveonline.com/corp/WalletJournal.xml.aspx",
@@ -367,4 +379,57 @@ def wallet_journal(keys=None):
     wallet_journal_end_time = time.time()
     print("wallet journal end: {}, Total: {}".format(wallet_journal_end_time,
                                                      wallet_journal_end_time - wallet_journal_start_time)
+          ) if g.timings else None
+
+
+def skill_sheets(keys):
+    # Keys = [key_id, vcode, character_id]
+    skill_sheet_start_time = time.time()
+    print("skill sheet start: {}".format(skill_sheet_start_time)) if g.timings else None
+
+    bulk_op = g.mongo.db.skill_sheets.initialize_unordered_bulk_op()
+    bulk_run = False
+    for service in keys:
+        db_wallet_journal_cache = g.mongo.db.key_caches.find_one({"_id": service[2]})
+        if not db_wallet_journal_cache or db_wallet_journal_cache.get("cached_until", 0) < time.time():
+            xml_wallet_journal_payload = {
+                "keyID": service[1],
+                "vCode": service[2]
+            }
+            wallet_journal_api_start = time.time()
+            print("wallet journal api start: {}".format(wallet_journal_api_start)) if g.timings else None
+            xml_wallet_journal_response = requests.get("https://api.eveonline.com/corp/WalletJournal.xml.aspx",
+                                                       data=xml_wallet_journal_payload, headers=xml_headers)
+            wallet_journal_api_end = time.time()
+            print("wallet journal api end: {}, Total: {}".format(wallet_journal_api_end,
+                                                                 wallet_journal_api_end - wallet_journal_api_start)
+                  ) if g.timings else None
+            # XML Parse
+            xml_wallet_journal_tree = ElementTree.fromstring(xml_wallet_journal_response.text)
+            # Store in database
+            xml_time_pattern = "%Y-%m-%d %H:%M:%S"
+            g.mongo.db.caches.update({"_id": service[0]}, {"cached_until": int(calendar.timegm(
+                time.strptime(xml_wallet_journal_tree[2].text, xml_time_pattern))),
+                "cached_str": xml_wallet_journal_tree[2].text}, upsert=True)
+            for transaction in xml_wallet_journal_tree[1][0]:
+                bulk_run = True
+                bulk_op.find({"_id": int(transaction.attrib["refID"]), "service": service[0]}).upsert().update(
+                    {
+                        "$set": {
+                            "ref_type_id": int(transaction.attrib["refTypeID"]),
+                            "owner_name_1": transaction.attrib["ownerName1"],
+                            "owner_id_1": int(transaction.attrib["ownerID1"]),
+                            "owner_name_2": transaction.attrib["ownerName2"],
+                            "owner_id_2": int(transaction.attrib["ownerID2"]),
+                            "amount": float(transaction.attrib["amount"]),
+                            "reason": transaction.attrib["reason"]
+                        }
+                    })
+
+    if bulk_run:
+        bulk_op.execute()
+
+    skill_sheet_end_time = time.time()
+    print("skill sheet end: {}, Total: {}".format(skill_sheet_end_time,
+                                                  skill_sheet_end_time - skill_sheet_start_time)
           ) if g.timings else None
