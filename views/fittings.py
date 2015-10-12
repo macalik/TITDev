@@ -21,6 +21,9 @@ def home():
     error_string = None
     subsystem = ["Legion", "Tengu", "Proteus", "Loki"]
 
+    # Check if fittings admin
+    admin = auth_check("fittings_admin")
+
     if request.args.get("error"):
         if request.args.get("error") == "parsing":
             error_string = "Could not parse the EFT-Formatted fit. Please ensure it is correctly formatted."
@@ -107,7 +110,7 @@ def home():
             "dna": dna_string,
             "ship": ship,
             "source": request.form.get("source"),
-            "doctrine": True if request.form.get("doctrine") else False
+            "doctrine": True if request.form.get("doctrine") and admin else False
         })
 
         return redirect(url_for("fittings.fit", fit_id=fit_id))
@@ -143,9 +146,6 @@ def home():
             alliance_fits.append(fit_info)
         all_fits.append(fit_info)
 
-    # Check if fittings admin
-    admin = auth_check("fittings_admin")
-
     return render_template("fittings.html", doctrine_fits=doctrine_fits, corporation_fits=corporation_fits,
                            alliance_fits=alliance_fits, dna_string=dna_string, personal_fits=personal_fits,
                            all_fits=all_fits, error_string=error_string, admin=admin)
@@ -166,15 +166,19 @@ def fit(fit_id=None):
     if not selected_fit:
         return redirect(url_for("fittings.home", error="not_found"))
 
+    # Check if fittings admin
+    admin = auth_check("fittings_admin")
+
     # Delete Permissions
-    if selected_fit["submitter"] == session["CharacterOwnerHash"] or auth_check("fittings_admin"):
+    if selected_fit["submitter"] == session["CharacterOwnerHash"] or admin:
         can_delete = True
     else:
         can_delete = False
 
     # Modifications
-    notes_change = request.args.get("notes")if request.args.get("notes") else selected_fit["notes"]
-    source_change = request.args.get("source")if request.args.get("source") else selected_fit.get("source")
+    notes_change = request.args.get("notes") if request.args.get("notes") else selected_fit["notes"]
+    source_change = request.args.get("source") if request.args.get("source") else selected_fit.get("source")
+    doctrine_change = bool(request.args.get("doctrine")) if request.args.get("doctrine") else False
     if request.args.get("action") == "delete" and can_delete:
         g.mongo.db.fittings.remove({"_id": ObjectId(fit_id)})
         return redirect(url_for("fittings.home"))
@@ -182,7 +186,8 @@ def fit(fit_id=None):
         g.mongo.db.fittings.update({"_id": ObjectId(fit_id)},
                                    {"$set": {
                                        "notes": notes_change,
-                                       "source": source_change
+                                       "source": source_change,
+                                       "doctrine": doctrine_change
                                    }})
         return redirect(url_for("fittings.fit", fit_id=fit_id))
 
@@ -266,4 +271,5 @@ def fit(fit_id=None):
                            total_fit_isk=total_fit_isk, total_volume=total_volume, valid_stations=valid_stations,
                            market_hub_name=market_hub_name, jf_rate=jf_rate, jf_total=jf_total, order_total=order_total,
                            dna_string=selected_fit["dna"], fit_name=selected_fit["name"], multiply=multiply,
-                           can_delete=can_delete, notes=selected_fit["notes"], source=selected_fit.get("source"))
+                           can_delete=can_delete, notes=selected_fit["notes"], source=selected_fit.get("source"),
+                           admin=admin, doctrine=selected_fit["doctrine"])

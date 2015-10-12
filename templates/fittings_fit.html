@@ -37,6 +37,18 @@
                             <label for="source">Source Link:</label>
                             <input class="form-control" id="source" name="source" placeholder="Http Link">
                         </div>
+                        {% if admin %}
+                        <div class="checkbox">
+                            <label>
+                                {% if doctrine %}
+                                <input name="doctrine" type="checkbox" value="True" checked>
+                                {% else %}
+                                <input name="doctrine" type="checkbox" value="True">
+                                {% endif %}
+                                Mark as doctrine fit?
+                            </label>
+                        </div>
+                        {% endif %}
                         <button type="submit" class="btn btn-warning" name="action" value="edit">Edit Meta</button>
                     </form>
                     <form>
@@ -49,6 +61,7 @@
         <div class="col-md-8">
             <div class="panel panel-default">
                 <div class="panel-body">
+                    <p><b>Doctrine:</b> {{doctrine}}</p>
                     <p><b>Notes:</b> {{notes}}</p>
                     <p><b>Source:</b> <a href="{{source}}">{% if source %}{{source}}{% endif %}</a></p>
                 </div>
