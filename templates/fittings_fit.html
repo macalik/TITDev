@@ -13,21 +13,46 @@
         <div class="col-md-4">
             <h3>{{fit_name}}</h3>
             <button type="button" class="btn btn-primary"
-                    onclick="CCPEVE.showFitting('{{dna_string}}')">In-Game Fit</button>
+                    onclick="CCPEVE.showFitting('{{dna_string}}')">In-Game Fit
+            </button>
             <address>
                 <small>
-                {% for line in fit_string %}
-                {{line}}<br>
-                {% endfor %}
+                    {% for line in fit_string %}
+                    {{line}}<br>
+                    {% endfor %}
                 </small>
             </address>
             {% if can_delete %}
-            <form>
-                <button type="submit" class="btn btn-danger" name="action" value="delete">Delete Fit</button>
-            </form>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>Edit</h4>
+                </div>
+                <div class="panel-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="notes">Notes:</label>
+                            <input class="form-control" id="notes" name="notes" placeholder="Notes">
+                        </div>
+                        <div class="form-group">
+                            <label for="source">Source Link:</label>
+                            <input class="form-control" id="source" name="source" placeholder="Http Link">
+                        </div>
+                        <button type="submit" class="btn btn-warning" name="action" value="edit">Edit Meta</button>
+                    </form>
+                    <form>
+                        <button type="submit" class="btn btn-danger" name="action" value="delete">Delete Fit</button>
+                    </form>
+                </div>
+            </div>
             {% endif %}
         </div>
         <div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <p><b>Notes:</b> {{notes}}</p>
+                    <p><b>Source:</b> <a href="{{source}}">{% if source %}{{source}}{% endif %}</a></p>
+                </div>
+            </div>
             <table class="table table-hover table-condensed" id="datatables-fit">
                 <thead>
                 <tr>
@@ -83,7 +108,7 @@
                                     {% endfor %}
                                 </select>
                             </div>
-                        <button type="submit" class="btn btn-warning" name="action" value="station">Change</button>
+                            <button type="submit" class="btn btn-warning" name="action" value="station">Change</button>
                         </form>
                     </td>
                 </tr>
@@ -97,7 +122,9 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td><button class="btn btn-success" disabled>Add to Cart</button></td>
+                    <td>
+                        <button class="btn btn-success" disabled>Add to Cart</button>
+                    </td>
                 </tr>
             </table>
         </div>

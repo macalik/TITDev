@@ -233,8 +233,10 @@ def contracts(keys=None):
     return invalid_apis
 
 
-def api_keys(api_key_list):
+def api_keys(api_key_list, unassociated=False):
     # [(key_id, vcode), (), ...]
+    api_owner = "unassociated" if unassociated else session["CharacterOwnerHash"]
+
     api_keys_start_time = time.time()
     print("api_keys start: {}".format(api_keys_start_time)) if g.timings else None
 
@@ -246,12 +248,14 @@ def api_keys(api_key_list):
     bulk_run = False
 
     for key_id, vcode in api_key_list:
-        db_api_cache = g.mongo.db.api_keys.find_one({"_id": session["CharacterOwnerHash"],
+        db_api_cache = g.mongo.db.api_keys.find_one({"_id": api_owner,
                                                      "keys.key_id": {"$eq": int(key_id)}})
         cache_timer = 0
-        if db_api_cache:
+        if db_api_cache and api_owner != "unassociated":
             cache_timer_list = [key["cached_until"] for key in db_api_cache["keys"] if key["key_id"] == int(key_id)]
             cache_timer = max(cache_timer_list)
+        elif api_owner == "unassociated":
+            cache_timer = 0
         if not db_api_cache or cache_timer < time.time():
 
             xml_contracts_payload = {
@@ -284,12 +288,21 @@ def api_keys(api_key_list):
                 continue
 
             # If same character is input, remove old keys first
-            bulk_op.find({"_id": session["CharacterOwnerHash"]}).upsert().update(
+            bulk_op.find({"_id": api_owner}).upsert().update(
                 {
                     "$pull": {
                         "keys": {"key_id": int(key_id)}
                     }
                 })
+            if api_owner != "unassociated":
+                # Remove keys from unassociated if found
+                bulk_op.find({"_id": "unassociated"}).upsert().update(
+                    {
+                        "$pull": {
+                            "keys": {"key_id": int(key_id)}
+                        }
+                    }
+                )
 
             for api_character in xml_api_key_tree[1][0][0]:
                 bulk_run = True
@@ -302,7 +315,9 @@ def api_keys(api_key_list):
                                                                       xml_time_pattern))),
                     "cached_str": xml_api_key_tree[2].text
                 }}}
-                bulk_op.find({"_id": session["CharacterOwnerHash"]}).upsert().update(update_request)
+                if api_owner != "unassociated" or (api_owner == "unassociated" and not g.mongo.db.api_keys.find_one(
+                        {"keys.key_id": {"$eq": int(key_id)}, "_id": {"$ne": "unassociated"}})):
+                    bulk_op.find({"_id": api_owner}).upsert().update(update_request)
 
     if bulk_run:
         bulk_op.execute()
@@ -330,7 +345,7 @@ def wallet_journal(keys=None):
         if service[0] == "jf_wallet":
             db_wallet_journal_cache = g.mongo.db.caches.find_one({"_id": service[0]})
         else:
-            db_wallet_journal_cache = None  # # Replace
+            db_wallet_journal_cache = g.mongo.db.key_caches.find_one({"_id": "wallet_journal"})
         if not db_wallet_journal_cache or db_wallet_journal_cache.get("cached_until", 0) < time.time():
             if service[0] == "jf_wallet":
                 xml_wallet_journal_payload = {
@@ -382,54 +397,56 @@ def wallet_journal(keys=None):
           ) if g.timings else None
 
 
-def skill_sheets(keys):
+def character_sheet(keys):
     # Keys = [key_id, vcode, character_id]
-    skill_sheet_start_time = time.time()
-    print("skill sheet start: {}".format(skill_sheet_start_time)) if g.timings else None
+    character_sheet_start_time = time.time()
+    print("character sheet start: {}".format(character_sheet_start_time)) if g.timings else None
 
-    bulk_op = g.mongo.db.skill_sheets.initialize_unordered_bulk_op()
+    bulk_op = g.mongo.db.character_sheet.initialize_unordered_bulk_op()
     bulk_run = False
     for service in keys:
-        db_wallet_journal_cache = g.mongo.db.key_caches.find_one({"_id": service[2]})
-        if not db_wallet_journal_cache or db_wallet_journal_cache.get("cached_until", 0) < time.time():
-            xml_wallet_journal_payload = {
-                "keyID": service[1],
-                "vCode": service[2]
+        db_character_sheet_cache = g.mongo.db.key_caches.find_one({"_id": service[2]})
+        if not db_character_sheet_cache or db_character_sheet_cache.get("character_sheet", 0) < time.time():
+            xml_character_sheet_payload = {
+                "keyID": service[0],
+                "vCode": service[1],
+                "characterID": service[2]
             }
-            wallet_journal_api_start = time.time()
-            print("wallet journal api start: {}".format(wallet_journal_api_start)) if g.timings else None
-            xml_wallet_journal_response = requests.get("https://api.eveonline.com/corp/WalletJournal.xml.aspx",
-                                                       data=xml_wallet_journal_payload, headers=xml_headers)
-            wallet_journal_api_end = time.time()
-            print("wallet journal api end: {}, Total: {}".format(wallet_journal_api_end,
-                                                                 wallet_journal_api_end - wallet_journal_api_start)
+            character_sheet_api_start = time.time()
+            print("character sheet api start: {}".format(character_sheet_api_start)) if g.timings else None
+            xml_character_sheet_response = requests.get("https://api.eveonline.com/char/CharacterSheet.xml.aspx",
+                                                        data=xml_character_sheet_payload, headers=xml_headers)
+            character_sheet_api_end = time.time()
+            print("character sheet api end: {}, Total: {}".format(character_sheet_api_end,
+                                                                  character_sheet_api_end - character_sheet_api_start)
                   ) if g.timings else None
             # XML Parse
-            xml_wallet_journal_tree = ElementTree.fromstring(xml_wallet_journal_response.text)
+            xml_character_sheet_tree = ElementTree.fromstring(xml_character_sheet_response.text)
             # Store in database
             xml_time_pattern = "%Y-%m-%d %H:%M:%S"
-            g.mongo.db.caches.update({"_id": service[0]}, {"cached_until": int(calendar.timegm(
-                time.strptime(xml_wallet_journal_tree[2].text, xml_time_pattern))),
-                "cached_str": xml_wallet_journal_tree[2].text}, upsert=True)
-            for transaction in xml_wallet_journal_tree[1][0]:
+            g.mongo.db.key_caches.update({"_id": service[2]}, {
+                "character_sheet": int(calendar.timegm(
+                    time.strptime(xml_character_sheet_tree[2].text, xml_time_pattern))),
+                "character_sheet_str": xml_character_sheet_tree[2].text,
+                "key": int(service[0])
+            }, upsert=True)
+
+            for skill in xml_character_sheet_tree[1][33]:
                 bulk_run = True
-                bulk_op.find({"_id": int(transaction.attrib["refID"]), "service": service[0]}).upsert().update(
+                bulk_op.find({"_id": service[2]}).upsert().update(
                     {
                         "$set": {
-                            "ref_type_id": int(transaction.attrib["refTypeID"]),
-                            "owner_name_1": transaction.attrib["ownerName1"],
-                            "owner_id_1": int(transaction.attrib["ownerID1"]),
-                            "owner_name_2": transaction.attrib["ownerName2"],
-                            "owner_id_2": int(transaction.attrib["ownerID2"]),
-                            "amount": float(transaction.attrib["amount"]),
-                            "reason": transaction.attrib["reason"]
+                            "skills." + skill.attrib["typeID"]: {
+                                "skill_points": int(skill.attrib["skillpoints"]),
+                                "level": int(skill.attrib["level"])
+                            }
                         }
                     })
 
     if bulk_run:
         bulk_op.execute()
 
-    skill_sheet_end_time = time.time()
-    print("skill sheet end: {}, Total: {}".format(skill_sheet_end_time,
-                                                  skill_sheet_end_time - skill_sheet_start_time)
+    character_sheet_end_time = time.time()
+    print("character sheet end: {}, Total: {}".format(character_sheet_end_time,
+                                                      character_sheet_end_time - character_sheet_start_time)
           ) if g.timings else None
