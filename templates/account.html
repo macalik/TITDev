@@ -26,16 +26,29 @@
             <ul class="list-group">
                 <li class="list-group-item">
                     <img src="{{image_list[0]}}" alt="Character">
-                </li>
-                <li class="list-group-item">Site ID: {{user_info[0]}}</li>
-                <li class="list-group-item">Character: {{user_info[1]}}</li>
-                <li class="list-group-item">
                     <img src="{{image_list[1]}}" alt="Corporation">
                     <img src="{{image_list[2]}}" alt="Alliance">
                 </li>
-                <li class="list-group-item">Corporation: {{user_info[2]}}</li>
-                <li class="list-group-item">Alliance: {{user_info[3]}}</li>
+                <li class="list-group-item"><b>Site ID:</b> {{user_info[0]}}</li>
+                <li class="list-group-item"><b>Character:</b> {{user_info[1]}}</li>
+                <li class="list-group-item"><b>Corporation:</b> {{user_info[2]}}</li>
+                <li class="list-group-item"><b>Alliance:</b> {{user_info[3]}}</li>
+                <li class="list-group-item"><b>Email:</b> {{user_info[4]}}</li>
             </ul>
+            <div>
+                <form method="post">
+                    <label> Edit Email:</label>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon">@</span>
+                            <input class="form-control" placeholder="user@example.com" name="email" type="email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button name="action" type="submit" class="btn btn-warning" value="email">Edit</button>
+                    </div>
+                </form>
+            </div>
         </div>
         <div class="col-md-6">
             <div class="panel panel-default">

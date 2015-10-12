@@ -61,6 +61,11 @@ def stations():
 
 
 def character(char_ids):
+    """
+
+    :param char_ids: [character_id, ...]
+    :return:
+    """
     character_start_time = time.time()
     print("Character start: {}".format(character_start_time)) if g.timings else None
 
@@ -121,7 +126,11 @@ def character(char_ids):
 
 
 def contracts(keys=None):
-    # [("jf_service" or "personal", key_id, vcode), (), ...]
+    """
+
+    :param keys: [("jf_service" or "personal", key_id, vcode), (), ...]
+    :return:
+    """
     contracts_start_time = time.time()
     print("Contracts start: {}".format(contracts_start_time)) if g.timings else None
 
@@ -234,7 +243,12 @@ def contracts(keys=None):
 
 
 def api_keys(api_key_list, unassociated=False):
-    # [(key_id, vcode), (), ...]
+    """
+
+    :param api_key_list: [(key_id, vcode), (), ...]
+    :param unassociated: True to add to unassociated API keys
+    :return:
+    """
     api_owner = "unassociated" if unassociated else session["CharacterOwnerHash"]
 
     api_keys_start_time = time.time()
@@ -330,7 +344,11 @@ def api_keys(api_key_list, unassociated=False):
 
 
 def wallet_journal(keys=None):
-    # ["personal", key_id, vcode] or None for jf_wallet
+    """
+
+    :param keys: [("personal", key_id, vcode), (), ...] or None for jf_wallet
+    :return:
+    """
     wallet_journal_start_time = time.time()
     print("wallet journal start: {}".format(wallet_journal_start_time)) if g.timings else None
 
@@ -398,7 +416,11 @@ def wallet_journal(keys=None):
 
 
 def character_sheet(keys):
-    # Keys = [key_id, vcode, character_id]
+    """
+
+    :param keys: [(key_id, vcode, character_id), (), ....]
+    :return:
+    """
     character_sheet_start_time = time.time()
     print("character sheet start: {}".format(character_sheet_start_time)) if g.timings else None
 
