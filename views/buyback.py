@@ -214,8 +214,6 @@ def home():
 def admin():
 
     # # Settings
-    character_list = []
-    current_user = g.mongo.db.api_keys.find_one({"_id": session["CharacterOwnerHash"]})
     refine_character = g.mongo.db.preferences.find_one({"_id": "refine_character"})
 
     if request.method == "POST":
@@ -256,25 +254,28 @@ def admin():
         general_implant = 0
         general_tax = 0
 
+    character_list = []
+    current_user = g.mongo.db.api_keys.find_one({"_id": session["CharacterOwnerHash"]})
     # Set Refine Character
     current_refine_character = refine_character["character_name"] if refine_character else None
-    for key in current_user["keys"]:
-        selected = False
-        if request.method == "POST" and request.form.get("action") == "refine_character":
-            if request.form.get("character") and key["character_id"] == int(request.form.get("character")):
+    if current_user:
+        for key in current_user["keys"]:
+            selected = False
+            if request.method == "POST" and request.form.get("action") == "refine_character":
+                if request.form.get("character") and key["character_id"] == int(request.form.get("character")):
+                    selected = True
+                    current_refine_character = key["character_name"]
+                    g.mongo.db.preferences.update({"_id": "refine_character"}, {
+                        "key_id": key["key_id"],
+                        "vcode": key["vcode"],
+                        "character_id": key["character_id"],
+                        "character_name": key["character_name"]
+                    }, upsert=True)
+                    caches.character_sheet([[key["key_id"], key["vcode"], key["character_id"]]])
+            elif refine_character and refine_character["character_id"] == key["character_id"]:
+                # Fix front end view
                 selected = True
-                current_refine_character = key["character_name"]
-                g.mongo.db.preferences.update({"_id": "refine_character"}, {
-                    "key_id": key["key_id"],
-                    "vcode": key["vcode"],
-                    "character_id": key["character_id"],
-                    "character_name": key["character_name"]
-                }, upsert=True)
-                caches.character_sheet([[key["key_id"], key["vcode"], key["character_id"]]])
-        elif refine_character and refine_character["character_id"] == key["character_id"]:
-            # Fix front end view
-            selected = True
-        character_list.append([key["character_id"], key["character_name"], selected])
+            character_list.append([key["character_id"], key["character_name"], selected])
 
     # # Refine Quick-Look
     with open("configs/definitions.json") as groups_file:

@@ -218,8 +218,12 @@ def sso_response():
             base_config = json.load(base_config_file)
         if db_user["corporation_id"] == base_config["corporation_id"]:
             session["UI_Corporation"] = True
+        else:
+            session["UI_Corporation"] = False
         if db_user["alliance_id"] == base_config["alliance_id"]:
             session["UI_Alliance"] = True
+        else:
+            session["UI_Alliance"] = False
         session["UI_Roles"] = []
         for role in g.mongo.db.eve_auth.find():
             if session["CharacterOwnerHash"] in role["users"]:
