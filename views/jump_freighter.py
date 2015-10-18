@@ -236,6 +236,13 @@ def home():
     next_update_query = g.mongo.db.caches.find_one({"_id": "jf_service"})
     next_update = next_update_query["cached_str"] if next_update_query else "Unknown"
 
+    # All related characters for personal list
+    alt_characters_db = g.mongo.db.api_keys.find_one({"_id": session.get("CharacterOwnerHash")})
+    alt_characters_list = []
+    if alt_characters_db:
+        for api_key in alt_characters_db["keys"]:
+            alt_characters_list.append(api_key["character_name"])
+
     for contract in g.mongo.db.contracts.find({"_id.service": "jf_service", "type": "Courier"}):
         if contract["status"] not in ["Deleted", "Canceled"]:
             # Perform ID Conversions
@@ -260,7 +267,8 @@ def home():
                 "{:0,.2f}".format(contract["volume"])
             ])
 
-            if session.get("CharacterOwnerHash") and issuer == session["CharacterName"]:
+            if session.get("CharacterOwnerHash") and (
+                            issuer == session["CharacterName"] or issuer in alt_characters_list):
                 personal_contract_list.append([
                     color,
                     acceptor,

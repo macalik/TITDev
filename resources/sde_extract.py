@@ -25,12 +25,18 @@ def ccp_sde():
         stations[int(row[0])] = row[1]
 
     for row in cursor.execute(
-            ("select invTypes.typeID, typename, volume, metaGroupName"
-             " from invMetaTypes,invTypes,invMetaGroups"
-             " where invTypes.typeID=invMetaTypes.typeID"
-             " and invMetaGroups.metaGroupID=invMetaTypes.metaGroupID"
-             " and invTypes.marketGroupID not null")):
-        marketable_items[int(row[0])] = {"name": row[1], "volume": row[2], "meta": row[3]}
+            (
+            "SELECT inv.typeID, inv.typeName, inv.volume, meta, img.marketGroupID, dtaRefine.valueInt as skillID"
+            " FROM invTypes inv"
+            " left JOIN invMarketGroups img ON img.marketGroupID = inv.marketGroupID"
+            " left JOIN (select coalesce(valueFloat, valueInt) meta, typeID from dgmTypeAttributes "
+            " where attributeID = 633) dtaMeta On dtaMeta.typeID = inv.typeID"
+            " left JOIN (select typeID, valueInt, attributeID from dgmTypeAttributes where attributeID = 790) dtaRefine"
+            " ON dtaRefine.typeID = inv.typeID"
+            " where inv.marketGroupID NOTNULL"
+            )):
+        marketable_items[int(row[0])] = {"name": row[1], "volume": row[2], "meta": int(row[3]) if row[3] else None,
+                                         "market_group_id": row[4], "skill_id": row[5]}
 
     for row in cursor.execute("SELECT typeID, typeName FROM invTypes WHERE invTypes.groupID IN " +
                               "(SELECT groupID FROM invGroups WHERE invGroups.categoryID = 16)"):

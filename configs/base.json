@@ -5,7 +5,9 @@
   "image_server": "https://imageserver.eveonline.com/",
   "jf_account_key": 1001,
   "market_hub_region": 10000002,
+  "market_hub_system": 30000142,
   "market_hub_station": 60003760,
   "market_hub_name": "Jita",
-  "default_ship_to": "3KNA-N II - We have top men working on it"
+  "default_ship_to": "3KNA-N II - We have top men working on it",
+  "home_station": 61000712
 }

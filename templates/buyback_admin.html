@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+{% block head %}
+{{super()}}
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon_jf.ico') }}">
+{% endblock head %}
+{% block scripts %}
+{{super()}}
+<script src="{{url_for('static', filename='datatables.js')}}"></script>
+{% endblock scripts %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <h2>Settings</h2>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>Refine Character</h4>
+                </div>
+                <div class="panel-body">
+                    <p>Current Character: <b>{{refine_character}}</b></p>
+                    <form class="form" method="post">
+                        <div class="form-group">
+                            <label for="character">Change Refine Character: </label>
+                            <select class="form-control" id="character" name="character">
+                                {% for character in character_list %}
+                                {% if character[2] %}
+                                <option value="{{character[0]}}" selected>{{character[1]}}</option>
+                                {% else %}
+                                <option value="{{character[0]}}">{{character[1]}}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-warning" name="action" value="refresh_character">Refresh</button>
+                        <button type="submit" class="btn btn-danger" name="action" value="refine_character">Change</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>General Rates</h4>
+                </div>
+                <div class="panel-body">
+                    <ul>
+                        <li>General Base: <b>{{general_base}}%</b></li>
+                        <li>General Implant: <b>{{general_implant}}%</b></li>
+                        <li>General Tax: <b>{{general_tax}}%</b></li>
+                    </ul>
+                    <form class="form" method="post">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="general_base_text">Base</span>
+                            <input type="text" class="form-control" placeholder="Base %" name="general_base"
+                                   aria-describedby="general_base_text">
+                            <span class="input-group-addon">%</span>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="general_implant_text">Implant</span>
+                            <input type="text" class="form-control" placeholder="Implant %" name="general_implant"
+                                   aria-describedby="general_implant_text">
+                            <span class="input-group-addon">%</span>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="general_tax_text">Tax</span>
+                            <input type="text" class="form-control" placeholder="Tax %" name="general_tax"
+                                   aria-describedby="general_tax_text">
+                            <span class="input-group-addon">%</span>
+                        </div>
+                        <button type="submit" class="btn btn-warning" name="action" value="general_settings">Change</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>New Specific Rate</h4>
+                </div>
+                <div class="panel-body">
+                    <form class="form" method="post">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="name_text">Name</span>
+                            <input type="text" class="form-control" placeholder="Name" name="name"
+                                   aria-describedby="name_text">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="specific_base_text">Base</span>
+                            <input type="text" class="form-control" placeholder="Base %" name="specific_base"
+                                   aria-describedby="specific_base_text">
+                            <span class="input-group-addon">%</span>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="specific_implant_text">Implant</span>
+                            <input type="text" class="form-control" placeholder="Implant %" name="specific_implant"
+                                   aria-describedby="specific_implant_text">
+                            <span class="input-group-addon">%</span>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="specific_tax_text">Tax</span>
+                            <input type="text" class="form-control" placeholder="Tax %" name="specific_tax"
+                                   aria-describedby="specific_tax_text">
+                            <span class="input-group-addon">%</span>
+                        </div>
+                        <button type="submit" class="btn btn-success" name="action" value="specific_settings">Add</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <h2>Specific Rates</h2>
+        <div class="col-md-12">
+            <table class="table table-hover table-condensed datatables">
+                <thead>
+                <tr>
+                    {% for header in specific_rates_table[0] %}
+                    <th>{{header}}</th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for rate in specific_rates_table[1:] %}
+                <tr>
+                    {% for info in rate[:-1] %}
+                    <td>{{info}}</td>
+                    {% endfor %}
+                    <td>
+                        <form method="post">
+                            <button type="submit" class="btn btn-danger" name="delete" value="{{rate[-1]}}">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <h2>Refine Quick-Look</h2>
+        <div class="col-md-12">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#ore">Ore</a></li>
+                <li><a data-toggle="tab" href="#ice">Ice</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="ore" class="tab-pane active">
+                    <h3>Ore Values</h3>
+                    <table class="table table-hover table-condensed datatables">
+                        <thead>
+                        <tr>
+                            {% for header in ore_table[0] %}
+                            <th>{{header}}</th>
+                            {% endfor %}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for raw_ore in ore_table[1:] %}
+                        <tr>
+                            {% for info in raw_ore %}
+                            <td>{{info}}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div id="ice" class="tab-pane">
+                    <h3>Ice Values</h3>
+                    <table class="table table-hover table-condensed datatables">
+                        <thead>
+                        <tr>
+                            {% for header in ice_table[0] %}
+                            <th>{{header}}</th>
+                            {% endfor %}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for raw_ore in ice_table[1:] %}
+                        <tr>
+                            {% for info in raw_ore %}
+                            <td>{{info}}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+        </div>
+    </div>
+</div>
+{% endblock content %}

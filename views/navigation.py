@@ -6,7 +6,8 @@ from flask import session
 class Navigation:
 
     base = ['TiT', View('Home', 'home'),  View('Account', "account.home")]
-    after_base = [View('JF Service', "jf.home"), View('Fittings', "fittings.home")]
+    after_base = [View('JF Service', "jf.home"), View('Buyback Service', 'buyback.home'),
+                  View('Fittings', "fittings.home")]
     alliance = base + after_base
     corp = base + [View('Corp Main', "corp.home")] + after_base
 
@@ -16,12 +17,12 @@ class Navigation:
         @nav.navigation('anon')
         def nav_anon():
             return Navbar('TiT', View('Home', 'home'), View('JF Service', "jf.home"),
-                          View('Log In', 'auth.sso_redirect'))
+                          View('Buyback Service', 'buyback.home'), View('Log In', 'auth.sso_redirect'))
 
         @nav.navigation('neut')
         def nav_neut():
             return Navbar('TiT', View('Home', 'home'), View('Account', "account.home"), View('JF Service', "jf.home"),
-                          View('Log Out', 'auth.log_out'))
+                          View('Buyback Service', 'buyback.home'), View('Log Out', 'auth.log_out'))
 
         @nav.navigation('corporation')
         def nav_corp():
@@ -43,6 +44,8 @@ class Navigation:
                     admin_elements.append(View('User Roles', "admin.roles"))
                 elif role == "jf_pilot":
                     admin_elements.append(View('JF Pilot', "jf.pilot"))
+                elif role == "buyback_admin":
+                    admin_elements.append(View('Buyback Service', 'buyback.admin'))
             if session["UI_Corporation"]:
                 items = Navigation.corp + [Subgroup('Admin Pages', *admin_elements),
                                            View('Log Out', 'auth.log_out')]

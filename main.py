@@ -13,6 +13,7 @@ from views.admin import admin
 from views.account import account
 from views.corp import corp
 from views.fittings import fittings
+from views.buyback import buyback
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -38,6 +39,7 @@ app.register_blueprint(admin, url_prefix="/admin")
 app.register_blueprint(account, url_prefix="/account")
 app.register_blueprint(corp, url_prefix="/corp")
 app.register_blueprint(fittings, url_prefix="/fittings")
+app.register_blueprint(buyback, url_prefix="/buyback")
 
 
 @app.before_first_request
@@ -56,11 +58,16 @@ def app_init():
         # Adjust packed volumes of ships
         with open("resources/invVolumes.json", "r") as invVolumes_file:
             volumes_list = json.load(invVolumes_file)
+        # Open refine amounts
+        with open("resources/invTypeMaterials.json", "r") as invTypesMaterials_file:
+            materials_list = json.load(invTypesMaterials_file)
 
         adjusted_items_list = []
         for key, value in items_list.items():
             corrected_volume = volumes_list[key] if volumes_list.get(key) else value["volume"]
-            adjusted_items_list.append({"_id": int(key), "name": value["name"], "volume": corrected_volume})
+            adjusted_items_list.append({"_id": int(key), "name": value["name"], "volume": corrected_volume,
+                                        "meta": value["meta"], "materials": materials_list.get(key, []),
+                                        "market_group_id": value["market_group_id"], "skill_id": value["skill_id"]})
         app_mongo.db.items.insert(adjusted_items_list)
 
 
@@ -92,6 +99,8 @@ if not os.environ.get("HEROKU") and __name__ == "__main__":
 
     @app.route('/test')
     def test():
+        from helpers import caches
+        caches.character_sheet([[1168219, "blWCFgyN18kPQdQ8fpJoyDLlq0vzLZ5n1v4V51LGpomGi6DzFrpnolqMEY4bLqgA", 379808692]])
         return render_template("base.html")
 
     app.debug = True

@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% block head %}
+{{super()}}
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon_jf.ico') }}">
+{% endblock head %}
+{% block scripts %}
+{{super()}}
+<script src="{{url_for('static', filename='datatables.js')}}"></script>
+{% endblock scripts %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3">
+            <form method="post">
+                <div class="form-group">
+                    <label for="input">Copy-Paste from Hangar</label>
+                    <textarea class="form-control" rows="25" id="input" name="input"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" name="action" value="hangar_parse">Calculate</button>
+            </form>
+        </div>
+        <div class="col-md-9">
+            <h2>Contract Price: {{total_price}}</h2>
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#quick">Quick</a></li>
+                <li><a data-toggle="tab" href="#detailed">Detailed</a></li>
+                <li><a data-toggle="tab" href="#refine">Refine</a></li>
+                <li><a data-toggle="tab" href="#materials">Materials</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="quick" class="tab-pane active">
+                    <h3>Quick Prices</h3>
+                    <table class="table table-hover table-condensed datatables">
+                        <thead>
+                        <tr>
+                            {% for header in quick_table[0] %}
+                            <th>{{header}}</th>
+                            {% endfor %}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for quick_stats in quick_table[1:] %}
+                        <tr>
+                            {% for info in quick_stats %}
+                            <td>{{info}}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div id="detailed" class="tab-pane">
+                    <h3>Detailed</h3>
+                    <table class="table table-hover table-condensed datatables">
+                        <thead>
+                        <tr>
+                            {% for header in price_table[0] %}
+                            <th>{{header}}</th>
+                            {% endfor %}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for price_stats in price_table[1:] %}
+                        <tr>
+                            {% for info in price_stats %}
+                            <td>{{info}}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <table class="table table-condensed table-bordered">
+                        <tbody>
+                        <tr>
+                            <td>Total Buy Delta:</td>
+                            <td>{{total_buy_delta}}</td>
+                        </tr>
+                        <tr>
+                            <td>Total Sell Delta:</td>
+                            <td>{{total_sell_delta}}</td>
+                        </tr>
+                        <tr>
+                            <td>Total Price:</td>
+                            <td>{{total_price}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="refine" class="tab-pane">
+                    <h3>Refine</h3>
+                    <table class="table table-hover table-condensed datatables">
+                        <thead>
+                        <tr>
+                            {% for header in item_table[0] %}
+                            <th>{{header}}</th>
+                            {% endfor %}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item_stats in item_table[1:] %}
+                        <tr>
+                            {% for info in item_stats %}
+                            <td>{{info}}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div id="materials" class="tab-pane">
+                    <h3>Material Costs</h3>
+                    <table class="table table-hover table-condensed datatables">
+                        <thead>
+                        <tr>
+                            {% for header in material_table[0] %}
+                            <th>{{header}}</th>
+                            {% endfor %}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for material_stats in material_table[1:] %}
+                        <tr>
+                            {% for info in material_stats %}
+                            <td>{{info}}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

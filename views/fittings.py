@@ -195,7 +195,7 @@ def fit(fit_id=None):
 
     # ID Matching
     item_list = list(g.mongo.db.items.find({"name": {"$in": list(selected_fit["items"].keys())}}))
-    item_prices = eve_central.market_hub_sell_prices([x["_id"] for x in item_list])
+    item_prices = eve_central.market_hub_prices([x["_id"] for x in item_list])
 
     item_table = [["Name", "Qty", "Isk/Item", "Vol/Item", "Total Isk", "Total Volume"]]
     total_fit_isk = 0
@@ -204,7 +204,7 @@ def fit(fit_id=None):
 
     for fit_item in item_list:
         qty = selected_fit["items"][fit_item["name"]] * multiply
-        isk_per_item = item_prices[fit_item["_id"]]
+        isk_per_item = item_prices[fit_item["_id"]]["sell"]
         vol_per_item = fit_item["volume"]
         item_isk_total = qty * isk_per_item
         item_vol_total = qty * vol_per_item
