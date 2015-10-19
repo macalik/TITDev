@@ -111,7 +111,8 @@ def home():
         for input_line in request.form.get("input").splitlines():
             input_split = input_line.split("\t")
             item_qty.setdefault(input_split[0], 0)
-            item_qty[input_split[0]] += int(input_split[1]) if len(input_split) > 1 and input_split[1].strip() else 1
+            qty_clean = input_split[1].strip().replace(",", "") if len(input_split) > 1 else 1
+            item_qty[input_split[0]] += int(qty_clean)
         refine_character = g.mongo.db.preferences.find_one({"_id": "refine_character"})
         if refine_character:
             refine_id = refine_character["character_id"]
