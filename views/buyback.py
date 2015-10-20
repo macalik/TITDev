@@ -1,6 +1,7 @@
 import json
 import time
 from itertools import chain
+import re
 
 from flask import Blueprint, render_template, g, request, session
 
@@ -106,13 +107,28 @@ def home():
         else:
             jf_rate = 0
 
-        item_input = [x.split("\t")[0] for x in request.form.get("input").splitlines()]
+        item_input = [re.compile("^" + x.split("\t")[0] + "$", re.IGNORECASE) if x.find("\t") != -1
+                      else re.compile("^" + " ".join(x.split(" ")[:-1]) + "$"
+                                      if conversions.is_a_number(x.split(" ")[-1]) else
+                                      "^" + x.strip() + "$", re.IGNORECASE)
+                      for x in request.form.get("input").splitlines()]
         item_qty = {}
         for input_line in request.form.get("input").splitlines():
-            input_split = input_line.split("\t")
-            item_qty.setdefault(input_split[0], 0)
-            qty_clean = input_split[1].strip().replace(",", "") if len(input_split) > 1 else 1
-            item_qty[input_split[0]] += int(qty_clean)
+            try:
+                if input_line.find("\t") != -1:
+                    input_split = input_line.split("\t")
+                elif conversions.is_a_number(input_line.split(" ")[-1]):
+                    input_split = [" ".join(input_line.split(" ")[:-1]), input_line.split(" ")[-1]]
+                else:
+                    input_split = [input_line.strip(), "1"]
+                item_qty.setdefault(input_split[0].upper(), 0)
+                try:
+                    qty_clean = int(input_split[1].strip().replace(",", "")) if len(input_split) > 1 else 1
+                except ValueError:
+                    qty_clean = int(input_split[2].strip().replace(",", "")) if len(input_split) > 2 else 1
+                item_qty[input_split[0].upper()] += qty_clean
+            except (IndexError, ValueError):
+                raise
         refine_character = g.mongo.db.preferences.find_one({"_id": "refine_character"})
         if refine_character:
             refine_id = refine_character["character_id"]
@@ -128,7 +144,7 @@ def home():
         for material_name in material_name_db:
             material_header.append((material_name["_id"], material_name["name"]))
         material_header.sort(key=lambda x: x[0])
-        item_table = [["name"] + [x[1] for x in material_header]]
+        item_table = [["Name", "Qty"] + [x[1] for x in material_header]]
         price_table = [[
             "Name",
             "Qty",
@@ -155,15 +171,16 @@ def home():
             buy_delta = item_prices[output_item["_id"]]["total"] - (item_prices[output_item["_id"]]["buy"] - jf_price)
             sell_delta = item_prices[output_item["_id"]]["total"] - (item_prices[output_item["_id"]]["sell"] - jf_price)
 
-            total_price += item_prices[output_item["_id"]]["total"] * item_qty[output_item["name"]]
-            total_buy_delta += buy_delta * item_qty[output_item["name"]]
-            total_sell_delta += sell_delta * item_qty[output_item["name"]]
+            total_price += item_prices[output_item["_id"]]["total"] * item_qty[output_item["name"].upper()]
+            total_buy_delta += buy_delta * item_qty[output_item["name"].upper()]
+            total_sell_delta += sell_delta * item_qty[output_item["name"].upper()]
 
-            materials_row = [item_materials[output_item["_id"]].get(x[0], 0) for x in material_header]
-            item_table.append([output_item["name"]] + materials_row)
+            materials_row = [item_materials[output_item["_id"]].get(x[0], 0) * item_qty[output_item["name"].upper()]
+                             for x in material_header]
+            item_table.append([output_item["name"], item_qty[output_item["name"].upper()]] + materials_row)
             price_table.append([
                 output_item["name"],
-                item_qty[output_item["name"]],
+                item_qty[output_item["name"].upper()],
                 item_prices[output_item["_id"]]["total"],
                 item_prices[output_item["_id"]]["tax"],
                 item_prices[output_item["_id"]]["no_tax"],
@@ -173,7 +190,7 @@ def home():
                 jf_price,
                 buy_delta,
                 sell_delta,
-                item_prices[output_item["_id"]]["total"] * item_qty[output_item["name"]]
+                item_prices[output_item["_id"]]["total"] * item_qty[output_item["name"].upper()]
             ])
 
         # Materials

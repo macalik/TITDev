@@ -92,3 +92,12 @@ def refine_calc(type_ids, character_id):
                     )
 
     return calculation
+
+
+def is_a_number(input_string):
+    try:
+        float(input_string)
+    except ValueError:
+        return False
+    else:
+        return True
