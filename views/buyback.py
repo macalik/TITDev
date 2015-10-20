@@ -43,7 +43,12 @@ def price_calc(names, character_id, jf_rate=0):
     for tax_item in taxes_list:
         tax_definition[tax_item["_id"]] = tax_item["tax"]
     refine_preferences = g.mongo.db.preferences.find_one({"_id": "buyback_yield"})
-    default_tax = refine_preferences.get("tax", 0)
+    if refine_preferences:
+        default_tax = refine_preferences.get("tax", 0)
+        default_refine_tax = refine_preferences.get("tax_refine", 0)
+    else:
+        default_tax = 0
+        default_refine_tax = 0
 
     # Refined Calculations
     calculations = {}
@@ -54,7 +59,7 @@ def price_calc(names, character_id, jf_rate=0):
             item_cost += material_amount * market_prices[material_id]["buy"]
             volume += material_amount * material_volumes[material_id]
         jf_price = jf_rate * volume
-        calculations[key] = {"total": item_cost * (1 - tax_definition.get(key, default_tax) / 100),
+        calculations[key] = {"total": item_cost * (1 - tax_definition.get(key, default_refine_tax) / 100),
                              "no_tax": item_cost,
                              "sell": market_prices[key]["sell"],
                              "buy": market_prices[key]["buy"],
@@ -62,7 +67,7 @@ def price_calc(names, character_id, jf_rate=0):
                              "jf_price": jf_price,
                              "delta_sell": item_cost - (market_prices[key]["sell"] - jf_price),
                              "delta_buy": item_cost - (market_prices[key]["buy"] - jf_price),
-                             "tax": tax_definition.get(key, default_tax)}
+                             "tax": tax_definition.get(key, default_refine_tax)}
 
     # Info for non-refined
     non_refine_info_db = g.mongo.db.items.find({"_id": {"$in": non_refine_list}})
@@ -239,19 +244,35 @@ def admin():
             caches.character_sheet([[refine_character["key_id"], refine_character["vcode"],
                                     refine_character["character_id"]]])
         elif request.form.get("action") == "general_settings":
+            current_settings = g.mongo.db.preferences.find_one({"_id": "buyback_yield"})
+            if not current_settings:
+                current_settings = {}
             g.mongo.db.preferences.update({"_id": "buyback_yield"}, {
-                "base": int(request.form.get("general_base")),
-                "implant": int(request.form.get("general_implant")),
-                "tax": int(request.form.get("general_tax"))
+                "base": float(request.form.get("general_base")) if request.form.get("general_base")
+                else current_settings.get("base", 0),
+                "implant": float(request.form.get("general_implant")) if request.form.get("general_implant")
+                else current_settings.get("implant", 0),
+                "tax": float(request.form.get("general_tax")) if request.form.get("general_tax")
+                else current_settings.get("tax", 0),
+                "tax_refine": float(request.form.get("general_refine")) if request.form.get("general_refine")
+                else current_settings.get("tax_refine", 0)
             }, upsert=True)
         elif request.form.get("action") == "specific_settings":
             db_item = g.mongo.db.items.find_one({"name": request.form.get("name").strip()})
+            current_settings = g.mongo.db.taxes.find_one({"_id": db_item["_id"]})
+            if not current_settings:
+                current_settings = {}
             if db_item:
                 g.mongo.db.taxes.update({"_id": db_item["_id"]}, {
                     "name": request.form.get("name").strip(),
-                    "base": int(request.form.get("specific_base")),
-                    "implant": int(request.form.get("specific_implant")),
-                    "tax": int(request.form.get("specific_tax"))
+                    "base": float(request.form.get("specific_base")) if request.form.get("specific_base")
+                    else current_settings.get("base", 0),
+                    "implant": float(request.form.get("specific_implant")) if request.form.get("specific_implant")
+                    else current_settings.get("implant", 0),
+                    "tax": float(request.form.get("specific_tax")) if request.form.get("specific_tax")
+                    else current_settings.get("tax", 0),
+                    "tax_refine": float(request.form.get("specific_refine")) if request.form.get("specific_refine")
+                    else current_settings.get("tax_refine", 0)
                 }, upsert=True)
         elif request.form.get("delete"):
             g.mongo.db.taxes.remove({"_id": int(request.form.get("delete"))})
@@ -264,13 +285,15 @@ def admin():
 
     general_rates = g.mongo.db.preferences.find_one({"_id": "buyback_yield"})
     if general_rates:
-        general_base = general_rates["base"]
-        general_implant = general_rates["implant"]
-        general_tax = general_rates["tax"]
+        general_base = "{:,.02f}".format(general_rates["base"])
+        general_implant = "{:,.02f}".format(general_rates["implant"])
+        general_tax = "{:,.02f}".format(general_rates["tax"])
+        general_refine = "{:,.02f}".format(general_rates["tax_refine"])
     else:
         general_base = 0
         general_implant = 0
         general_tax = 0
+        general_refine = 0
 
     character_list = []
     current_user = g.mongo.db.api_keys.find_one({"_id": session["CharacterOwnerHash"]})
@@ -357,4 +380,5 @@ def admin():
     return render_template("buyback_admin.html", ore_table=ore_table, ice_table=ice_table,
                            character_list=character_list, refine_character=current_refine_character,
                            general_base=general_base, general_implant=general_implant,
-                           general_tax=general_tax, specific_rates_table=specific_rates_table)
+                           general_tax=general_tax, specific_rates_table=specific_rates_table,
+                           general_refine=general_refine)

@@ -47,6 +47,7 @@
                         <li>General Base: <b>{{general_base}}%</b></li>
                         <li>General Implant: <b>{{general_implant}}%</b></li>
                         <li>General Tax: <b>{{general_tax}}%</b></li>
+                        <li>General Refine Tax: <b>{{general_refine}}%</b></li>
                     </ul>
                     <form class="form" method="post">
                         <div class="input-group">
@@ -65,6 +66,12 @@
                             <span class="input-group-addon" id="general_tax_text">Tax</span>
                             <input type="text" class="form-control" placeholder="Tax %" name="general_tax"
                                    aria-describedby="general_tax_text">
+                            <span class="input-group-addon">%</span>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="general_refine_text">Refine Tax</span>
+                            <input type="text" class="form-control" placeholder="Tax %" name="general_refine"
+                                   aria-describedby="general_refine_text">
                             <span class="input-group-addon">%</span>
                         </div>
                         <button type="submit" class="btn btn-warning" name="action" value="general_settings">Change</button>
