@@ -1,6 +1,5 @@
 import os
 import json
-import time
 
 from flask import Flask, render_template, g
 from flask_bootstrap import Bootstrap
@@ -73,19 +72,11 @@ def app_init():
 
 @app.before_request
 def db_init():
-    if os.environ.get("TIMINGS"):
-        g.timings = True
-    else:
-        g.timings = False
     g.mongo = app_mongo
-    g.start_time = time.time()
-    print("Request start: {}".format(g.start_time)) if g.timings else None
 
 
 @app.teardown_request
 def cleanup(exception=None):
-    end_time = time.time()
-    print("Request end: {}, Total: {}".format(end_time, end_time - g.start_time)) if g.timings else None
     if exception:
         print("Error: ", exception)
 

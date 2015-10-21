@@ -24,24 +24,12 @@ else:
 
 
 def stations():
-    station_start_time = time.time()
-    print("Stations start: {}".format(station_start_time)) if g.timings else None
-
     db_stations_cache = g.mongo.db.caches.find_one({"_id": "stations"})
     bulk_op = g.mongo.db.stations.initialize_unordered_bulk_op()
     bulk_run = False
     if not db_stations_cache or db_stations_cache["cached_until"] < time.time():
-
-        station_api_start = time.time()
-        print("Stations api start: {}".format(station_api_start)) if g.timings else None
-
         xml_stations_response = requests.get("https://api.eveonline.com/eve/ConquerableStationList.xml.aspx",
                                              headers=xml_headers)
-
-        station_api_end = time.time()
-        print("Stations api end: {}, Total: {}".format(station_api_end,
-                                                       station_api_end - station_api_start)) if g.timings else None
-
         # XML Parse
         xml_stations_tree = ElementTree.fromstring(xml_stations_response.text)
         # Store in database
@@ -55,10 +43,6 @@ def stations():
     if bulk_run:
         bulk_op.execute()
 
-    station_end_time = time.time()
-    print("Stations end: {}, Total: {}".format(station_end_time,
-                                               station_end_time - station_start_time)) if g.timings else None
-
 
 def character(char_ids):
     """
@@ -66,8 +50,6 @@ def character(char_ids):
     :param char_ids: [character_id, ...]
     :return:
     """
-    character_start_time = time.time()
-    print("Character start: {}".format(character_start_time)) if g.timings else None
 
     missing_names = []
     for char_id in char_ids:
@@ -88,15 +70,8 @@ def character(char_ids):
                 "ids": ",".join([str(x) for x in char_ids])
             }
 
-        character_api_start = time.time()
-        print("Character api start: {}".format(character_api_start)) if g.timings else None
-
         xml_character_response = requests.get("https://api.eveonline.com/eve/CharacterAffiliation.xml.aspx",
                                               data=character_payload, headers=xml_headers)
-
-        character_api_end = time.time()
-        print("Character api end: {}, Total: {}".format(character_api_end,
-                                                        character_api_end - character_api_start)) if g.timings else None
 
         # XML Parse
         xml_character_tree = ElementTree.fromstring(xml_character_response.text)
@@ -120,10 +95,6 @@ def character(char_ids):
     if bulk_run:
         bulk_op.execute()
 
-    character_end_time = time.time()
-    print("Character end: {}, Total: {}".format(character_end_time,
-                                                character_end_time - character_start_time)) if g.timings else None
-
 
 def contracts(keys=None):
     """
@@ -131,8 +102,6 @@ def contracts(keys=None):
     :param keys: [("jf_service" or "personal", key_id, vcode), (), ...]
     :return:
     """
-    contracts_start_time = time.time()
-    print("Contracts start: {}".format(contracts_start_time)) if g.timings else None
 
     # If service is personal, uses key_caches database for cache values instead
     invalid_apis = []
@@ -157,28 +126,15 @@ def contracts(keys=None):
                     "vCode": service[2],
                     "characterID": service[3]
                 }
-                contracts_personal_api_start = time.time()
-                print("Contracts Personal API start: {}".format(contracts_personal_api_start)) if g.timings else None
                 xml_contracts_response = requests.get("https://api.eveonline.com/char/Contracts.xml.aspx",
                                                       data=xml_contracts_payload, headers=xml_headers)
-                contracts_personal_api_end = time.time()
-                print("Contracts Personal API end: {}, Total: {}".format(contracts_personal_api_end,
-                                                                         contracts_personal_api_end -
-                                                                         contracts_personal_api_start)
-                      ) if g.timings else None
             else:
                 xml_contracts_payload = {
                     "keyID": service[1],
                     "vCode": service[2]
                 }
-                contracts_corp_api_start = time.time()
-                print("Contracts Corp API start: {}".format(contracts_corp_api_start)) if g.timings else None
                 xml_contracts_response = requests.get("https://api.eveonline.com/Corp/Contracts.xml.aspx",
                                                       data=xml_contracts_payload, headers=xml_headers)
-                contracts_corp_api_end = time.time()
-                print("Contracts Corp API end: {}, Total: {}".format(contracts_corp_api_end,
-                                                                     contracts_corp_api_end - contracts_corp_api_start)
-                      ) if g.timings else None
 
             # XML Parse
             xml_contracts_tree = ElementTree.fromstring(xml_contracts_response.text)
@@ -237,10 +193,6 @@ def contracts(keys=None):
         except BulkWriteError as bulk_op_error:
             print("error", bulk_op_error.details)
 
-    contracts_end_time = time.time()
-    print("Contracts end: {}, Total: {}".format(contracts_end_time,
-                                                contracts_end_time - contracts_start_time)) if g.timings else None
-
     return invalid_apis
 
 
@@ -252,9 +204,6 @@ def api_keys(api_key_list, unassociated=False):
     :return:
     """
     api_owner = "unassociated" if unassociated else session["CharacterOwnerHash"]
-
-    api_keys_start_time = time.time()
-    print("api_keys start: {}".format(api_keys_start_time)) if g.timings else None
 
     with open("configs/base.json", "r") as base_config_file:
         base_config = json.load(base_config_file)
@@ -278,13 +227,8 @@ def api_keys(api_key_list, unassociated=False):
                 "keyID": key_id,
                 "vCode": vcode
             }
-            api_keys_api_start = time.time()
-            print("api_keys api start: {}".format(api_keys_api_start)) if g.timings else None
             xml_api_key_response = requests.get("https://api.eveonline.com/account/APIKeyInfo.xml.aspx",
                                                 data=xml_contracts_payload, headers=xml_headers)
-            api_keys_api_end = time.time()
-            print("api_keys api end: {}, Total: {}".format(
-                api_keys_api_end, api_keys_api_end - api_keys_api_start)) if g.timings else None
             # XML Parse
             xml_api_key_tree = ElementTree.fromstring(xml_api_key_response.text)
             # Store in database
@@ -338,10 +282,6 @@ def api_keys(api_key_list, unassociated=False):
     if bulk_run:
         bulk_op.execute()
 
-    api_keys_end_time = time.time()
-    print("api_keys end: {}, total: {}".format(api_keys_end_time,
-                                               api_keys_end_time - api_keys_start_time)) if g.timings else None
-
     return errors_list
 
 
@@ -351,8 +291,6 @@ def wallet_journal(keys=None):
     :param keys: [("personal", key_id, vcode), (), ...] or None for jf_wallet
     :return:
     """
-    wallet_journal_start_time = time.time()
-    print("wallet journal start: {}".format(wallet_journal_start_time)) if g.timings else None
 
     with open("configs/base.json", "r") as base_config_file:
         base_config = json.load(base_config_file)
@@ -378,14 +316,8 @@ def wallet_journal(keys=None):
                     "keyID": service[1],
                     "vCode": service[2]
                 }
-            wallet_journal_api_start = time.time()
-            print("wallet journal api start: {}".format(wallet_journal_api_start)) if g.timings else None
             xml_wallet_journal_response = requests.get("https://api.eveonline.com/corp/WalletJournal.xml.aspx",
                                                        data=xml_wallet_journal_payload, headers=xml_headers)
-            wallet_journal_api_end = time.time()
-            print("wallet journal api end: {}, Total: {}".format(wallet_journal_api_end,
-                                                                 wallet_journal_api_end - wallet_journal_api_start)
-                  ) if g.timings else None
             # XML Parse
             xml_wallet_journal_tree = ElementTree.fromstring(xml_wallet_journal_response.text)
             # Store in database
@@ -411,11 +343,6 @@ def wallet_journal(keys=None):
     if bulk_run:
         bulk_op.execute()
 
-    wallet_journal_end_time = time.time()
-    print("wallet journal end: {}, Total: {}".format(wallet_journal_end_time,
-                                                     wallet_journal_end_time - wallet_journal_start_time)
-          ) if g.timings else None
-
 
 def character_sheet(keys):
     """
@@ -423,8 +350,6 @@ def character_sheet(keys):
     :param keys: [(key_id, vcode, character_id), (), ....]
     :return:
     """
-    character_sheet_start_time = time.time()
-    print("character sheet start: {}".format(character_sheet_start_time)) if g.timings else None
 
     bulk_op = g.mongo.db.character_sheet.initialize_unordered_bulk_op()
     bulk_run = False
@@ -436,14 +361,8 @@ def character_sheet(keys):
                 "vCode": service[1],
                 "characterID": service[2]
             }
-            character_sheet_api_start = time.time()
-            print("character sheet api start: {}".format(character_sheet_api_start)) if g.timings else None
             xml_character_sheet_response = requests.get("https://api.eveonline.com/char/CharacterSheet.xml.aspx",
                                                         data=xml_character_sheet_payload, headers=xml_headers)
-            character_sheet_api_end = time.time()
-            print("character sheet api end: {}, Total: {}".format(character_sheet_api_end,
-                                                                  character_sheet_api_end - character_sheet_api_start)
-                  ) if g.timings else None
             # XML Parse
             xml_character_sheet_tree = ElementTree.fromstring(xml_character_sheet_response.text)
             # Store in database
@@ -469,8 +388,3 @@ def character_sheet(keys):
 
     if bulk_run:
         bulk_op.execute()
-
-    character_sheet_end_time = time.time()
-    print("character sheet end: {}, Total: {}".format(character_sheet_end_time,
-                                                      character_sheet_end_time - character_sheet_start_time)
-          ) if g.timings else None
