@@ -3,7 +3,9 @@ import time
 from itertools import chain
 import re
 
-from flask import Blueprint, render_template, g, request, session
+from flask import Blueprint, render_template, g, request, session, redirect, url_for, abort
+from bson.objectid import ObjectId
+import bson.errors
 
 from views.auth import requires_sso
 from helpers import conversions, eve_central, caches
@@ -19,7 +21,7 @@ def price_calc(names, character_id, jf_rate=0):
     material_id_list = set()
     non_refine_list = []
     for item in item_list:
-        if item["materials"] and (not item["meta"] or item["meta"] <= 5):
+        if item["materials"] and (not item["meta"] or item["meta"] < 4):
             item_materials[item["_id"]] = conversions.refine_calc([item["_id"]], character_id)[item["_id"]]
             for material_id, material_amount in item_materials[item["_id"]].items():
                 material_id_list.add(material_id)
@@ -96,7 +98,15 @@ def price_calc(names, character_id, jf_rate=0):
 
 @buyback.route("/", methods=["GET", "POST"])
 def home():
+    quote_ran = False
+    error_id = request.args.get("error_id")
+    if not error_id:
+        error_list = []
+    else:
+        error_list = ["Quote of id '{}' cannot be found. It's probably really old.".format(error_id)]
+
     if request.method == "POST":
+        quote_ran = True
         with open("configs/base.json", "r") as base_config_file:
             base_config = json.load(base_config_file)
 
@@ -133,7 +143,8 @@ def home():
                     qty_clean = int(input_split[2].strip().replace(",", "")) if len(input_split) > 2 else 1
                 item_qty[input_split[0].upper()] += qty_clean
             except (IndexError, ValueError):
-                raise
+                error_list.append("The line'{}' could not be processed.".format(input_line))
+
         refine_character = g.mongo.db.preferences.find_one({"_id": "refine_character"})
         if refine_character:
             refine_id = refine_character["character_id"]
@@ -160,8 +171,6 @@ def home():
             base_config["market_hub_name"] + " sell",
             "Volume",
             "JF Price",
-            "Delta Buy",
-            "Delta Sell",
             "Sub Total"
         ]]
 
@@ -169,7 +178,10 @@ def home():
         total_price = 0
         total_buy_delta = 0
         total_sell_delta = 0
+        parsed_item_count = 0
         for output_item in item_list:
+            parsed_item_count += 1
+
             jf_price = output_item["volume"] * jf_rate
 
             # Deltas
@@ -193,10 +205,12 @@ def home():
                 item_prices[output_item["_id"]]["sell"],
                 output_item["volume"],
                 jf_price,
-                buy_delta,
-                sell_delta,
                 item_prices[output_item["_id"]]["total"] * item_qty[output_item["name"].upper()]
             ])
+
+        # Check if all items parsed
+        if parsed_item_count != len(item_input):
+            error_list.append("{} item(s) could not be found.".format(len(item_input) - parsed_item_count))
 
         # Materials
         material_table = [["Name", base_config["market_hub_name"] + " buy", base_config["market_hub_name"] + " sell"]]
@@ -217,6 +231,18 @@ def home():
 
         # GUI Tables
         quick_table = [x[:3] + [x[-1]] for x in price_table]
+
+        # Quote Saving
+        quote_id = g.mongo.db.buyback_quotes.insert({
+            "item_table": item_table,
+            "price_table": price_table,
+            "material_table": material_table,
+            "total_buy_delta": total_buy_delta,
+            "total_sell_delta": total_sell_delta,
+            "total_price": total_price,
+            "quick_table": quick_table,
+            "date_added": time.time()
+        })
     else:
         item_table = []
         price_table = []
@@ -225,11 +251,48 @@ def home():
         total_sell_delta = 0
         total_price = 0
         quick_table = []
+        quote_id = 0
+
+    # Quote Saving
+    if request.method == "GET" and request.args.get("action") == "quote":
+        return redirect(url_for("buyback.quote", quote_id=request.args.get("quote_id", "0")))
 
     return render_template("buyback.html", item_table=item_table, price_table=price_table,
                            material_table=material_table, total_buy_delta=total_buy_delta,
                            total_sell_delta=total_sell_delta, total_price=total_price,
-                           quick_table=quick_table)
+                           quick_table=quick_table, error_list=error_list, quote=quote_ran, quote_id=quote_id)
+
+
+@buyback.route("/quote/<quote_id>")
+def quote(quote_id):
+    if not quote_id:
+        abort(404)
+
+    selected_quote = None
+    try:
+        selected_quote = g.mongo.db.buyback_quotes.find_one({"_id": ObjectId(quote_id)})
+    except bson.errors.InvalidId:
+        abort(404)
+
+    if not selected_quote:
+        return redirect(url_for("buyback.home", error_id=quote_id))
+
+    item_table = selected_quote["item_table"]
+    price_table = selected_quote["price_table"]
+    material_table = selected_quote["material_table"]
+    total_buy_delta = selected_quote["total_buy_delta"]
+    total_sell_delta = selected_quote["total_sell_delta"]
+    total_price = selected_quote["total_price"]
+    quick_table = selected_quote["quick_table"]
+    date_added = selected_quote["date_added"]
+
+    # Formatting
+    date_added_str = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(date_added)) + " UTC"
+
+    return render_template("buyback_quote.html", item_table=item_table, price_table=price_table,
+                           material_table=material_table, total_buy_delta=total_buy_delta,
+                           total_sell_delta=total_sell_delta, total_price=total_price,
+                           quick_table=quick_table, date_added_str=date_added_str, quote_id=quote_id)
 
 
 @buyback.route("/admin", methods=["GET", "POST"])

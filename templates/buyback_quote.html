@@ -10,35 +10,11 @@
 {% endblock scripts %}
 {% block content %}
 <div class="container-fluid">
-    {% for error in error_list %}
     <div class="row">
-        <div class="alert alert-danger">
-            {{error}}
-        </div>
-    </div>
-    {% endfor %}
-    <div class="row">
-        <div class="col-md-3">
-            <form method="post" action="{{url_for('buyback.home')}}">
-                <div class="form-group">
-                    <label for="input">Copy-Paste from Hangar</label>
-                    <textarea class="form-control" rows="25" id="input" name="input"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary" name="action" value="hangar_parse">Calculate</button>
-            </form>
-        </div>
-        <div class="col-md-9">
+        <div class="col-md-12">
             <h2>Contract Price: {{total_price}}</h2>
-            <form>
-                <div class="form-group">
-                    <input name="quote_id" value="{{quote_id}}" hidden>
-                    {% if quote %}
-                    <button type="submit" class="btn btn-success" name="action" value="quote">Save Quote</button>
-                    {% else %}
-                    <button type="submit" class="btn btn-success" name="action" value="quote" disabled>Save Quote</button>
-                    {% endif %}
-                </div>
-            </form>
+            <h3>Date Quoted: {{date_added_str}}</h3>
+            <h3>Quote ID: <b>{{quote_id}}</b></h3>
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#quick">Quick</a></li>
                 <li><a data-toggle="tab" href="#detailed">Detailed</a></li>
