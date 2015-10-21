@@ -143,7 +143,7 @@ def home():
                     qty_clean = int(input_split[2].strip().replace(",", "")) if len(input_split) > 2 else 1
                 item_qty[input_split[0].upper()] += qty_clean
             except (IndexError, ValueError):
-                error_list.append("The line'{}' could not be processed.".format(input_line))
+                error_list.append("The line '{}' could not be processed.".format(input_line))
 
         refine_character = g.mongo.db.preferences.find_one({"_id": "refine_character"})
         if refine_character:
