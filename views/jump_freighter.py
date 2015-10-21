@@ -112,6 +112,26 @@ def jf_tax_calculator(character_owner_hash):
     return total_paid, total_owed
 
 
+def station_name_corrector():
+    check_bulk_run = False
+    check_bulk_op = g.mongo.db.jf_routes.initialize_unordered_bulk_op()
+    caches.stations()
+    station_db = g.mongo.db.stations.find().distinct("name")
+    for route in g.mongo.db.jf_routes.find():
+        if route["start"] not in station_db or route["end"] not in station_db:
+            start_id = int(route["_id"] / 100000000)
+            end_id = route["_id"] % 100000000
+            start_db = g.mongo.db.stations.find_one({"_id": start_id})
+            end_db = g.mongo.db.stations.find_one({"_id": end_id})
+            check_bulk_run = True
+            check_bulk_op.find({"_id": route["_id"]}).update({"$set": {
+                "start": start_db["name"],
+                "end": end_db["name"]
+            }})
+    if check_bulk_run:
+        check_bulk_op.execute()
+
+
 @jf.route("/")
 def home():
     corp_rate = 0
@@ -124,6 +144,9 @@ def home():
     collateral_cost = 0
     price = ""
     corp_price = ""
+
+    # Check Station Names
+    station_name_corrector()
 
     start_list = []
     end_list = []
@@ -219,68 +242,74 @@ def home():
 
     # Contract History
 
-    # Check Caches
-    caches.stations()
-    caches.contracts()
-
-    users_set = set()
-    # Find all users
-    for contract in g.mongo.db.contracts.find({"_id.service": "jf_service"}):
-        users_set.update([contract["issuer_id"], contract["acceptor_id"]])
-    caches.character(users_set)
-
-    contract_list = [["Issuer", "Acceptor", "Start", "End", "Status", "Date Issued", "Expiration Date", "Volume"]]
-    personal_contract_list = [["Acceptor", "Start", "End", "Status", "Date Issued", "Expiration Date", "Volume",
-                               "Reward", "Collateral"]]
-
     next_update_query = g.mongo.db.caches.find_one({"_id": "jf_service"})
     next_update = next_update_query["cached_str"] if next_update_query else "Unknown"
 
-    # All related characters for personal list
-    alt_characters_db = g.mongo.db.api_keys.find_one({"_id": session.get("CharacterOwnerHash")})
-    alt_characters_list = []
-    if alt_characters_db:
-        for api_key in alt_characters_db["keys"]:
-            alt_characters_list.append(api_key["character_name"])
+    if session.get("UI_Alliance"):
+        # Check Caches
+        caches.stations()
+        caches.contracts()
 
-    for contract in g.mongo.db.contracts.find({"_id.service": "jf_service", "type": "Courier"}):
-        if contract["status"] not in ["Deleted", "Canceled"]:
-            # Perform ID Conversions
-            start_station = g.mongo.db.stations.find_one({"_id": contract["start_station_id"]})
-            start_station = start_station.get("name") if start_station else "Unknown"
-            end_station = g.mongo.db.stations.find_one({"_id": contract["end_station_id"]})
-            end_station = end_station.get("name") if end_station else "Unknown"
-            acceptor = conversions.character(contract["acceptor_id"])
-            issuer = conversions.character(contract["issuer_id"])
+        users_set = set()
+        # Find all users
+        for contract in g.mongo.db.contracts.find({"_id.service": "jf_service",
+                                                   "issued_int": {"$gt": int(time.time()) - 2629743}}):
+            users_set.update([contract["issuer_id"], contract["acceptor_id"]])
+        caches.character(users_set)
 
-            color = validator(contract)
+        contract_list = [["Issuer", "Acceptor", "Start", "End", "Status", "Date Issued", "Expiration Date", "Volume"]]
+        personal_contract_list = [["Acceptor", "Start", "End", "Status", "Date Issued", "Expiration Date", "Volume",
+                                   "Reward", "Collateral"]]
 
-            contract_list.append([
-                color,
-                issuer,
-                acceptor,
-                start_station,
-                end_station,
-                contract["status"],
-                contract["date_issued"],
-                contract["date_expired"],
-                "{:0,.2f}".format(contract["volume"])
-            ])
+        # All related characters for personal list
+        alt_characters_db = g.mongo.db.api_keys.find_one({"_id": session.get("CharacterOwnerHash")})
+        alt_characters_list = []
+        if alt_characters_db:
+            for api_key in alt_characters_db["keys"]:
+                alt_characters_list.append(api_key["character_name"])
 
-            if session.get("CharacterOwnerHash") and (
-                            issuer == session["CharacterName"] or issuer in alt_characters_list):
-                personal_contract_list.append([
+        for contract in g.mongo.db.contracts.find({"_id.service": "jf_service", "type": "Courier",
+                                                   "issued_int": {"$gt": int(time.time()) - 2629743}}):
+            if contract["status"] not in ["Deleted", "Canceled"]:
+                # Perform ID Conversions
+                start_station = g.mongo.db.stations.find_one({"_id": contract["start_station_id"]})
+                start_station = start_station.get("name") if start_station else "Unknown"
+                end_station = g.mongo.db.stations.find_one({"_id": contract["end_station_id"]})
+                end_station = end_station.get("name") if end_station else "Unknown"
+                acceptor = conversions.character(contract["acceptor_id"])
+                issuer = conversions.character(contract["issuer_id"])
+
+                color = validator(contract)
+
+                contract_list.append([
                     color,
+                    issuer,
                     acceptor,
                     start_station,
                     end_station,
                     contract["status"],
                     contract["date_issued"],
                     contract["date_expired"],
-                    "{:0,.2f}".format(contract["volume"]),
-                    "{:0,.2f}".format(contract["reward"]),
-                    "{:0,.2f}".format(contract["collateral"])
+                    "{:0,.2f}".format(contract["volume"])
                 ])
+
+                if session.get("CharacterOwnerHash") and (
+                                issuer == session["CharacterName"] or issuer in alt_characters_list):
+                    personal_contract_list.append([
+                        color,
+                        acceptor,
+                        start_station,
+                        end_station,
+                        contract["status"],
+                        contract["date_issued"],
+                        contract["date_expired"],
+                        "{:0,.2f}".format(contract["volume"]),
+                        "{:0,.2f}".format(contract["reward"]),
+                        "{:0,.2f}".format(contract["collateral"])
+                    ])
+    else:
+        contract_list = []
+        personal_contract_list = []
 
     # Check auth
     if session.get("CharacterOwnerHash"):
@@ -317,6 +346,9 @@ def admin():
     end = ""
     collateral = ""
     edit = False
+
+    # Check station names
+    station_name_corrector()
 
     if request.method == "GET":
         if request.args.get("action") == "delete":
@@ -718,3 +750,14 @@ def stats():
     jf_reimbursement = "{:,.02f}".format(jf_reimbursement)
 
     return render_template("jf_stats.html", user_payment_info=user_payment_info, jf_reimbursement=jf_reimbursement)
+
+
+@jf.route('/fix')
+@requires_sso('jf_admin')
+def fix():
+    xml_time_pattern = "%Y-%m-%d %H:%M:%S"
+    for contract in g.mongo.db.contracts.find():
+        g.mongo.db.contracts.update({"_id": contract["_id"]}, {"$set": {
+            "issued_int": int(calendar.timegm(time.strptime(contract["date_issued"], xml_time_pattern)))
+        }})
+    return render_template("base.html")

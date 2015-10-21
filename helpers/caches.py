@@ -226,7 +226,9 @@ def contracts(keys=None):
                                 "price": float(contract.attrib["price"]),
                                 "reward": float(contract.attrib["reward"]),
                                 "collateral": float(contract.attrib["collateral"]),
-                                "volume": float(contract.attrib["volume"])
+                                "volume": float(contract.attrib["volume"]),
+                                "issued_int": int(
+                                    calendar.timegm(time.strptime(contract.attrib["dateIssued"], xml_time_pattern)))
                             }
                         })
     if bulk_run:
