@@ -89,7 +89,7 @@ def refine_calc(type_ids, character_id):
                 else:
                     calculation[refine_item["_id"]][refine_material["type_id"]] = corrected_base * (
                         refine_material["amount"] * scrapmetal_processing
-                    )
+                    ) / refine_item["batch"]
 
     return calculation
 

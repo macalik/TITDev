@@ -26,7 +26,7 @@ def ccp_sde():
 
     for row in cursor.execute(
             (
-            "SELECT inv.typeID, inv.typeName, inv.volume, meta, img.marketGroupID, dtaRefine.valueInt as skillID"
+            "SELECT inv.typeID, inv.typeName, inv.volume, meta, img.marketGroupID, dtaRefine.valueInt, inv.portionSize"
             " FROM invTypes inv"
             " left JOIN invMarketGroups img ON img.marketGroupID = inv.marketGroupID"
             " left JOIN (select coalesce(valueFloat, valueInt) meta, typeID from dgmTypeAttributes "
@@ -36,7 +36,7 @@ def ccp_sde():
             " where inv.marketGroupID NOTNULL"
             )):
         marketable_items[int(row[0])] = {"name": row[1], "volume": row[2], "meta": int(row[3]) if row[3] else None,
-                                         "market_group_id": row[4], "skill_id": row[5]}
+                                         "market_group_id": row[4], "skill_id": row[5], "batch": row[6]}
 
     for row in cursor.execute("SELECT typeID, typeName FROM invTypes WHERE invTypes.groupID IN " +
                               "(SELECT groupID FROM invGroups WHERE invGroups.categoryID = 16)"):

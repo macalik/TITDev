@@ -2,6 +2,7 @@ import json
 import time
 from itertools import chain
 import re
+import math
 
 from flask import Blueprint, render_template, g, request, session, redirect, url_for, abort
 from bson.objectid import ObjectId
@@ -15,14 +16,14 @@ buyback = Blueprint("buyback", __name__, template_folder="templates")
 
 def price_calc(names, character_id, jf_rate=0):
     item_list = g.mongo.db.items.find({"name": {"$in": names}})
+    id_list = g.mongo.db.items.find({"name": {"$in": names}}).distinct("_id")
 
     mineral_list = {}
-    item_materials = {}
+    item_materials = conversions.refine_calc(id_list, character_id)
     material_id_list = set()
     non_refine_list = []
     for item in item_list:
         if item["materials"] and (not item["meta"] or item["meta"] < 4):
-            item_materials[item["_id"]] = conversions.refine_calc([item["_id"]], character_id)[item["_id"]]
             for material_id, material_amount in item_materials[item["_id"]].items():
                 material_id_list.add(material_id)
                 mineral_list.setdefault(material_id, 0)
@@ -122,6 +123,10 @@ def home():
         else:
             jf_rate = 0
 
+        # Parsing
+        item_names = [x.split("\t")[0] if x.find("\t") != -1
+                      else (" ".join(x.split(" ")[:-1]) if conversions.is_a_number(x.split(" ")[-1]) else x.strip())
+                      for x in request.form.get("input").splitlines()]
         item_input = [re.compile("^" + x.split("\t")[0] + "$", re.IGNORECASE) if x.find("\t") != -1
                       else re.compile("^" + " ".join(x.split(" ")[:-1]) + "$"
                                       if conversions.is_a_number(x.split(" ")[-1]) else
@@ -178,9 +183,9 @@ def home():
         total_price = 0
         total_buy_delta = 0
         total_sell_delta = 0
-        parsed_item_count = 0
+        parsed_item_list = []
         for output_item in item_list:
-            parsed_item_count += 1
+            parsed_item_list.append(output_item["name"].upper())
 
             jf_price = output_item["volume"] * jf_rate
 
@@ -192,8 +197,10 @@ def home():
             total_buy_delta += buy_delta * item_qty[output_item["name"].upper()]
             total_sell_delta += sell_delta * item_qty[output_item["name"].upper()]
 
-            materials_row = [item_materials[output_item["_id"]].get(x[0], 0) * item_qty[output_item["name"].upper()]
+            materials_row = [math.floor(item_materials[output_item["_id"]].get(x[0], 0) *
+                                        item_qty[output_item["name"].upper()])
                              for x in material_header]
+            # noinspection PyTypeChecker
             item_table.append([output_item["name"], item_qty[output_item["name"].upper()]] + materials_row)
             price_table.append([
                 output_item["name"],
@@ -209,8 +216,9 @@ def home():
             ])
 
         # Check if all items parsed
-        if parsed_item_count != len(item_input):
-            error_list.append("{} item(s) could not be found.".format(len(item_input) - parsed_item_count))
+        for item in item_names:
+            if item.upper() not in parsed_item_list:
+                error_list.append("The item '{}' could not be found.".format(item))
 
         # Materials
         material_table = [["Name", base_config["market_hub_name"] + " buy", base_config["market_hub_name"] + " sell"]]
@@ -227,7 +235,10 @@ def home():
                                                 for row in material_table[1:]]
         total_buy_delta = "{:,.02f}".format(total_buy_delta)
         total_sell_delta = "{:,.02f}".format(total_sell_delta)
-        total_price = "{:,.02f}".format(total_price)
+        if total_price < 100000:
+            total_price = "{:,.02f}".format(total_price)
+        else:
+            total_price = "{:,.02f}".format(round(total_price + 50000, -5))
 
         # GUI Tables
         quick_table = [x[:3] + [x[-1]] for x in price_table]

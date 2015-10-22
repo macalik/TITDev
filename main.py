@@ -66,7 +66,8 @@ def app_init():
             corrected_volume = volumes_list[key] if volumes_list.get(key) else value["volume"]
             adjusted_items_list.append({"_id": int(key), "name": value["name"], "volume": corrected_volume,
                                         "meta": value["meta"], "materials": materials_list.get(key, []),
-                                        "market_group_id": value["market_group_id"], "skill_id": value["skill_id"]})
+                                        "market_group_id": value["market_group_id"], "skill_id": value["skill_id"],
+                                        "batch": value["batch"]})
         app_mongo.db.items.insert(adjusted_items_list)
 
 
@@ -90,9 +91,12 @@ if not os.environ.get("HEROKU") and __name__ == "__main__":
 
     @app.route('/test')
     def test():
-        from helpers import caches
-        caches.character_sheet([[1168219, "blWCFgyN18kPQdQ8fpJoyDLlq0vzLZ5n1v4V51LGpomGi6DzFrpnolqMEY4bLqgA", 379808692]])
         return render_template("base.html")
+
+    # Profiling
+    # from werkzeug.contrib.profiler import ProfilerMiddleware
+    # app.config["PROFILE"] = True
+    # app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[30])
 
     app.debug = True
     app.run()
