@@ -25,12 +25,17 @@
 </div>
     <div class="container">
         <h2>TIT Security Panel: Dashboard</h2>
+        <br/><br/>
+        <!-- ROW 1 -->
         <div class="row">
-             <div class="col-md-4">
+
+             <div class="col-md-4" style="width:500px;">
                  <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Account Balances - Recent Activity</h3>
-                        <table class="table table-hover" width="500px">
+                    </div>
+                    <div class="panel-body">
+                         <table class="table table-hover" width="500px">
                             <thead>
                             <tr>
                                 <th>Pilot</th>
@@ -61,70 +66,135 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+             </div>
+
+            <div class="col-md-4" style="width:500px;">
+                 <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Wardecs - Active</h3>
+                    </div>
                     <div class="panel-body">
+                        Content
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- ROW 2 -->
+        <div class="row">
+            <div class="col-md-4" style="width:500px;">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Donations - Recent Activity</h3>
+                    </div>
+                    <div class="panel-body">
+                         <table class="table table-hover" width="500px">
+                            <thead>
+                            <tr>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Donation</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for pilot in pilot_wallet_transactions %}
+                                <tr>
+                                    <td>
+                                        {{pilot["owner_name_1"]}}
+                                    </td>
+                                    <td>
+                                        {{pilot["owner_name_2"]}}
+                                    </td>
+                                    <td>
+                                        {{pilot["amount"]}}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4" style="width:500px;">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Transactions - Recent Activity</h3>
-                        <table class="table table-hover table-condensed">
-
-                        </table>
                     </div>
                     <div class="panel-body">
-                    </div>
-                </div>
-                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Donations - Recent Activity</h3>
-                    </div>
-                    <div class="panel-body">
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Donations - Recent Activity</h3>
-                    </div>
-                    <div class="panel-body">
-                        <p><b>{{next_update}} UTC</b></p>
+                        Content
                     </div>
                 </div>
             </div>
+
         </div>
+
+        <!-- ROW 3 -->
         <div class="row">
-             <div class="col-md-4">
+            <div class="col-md-4" style="width:500px;">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Movement - Pilot Departure</h3>
+                        <h3 class="panel-title">PLEX - Recent Activity</h3>
                     </div>
                     <div class="panel-body">
-                    </div>
-                </div>
-                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Movement - Pilot Joined</h3>
-                    </div>
-                    <div class="panel-body">
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Pilot Mails</h3>
-                    </div>
-                    <div class="panel-body">
-                        <p><b>{{next_update}} UTC</b></p>
-                    </div>
-                </div>
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Kill Mails</h3>
-                    </div>
-                    <div class="panel-body">
-                        <p><b>{{next_update}} UTC</b></p>
-                    </div>
-                </div>
+                         <table class="table table-hover" width="500px">
+                            <thead>
+                            <tr>
+                                <th>Pilot</th>
+                                <th>Corp</th>
+                                <th>PLEX</th>
+                                <th>Price</th>
+                            </tr>
+                          </thead>
+                            <tbody>
+                            </tbody>
+                         </table>
 
+                    </div>
+                </div>
             </div>
+
+            <div class="col-md-4" style="width:500px;">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Large Market Transactions</h3>
+                    </div>
+                    <div class="panel-body">
+                        Content
+                    </div>
+                </div>
+            </div>
+
         </div>
+
+         <!-- ROW 4 -->
+        <div class="row">
+            <div class="col-md-4" style="width:500px;">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Mail - Recent Activity</h3>
+                    </div>
+                    <div class="panel-body">
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4" style="width:500px;">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Pilot Movement</h3>
+                    </div>
+                    <div class="panel-body">
+                        Content
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
     </div>
 {% endblock content %}

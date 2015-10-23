@@ -3,7 +3,13 @@
 
 {% block styles %}
 {{super()}}
+<!--
+ original css file
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.9/css/dataTables.bootstrap.min.css">
+-->
+<!-- cyborg css file -->
+<link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/bootswatch/2.3.2/cyborg/bootstrap.min.css">
+
 <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='subnav.css')}}">
 {% endblock styles %}
 

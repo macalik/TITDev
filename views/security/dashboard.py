@@ -14,17 +14,17 @@ security_dashboard = Blueprint("security_dashboard", __name__, template_folder="
 
 def load():
     # call cache
-    caches.character_balances()
+    caches.wallet_journal()
 
     pilot_list = []
     # All Users List
     for pilot in g.mongo.db.users.find():
         pilot_list.append(pilot)
 
-    pilot_balances = []
-    for p_balance in g.mongo.db.char_balances.find():
-        pilot_balances.append(p_balance)
+    pilot_wallet_transactions = []
+    for p_balance in g.mongo.db.wallet_journal.find({"ref_type_id":10}):
+        pilot_wallet_transactions.append(p_balance)
 
-    print(pilot_balances)
+    # print(pilot_wallet_transactions)
 
-    return render_template("security/security.html", pilot_list=pilot_list, pilot_balances=pilot_balances)
+    return render_template("security/security.html", pilot_list=pilot_list, pilot_wallet_transactions=pilot_wallet_transactions)

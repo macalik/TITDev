@@ -45,23 +45,26 @@
         <h3>All API Keys</h3>
         <div class="row">
             <div class="col-md-12">
-                <table class="table table-hover table-condensed datatables">
+                <table class="table datatables table-hover table-condensed">
                     <thead>
                         <tr>
-                            <th>Owner</th>
-                            <th>Char ID</th>
                             <th>Char Name</th>
                             <th>Key ID</th>
                             <th>vCode</th>
                         </tr>
                     </thead>
                     <tbody>
-                    {% for key in all_keys %}
-                        <tr>
-                            {% for info in key %}
-                            <td>{{info}}</td>
-                            {% endfor %}
-                        </tr>
+
+                    {% for key in api_list %}
+
+                        {% for info in key["keys"] %}
+                            <tr>
+                                <td>{{info["character_name"]}}</td>
+                                <td>{{info["key_id"]}}</td>
+                                <td>{{info["vcode"]}}</td>
+                            </tr>
+                        {% endfor %}
+
                     {% endfor %}
                     </tbody>
                 </table>
