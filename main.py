@@ -93,5 +93,10 @@ def home():
 
 
 if not os.environ.get("HEROKU") and __name__ == "__main__":
+
+    @app.route('/test')
+    def test():
+        return render_template("base.html")
+
     app.debug = True
     app.run(host="0.0.0.0")

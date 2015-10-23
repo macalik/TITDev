@@ -27,12 +27,18 @@
                     <label for="notes">Notes:</label>
                     <input class="form-control" id="notes" name="notes" placeholder="Notes">
                 </div>
+                <div class="form-group">
+                    <label for="source">Source Link:</label>
+                    <input class="form-control" id="source" name="source" placeholder="Http Link">
+                </div>
+                {% if admin %}
                 <div class="checkbox">
                     <label>
                         <input name="doctrine" type="checkbox" value="True">
                         Mark as doctrine fit?
                     </label>
                 </div>
+                {% endif %}
                 <button type="reset" class="btn btn-danger" name="action" value="fit_submit">Clear</button>
                 <button type="submit" class="btn btn-primary" name="action" value="fit_submit">Submit to Site</button>
                 <button type="submit" class="btn btn-success" name="action" value="cart" disabled>
@@ -69,7 +75,7 @@
                                 <a class="btn btn-success" href="{{url_for('fittings.fit', fit_id=item[-2])}}" role="button">
                                 View</a>
                                 <button type="button" class="btn btn-primary"
-                                        onclick="CCPEVE.showFitting('{{item[-1]}}')">Fit</button>
+                                        onclick="CCPEVE.showFitting('{{item[-1]}}')">In-Game Fit</button>
                                 {% if item[-3] %}
                                 <form action="{{url_for('fittings.fit', fit_id=item[-2])}}" method="get">
                                     <button type="submit" class="btn btn-danger" name="action" value="delete">Delete</button>
