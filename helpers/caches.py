@@ -31,7 +31,12 @@ def stations():
         xml_stations_response = requests.get("https://api.eveonline.com/eve/ConquerableStationList.xml.aspx",
                                              headers=xml_headers)
         # XML Parse
-        xml_stations_tree = ElementTree.fromstring(xml_stations_response.text)
+        try:
+            xml_stations_tree = ElementTree.fromstring(xml_stations_response.text)
+        except ElementTree.ParseError:
+            print(xml_stations_response.text)
+            return None
+
         # Store in database
         xml_time_pattern = "%Y-%m-%d %H:%M:%S"
         g.mongo.db.caches.update({"_id": "stations"}, {"cached_until": int(calendar.timegm(time.strptime(
@@ -74,7 +79,12 @@ def character(char_ids):
                                               data=character_payload, headers=xml_headers)
 
         # XML Parse
-        xml_character_tree = ElementTree.fromstring(xml_character_response.text)
+        try:
+            xml_character_tree = ElementTree.fromstring(xml_character_response.text)
+        except ElementTree.ParseError:
+            print(xml_character_response.text)
+            return None
+
         xml_time_pattern = "%Y-%m-%d %H:%M:%S"
         g.mongo.db.caches.update({"_id": "characters"}, {"cached_until": int(calendar.timegm(time.strptime(
             xml_character_tree[2].text, xml_time_pattern)))}, upsert=True)
@@ -137,7 +147,12 @@ def contracts(keys=None):
                                                       data=xml_contracts_payload, headers=xml_headers)
 
             # XML Parse
-            xml_contracts_tree = ElementTree.fromstring(xml_contracts_response.text)
+            try:
+                xml_contracts_tree = ElementTree.fromstring(xml_contracts_response.text)
+            except ElementTree.ParseError:
+                print(xml_contracts_response.text)
+                return invalid_apis
+
             # Store in database
             xml_time_pattern = "%Y-%m-%d %H:%M:%S"
 
@@ -230,7 +245,12 @@ def api_keys(api_key_list, unassociated=False):
             xml_api_key_response = requests.get("https://api.eveonline.com/account/APIKeyInfo.xml.aspx",
                                                 data=xml_contracts_payload, headers=xml_headers)
             # XML Parse
-            xml_api_key_tree = ElementTree.fromstring(xml_api_key_response.text)
+            try:
+                xml_api_key_tree = ElementTree.fromstring(xml_api_key_response.text)
+            except ElementTree.ParseError:
+                print(xml_api_key_response.text)
+                return errors_list
+
             # Store in database
             xml_time_pattern = "%Y-%m-%d %H:%M:%S"
             if xml_api_key_tree[1].tag == "error":
@@ -319,7 +339,12 @@ def wallet_journal(keys=None):
             xml_wallet_journal_response = requests.get("https://api.eveonline.com/corp/WalletJournal.xml.aspx",
                                                        data=xml_wallet_journal_payload, headers=xml_headers)
             # XML Parse
-            xml_wallet_journal_tree = ElementTree.fromstring(xml_wallet_journal_response.text)
+            try:
+                xml_wallet_journal_tree = ElementTree.fromstring(xml_wallet_journal_response.text)
+            except ElementTree.ParseError:
+                print(xml_wallet_journal_response.text)
+                return None
+
             # Store in database
             xml_time_pattern = "%Y-%m-%d %H:%M:%S"
             g.mongo.db.caches.update({"_id": service[0]}, {"cached_until": int(calendar.timegm(
@@ -364,7 +389,12 @@ def character_sheet(keys):
             xml_character_sheet_response = requests.get("https://api.eveonline.com/char/CharacterSheet.xml.aspx",
                                                         data=xml_character_sheet_payload, headers=xml_headers)
             # XML Parse
-            xml_character_sheet_tree = ElementTree.fromstring(xml_character_sheet_response.text)
+            try:
+                xml_character_sheet_tree = ElementTree.fromstring(xml_character_sheet_response.text)
+            except ElementTree.ParseError:
+                print(xml_character_sheet_response.text)
+                return None
+
             # Store in database
             xml_time_pattern = "%Y-%m-%d %H:%M:%S"
             g.mongo.db.key_caches.update({"_id": service[2]}, {
