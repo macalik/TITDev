@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block head %}
+{{super()}}
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon_jf.ico') }}">
+{% endblock head %}
+{% block scripts %}
+{{super()}}
+<script src="{{url_for('static', filename='datatables-fit.js')}}"></script>
+{% endblock scripts %}
+{% block content %}
+<div class="container">
+    {% if not prices_usable %}
+    <div class="row">
+        <div class="alert alert-danger">
+            Eve Central API is down. The prices below are not correct.
+        </div>
+    </div>
+    {% endif %}
+    <div class="row">
+        <div class="col-md-3">
+            <form method="post">
+                <div class="form-group">
+                    <label for="parse">EFT-Formatted Fit</label>
+                    <textarea class="form-control" rows="25" id="parse" name="parse"></textarea>
+                </div>
+                <button type="submit" class="btn btn-success" name="action" value="parse">Add</button>
+            </form>
+        </div>
+        <div class="col-md-9">
+            <form method="post">
+                <table class="table table-hover table-condensed" id="datatables-fit">
+                    <thead>
+                    <tr>
+                        <th class="col-xs-4">{{invoice_info[0][0]}}</th>
+                        <th class="col-xs-1">{{invoice_info[0][1]}}</th>
+                        {% for header in invoice_info[0][2:] %}
+                        <th class="col-xs-2">{{header}}</th>
+                        {% endfor %}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in invoice_info[1:] %}
+                    <tr>
+                        <td>{{item[1]}}</td>
+                        <td>
+                            <input class="form-control col-xs-1" id="notes" name="{{item[0]}}" placeholder="{{item[2]}}" value="{{item[2]}}">
+                        </td>
+                        {% for info in item[3:] %}
+                        <td>{{info}}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </form>
+            <table class="table table-condensed table-bordered">
+                <tr>
+                    <td>Total volume of items:</td>
+                    <td>{{total_volume}}</td>
+                </tr>
+                <tr>
+                    <td>Total price of items in {{market_hub_name}}:</td>
+                    <td>{{sell_price}}</td>
+                </tr>
+                <tr>
+                    <td>Ship to:</td>
+                    <td>
+                        <form class="form-inline" method="get">
+                            <div class="form-group">
+                                <select class="form-control" name="end">
+                                    {% for station in valid_stations %}
+                                    {% if station[2] %}
+                                    <option value="{{station[0]}}" selected>{{station[1]}}</option>
+                                    {% else %}
+                                    <option value="{{station[0]}}">{{station[1]}}</option>
+                                    {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-warning" name="action" value="station">Change</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Shipping Cost [@{{jf_rate}} Isk/M3]:</td>
+                    <td>{{jf_total}}</td>
+                </tr>
+                <tr>
+                    <td>Total Cost:</td>
+                    <td>{{order_total}}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <button type="submit" class="btn btn-success">Create Order</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}

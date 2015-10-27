@@ -13,6 +13,7 @@ from views.account import account
 from views.corp import corp
 from views.fittings import fittings
 from views.buyback import buyback
+from views.ordering import ordering
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -39,6 +40,7 @@ app.register_blueprint(account, url_prefix="/account")
 app.register_blueprint(corp, url_prefix="/corp")
 app.register_blueprint(fittings, url_prefix="/fittings")
 app.register_blueprint(buyback, url_prefix="/buyback")
+app.register_blueprint(ordering, url_prefix="/ordering")
 
 
 @app.before_first_request

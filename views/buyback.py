@@ -5,6 +5,7 @@ import re
 import math
 
 from flask import Blueprint, render_template, g, request, session, redirect, url_for, abort
+
 from bson.objectid import ObjectId
 import bson.errors
 
@@ -31,8 +32,9 @@ def price_calc(names, character_id, jf_rate=0):
         else:
             item_materials[item["_id"]] = {}
             non_refine_list.append(item["_id"])
-    market_prices = eve_central.market_hub_prices(list(mineral_list.keys()) + list(item_materials.keys()) +
-                                                  non_refine_list)
+    market_prices, prices_usable = eve_central.market_hub_prices(list(mineral_list.keys()) +
+                                                                 list(item_materials.keys()) +
+                                                                 non_refine_list)
 
     # Material info for volume
     material_info_db = g.mongo.db.items.find({"_id": {"$in": list(material_id_list)}})
@@ -78,7 +80,7 @@ def price_calc(names, character_id, jf_rate=0):
     # Non-refined modules
     for non_refine_item in non_refine_info_db:
         calculations[non_refine_item["_id"]] = {
-            "total":  market_prices[non_refine_item["_id"]]["buy"] * (
+            "total": market_prices[non_refine_item["_id"]]["buy"] * (
                 1 - tax_definition.get(non_refine_item["_id"], default_tax) / 100),
             "no_tax": market_prices[non_refine_item["_id"]]["buy"],
             "sell": market_prices[non_refine_item["_id"]]["sell"],
@@ -94,11 +96,12 @@ def price_calc(names, character_id, jf_rate=0):
     for mineral in mineral_list.keys():
         mineral_prices[mineral] = market_prices[mineral]
 
-    return calculations, mineral_prices, item_materials
+    return calculations, mineral_prices, item_materials, prices_usable
 
 
 @buyback.route("/", methods=["GET", "POST"])
 def home():
+    prices_usable = True
     quote_ran = False
     error_id = request.args.get("error_id")
     if not error_id:
@@ -155,7 +158,7 @@ def home():
             refine_id = refine_character["character_id"]
         else:
             refine_id = 0
-        item_prices, material_prices_list, item_materials = price_calc(item_input, refine_id, jf_rate)
+        item_prices, material_prices_list, item_materials, prices_usable = price_calc(item_input, refine_id, jf_rate)
         item_list = g.mongo.db.items.find({"name": {"$in": item_input}})
 
         # Headers
@@ -271,7 +274,8 @@ def home():
     return render_template("buyback.html", item_table=item_table, price_table=price_table,
                            material_table=material_table, total_buy_delta=total_buy_delta,
                            total_sell_delta=total_sell_delta, total_price=total_price,
-                           quick_table=quick_table, error_list=error_list, quote=quote_ran, quote_id=quote_id)
+                           quick_table=quick_table, error_list=error_list, quote=quote_ran, quote_id=quote_id,
+                           prices_usable=prices_usable)
 
 
 @buyback.route("/quote/<quote_id>")
@@ -309,14 +313,13 @@ def quote(quote_id):
 @buyback.route("/admin", methods=["GET", "POST"])
 @requires_sso("buyback_admin")
 def admin():
-
     # # Settings
     refine_character = g.mongo.db.preferences.find_one({"_id": "refine_character"})
 
     if request.method == "POST":
         if request.form.get("action") == "refresh_character":
             caches.character_sheet([[refine_character["key_id"], refine_character["vcode"],
-                                    refine_character["character_id"]]])
+                                     refine_character["character_id"]]])
         elif request.form.get("action") == "general_settings":
             current_settings = g.mongo.db.preferences.find_one({"_id": "buyback_yield"})
             if not current_settings:

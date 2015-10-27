@@ -55,10 +55,10 @@ def validator(contract):
                                                    "corporation_id": int(base_config["corporation_id"])})
 
         if corp_check or ooc_check:
-            validation_calc = max(corp_price * contract["volume"] + contract["collateral"] * collateral_rate / 100,
+            validation_calc = max(corp_price * int(contract["volume"]) + contract["collateral"] * collateral_rate / 100,
                                   1000000)
         else:
-            validation_calc = max(gen_price * contract["volume"] + contract["collateral"] * collateral_rate / 100,
+            validation_calc = max(gen_price * int(contract["volume"]) + contract["collateral"] * collateral_rate / 100,
                                   1000000)
         if (contract["reward"] < validation_calc or contract["volume"] > 300000) and contract["for_corp"] != 1:
             color = "info"
@@ -750,14 +750,3 @@ def stats():
     jf_reimbursement = "{:,.02f}".format(jf_reimbursement)
 
     return render_template("jf_stats.html", user_payment_info=user_payment_info, jf_reimbursement=jf_reimbursement)
-
-
-@jf.route('/fix')
-@requires_sso('jf_admin')
-def fix():
-    xml_time_pattern = "%Y-%m-%d %H:%M:%S"
-    for contract in g.mongo.db.contracts.find():
-        g.mongo.db.contracts.update({"_id": contract["_id"]}, {"$set": {
-            "issued_int": int(calendar.timegm(time.strptime(contract["date_issued"], xml_time_pattern)))
-        }})
-    return render_template("base.html")

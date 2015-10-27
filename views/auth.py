@@ -197,6 +197,7 @@ def sso_response():
                                      "alliance_id": int(xml_tree[1][10].text),
                                      "alliance_name": xml_tree[1][11].text.strip(),
                                      "refresh_token": auth_token["refresh_token"],
+                                     "last_sign_on": int(time.time()),
                                      "cached_until": int(calendar.timegm(time.strptime(xml_tree[2].text,
                                                                                        xml_time_pattern)))
                                      }, upsert=True)

@@ -1,3 +1,5 @@
+import time
+
 from flask import Blueprint, render_template, g, request
 from views.auth import requires_sso
 
@@ -32,7 +34,8 @@ def roles():
 
     # All Users List
     for user in g.mongo.db.users.find():
-        user_list.append([user["character_name"], user["_id"], user["corporation_name"], user["alliance_name"]])
+        user_list.append([user["character_name"], user["_id"], user["corporation_name"], user["alliance_name"],
+                          time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(user.get("last_sign_on", 0)))])
     for role in g.mongo.db.eve_auth.find():
         role_list.append([role["_id"], [(x, g.mongo.db.users.find_one({"_id": x}).get("character_name"))
                                         for x in role["users"] if g.mongo.db.users.find_one({"_id": x})]])

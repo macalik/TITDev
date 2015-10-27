@@ -10,6 +10,13 @@
 {% endblock scripts %}
 {% block content %}
 <div class="container-fluid">
+    {% if not prices_usable %}
+    <div class="row">
+        <div class="alert alert-danger">
+            Eve Central is down. The prices below are not correct.
+        </div>
+    </div>
+    {% endif %}
     {% for error in error_list %}
     <div class="row">
         <div class="alert alert-danger">
@@ -24,7 +31,11 @@
                     <label for="input">Copy-Paste from Hangar</label>
                     <textarea class="form-control" rows="25" id="input" name="input"></textarea>
                 </div>
+                {% if prices_usable %}
                 <button type="submit" class="btn btn-primary" name="action" value="hangar_parse">Calculate</button>
+                {% else %}
+                <button type="submit" class="btn btn-primary" name="action" value="hangar_parse" disabled>Calculate</button>
+                {% endif %}
             </form>
         </div>
         <div class="col-md-9">
@@ -32,7 +43,7 @@
             <form>
                 <div class="form-group">
                     <input name="quote_id" value="{{quote_id}}" hidden>
-                    {% if quote %}
+                    {% if quote and prices_usable %}
                     <button type="submit" class="btn btn-success" name="action" value="quote">Save Quote</button>
                     {% else %}
                     <button type="submit" class="btn btn-success" name="action" value="quote" disabled>Save Quote</button>

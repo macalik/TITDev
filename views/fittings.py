@@ -1,6 +1,3 @@
-import re
-import collections
-import itertools
 import json
 import time
 
@@ -19,7 +16,6 @@ fittings = Blueprint("fittings", __name__, template_folder="templates")
 def home():
     dna_string = None
     error_string = None
-    subsystem = ["Legion", "Tengu", "Proteus", "Loki"]
 
     # Check if fittings admin
     admin = auth_check("fittings_admin")
@@ -34,70 +30,10 @@ def home():
         if not request.form.get("fit_string"):
             return redirect(url_for("fittings.home"))
 
-        # Eft Parsing
+        fit_name, ship, item_counter, dna_string = conversions.eft_parsing(request.form.get("fit_string"))
 
-        split_fit = [x.strip() for x in request.form.get("fit_string").splitlines()]
-        comma_split_fit = [x.split(",") for x in split_fit[1:] if not x.startswith("[")]
-        comma_split_fit = list(itertools.chain(*comma_split_fit))
-
-        multi = re.compile(r"(.*)x([0-9]+$)")
-        try:
-            ship, fit_name = [x.strip() for x in split_fit[0][1:-1].split(",")]
-
-            # DNA Setup
-            ship_fittings = [[], [], [], [], []]
-            fit_counter = 0
-            subsystem_list = []
-            new_slot = False
-            subsystem_flag = None
-            for split_item in comma_split_fit:
-                item_match = re.match(multi, split_item)
-                subsystem_check = [split_item.startswith(x) for x in subsystem]
-                if not split_item:
-                    if new_slot:
-                        fit_counter += 1
-                        fit_counter = min(fit_counter, 4)
-                        new_slot = False
-                    if subsystem_flag:
-                        subsystem_flag = False
-                elif any(subsystem_check):
-                    if subsystem_flag is None or subsystem_flag:
-                        subsystem_flag = True
-                        subsystem_list.append(split_item.strip())
-                elif item_match:
-                    new_slot = True
-                    item_match_name = item_match.group(1).strip()
-                    # noinspection PyTypeChecker
-                    ship_fittings[fit_counter].append(item_match_name)
-                else:
-                    new_slot = True
-                    ship_fittings[fit_counter].append(split_item)
-            ship_fittings[0], ship_fittings[2] = ship_fittings[2], ship_fittings[0]
-            ship_fittings = subsystem_list + [x.strip() for x in list(itertools.chain(*ship_fittings))]
-            dna_fittings = []
-            for ship_fit in ship_fittings:
-                if ship_fit not in dna_fittings:
-                    dna_fittings.append(ship_fit)
-
-            clean_split_fit = [ship] + [x.split(",")[0].strip() for x in comma_split_fit
-                                        if x and not re.match(multi, x)]
-            item_counter = collections.Counter(clean_split_fit)
-            for item in comma_split_fit:
-                multiple_item = re.match(multi, item)
-                if multiple_item:
-                    item_counter[multiple_item.group(1).strip()] += int(multiple_item.group(2))
-        except (IndexError, ValueError):
-            return redirect(url_for("fittings.home", error="parsing"))
-
-        # DNA Parsing
-        fit_db_ids = g.mongo.db.items.find({"name": {"$in": [ship] + subsystem_list + dna_fittings}})
-        name_id_conversion = {}
-        for db_item in fit_db_ids:
-            name_id_conversion[db_item["name"]] = db_item["_id"]
-        dna_string_list = [str(name_id_conversion[ship])]
-        for item in dna_fittings:
-            dna_string_list.append(str(name_id_conversion[item]) + ";" + str(item_counter[item]))
-        dna_string = ":".join(dna_string_list) + "::"
+        if not fit_name:  # Error in parsing
+            redirect(url_for("fittings.home", error="parsing"))
 
         fit_id = g.mongo.db.fittings.insert({
             "fit": request.form.get("fit_string"),
@@ -114,6 +50,9 @@ def home():
         })
 
         return redirect(url_for("fittings.fit", fit_id=fit_id))
+    elif request.method == "POST" and request.form.get("action") == "direct_to_cart":
+        session["fitting"] = request.form.get("fit_string")
+        return redirect(url_for("ordering.home"))
 
     # Fit Listings
 
@@ -195,7 +134,7 @@ def fit(fit_id=None):
 
     # ID Matching
     item_list = list(g.mongo.db.items.find({"name": {"$in": list(selected_fit["items"].keys())}}))
-    item_prices = eve_central.market_hub_prices([x["_id"] for x in item_list])
+    item_prices, prices_usable = eve_central.market_hub_prices([x["_id"] for x in item_list])
 
     item_table = [["Name", "Qty", "Isk/Item", "Vol/Item", "Total Isk", "Total Volume"]]
     total_fit_isk = 0
@@ -217,7 +156,7 @@ def fit(fit_id=None):
         item_vol_total = "{:,.02f}".format(item_vol_total)
         item_table.append([fit_item["name"], qty, isk_per_item, vol_per_item, item_isk_total, item_vol_total])
 
-    if multiply == 1:
+    if multiply == 1 and prices_usable:
         g.mongo.db.fittings.update({"_id": ObjectId(fit_id)}, {"$set": {
             "price": total_fit_isk, "volume": total_volume}})
 
@@ -272,4 +211,4 @@ def fit(fit_id=None):
                            market_hub_name=market_hub_name, jf_rate=jf_rate, jf_total=jf_total, order_total=order_total,
                            dna_string=selected_fit["dna"], fit_name=selected_fit["name"], multiply=multiply,
                            can_delete=can_delete, notes=selected_fit["notes"], source=selected_fit.get("source"),
-                           admin=admin, doctrine=selected_fit["doctrine"])
+                           admin=admin, doctrine=selected_fit["doctrine"], prices_usable=prices_usable)
