@@ -157,6 +157,8 @@ def sso_response():
         # Abort on EVE API server errors
         try:
             auth_token = auth_response.json()
+            if not auth_token.get("access_token"):
+                print(auth_token)
         except ValueError:
             auth_token = None
             abort(400)
