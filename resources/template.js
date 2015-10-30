@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('#buyback_quick').DataTable({
+    $('#custom').DataTable({
         "lengthMenu": [[50, 75, 100, -1], [50, 75, 100, "All"]]
     });
     $('table.datatables').DataTable({

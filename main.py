@@ -1,5 +1,6 @@
 import os
 import json
+import logging
 
 from flask import Flask, render_template, g
 from flask_bootstrap import Bootstrap
@@ -41,6 +42,13 @@ app.register_blueprint(corp, url_prefix="/corp")
 app.register_blueprint(fittings, url_prefix="/fittings")
 app.register_blueprint(buyback, url_prefix="/buyback")
 app.register_blueprint(ordering, url_prefix="/ordering")
+
+# Set up logging
+console_logger = logging.StreamHandler()
+console_format = logging.Formatter(" %(asctime)s %(levelname)s: %(message)s [in %(module)s:%(lineno)d]")
+console_logger.setFormatter(console_format)
+console_logger.setLevel(logging.WARNING)
+app.logger.addHandler(console_logger)
 
 
 @app.before_first_request

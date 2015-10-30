@@ -2,6 +2,7 @@ import json
 import time
 
 from flask import Blueprint, render_template, request, g, redirect, url_for, session, abort
+
 from bson.objectid import ObjectId
 import bson.errors
 
@@ -96,6 +97,10 @@ def fit(fit_id=None):
     if not fit_id:
         abort(404)
 
+    # Redirect if fit is purchased
+    if request.method == "GET" and request.args.get("action") == "purchase":
+        return redirect(url_for("ordering.home", item=fit_id + ";" + request.args.get("multiply", 1)))
+
     selected_fit = None
     try:
         selected_fit = g.mongo.db.fittings.find_one({"_id": ObjectId(fit_id)})
@@ -175,11 +180,22 @@ def fit(fit_id=None):
         selected_route = 0
 
     valid_stations = []
+    current_route = g.mongo.db.carts.find_one({"_id": session["CharacterOwnerHash"]})
     for route in market_hub_routes:
         if request.args.get("end") and route["_id"] == int(request.args.get("end")):
             valid_stations.append([route["_id"], route["end"], True])
+            g.mongo.db.carts.update({"_id": session["CharacterOwnerHash"]},
+                                    {"$set": {"route": route["_id"]}}, upsert=True)
+        elif current_route:
+            if route["_id"] == current_route.get("route"):
+                valid_stations.append([route["_id"], route["end"], True])
+                selected_route = route["_id"] if selected_route == 0 else selected_route
+            else:
+                valid_stations.append([route["_id"], route["end"], False])
         elif not request.args.get("end") and route["end"] == base_config["default_ship_to"]:
             valid_stations.append([route["_id"], route["end"], True])
+            g.mongo.db.carts.update({"_id": session["CharacterOwnerHash"]},
+                                    {"$set": {"route": route["_id"]}}, upsert=True)
             selected_route = route["_id"] if selected_route == 0 else selected_route
         else:
             valid_stations.append([route["_id"], route["end"], False])

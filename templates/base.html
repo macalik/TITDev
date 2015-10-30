@@ -11,7 +11,9 @@
 {{super()}}
 <script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.9/js/dataTables.bootstrap.min.js"></script>
+{% block defaults %}
 <script src="{{url_for('static', filename='datatables.js')}}"></script>
+{% endblock defaults %}
 {% endblock scripts %}
 
 {% block navbar %}

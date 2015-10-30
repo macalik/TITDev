@@ -3,11 +3,14 @@
   "alliance_id": 151380924,
   "access_mask": 1073741823,
   "image_server": "https://imageserver.eveonline.com/",
-  "jf_account_key": 1001,
+  "jf_account_key": 1000,
   "market_hub_region": 10000002,
   "market_hub_system": 30000142,
   "market_hub_station": 60003760,
   "market_hub_name": "Jita",
   "default_ship_to": "3KNA-N II - Naughty Nurse Academy",
-  "home_station": 61000712
+  "home_station": 61000712,
+  "marketeer_slack_url": "https://hooks.slack.com/services/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",
+  "market_service_slack_url": "https://hooks.slack.com/services/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",
+  "slack_enable": false
 }

@@ -3,10 +3,9 @@
 {{super()}}
 <link rel="shortcut icon" href="{{ url_for('static', filename='favicon_jf.ico') }}">
 {% endblock head %}
-{% block scripts %}
-{{super()}}
-<script src="{{url_for('static', filename='datatables-fit.js')}}"></script>
-{% endblock scripts %}
+{% block defaults %}
+<script src="{{url_for('static', filename='datatables-ordering.js')}}"></script>
+{% endblock defaults %}
 {% block content %}
 <div class="container">
     {% if not prices_usable %}
@@ -16,9 +15,16 @@
         </div>
     </div>
     {% endif %}
+    {% if error_string %}
+    <div class="row">
+        <div class="alert alert-danger">
+            {{error_string}}
+        </div>
+    </div>
+    {% endif %}
     <div class="row">
         <div class="col-md-3">
-            <form method="post">
+            <form method="post" action="{{url_for('ordering.home')}}">
                 <div class="form-group">
                     <label for="parse">EFT-Formatted Fit</label>
                     <textarea class="form-control" rows="25" id="parse" name="parse"></textarea>
@@ -27,75 +33,148 @@
             </form>
         </div>
         <div class="col-md-9">
-            <form method="post">
-                <table class="table table-hover table-condensed" id="datatables-fit">
-                    <thead>
-                    <tr>
-                        <th class="col-xs-4">{{invoice_info[0][0]}}</th>
-                        <th class="col-xs-1">{{invoice_info[0][1]}}</th>
-                        {% for header in invoice_info[0][2:] %}
-                        <th class="col-xs-2">{{header}}</th>
-                        {% endfor %}
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for item in invoice_info[1:] %}
-                    <tr>
-                        <td>{{item[1]}}</td>
-                        <td>
-                            <input class="form-control col-xs-1" id="notes" name="{{item[0]}}" placeholder="{{item[2]}}" value="{{item[2]}}">
-                        </td>
-                        {% for info in item[3:] %}
-                        <td>{{info}}</td>
-                        {% endfor %}
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </form>
-            <table class="table table-condensed table-bordered">
-                <tr>
-                    <td>Total volume of items:</td>
-                    <td>{{total_volume}}</td>
-                </tr>
-                <tr>
-                    <td>Total price of items in {{market_hub_name}}:</td>
-                    <td>{{sell_price}}</td>
-                </tr>
-                <tr>
-                    <td>Ship to:</td>
-                    <td>
-                        <form class="form-inline" method="get">
-                            <div class="form-group">
-                                <select class="form-control" name="end">
-                                    {% for station in valid_stations %}
-                                    {% if station[2] %}
-                                    <option value="{{station[0]}}" selected>{{station[1]}}</option>
-                                    {% else %}
-                                    <option value="{{station[0]}}">{{station[1]}}</option>
-                                    {% endif %}
+            <div class="row">
+                <form action="{{url_for('ordering.search')}}" class="form-inline">
+                    <div class="form-group">
+                        <label> Search for an item to add: </label>
+                        <input class="form-control" placeholder="Ex. Tritanium" name="name">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success" name="action" value="search">Search</button>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#cart">Cart</a></li>
+                    <li><a data-toggle="tab" href="#breakdown">All Fit Items</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="cart" class="tab-pane active">
+                        <form method="post" action="{{url_for('ordering.home')}}">
+                            <table class="table table-hover table-condensed" id="cart_table">
+                                <thead>
+                                <tr>
+                                    <th class="col-xs-4">{{invoice_info[0][0]}}</th>
+                                    <th class="col-xs-1">{{invoice_info[0][1]}}</th>
+                                    {% for header in invoice_info[0][2:] %}
+                                    <th class="col-xs-2">{{header}}</th>
                                     {% endfor %}
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-warning" name="action" value="station">Change</button>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in invoice_info[1:] %}
+                                <tr>
+                                    <td>{{item[1]}}</td>
+                                    <td>
+                                        <input class="form-control col-xs-1 input-sm" name="{{item[0]}}" placeholder="{{item[2]}}" value="{{item[2]}}">
+                                    </td>
+                                    {% for info in item[3:] %}
+                                    <td>{{info}}</td>
+                                    {% endfor %}
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            <table class="table table-condensed table-bordered">
+                                <tr>
+                                    <td>Cart Actions:</td>
+                                    <td>
+                                        <button type="submit" class="btn btn-success" name="action" value="qty">Save Qtys</button>
+                                        <button type="reset" class="btn btn-warning" name="action" value="qty">Reset Qtys</button>
+                                        <button type="submit" class="btn btn-danger" name="action" value="clear">Remove All</button>
+                                    </td>
+                                </tr>
+                            </table>
                         </form>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Shipping Cost [@{{jf_rate}} Isk/M3]:</td>
-                    <td>{{jf_total}}</td>
-                </tr>
-                <tr>
-                    <td>Total Cost:</td>
-                    <td>{{order_total}}</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <button type="submit" class="btn btn-success">Create Order</button>
-                    </td>
-                </tr>
-            </table>
+                    </div>
+                    <div id="breakdown" class="tab-pane">
+                        <form method="post" action="{{url_for('ordering.home')}}">
+                            <table class="table table-hover table-condensed datatables">
+                                <thead>
+                                <tr>
+                                    <th class="col-xs-4">{{breakdown_info[0][0]}}</th>
+                                    <th class="col-xs-1">{{breakdown_info[0][1]}}</th>
+                                    {% for header in breakdown_info[0][2:] %}
+                                    <th class="col-xs-2">{{header}}</th>
+                                    {% endfor %}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in breakdown_info[1:] %}
+                                <tr>
+                                    {% for info in item[1:] %}
+                                    <td>{{info}}</td>
+                                    {% endfor %}
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            <table class="table table-condensed table-bordered">
+                                <tr>
+                                    <td>Cart Actions:</td>
+                                    <td>
+                                        <button type="submit" class="btn btn-success" name="action" value="qty">Save Qtys</button>
+                                        <button type="reset" class="btn btn-warning" name="action" value="qty">Reset Qtys</button>
+                                        <button type="submit" class="btn btn-danger" name="action" value="clear">Remove All</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+                <form class="form-inline" method="get" action="{{url_for('ordering.home')}}">
+                    <table class="table table-condensed table-bordered">
+                        <tr>
+                            <td>Total volume of items:</td>
+                            <td>{{total_volume}}</td>
+                        </tr>
+                        <tr>
+                            <td>Total price of items in {{market_hub_name}}:</td>
+                            <td>{{sell_price}}</td>
+                        </tr>
+                        <tr>
+                            <td>Processing Cost [@{{order_tax}}%]:</td>
+                            <td>{{order_tax_total}}</td>
+                        </tr>
+                        <tr>
+                            <td>Ship to:</td>
+                            <td>
+                                <div class="form-group">
+                                    <select class="form-control" name="end">
+                                        {% for station in valid_stations %}
+                                        {% if station[2] %}
+                                        <option value="{{station[0]}}" selected>{{station[1]}}</option>
+                                        {% else %}
+                                        <option value="{{station[0]}}">{{station[1]}}</option>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-warning" name="action" value="station">Change</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Shipping Cost [@{{jf_rate}} Isk/M3]:</td>
+                            <td>{{jf_total}}</td>
+                        </tr>
+                        <tr>
+                            <td>Total Cost:</td>
+                            <td>{{order_total}}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                {% if prices_usable %}
+                                <button type="submit" class="btn btn-primary" name="action" value="order">Create Order</button>
+                                {% else %}
+                                <button type="submit" class="btn btn-primary" name="action" value="order" disabled>Create Order</button>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
         </div>
     </div>
 </div>

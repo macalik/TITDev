@@ -1,12 +1,10 @@
 {% extends "base.html" %}
 {% block head %}
 {{super()}}
-<link rel="shortcut icon" href="{{ url_for('static', filename='favicon_jf.ico') }}">
 {% endblock head %}
-{% block scripts %}
-{{super()}}
+{% block defaults %}
 <script src="{{url_for('static', filename='datatables-fit.js')}}"></script>
-{% endblock scripts %}
+{% endblock defaults %}
 {% block content %}
 <div class="container">
     {% if not prices_usable %}
@@ -91,32 +89,30 @@
                 {% endfor %}
                 </tbody>
             </table>
-            <table class="table table-condensed table-bordered">
-                <tr>
-                    <td>Qty:</td>
-                    <td>
-                        <form class="form-inline">
+            <form class="form-inline">
+                <table class="table table-condensed table-bordered">
+                    <tr>
+                        <td>Qty:</td>
+                        <td>
                             <div class="input-group">
                                 <span class="input-group-addon" id="multi-txt">Qty</span>
                                 <input type="text" class="form-control" placeholder="Qty (Default: 1)" name="multiply"
                                        aria-describedby="multi-txt" value="{{multiply}}">
                             </div>
                             <button type="submit" class="btn btn-warning" name="action" value="qty">Change</button>
-                        </form>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Total volume of items:</td>
-                    <td>{{total_volume}}</td>
-                </tr>
-                <tr>
-                    <td>Total price of items in {{market_hub_name}}:</td>
-                    <td>{{total_fit_isk}}</td>
-                </tr>
-                <tr>
-                    <td>Ship to:</td>
-                    <td>
-                        <form class="form-inline" method="get">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Total volume of items:</td>
+                        <td>{{total_volume}}</td>
+                    </tr>
+                    <tr>
+                        <td>Total price of items in {{market_hub_name}}:</td>
+                        <td>{{total_fit_isk}}</td>
+                    </tr>
+                    <tr>
+                        <td>Ship to:</td>
+                        <td>
                             <div class="form-group">
                                 <select class="form-control" name="end">
                                     {% for station in valid_stations %}
@@ -129,24 +125,28 @@
                                 </select>
                             </div>
                             <button type="submit" class="btn btn-warning" name="action" value="station">Change</button>
-                        </form>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Shipping Cost [@{{jf_rate}} Isk/M3]:</td>
-                    <td>{{jf_total}}</td>
-                </tr>
-                <tr>
-                    <td>Total Cost:</td>
-                    <td>{{order_total}}</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <button class="btn btn-success" disabled>Add to Cart</button>
-                    </td>
-                </tr>
-            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Shipping Cost [@{{jf_rate}} Isk/M3]:</td>
+                        <td>{{jf_total}}</td>
+                    </tr>
+                    <tr>
+                        <td>Total Cost:</td>
+                        <td>{{order_total}}</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            {% if prices_usable %}
+                            <button type="submit" class="btn btn-success" name="action" value="purchase">Add to Cart</button>
+                            {% else %}
+                            <button class="btn btn-success" disabled>Add to Cart</button>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </table>
+            </form>
         </div>
     </div>
 </div>

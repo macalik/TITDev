@@ -1,8 +1,7 @@
 {% extends "base.html" %}
-{% block scripts %}
-{{super()}}
+{% block defaults %}
 <script src="{{url_for('static', filename='datatables-jf-pilot.js')}}"></script>
-{% endblock scripts %}
+{% endblock defaults %}
 {% block content %}
 <div class="container">
     <div class="row">

@@ -28,7 +28,14 @@ def home():
             g.mongo.db.users.update({"_id": session["CharacterOwnerHash"]},
                                     {
                                         "$set": {
-                                            "email": request.form.get("email")
+                                            "email": request.form.get("email", "").strip()
+                                        }
+                                    })
+        elif request.form.get("action") == "slack":
+            g.mongo.db.users.update({"_id": session["CharacterOwnerHash"]},
+                                    {
+                                        "$set": {
+                                            "slack": request.form.get("slack", "").strip()
                                         }
                                     })
 
@@ -49,7 +56,7 @@ def home():
     # User Information
     db_user_info = g.mongo.db.users.find_one({"_id": session["CharacterOwnerHash"]})
     user_info = [db_user_info["_id"], db_user_info["character_name"], db_user_info["corporation_name"],
-                 db_user_info["alliance_name"], db_user_info.get("email")]
+                 db_user_info["alliance_name"], db_user_info.get("email"), db_user_info.get("slack")]
 
     # Images
     with open("configs/base.json", "r") as base_config_file:

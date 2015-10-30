@@ -3,9 +3,8 @@
 {{super()}}
 <link rel="shortcut icon" href="{{ url_for('static', filename='favicon_jf.ico') }}">
 {% endblock head %}
-{% block scripts %}
-{{super()}}
+{% block defaults %}
 <script src="{{url_for('static', filename='datatables.js')}}"></script>
-{% endblock scripts %}
+{% endblock defaults %}
 {% block content %}
 {% endblock content %}
