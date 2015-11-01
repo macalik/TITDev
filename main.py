@@ -53,6 +53,7 @@ app.logger.addHandler(console_logger)
 
 @app.before_first_request
 def app_init():
+    # Check if stations are loaded
     db_check_stations = app_mongo.db.stations.find_one({"_id": 60003760})  # Use Jita as check
     if not db_check_stations:
         # Load statics into memory
@@ -60,6 +61,7 @@ def app_init():
             stations_list = json.load(staStations_file)
         app_mongo.db.stations.insert([{"_id": int(key), "name": value} for key, value in stations_list.items()])
 
+    # Check if items are loaded
     db_check_items = app_mongo.db.items.find_one({"_id": 34})  # Use Tritanium as check
     if not db_check_items:
         with open("resources/invTypes.json", "r") as invTypes_file:
@@ -79,6 +81,16 @@ def app_init():
                                         "market_group_id": value["market_group_id"], "skill_id": value["skill_id"],
                                         "batch": value["batch"]})
         app_mongo.db.items.insert(adjusted_items_list)
+
+    # Check if roles are loaded
+    app_mongo.db.eve_auth.update({"_id": "super_admin"}, {"$setOnInsert": {"users": []}}, upsert=True)
+    app_mongo.db.eve_auth.update({"_id": "jf_admin"}, {"$setOnInsert": {"users": []}}, upsert=True)
+    app_mongo.db.eve_auth.update({"_id": "jf_pilot"}, {"$setOnInsert": {"users": []}}, upsert=True)
+    app_mongo.db.eve_auth.update({"_id": "user_admin"}, {"$setOnInsert": {"users": []}}, upsert=True)
+    app_mongo.db.eve_auth.update({"_id": "fittings_admin"}, {"$setOnInsert": {"users": []}}, upsert=True)
+    app_mongo.db.eve_auth.update({"_id": "buyback_admin"}, {"$setOnInsert": {"users": []}}, upsert=True)
+    app_mongo.db.eve_auth.update({"_id": "ordering_admin"}, {"$setOnInsert": {"users": []}}, upsert=True)
+    app_mongo.db.eve_auth.update({"_id": "ordering_marketeer"}, {"$setOnInsert": {"users": []}}, upsert=True)
 
 
 @app.before_request

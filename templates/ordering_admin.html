@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container">
+        {% if is_admin %}
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>Ordering Tax</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>Current Tax: <b>{{tax}}</b>%</p>
+                        <form class="form" method="post">
+                            <div class="input-group">
+                                <span class="input-group-addon" id="tax_text">Tax</span>
+                                <input type="text" class="form-control" placeholder="Tax %" name="tax"
+                                       aria-describedby="tax_text">
+                                <span class="input-group-addon">%</span>
+                            </div>
+                            <button type="submit" class="btn btn-danger" name="action" value="tax">Change</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Reserved invoices in the last 30 days</h2>
+                <table class="table table-hover table-condensed datatables">
+                    <thead>
+                        <tr>
+                            <th>Creation Date</th>
+                            <th>ID</th>
+                            <th>Destination</th>
+                            <th>Price</th>
+                            <th>Character</th>
+                            <th>Marketeer</th>
+                            <th>Status</th>
+                            <th>Link</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for invoice in marketeer_invoice_table %}
+                        <tr>
+                            {% for info in invoice[1:] %}
+                            <td class="{{invoice[0]}}">{{info}}</td>
+                            {% endfor %}
+                            <td class="{{invoice[0]}}">
+                                <form action="{{url_for('ordering.invoice', invoice_id=invoice[2])}}" method="get">
+                                    <button type="submit" class="btn btn-success">Link</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Outstanding invoices in the last 30 days</h2>
+                <table class="table table-hover table-condensed datatables">
+                    <thead>
+                        <tr>
+                            <th>Creation Date</th>
+                            <th>ID</th>
+                            <th>Destination</th>
+                            <th>Price</th>
+                            <th>Character</th>
+                            <th>Marketeer</th>
+                            <th>Status</th>
+                            <th>Link</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for invoice in new_invoice_table %}
+                        <tr>
+                            {% for info in invoice[1:] %}
+                            <td class="{{invoice[0]}}">{{info}}</td>
+                            {% endfor %}
+                            <td class="{{invoice[0]}}">
+                                <form action="{{url_for('ordering.invoice', invoice_id=invoice[2])}}" method="get">
+                                    <button type="submit" class="btn btn-success">Link</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h2>All invoices in the last 30 days</h2>
+                <table class="table table-hover table-condensed datatables">
+                    <thead>
+                        <tr>
+                            <th>Creation Date</th>
+                            <th>ID</th>
+                            <th>Destination</th>
+                            <th>Price</th>
+                            <th>Character</th>
+                            <th>Marketeer</th>
+                            <th>Status</th>
+                            <th>Link</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for invoice in invoice_table %}
+                        <tr>
+                            {% for info in invoice[1:] %}
+                            <td class="{{invoice[0]}}">{{info}}</td>
+                            {% endfor %}
+                            <td class="{{invoice[0]}}">
+                                <form action="{{url_for('ordering.invoice', invoice_id=invoice[2])}}" method="get">
+                                    <button type="submit" class="btn btn-success">Link</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

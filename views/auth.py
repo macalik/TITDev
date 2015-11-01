@@ -24,7 +24,7 @@ else:
         secrets = json.load(secrets_file)
 
 
-def requires_sso(role):
+def requires_sso(*roles):
     def decorator(function):
         @wraps(function)
         def decorated_function(*args, **kwargs):
@@ -94,7 +94,7 @@ def requires_sso(role):
                     session["UI_Roles"].append(role_ui["_id"])
 
             # Auth check after checking if user exists and updating cache if necessary
-            if not auth_check(role):
+            if not any([auth_check(x) for x in roles]):
                 abort(403)
 
             return function(*args, **kwargs)

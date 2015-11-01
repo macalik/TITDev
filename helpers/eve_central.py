@@ -10,7 +10,7 @@ def market_hub_prices(id_list):
     :return: prices[id] = lowest_sell_price
     """
 
-    usable = False
+    usable = True
 
     with open("configs/base.json") as base_config_file:
         base_config = json.load(base_config_file)
@@ -25,8 +25,8 @@ def market_hub_prices(id_list):
         ec_response = requests.get("http://api.eve-central.com/api/marketstat/json", data=payload)
         try:
             ec_prices = ec_response.json()
-            usable = True
         except ValueError:
+            usable = False
             print(ec_response.text)
             ec_prices = {}
     else:

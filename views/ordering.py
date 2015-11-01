@@ -1,6 +1,7 @@
 import json
 import time
 import re
+import datetime
 
 from flask import Blueprint, render_template, session, g, request, redirect, url_for
 
@@ -8,9 +9,9 @@ from bson.objectid import ObjectId
 import bson.errors
 import requests
 
-from views.auth import requires_sso
+from views.auth import requires_sso, auth_check
 from helpers.eve_central import market_hub_prices
-from helpers import conversions
+from helpers import conversions, caches
 
 ordering = Blueprint("ordering", __name__, template_folder="templates")
 
@@ -219,6 +220,8 @@ def home(item=""):
             valid_stations.append([route["_id"], route["end"], False])
 
     # JF Calculations
+    if selected_route == 0:
+        selected_route = int(str(base_config["market_hub_station"]) + str(base_config["home_station"]))
     selected_route_info = g.mongo.db.jf_routes.find_one({"_id": selected_route})
     if selected_route_info:
         rate_info = conversions.valid_value(selected_route_info["prices"], time.time())
@@ -252,7 +255,7 @@ def home(item=""):
                                 "order_tax": order_tax,
                                 "order_tax_total": order_tax_total,
                                 "prices_usable": prices_usable
-                            }}, upsert=True)
+                            }})
 
     if request.args.get("action") == "order":
         return redirect(url_for("ordering.invoice"))
@@ -278,7 +281,7 @@ def search():
     if request.args.get("id"):
         return redirect(url_for("ordering.home",
                                 item=request.args.get("id") + ";" +
-                                     request.args.get("qty-" + request.args.get("id"), 1)))
+                                request.args.get("qty-" + request.args.get("id"), 1)))
     elif not request.args.get("name"):
         return redirect(url_for("ordering.home"))
 
@@ -301,10 +304,11 @@ def search():
                            prices_usable=prices_usable)
 
 
-@ordering.route("/invoice/<invoice_id>")
+@ordering.route("/invoice/<invoice_id>", methods=["GET", "POST"])
 @ordering.route("/invoice")
 @requires_sso("corporation")
 def invoice(invoice_id=""):
+    timestamp = None
 
     with open("configs/base.json") as base_config_file:
         base_config = json.load(base_config_file)
@@ -314,8 +318,10 @@ def invoice(invoice_id=""):
         cart = g.mongo.db.carts.find_one({"_id": session["CharacterOwnerHash"]})
         if request.args.get("action") == "order":
             cart["user"] = cart.pop("_id")
+            cart["external"] = False
+            cart["character"] = session["CharacterName"]
             invoice_id = g.mongo.db.invoices.insert(cart)
-            # g.mongo.db.carts.remove({"_id": cart["user"]})
+            g.mongo.db.carts.remove({"_id": cart["user"]})
 
             # Slack Integration
             if (base_config.get("slack_enable") and
@@ -330,9 +336,95 @@ def invoice(invoice_id=""):
                                url_for("ordering.invoice", invoice_id=invoice_id, _external=True) + "|Invoice Link>"}
                     requests.post(base_config["market_service_slack_url"], json=payload)
 
-            return redirect(url_for("account.home"))
+            return redirect(url_for("ordering.invoice", invoice_id=invoice_id))
     else:
-        cart = g.mongo.db.invoices.find_one({"_id": invoice_id})
+        cart = g.mongo.db.invoices.find_one({"_id": ObjectId(invoice_id)})
+        timestamp = ObjectId(invoice_id).generation_time.strftime("%Y-%m-%d %H:%M:%S")
+        if not cart:
+            return redirect(url_for("account.home"))
+
+    # Invoice Editing
+    status = cart.get("status", "Not Processed")
+    ordering_admin = auth_check("ordering_admin")
+    ordering_marketeer = auth_check("ordering_marketeer")
+    editor = True if ordering_admin or ordering_marketeer else False
+    can_delete = True if status == "Not Processed" and (
+            cart.get("user") == session["CharacterOwnerHash"] or ordering_admin) else False
+    can_edit = True if ordering_admin or (
+        cart.get("marketeer") == session["CharacterName"] or status == "Not Processed") else False
+    if request.method == "POST":
+        if request.form.get("action") == "delete" and can_delete:
+            g.mongo.db.invoices.remove({"_id": ObjectId(invoice_id)})
+            return redirect(url_for("account.home"))
+        elif request.form.get("action") == "reject" and status in ["Not Processed", "Failed", "Processing"] and editor:
+            g.mongo.db.invoices.update({"_id": ObjectId(invoice_id)}, {"$set": {"status": "Rejected",
+                                                                                "marketeer": session["CharacterName"],
+                                                                                "reason": request.form.get("reason")
+                                                                                }})
+            # Slack Integration
+            if base_config.get("slack_enable") and base_config.get("market_service_slack_url") and cart.get("user"):
+                notify_user = g.mongo.db.users.find_one({"_id": cart.get("user")})
+                if base_config.get("market_service_slack_url") and notify_user.get("slack"):
+                    payload = {"text": "@{}: Your order has been rejected by {}. <{}|Invoice Link>".format(
+                        notify_user["slack"], session["CharacterName"],
+                        url_for("ordering.invoice", invoice_id=invoice_id, _external=True))}
+                    requests.post(base_config["market_service_slack_url"], json=payload)
+        elif request.form.get("action") == "process" and status in ["Not Processed", "Failed", "Rejected"] and editor:
+            g.mongo.db.invoices.update({"_id": ObjectId(invoice_id)}, {"$set": {"status": "Processing",
+                                                                                "marketeer": session["CharacterName"]
+                                                                                },
+                                                                       "$unset": {
+                                                                           "reason": request.form.get("reason")}})
+        elif request.form.get("action") == "release" and status in ["Processing", "Failed", "Rejected"] and (
+            cart.get("marketeer") == session["CharacterName"] or ordering_admin
+        ):
+            g.mongo.db.invoices.update({"_id": ObjectId(invoice_id)}, {"$unset": {"status": "Processing",
+                                                                                  "marketeer": session["CharacterName"],
+                                                                                  "reason": request.form.get("reason")
+                                                                                  }})
+        elif request.form.get("action") == "fail" and editor:
+            g.mongo.db.invoices.update({"_id": ObjectId(invoice_id)}, {"$set": {"status": "Failed",
+                                                                                "marketeer": session["CharacterName"],
+                                                                                "reason": request.form.get("reason")
+                                                                                }})
+            # Slack Integration
+            if base_config.get("slack_enable") and base_config.get("market_service_slack_url") and cart.get("user"):
+                notify_user = g.mongo.db.users.find_one({"_id": cart.get("user")})
+                if base_config.get("market_service_slack_url") and notify_user.get("slack"):
+                    payload = {"text": "@{}: Your order has been marked as failed by {}. <{}|Invoice Link>".format(
+                        notify_user["slack"], session["CharacterName"],
+                        url_for("ordering.invoice", invoice_id=invoice_id, _external=True))}
+                    requests.post(base_config["market_service_slack_url"], json=payload)
+        elif request.form.get("action") == "complete" and editor:
+            g.mongo.db.invoices.update({"_id": ObjectId(invoice_id)}, {"$set": {"status": "Completed",
+                                                                                "marketeer": session["CharacterName"]},
+                                                                       "$unset": {
+                                                                           "reason": request.form.get("reason")}})
+            # Slack Integration
+            if base_config.get("slack_enable") and base_config.get("market_service_slack_url") and cart.get("user"):
+                notify_user = g.mongo.db.users.find_one({"_id": cart.get("user")})
+                if base_config.get("market_service_slack_url") and notify_user.get("slack"):
+                    payload = {"text": "@{}: Your order has been completed by {}. <{}|Invoice Link>".format(
+                        notify_user["slack"], session["CharacterName"],
+                        url_for("ordering.invoice", invoice_id=invoice_id, _external=True))}
+                    requests.post(base_config["market_service_slack_url"], json=payload)
+        elif request.form.get("action") == "shipping" and editor:
+            g.mongo.db.invoices.update({"_id": ObjectId(invoice_id)}, {"$set": {
+                "external": not cart.get("external", False)}})
+        return redirect(url_for("ordering.invoice", invoice_id=invoice_id))
+
+    # Check shipping
+    if not cart.get("external") and status == "Processing":
+        caches.contracts()
+        shipping_contract = g.mongo.db.contracts.find_one({"title": invoice_id})
+        if shipping_contract:
+            status = "Shipping - " + shipping_contract["status"]
+
+    # Set buttons
+    if status == "Not Processed" or status == "Failed":
+        button = "Process"
+    else:
+        button = "Release"
 
     invoice_info = [["Name", "Qty", "Vol/Item", "Isk/Item", "Vol Subtotal", "Isk Subtotal"]]
     for item in cart["item_table"].values():
@@ -347,4 +439,48 @@ def invoice(invoice_id=""):
                            order_tax="{:,.02f}".format(cart["order_tax"]), jf_end=cart["jf_end"],
                            jf_rate="{:,.02f}".format(cart["jf_rate"]),
                            jf_total="{:,.02f}".format(cart["jf_total"]),
-                           order_total="{:,.02f}".format(cart["order_total"]))
+                           order_total="{:,.02f}".format(cart["order_total"]),
+                           timestamp=timestamp, can_delete=can_delete, editor=editor,
+                           status=status, button=button, marketeer=cart.get("marketeer"), reason=cart.get("reason"),
+                           external=cart.get("external", False), can_edit=can_edit, character=cart.get("character"))
+
+
+@ordering.route("/admin", methods=["GET", "POST"])
+@requires_sso("ordering_marketeer", "ordering_admin")
+def admin():
+
+    # Auth Check
+    is_admin = auth_check("ordering_admin")
+    if request.form.get("action") == "tax" and request.form.get("tax") and is_admin:
+        g.mongo.db.preferences.update({"_id": "ordering"}, {"tax": float(request.form.get("tax", 0))}, upsert=True)
+    tax_db = g.mongo.db.preferences.find_one({"_id": "ordering"})
+    tax = "{:.02f}".format(tax_db["tax"]) if tax_db else 0
+
+    # Invoice List
+    one_month_oid = ObjectId.from_datetime(datetime.datetime.today() - datetime.timedelta(30))
+    invoice_table = []
+    marketeer_invoice_table = []
+    new_invoice_table = []
+    for invoice_db in g.mongo.db.invoices.find({"_id": {"$gt": one_month_oid}}):
+        invoice_status = invoice_db.get("status", "Not Processed")
+        invoice_timestamp = ObjectId(invoice_db["_id"]).generation_time.strftime("%Y-%m-%d %H:%M:%S")
+        invoice_color = ""
+        if invoice_status == "Shipping - Completed":
+            invoice_color = "primary"
+        elif invoice_status == "Processing" or invoice_status.startswith("Shipping"):
+            invoice_color = "warning"
+        elif invoice_status in ["Failed", "Rejected"]:
+            invoice_color = "danger"
+
+        invoice_row = [invoice_color, invoice_timestamp, invoice_db["_id"], invoice_db["jf_end"],
+                       "{:,.02f}".format(invoice_db["order_total"]), invoice_db.get("character"),
+                       invoice_db.get("marketeer"), invoice_status]
+
+        invoice_table.append(invoice_row)
+        if invoice_db.get("marketeer") == session["CharacterName"]:
+            marketeer_invoice_table.append(invoice_row)
+        if invoice_status == "Not Processed":
+            new_invoice_table.append(invoice_row)
+
+    return render_template("ordering_admin.html", invoice_table=invoice_table, tax=tax, is_admin=is_admin,
+                           marketeer_invoice_table=marketeer_invoice_table, new_invoice_table=new_invoice_table)

@@ -9,7 +9,7 @@ class Navigation:
     after_base = [View('JF Service', "jf.home"), View('Buyback Service', 'buyback.home'),
                   View('Fittings', "fittings.home")]
     alliance = base + after_base
-    corp = base + [View('Corp Main', "corp.home")] + after_base
+    corp = base + [View('Corp Main', "corp.home"), View("Market Service", "ordering.home")] + after_base
 
     def __init__(self, app):
         nav = Nav()
@@ -37,6 +37,7 @@ class Navigation:
         @nav.navigation('admin')
         def nav_admin():
             admin_elements = []
+            market_service = False
             for role in session.get("UI_Roles"):
                 if role == "jf_admin":
                     admin_elements += [View('JF Service', "jf.admin"), View('JF Stats', "jf.stats")]
@@ -46,6 +47,9 @@ class Navigation:
                     admin_elements.append(View('JF Pilot', "jf.pilot"))
                 elif role == "buyback_admin":
                     admin_elements.append(View('Buyback Service', 'buyback.admin'))
+                elif role in ["ordering_marketeer", "ordering_admin"] and not market_service:
+                    admin_elements.append(View('Market Service', 'ordering.admin'))
+                    market_service = True
             if session["UI_Corporation"]:
                 items = Navigation.corp + [Subgroup('Admin Pages', *admin_elements),
                                            View('Log Out', 'auth.log_out')]
@@ -53,7 +57,7 @@ class Navigation:
                 items = Navigation.alliance + [Subgroup('Admin Pages', *admin_elements),
                                                View('Log Out', 'auth.log_out')]
             else:
-                items = ['TiT', View('Home', 'home'), View('Log Out', 'auth.log_out')]
+                return nav_neut()
 
             return Navbar(*items)
 

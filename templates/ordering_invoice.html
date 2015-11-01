@@ -13,8 +13,65 @@
     </div>
     {% endif %}
     <div class="row">
-        <h2>Confirm Purchase</h2>
-        <h3>Price: {{order_total}}</h3>
+        <div class="col-md-6">
+            {% if timestamp %}
+            <h2>Invoice</h2>
+            <h3>Date: {{timestamp}} UTC</h3>
+            <h3>Character: {{character}}</h3>
+            {% else %}
+            <h2>Confirm Purchase</h2>
+            {% endif %}
+            <h3>Price: {{order_total}}</h3>
+        </div>
+        <div class="col-lg-6">
+            <ul class="list-group">
+                <li class="list-group-item">Status: {{status}}</li>
+                <li class="list-group-item">Marketeer: {{marketeer}}</li>
+                <li class="list-group-item">Reason: {{reason}}</li>
+                <li class="list-group-item">External shipper: {{external}}</li>
+                {% if timestamp %}
+                <li class="list-group-item">
+                    <form method="post">
+                        {% if editor %}
+                        {% if can_edit %}
+                        <div class="input-group">
+                            <span class="input-group-addon">Reason</span>
+                            <input class="form-control" placeholder="Ex. Cannot be shipped." name="reason">
+                        </div>
+                        {% else %}
+                        <div class="input-group">
+                            <span class="input-group-addon">Reason</span>
+                            <input class="form-control" placeholder="Ex. Cannot be shipped." name="reason" disabled>
+                        </div>
+                        {% endif %}
+                        {% endif %}
+                        {% if can_delete %}
+                        <button type="submit" class="btn btn-danger" name="action" value="delete">Delete</button>
+                        {% else %}
+                        <button type="submit" class="btn btn-danger" name="action" value="delete" disabled>Delete</button>
+                        {% endif %}
+                        {% if editor %}
+                        {% if can_edit %}
+                        <button type="submit" class="btn btn-danger" name="action" value="reject">Reject</button>
+                        <button type="submit" class="btn btn-primary" name="action" value="{{button.lower()}}">{{button}}</button>
+                        <button type="submit" class="btn btn-warning" name="action" value="shipping">Change Shipper</button>
+                        <button type="submit" class="btn btn-success" name="action" value="complete">Complete</button>
+                        <button type="submit" class="btn btn-danger" name="action" value="fail">Fail</button>
+                        {% else %}
+                        <button type="submit" class="btn btn-danger" name="action" value="reject" disabled>Reject</button>
+                        <button type="submit" class="btn btn-primary" name="action" value="{{button.lower()}}" disabled>{{button}}</button>
+                        <button type="submit" class="btn btn-warning" name="action" value="shipping" disabled>Change Shipper</button>
+                        <button type="submit" class="btn btn-success" name="action" value="complete" disabled>Complete</button>
+                        <button type="submit" class="btn btn-danger" name="action" value="fail" disabled>Fail</button>
+                        {% endif %}
+                        {% endif %}
+                    </form>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-12">
             <div class="row">
                 <table class="table table-hover table-condensed datatables">
@@ -62,6 +119,7 @@
                         <td>Total Cost:</td>
                         <td>{{order_total}}</td>
                     </tr>
+                    {% if not timestamp %}
                     <tr>
                         <td></td>
                         <td>
@@ -74,6 +132,7 @@
                             </form>
                         </td>
                     </tr>
+                    {% endif %}
                 </table>
             </div>
         </div>
