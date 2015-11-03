@@ -432,6 +432,9 @@ def invoice(invoice_id=""):
                              "{:,.02f}".format(item["price"]), "{:,.02f}".format(item["volume_total"]),
                              "{:,.02f}".format(item["price_total"])])
 
+    # Route order total
+    cart["order_total"] = round(cart["order_total"] + 50000, -5)
+
     return render_template("ordering_invoice.html", invoice_info=invoice_info, market_hub_name=market_hub_name,
                            prices_usable=cart["prices_usable"], total_volume="{:,.02f}".format(cart["volume"]),
                            sell_price="{:,.02f}".format(cart["sell_price"]),
