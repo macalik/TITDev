@@ -1,13 +1,16 @@
 import os
 import json
 import logging
+import datetime
 
-from flask import Flask, render_template, g
+from flask import Flask, render_template, g, session, jsonify
 from flask_bootstrap import Bootstrap
 from flask_pymongo import PyMongo
+from flask_oauthlib.provider import OAuth2Provider
+from bson.objectid import ObjectId
 
 from views.navigation import Navigation
-from views.auth import auth
+from views.auth import auth, requires_sso
 from views.jump_freighter import jf
 from views.admin import admin
 from views.account import account
@@ -33,6 +36,7 @@ else:
     app.config["MONGO_PORT"] = secrets["mongo-port"]
     app.secret_key = secrets["random_key"]
 app_mongo = PyMongo(app)
+oauth = OAuth2Provider(app)
 
 app.register_blueprint(auth, url_prefix="/auth")
 app.register_blueprint(jf, url_prefix="/jf")
@@ -109,7 +113,192 @@ def home():
     return render_template("index.html")
 
 
+# API and OAuth2
+
+class OAuth2Client:
+
+    name = ""
+    description = ""
+
+    user_id = ""
+    user = ""
+
+    client_id = ""
+    client_secret = ""
+
+    client_type = "public"
+    redirect_uris = []
+    default_redirect_uri = ""
+    default_scopes = []
+
+    def __init__(self, input_client_id=None):
+        if input_client_id:
+            db_info = g.mongo.db.oauth2_clients.find_one({"_id": ObjectId(input_client_id)})
+            self.name = db_info.get("name")
+            self.description = db_info.get("description")
+            self.user_id = db_info.get("user_id")
+            self.user = db_info.get("user")
+            self.client_id = str(db_info["_id"])
+            self.client_secret = db_info["client_secret"]
+            self.client_type = db_info["client_type"]
+            self.redirect_uris = db_info["redirect_uris"]
+            self.default_redirect_uri = db_info["redirect_uris"][0]
+            self.default_scopes = db_info["default_scopes"]
+
+
+class OAuth2Grant:
+
+    grant_id = ObjectId()
+    user = ""
+    client_id = ""
+    code = ""
+    redirect_uri = ""
+    expires = datetime.datetime.utcnow()
+    scopes = []
+
+    def __init__(self, input_client_id=None, input_code=None):
+        if input_client_id and input_code:
+            db_info = g.mongo.db.oauth2_grants.find_one({"client_id": input_client_id, "code": input_code})
+            self.user = db_info["user"]
+            self.client_id = db_info["client_id"]
+            self.code = db_info["code"]
+            self.redirect_uri = db_info["redirect_uri"]
+            self.expires = db_info["expires"].replace(tzinfo=None)
+            self.scopes = db_info["scopes"]
+            self.grant_id = db_info["_id"]
+
+    def delete(self):
+        g.mongo.db.oauth2_grants.remove({"_id": self.grant_id})
+        return self
+
+
+class OAuth2Token:
+
+    token_id = ObjectId()
+    client_id = ""
+    user = ""
+
+    token_type = ""
+
+    access_token = ""
+    refresh_token = ""
+    expires = datetime.datetime.utcnow()
+    scopes = []
+
+    def __init__(self, input_access_token=None, input_refresh_token=None):
+        db_info = None
+        if input_access_token or input_refresh_token:
+            if input_access_token:
+                db_info = g.mongo.db.oauth2_tokens.find_one({"access_token": input_access_token})
+            else:
+                db_info = g.mongo.db.oauth2_tokens.find_one({"refresh_token": input_refresh_token})
+
+        if db_info:
+            self.client_id = db_info["client_id"]
+            self.user = db_info["user"]
+            self.token_type = db_info["token_type"]
+            self.access_token = db_info["access_token"]
+            self.refresh_token = db_info["refresh_token"]
+            self.expires = db_info["expires"].replace(tzinfo=None)
+            self.scopes = db_info["scopes"]
+            self.token_id = db_info["_id"]
+
+
+@oauth.clientgetter
+def load_client(client_id):
+    return OAuth2Client(client_id)
+
+
+@oauth.grantgetter
+def load_grant(client_id, code):
+    return OAuth2Grant(client_id, code)
+
+
+@oauth.grantsetter
+def save_grant(client_id, code, request, *args, **kwargs):
+    expires = datetime.datetime.utcnow() + datetime.timedelta(seconds=300)
+    g.mongo.db.oauth2_grants.insert({
+        "client_id": client_id,
+        "code": code["code"],
+        "redirect_uri": request.redirect_uri,
+        "scopes": request.scopes,
+        "user": session["CharacterOwnerHash"],
+        "expires": expires
+    })
+    grant = OAuth2Grant()
+    grant.client_id = client_id
+    grant.code = code["code"]
+    grant.redirect_uri = request.redirect_uri,
+    grant.scopes = request.scopes
+    grant.user = session["CharacterOwnerHash"],
+    grant.expires = expires
+
+    return grant
+
+
+@oauth.tokengetter
+def load_token(access_token=None, refresh_token=None):
+    if access_token:
+        return OAuth2Token(input_access_token=access_token)
+    else:
+        return OAuth2Token(input_refresh_token=refresh_token)
+
+
+@oauth.tokensetter
+def save_token(token, request, *args, **kwargs):
+    g.mongo.db.oauth2_tokens.remove({"client_id": request.client.client_id, "user": request.user})
+
+    expires_in = token.get("expires_in")
+    expires = datetime.datetime.utcnow() + datetime.timedelta(seconds=expires_in)
+    g.mongo.db.oauth2_tokens.insert({
+        "client_id": request.client_id,
+        "user": request.user,
+        "token_type": token["token_type"],
+        "access_token": token["access_token"],
+        "refresh_token": token["refresh_token"],
+        "expires": expires,
+        "scopes": token["scope"].split()
+    })
+
+    tok = OAuth2Token()
+    tok.access_token = token["access_token"]
+    tok.refresh_token = token["refresh_token"]
+    tok.token_type = token["token_type"]
+    tok.scopes = token["scope"].split()
+    tok.expires = expires
+    tok.client_id = request.client.client_id
+    tok.user = request.user
+
+    return tok
+
+
+@app.route("/oauth/authorize", methods=['GET', 'POST'])
+@requires_sso(None)
+@oauth.authorize_handler
+def authorize(*args, **kwargs):
+    return True
+
+
+@app.route("/oauth/token", methods=['POST'])
+@oauth.token_handler
+def access_token():
+    return None
+
+
+@app.route("/oauth/revoke")
+@oauth.revoke_handler
+def revoke_token(): pass
+
+
+@app.route("/api/users")
+@oauth.require_oauth()
+def api_users():
+    return jsonify(username="hi")
+
+
 if not os.environ.get("HEROKU") and __name__ == "__main__":
+
+    os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = 'true'
 
     @app.route('/test')
     def test():
