@@ -1,5 +1,6 @@
 Flask==0.10.1
 Flask-Bootstrap==3.3.5.6
+Flask-OAuthlib==0.9.2
 Flask-PyMongo==0.3.1
 Jinja2==2.8
 MarkupSafe==0.23

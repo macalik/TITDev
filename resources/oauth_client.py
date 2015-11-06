@@ -26,7 +26,7 @@ remote = oauth.remote_app(
 @app.route('/')
 def index():
     if 'remote_oauth' in session:
-        resp = remote.get('users')
+        resp = remote.get('user/Kazuki%20Ishikawa')
         print(resp.data)
         return jsonify(resp.data)
     next_url = request.args.get('next') or request.referrer or None

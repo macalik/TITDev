@@ -222,7 +222,7 @@ def save_grant(client_id, code, request, *args, **kwargs):
         "code": code["code"],
         "redirect_uri": request.redirect_uri,
         "scopes": request.scopes,
-        "user": session["CharacterOwnerHash"],
+        "user": session["CharacterName"],
         "expires": expires
     })
     grant = OAuth2Grant()
@@ -230,7 +230,7 @@ def save_grant(client_id, code, request, *args, **kwargs):
     grant.code = code["code"]
     grant.redirect_uri = request.redirect_uri,
     grant.scopes = request.scopes
-    grant.user = session["CharacterOwnerHash"],
+    grant.user = session["CharacterName"],
     grant.expires = expires
 
     return grant
@@ -290,10 +290,36 @@ def access_token():
 def revoke_token(): pass
 
 
-@app.route("/api/users")
+@app.route("/api/user/<name>")
 @oauth.require_oauth()
-def api_users():
-    return jsonify(username="hi")
+def api_user(name):
+    """
+    1: Guests
+    2: Registered
+    3: Super Moderators
+    4: Administrators
+    5: Awaiting Activation
+    6: Moderators
+    7: Banned
+    :param name:
+    :return:
+    """
+    with open("configs/base.json", "r") as base_config_file:
+        base_config = json.load(base_config_file)
+    db_user = g.mongo.db.users.find_one({"character_name": name})
+    if db_user:
+        if db_user.get("forum_role") == "admin":
+            group_id = 4
+        elif db_user.get("forum_role") == "moderator":
+            group_id = 3
+        elif db_user["corporation_id"] == base_config["corporation_id"]:
+            group_id = 2
+        else:
+            group_id = 7
+
+        return jsonify(username=db_user["character_name"], group_id=group_id)
+    else:
+        return jsonify(username=name, group_id=7)
 
 
 if not os.environ.get("HEROKU") and __name__ == "__main__":
