@@ -145,9 +145,6 @@ def home():
     price = ""
     corp_price = ""
 
-    # Check Station Names
-    station_name_corrector()
-
     start_list = []
     end_list = []
     for station in g.mongo.db.jf_routes.distinct("start"):
@@ -347,12 +344,12 @@ def admin():
     collateral = ""
     edit = False
 
-    # Check station names
-    station_name_corrector()
-
     if request.method == "GET":
         if request.args.get("action") == "delete":
             g.mongo.db.jf_routes.remove({"_id": int(request.args.get("_id"))})
+        elif request.args.get("action") == "fix":
+            # Check station names
+            station_name_corrector()
         elif request.args.get("action") == "edit":
             selected_route = g.mongo.db.jf_routes.find_one({"_id": int(request.args.get("_id"))})
             edit = True
