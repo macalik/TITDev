@@ -130,6 +130,15 @@ def contracts(keys=None):
             cache_time = db_cache.get("cached_until", 0) if db_cache else 0
         if not db_cache or cache_time < time.time():
 
+            # Clean contract history
+            month_ago = int(time.time()) - 2629743  # Services are 1 month
+            two_weeks_ago = int(time.time()) - 1512000  # Personals are 2 1/2 weeks
+            g.mongo.db.contracts.remove({"issued_int": {"$lt": month_ago}})
+            filter_time = month_ago
+            if service[0] == "personal":
+                g.mongo.db.contracts.remove({"_id.service": "personal", "issued_int": {"$lt": two_weeks_ago}})
+                filter_time = two_weeks_ago
+
             if service[0] == "personal":
                 xml_contracts_payload = {
                     "keyID": service[1],
@@ -174,34 +183,35 @@ def contracts(keys=None):
                 invalid_apis.append(service[1])
             else:
                 for contract in xml_contracts_tree[1][0]:
-                    bulk_run = True
-                    bulk_op.find({
-                        "_id.id": int(contract.attrib["contractID"]), "_id.service": service[0]
-                    }).upsert().update(
-                        {
-                            "$set": {
-                                "issuer_id": int(contract.attrib["issuerID"]),
-                                "assignee_id": int(contract.attrib["assigneeID"]),
-                                "acceptor_id": int(contract.attrib["acceptorID"]),
-                                "start_station_id": int(contract.attrib["startStationID"]),
-                                "end_station_id": int(contract.attrib["endStationID"]),
-                                "type": contract.attrib["type"],
-                                "status": contract.attrib["status"],
-                                "title": contract.attrib["title"],
-                                "for_corp": int(contract.attrib["forCorp"]),
-                                "date_issued": contract.attrib["dateIssued"],
-                                "date_expired": contract.attrib["dateExpired"],
-                                "date_accepted": contract.attrib["dateAccepted"],
-                                "num_days": int(contract.attrib["numDays"]),
-                                "date_completed": contract.attrib["dateCompleted"],
-                                "price": float(contract.attrib["price"]),
-                                "reward": float(contract.attrib["reward"]),
-                                "collateral": float(contract.attrib["collateral"]),
-                                "volume": float(contract.attrib["volume"]),
-                                "issued_int": int(
-                                    calendar.timegm(time.strptime(contract.attrib["dateIssued"], xml_time_pattern)))
-                            }
-                        })
+                    issue_time = int(calendar.timegm(time.strptime(contract.attrib["dateIssued"], xml_time_pattern)))
+                    if issue_time > filter_time:
+                        bulk_run = True
+                        bulk_op.find({
+                            "_id.id": int(contract.attrib["contractID"]), "_id.service": service[0]
+                        }).upsert().update(
+                            {
+                                "$set": {
+                                    "issuer_id": int(contract.attrib["issuerID"]),
+                                    "assignee_id": int(contract.attrib["assigneeID"]),
+                                    "acceptor_id": int(contract.attrib["acceptorID"]),
+                                    "start_station_id": int(contract.attrib["startStationID"]),
+                                    "end_station_id": int(contract.attrib["endStationID"]),
+                                    "type": contract.attrib["type"],
+                                    "status": contract.attrib["status"],
+                                    "title": contract.attrib["title"],
+                                    "for_corp": int(contract.attrib["forCorp"]),
+                                    "date_issued": contract.attrib["dateIssued"],
+                                    "date_expired": contract.attrib["dateExpired"],
+                                    "date_accepted": contract.attrib["dateAccepted"],
+                                    "num_days": int(contract.attrib["numDays"]),
+                                    "date_completed": contract.attrib["dateCompleted"],
+                                    "price": float(contract.attrib["price"]),
+                                    "reward": float(contract.attrib["reward"]),
+                                    "collateral": float(contract.attrib["collateral"]),
+                                    "volume": float(contract.attrib["volume"]),
+                                    "issued_int": issue_time
+                                }
+                            })
     if bulk_run:
         try:
             bulk_op.execute()

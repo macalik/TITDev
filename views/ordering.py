@@ -87,7 +87,7 @@ def home(item=""):
     current_cart = g.mongo.db.carts.find_one({"_id": session["CharacterOwnerHash"]})
     fittings_info = []
     fittings_breakdown = {}
-    if current_cart:
+    if current_cart and current_cart.get("items"):
         cart_item_list_pre = current_cart["items"]
 
         # Filter fittings from items
