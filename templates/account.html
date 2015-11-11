@@ -140,36 +140,76 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
-            <h2>All Valid APIs</h2>
-            <table class="table table-hover table-condensed datatables">
-                <thead>
-                <tr>
-                    <th>Char ID</th>
-                    <th>Char Name</th>
-                    <th>Key ID</th>
-                    <th>vCode</th>
-                    <th>Cached Until</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for key in associated_keys %}
-                <tr>
-                    {% for info in key %}
-                    <td>{{info}}</td>
-                    {% endfor %}
-                    <td>
-                        <form method="post">
-                            <input class="form-control" name="key_id" type="hidden" value="{{key[2]}}">
-                            <input class="form-control" name="vcode" type="hidden" value="{{key[3]}}">
-                            <button name="action" type="submit" class="btn btn-danger" value="remove">Remove</button>
-                        </form>
-                    </td>
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#apis">APIs</a></li>
+            <li><a data-toggle="tab" href="#invoices">Invoices</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="apis" class="tab-pane active">
+                <div class="col-md-12">
+                    <h2>All Valid APIs</h2>
+                    <table class="table table-hover table-condensed datatables">
+                        <thead>
+                        <tr>
+                            <th>Char ID</th>
+                            <th>Char Name</th>
+                            <th>Key ID</th>
+                            <th>vCode</th>
+                            <th>Cached Until</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for key in associated_keys %}
+                        <tr>
+                            {% for info in key %}
+                            <td>{{info}}</td>
+                            {% endfor %}
+                            <td>
+                                <form method="post">
+                                    <input class="form-control" name="key_id" type="hidden" value="{{key[2]}}">
+                                    <input class="form-control" name="vcode" type="hidden" value="{{key[3]}}">
+                                    <button name="action" type="submit" class="btn btn-danger" value="remove">Remove</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="invoices" class="tab-pane">
+                <div class="col-md-12">
+                    <h2>Personal invoices in the last 30 days</h2>
+                    <table class="table table-hover table-condensed datatables">
+                        <thead>
+                            <tr>
+                                <th>Creation Date</th>
+                                <th>ID</th>
+                                <th>Destination</th>
+                                <th>Price</th>
+                                <th>Marketeer</th>
+                                <th>Status</th>
+                                <th>Link</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for invoice in invoice_table %}
+                            <tr>
+                                {% for info in invoice[1:] %}
+                                <td class="{{invoice[0]}}">{{info}}</td>
+                                {% endfor %}
+                                <td class="{{invoice[0]}}">
+                                    <form action="{{url_for('ordering.invoice', invoice_id=invoice[2])}}" method="get">
+                                        <button type="submit" class="btn btn-success">Link</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>

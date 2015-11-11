@@ -127,11 +127,12 @@ def home():
             jf_rate = 0
 
         # Parsing
-        item_names = [x.split("\t")[0] if x.find("\t") != -1
-                      else (" ".join(x.split(" ")[:-1]) if conversions.is_a_number(x.split(" ")[-1]) else x.strip())
+        item_names = [x.split("\t")[0].strip() if x.find("\t") != -1
+                      else (" ".join(x.split(" ")[:-1]).strip() if conversions.is_a_number(x.split(" ")[-1])
+                            else x.strip())
                       for x in request.form.get("input").splitlines()]
-        item_input = [re.compile("^" + x.split("\t")[0] + "$", re.IGNORECASE) if x.find("\t") != -1
-                      else re.compile("^" + " ".join(x.split(" ")[:-1]) + "$"
+        item_input = [re.compile("^" + x.split("\t")[0].strip() + "$", re.IGNORECASE) if x.find("\t") != -1
+                      else re.compile("^" + " ".join(x.split(" ")[:-1]).strip() + "$"
                                       if conversions.is_a_number(x.split(" ")[-1]) else
                                       "^" + x.strip() + "$", re.IGNORECASE)
                       for x in request.form.get("input").splitlines()]
@@ -139,9 +140,9 @@ def home():
         for input_line in request.form.get("input").splitlines():
             try:
                 if input_line.find("\t") != -1:
-                    input_split = input_line.split("\t")
+                    input_split = [y.strip() for y in input_line.split("\t")]
                 elif conversions.is_a_number(input_line.split(" ")[-1]):
-                    input_split = [" ".join(input_line.split(" ")[:-1]), input_line.split(" ")[-1]]
+                    input_split = [" ".join(input_line.split(" ")[:-1]).strip(), input_line.split(" ")[-1]]
                 else:
                     input_split = [input_line.strip(), "1"]
                 item_qty.setdefault(input_split[0].upper(), 0)

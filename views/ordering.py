@@ -30,13 +30,14 @@ def home(item=""):
     if request.method == "POST" and request.form.get("action") == "qty":
         for key, value in request.form.items():
             if key != "action" and not key.startswith("DataTables"):
-                if int(float(value)) != 0:
-                    bulk_op_update.find({"_id": session["CharacterOwnerHash"]}).upsert().update({
-                        "$set": {"items." + key: int(float(value))}})
-                else:
-                    bulk_op_update.find({"_id": session["CharacterOwnerHash"]}).upsert().update({
-                        "$unset": {"items." + key: int(float(value))}})
-                bulk_run_update = True
+                if value.strip():
+                    if int(float(value)) != 0:
+                        bulk_op_update.find({"_id": session["CharacterOwnerHash"]}).upsert().update({
+                            "$set": {"items." + key: int(float(value))}})
+                    else:
+                        bulk_op_update.find({"_id": session["CharacterOwnerHash"]}).upsert().update({
+                            "$unset": {"items." + key: int(float(value))}})
+                    bulk_run_update = True
     if request.method == "POST" and request.form.get("action") == "clear":
         g.mongo.db.carts.remove({"_id": session["CharacterOwnerHash"]})
 
@@ -130,16 +131,24 @@ def home(item=""):
 
     full_cart = {}
 
-    invoice_info = [["Name", "Qty", "Vol/Item", "Isk/Item", "Vol Subtotal", "Isk Subtotal"]] + fittings_info
+    order_db = g.mongo.db.preferences.find_one({"_id": "ordering"})
+    if session["UI_Corporation"]:
+        order_tax = order_db.get("tax_corp", 0) if order_db else 0
+    else:
+        order_tax = order_db.get("tax", 0) if order_db else 0
+
+    invoice_info = [["Name", "Qty", "Vol/Item", "Isk/Item + Markup",
+                     "Vol Subtotal", "Isk Subtotal w/ Markup"]] + fittings_info
     for db_item in g.mongo.db.items.find({"_id": {"$in": cart_item_list_int}}):
         invoice_info.append([
             db_item["_id"],
             db_item["name"],
             cart_item_list[str(db_item["_id"])],
             "{:,.02f}".format(db_item["volume"]),
-            "{:,.02f}".format(prices[db_item["_id"]]["sell"]),
+            "{:,.02f}".format(prices[db_item["_id"]]["sell"] * (1 + order_tax/100)),
             "{:,.02f}".format(db_item["volume"] * cart_item_list[str(db_item["_id"])]),
-            "{:,.02f}".format(prices[db_item["_id"]]["sell"] * cart_item_list[str(db_item["_id"])])
+            "{:,.02f}".format(prices[db_item["_id"]]["sell"] * cart_item_list[str(db_item["_id"])] *
+                              (1 + order_tax/100))
         ])
         full_cart[str(db_item["_id"])] = {
             "name": db_item["name"],
@@ -152,17 +161,17 @@ def home(item=""):
         total_volume += db_item["volume"] * cart_item_list[str(db_item["_id"])]
         sell_price += prices[db_item["_id"]]["sell"] * cart_item_list[str(db_item["_id"])]
 
-    breakdown_info = [["Name", "Qty", "Vol/Item", "Isk/Item", "Vol Subtotal", "Isk Subtotal"]]
+    breakdown_info = [["Name", "Qty", "Vol/Item", "Isk/Item + Markup", "Vol Subtotal", "Isk Subtotal w/ Markup"]]
     for db_item_breakdown in g.mongo.db.items.find({"_id": {"$in": fittings_breakdown_int}}):
         breakdown_info.append([
             db_item_breakdown["_id"],
             db_item_breakdown["name"],
             fittings_breakdown[str(db_item_breakdown["_id"])],
             "{:,.02f}".format(db_item_breakdown["volume"]),
-            "{:,.02f}".format(prices[int(db_item_breakdown["_id"])]["sell"]),
+            "{:,.02f}".format(prices[int(db_item_breakdown["_id"])]["sell"] * (1 + order_tax/100)),
             "{:,.02f}".format(db_item_breakdown["volume"] * fittings_breakdown[str(db_item_breakdown["_id"])]),
             "{:,.02f}".format(prices[int(db_item_breakdown["_id"])]["sell"] *
-                              fittings_breakdown[str(db_item_breakdown["_id"])])
+                              fittings_breakdown[str(db_item_breakdown["_id"])] * (1 + order_tax/100))
         ])
         if full_cart.get(str(db_item_breakdown["_id"])):
             full_cart[str(db_item_breakdown["_id"])]["qty"] += fittings_breakdown[str(db_item_breakdown["_id"])]
@@ -235,10 +244,7 @@ def home(item=""):
         jf_rate = 0
         jf_total = 0
 
-    order_db = g.mongo.db.preferences.find_one({"_id": "ordering"})
-    order_tax = order_db.get("tax", 0) if order_db else 0
     order_tax_total = sell_price * order_tax / 100
-
     order_total = jf_total + sell_price + order_tax_total
 
     # Update DB
@@ -259,6 +265,9 @@ def home(item=""):
 
     if request.args.get("action") == "order":
         return redirect(url_for("ordering.invoice"))
+
+    # Round order total
+    order_total = round(order_total + 50000, -5)
 
     # Formatting
     total_volume = "{:,.02f}".format(total_volume)
@@ -320,6 +329,7 @@ def invoice(invoice_id=""):
             cart["user"] = cart.pop("_id")
             cart["external"] = False
             cart["character"] = session["CharacterName"]
+            cart["status"] = "Submitted"
             invoice_id = g.mongo.db.invoices.insert(cart)
             g.mongo.db.carts.remove({"_id": cart["user"]})
 
@@ -348,15 +358,16 @@ def invoice(invoice_id=""):
     ordering_admin = auth_check("ordering_admin")
     ordering_marketeer = auth_check("ordering_marketeer")
     editor = True if ordering_admin or ordering_marketeer else False
-    can_delete = True if status == "Not Processed" and (
+    can_delete = True if status == "Submitted" and (
             cart.get("user") == session["CharacterOwnerHash"] or ordering_admin) else False
     can_edit = True if ordering_admin or (
-        cart.get("marketeer") == session["CharacterName"] or status == "Not Processed") else False
+        cart.get("marketeer") == session["CharacterName"] or status == "Submitted") else False
     if request.method == "POST":
         if request.form.get("action") == "delete" and can_delete:
             g.mongo.db.invoices.remove({"_id": ObjectId(invoice_id)})
             return redirect(url_for("account.home"))
-        elif request.form.get("action") == "reject" and status in ["Not Processed", "Failed", "Processing"] and editor:
+        elif request.form.get("action") == "reject" and status in ["Not Processed", "Failed",
+                                                                   "Processing", "Submitted"] and editor:
             g.mongo.db.invoices.update({"_id": ObjectId(invoice_id)}, {"$set": {"status": "Rejected",
                                                                                 "marketeer": session["CharacterName"],
                                                                                 "reason": request.form.get("reason")
@@ -369,7 +380,8 @@ def invoice(invoice_id=""):
                         notify_user["slack"], session["CharacterName"],
                         url_for("ordering.invoice", invoice_id=invoice_id, _external=True))}
                     requests.post(base_config["market_service_slack_url"], json=payload)
-        elif request.form.get("action") == "process" and status in ["Not Processed", "Failed", "Rejected"] and editor:
+        elif request.form.get("action") == "process" and status in ["Not Processed", "Failed", "Rejected",
+                                                                    "Submitted"] and editor:
             g.mongo.db.invoices.update({"_id": ObjectId(invoice_id)}, {"$set": {"status": "Processing",
                                                                                 "marketeer": session["CharacterName"]
                                                                                 },
@@ -378,10 +390,10 @@ def invoice(invoice_id=""):
         elif request.form.get("action") == "release" and status in ["Processing", "Failed", "Rejected"] and (
             cart.get("marketeer") == session["CharacterName"] or ordering_admin
         ):
-            g.mongo.db.invoices.update({"_id": ObjectId(invoice_id)}, {"$unset": {"status": "Processing",
-                                                                                  "marketeer": session["CharacterName"],
+            g.mongo.db.invoices.update({"_id": ObjectId(invoice_id)}, {"$unset": {"marketeer": session["CharacterName"],
                                                                                   "reason": request.form.get("reason")
-                                                                                  }})
+                                                                                  },
+                                                                       "$set": {"status": "Submitted"}})
         elif request.form.get("action") == "fail" and editor:
             g.mongo.db.invoices.update({"_id": ObjectId(invoice_id)}, {"$set": {"status": "Failed",
                                                                                 "marketeer": session["CharacterName"],
@@ -421,7 +433,7 @@ def invoice(invoice_id=""):
             status = "Shipping - " + shipping_contract["status"]
 
     # Set buttons
-    if status == "Not Processed" or status == "Failed":
+    if status == "Not Processed" or status == "Failed" or status == "Submitted":
         button = "Process"
     else:
         button = "Release"
@@ -432,7 +444,7 @@ def invoice(invoice_id=""):
                              "{:,.02f}".format(item["price"]), "{:,.02f}".format(item["volume_total"]),
                              "{:,.02f}".format(item["price_total"])])
 
-    # Route order total
+    # Round order total
     cart["order_total"] = round(cart["order_total"] + 50000, -5)
 
     return render_template("ordering_invoice.html", invoice_info=invoice_info, market_hub_name=market_hub_name,
@@ -455,9 +467,14 @@ def admin():
     # Auth Check
     is_admin = auth_check("ordering_admin")
     if request.form.get("action") == "tax" and request.form.get("tax") and is_admin:
-        g.mongo.db.preferences.update({"_id": "ordering"}, {"tax": float(request.form.get("tax", 0))}, upsert=True)
+        g.mongo.db.preferences.update({"_id": "ordering"}, {"$set": {"tax": float(request.form.get("tax", 0))}},
+                                      upsert=True)
+    elif request.form.get("action") == "tax_corp" and request.form.get("tax") and is_admin:
+        g.mongo.db.preferences.update({"_id": "ordering"}, {"$set": {"tax_corp": float(request.form.get("tax", 0))}},
+                                      upsert=True)
     tax_db = g.mongo.db.preferences.find_one({"_id": "ordering"})
-    tax = "{:.02f}".format(tax_db["tax"]) if tax_db else 0
+    tax = "{:.02f}".format(tax_db.get("tax", 0)) if tax_db else 0
+    tax_corp = "{:.02f}".format(tax_db.get("tax_corp", 0)) if tax_db else 0
 
     # Invoice List
     one_month_oid = ObjectId.from_datetime(datetime.datetime.today() - datetime.timedelta(30))
@@ -474,6 +491,8 @@ def admin():
             invoice_color = "warning"
         elif invoice_status in ["Failed", "Rejected"]:
             invoice_color = "danger"
+        elif invoice_status == "Completed":
+            invoice_color = "success"
 
         invoice_row = [invoice_color, invoice_timestamp, invoice_db["_id"], invoice_db["jf_end"],
                        "{:,.02f}".format(invoice_db["order_total"]), invoice_db.get("character"),
@@ -482,8 +501,9 @@ def admin():
         invoice_table.append(invoice_row)
         if invoice_db.get("marketeer") == session["CharacterName"]:
             marketeer_invoice_table.append(invoice_row)
-        if invoice_status == "Not Processed":
+        if invoice_status in ["Not Processed", "Submitted"]:
             new_invoice_table.append(invoice_row)
 
     return render_template("ordering_admin.html", invoice_table=invoice_table, tax=tax, is_admin=is_admin,
-                           marketeer_invoice_table=marketeer_invoice_table, new_invoice_table=new_invoice_table)
+                           marketeer_invoice_table=marketeer_invoice_table, new_invoice_table=new_invoice_table,
+                           tax_corp=tax_corp)

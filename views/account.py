@@ -1,6 +1,8 @@
 import json
+import datetime
 
 from flask import Blueprint, render_template, session, request, g
+from bson.objectid import ObjectId
 
 from views.auth import requires_sso
 from helpers import caches
@@ -105,7 +107,25 @@ def home():
     if keys:
         keys = keys.split(",")
 
+    # Personal Invoices
+    one_month_oid = ObjectId.from_datetime(datetime.datetime.today() - datetime.timedelta(30))
+    invoice_table = []
+    for invoice in g.mongo.db.invoices.find({"_id": {"$gt": one_month_oid}, "user": session["CharacterOwnerHash"]}):
+        invoice_status = invoice.get("status", "Not Processed")
+        invoice_timestamp = ObjectId(invoice["_id"]).generation_time.strftime("%Y-%m-%d %H:%M:%S")
+        invoice_color = ""
+        if invoice_status == "Shipping - Completed":
+            invoice_color = "primary"
+        elif invoice_status == "Processing" or invoice_status.startswith("Shipping"):
+            invoice_color = "warning"
+        elif invoice_status in ["Failed", "Rejected"]:
+            invoice_color = "danger"
+        elif invoice_status == "Completed":
+            invoice_color = "success"
+        invoice_table.append([invoice_color, invoice_timestamp, invoice["_id"], invoice["jf_end"],
+                              "{:,.02f}".format(invoice["order_total"]), invoice.get("marketeer"), invoice_status])
+
     return render_template("account.html", error_list=error_list, given_roles=given_roles,
                            associated_keys=associated_keys, user_info=user_info, image_list=image_list,
                            vacation=vacation, vacation_text=vacation_text, keys=keys, access_mask=access_mask,
-                           vacation_date=vacation_date)
+                           vacation_date=vacation_date, invoice_table=invoice_table)
