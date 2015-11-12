@@ -37815,50 +37815,38 @@
     ],
     "11940": [
         {
-            "amount": 2752,
+            "amount": 22778,
             "type_id": 34
         },
         {
-            "amount": 2510,
+            "amount": 6111,
             "type_id": 35
         },
         {
-            "amount": 130,
+            "amount": 2889,
             "type_id": 36
         },
         {
-            "amount": 2,
+            "amount": 400,
             "type_id": 37
         }
     ],
     "11942": [
         {
-            "amount": 27052,
+            "amount": 22778,
             "type_id": 34
         },
         {
-            "amount": 888,
+            "amount": 6111,
             "type_id": 35
         },
         {
-            "amount": 599,
+            "amount": 2889,
             "type_id": 36
         },
         {
-            "amount": 52,
+            "amount": 400,
             "type_id": 37
-        },
-        {
-            "amount": 31,
-            "type_id": 39
-        },
-        {
-            "amount": 15,
-            "type_id": 40
-        },
-        {
-            "amount": 8,
-            "type_id": 11399
         }
     ],
     "11957": [

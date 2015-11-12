@@ -4179,7 +4179,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": null,
-        "name": "Basic Thermic Plating",
+        "name": "Basic Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -4187,7 +4187,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": null,
-        "name": "Thermic Plating I",
+        "name": "Thermal Plating I",
         "skill_id": null,
         "volume": 5.0
     },
@@ -4195,7 +4195,7 @@
         "batch": 1,
         "market_group_id": 1544,
         "meta": null,
-        "name": "Thermic Plating I Blueprint",
+        "name": "Thermal Plating I Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -4203,7 +4203,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 5,
-        "name": "Thermic Plating II",
+        "name": "Thermal Plating II",
         "skill_id": null,
         "volume": 5.0
     },
@@ -4547,7 +4547,7 @@
         "batch": 1,
         "market_group_id": 1688,
         "meta": null,
-        "name": "Basic Thermic Dissipation Amplifier",
+        "name": "Basic Thermal Dissipation Amplifier",
         "skill_id": null,
         "volume": 5.0
     },
@@ -5763,7 +5763,7 @@
         "batch": 1,
         "market_group_id": 1692,
         "meta": null,
-        "name": "Thermic Dissipation Field I",
+        "name": "Thermal Dissipation Field I",
         "skill_id": null,
         "volume": 20.0
     },
@@ -5771,7 +5771,7 @@
         "batch": 1,
         "market_group_id": 1548,
         "meta": null,
-        "name": "Thermic Dissipation Field I Blueprint",
+        "name": "Thermal Dissipation Field I Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -5803,7 +5803,7 @@
         "batch": 1,
         "market_group_id": 1692,
         "meta": 5,
-        "name": "Thermic Dissipation Field II",
+        "name": "Thermal Dissipation Field II",
         "skill_id": null,
         "volume": 5.0
     },
@@ -6579,7 +6579,7 @@
         "batch": 1,
         "market_group_id": 1688,
         "meta": null,
-        "name": "Thermic Dissipation Amplifier I",
+        "name": "Thermal Dissipation Amplifier I",
         "skill_id": null,
         "volume": 5.0
     },
@@ -6587,7 +6587,7 @@
         "batch": 1,
         "market_group_id": 1554,
         "meta": null,
-        "name": "Thermic Dissipation Amplifier I Blueprint",
+        "name": "Thermal Dissipation Amplifier I Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -6595,7 +6595,7 @@
         "batch": 1,
         "market_group_id": 1688,
         "meta": 5,
-        "name": "Thermic Dissipation Amplifier II",
+        "name": "Thermal Dissipation Amplifier II",
         "skill_id": null,
         "volume": 5.0
     },
@@ -13051,7 +13051,7 @@
         "batch": 1,
         "market_group_id": 1398,
         "meta": null,
-        "name": "Men's 'Form' Shirt (black)",
+        "name": "Men's 'Form' T-shirt (black)",
         "skill_id": null,
         "volume": 0.1
     },
@@ -13059,7 +13059,7 @@
         "batch": 1,
         "market_group_id": 1398,
         "meta": null,
-        "name": "Men's 'Form' Shirt (blue)",
+        "name": "Men's 'Form' T-shirt (blue)",
         "skill_id": null,
         "volume": 0.1
     },
@@ -13067,7 +13067,7 @@
         "batch": 1,
         "market_group_id": 1398,
         "meta": null,
-        "name": "Men's 'Form' Shirt (brown)",
+        "name": "Men's 'Form' T-shirt (brown)",
         "skill_id": null,
         "volume": 0.1
     },
@@ -13075,7 +13075,7 @@
         "batch": 1,
         "market_group_id": 1398,
         "meta": null,
-        "name": "Men's 'Form' Shirt (dark blue)",
+        "name": "Men's 'Form' T-shirt (dark blue)",
         "skill_id": null,
         "volume": 0.1
     },
@@ -13083,7 +13083,7 @@
         "batch": 1,
         "market_group_id": 1398,
         "meta": null,
-        "name": "Men's 'Form' Shirt (dark red)",
+        "name": "Men's 'Form' T-shirt (dark red)",
         "skill_id": null,
         "volume": 0.1
     },
@@ -13091,7 +13091,7 @@
         "batch": 1,
         "market_group_id": 1398,
         "meta": null,
-        "name": "Men's 'Form' Shirt (khaki)",
+        "name": "Men's 'Form' T-shirt (khaki)",
         "skill_id": null,
         "volume": 0.1
     },
@@ -13099,7 +13099,7 @@
         "batch": 1,
         "market_group_id": 1398,
         "meta": null,
-        "name": "Men's 'Form' Shirt (light gray)",
+        "name": "Men's 'Form' T-shirt (light gray)",
         "skill_id": null,
         "volume": 0.1
     },
@@ -13107,7 +13107,7 @@
         "batch": 1,
         "market_group_id": 1398,
         "meta": null,
-        "name": "Men's 'Form' Shirt (olive)",
+        "name": "Men's 'Form' T-shirt (olive)",
         "skill_id": null,
         "volume": 0.1
     },
@@ -13115,7 +13115,7 @@
         "batch": 1,
         "market_group_id": 1398,
         "meta": null,
-        "name": "Men's 'Form' Shirt (dark camo)",
+        "name": "Men's 'Form' T-shirt (dark camo)",
         "skill_id": null,
         "volume": 0.1
     },
@@ -13123,7 +13123,7 @@
         "batch": 1,
         "market_group_id": 1398,
         "meta": null,
-        "name": "Men's 'Form' Shirt (desert camo)",
+        "name": "Men's 'Form' T-shirt (desert camo)",
         "skill_id": null,
         "volume": 0.1
     },
@@ -13131,7 +13131,7 @@
         "batch": 1,
         "market_group_id": 1398,
         "meta": null,
-        "name": "Men's 'Form' Shirt (white)",
+        "name": "Men's 'Form' T-shirt (white)",
         "skill_id": null,
         "volume": 0.1
     },
@@ -13219,7 +13219,7 @@
         "batch": 1,
         "market_group_id": 1406,
         "meta": null,
-        "name": "Women's 'Function' Shirt (black)",
+        "name": "Women's 'Function' T-shirt (black)",
         "skill_id": null,
         "volume": 0.1
     },
@@ -13227,7 +13227,7 @@
         "batch": 1,
         "market_group_id": 1406,
         "meta": null,
-        "name": "Women's 'Function' Shirt (blue)",
+        "name": "Women's 'Function' T-shirt (blue)",
         "skill_id": null,
         "volume": 0.1
     },
@@ -13235,7 +13235,7 @@
         "batch": 1,
         "market_group_id": 1406,
         "meta": null,
-        "name": "Women's 'Function' Shirt (brown)",
+        "name": "Women's 'Function' T-shirt (brown)",
         "skill_id": null,
         "volume": 0.1
     },
@@ -13243,7 +13243,7 @@
         "batch": 1,
         "market_group_id": 1406,
         "meta": null,
-        "name": "Women's 'Function' Shirt (cream)",
+        "name": "Women's 'Function' T-shirt (cream)",
         "skill_id": null,
         "volume": 0.1
     },
@@ -13251,7 +13251,7 @@
         "batch": 1,
         "market_group_id": 1406,
         "meta": null,
-        "name": "Women's 'Function' Shirt (dark blue)",
+        "name": "Women's 'Function' T-shirt (dark blue)",
         "skill_id": null,
         "volume": 0.1
     },
@@ -13259,7 +13259,7 @@
         "batch": 1,
         "market_group_id": 1406,
         "meta": null,
-        "name": "Women's 'Function' Shirt (dark red)",
+        "name": "Women's 'Function' T-shirt (dark red)",
         "skill_id": null,
         "volume": 0.1
     },
@@ -13267,7 +13267,7 @@
         "batch": 1,
         "market_group_id": 1406,
         "meta": null,
-        "name": "Women's 'Function' Shirt (gray)",
+        "name": "Women's 'Function' T-shirt (gray)",
         "skill_id": null,
         "volume": 0.1
     },
@@ -13275,7 +13275,7 @@
         "batch": 1,
         "market_group_id": 1406,
         "meta": null,
-        "name": "Women's 'Function' Shirt (green)",
+        "name": "Women's 'Function' T-shirt (green)",
         "skill_id": null,
         "volume": 0.1
     },
@@ -13283,7 +13283,7 @@
         "batch": 1,
         "market_group_id": 1406,
         "meta": null,
-        "name": "Women's 'Function' Shirt (khaki)",
+        "name": "Women's 'Function' T-shirt (khaki)",
         "skill_id": null,
         "volume": 0.1
     },
@@ -13291,7 +13291,7 @@
         "batch": 1,
         "market_group_id": 1406,
         "meta": null,
-        "name": "Women's 'Function' Shirt (olive)",
+        "name": "Women's 'Function' T-shirt (olive)",
         "skill_id": null,
         "volume": 0.1
     },
@@ -13299,7 +13299,7 @@
         "batch": 1,
         "market_group_id": 1406,
         "meta": null,
-        "name": "Women's 'Function' Shirt (orange)",
+        "name": "Women's 'Function' T-shirt (orange)",
         "skill_id": null,
         "volume": 0.1
     },
@@ -13307,7 +13307,7 @@
         "batch": 1,
         "market_group_id": 1406,
         "meta": null,
-        "name": "Women's 'Function' Shirt (dark camo)",
+        "name": "Women's 'Function' T-shirt (dark camo)",
         "skill_id": null,
         "volume": 0.1
     },
@@ -13315,7 +13315,7 @@
         "batch": 1,
         "market_group_id": 1406,
         "meta": null,
-        "name": "Women's 'Function' Shirt (desert camo)",
+        "name": "Women's 'Function' T-shirt (desert camo)",
         "skill_id": null,
         "volume": 0.1
     },
@@ -13323,7 +13323,7 @@
         "batch": 1,
         "market_group_id": 1406,
         "meta": null,
-        "name": "Women's 'Function' Shirt (red)",
+        "name": "Women's 'Function' T-shirt (red)",
         "skill_id": null,
         "volume": 0.1
     },
@@ -13331,7 +13331,7 @@
         "batch": 1,
         "market_group_id": 1406,
         "meta": null,
-        "name": "Women's 'Function' Shirt (white)",
+        "name": "Women's 'Function' T-shirt (white)",
         "skill_id": null,
         "volume": 0.1
     },
@@ -18091,7 +18091,7 @@
         "batch": 1,
         "market_group_id": 1688,
         "meta": null,
-        "name": "Supplemental Thermic Dissipation Amplifier",
+        "name": "Supplemental Thermal Dissipation Amplifier",
         "skill_id": null,
         "volume": 5.0
     },
@@ -18099,7 +18099,7 @@
         "batch": 1,
         "market_group_id": 1688,
         "meta": 1,
-        "name": "Upgraded Thermic Dissipation Amplifier I",
+        "name": "Upgraded Thermal Dissipation Amplifier I",
         "skill_id": null,
         "volume": 5.0
     },
@@ -18171,7 +18171,7 @@
         "batch": 1,
         "market_group_id": 1692,
         "meta": 2,
-        "name": "Limited Thermic Dissipation Field I",
+        "name": "Limited Thermal Dissipation Field I",
         "skill_id": null,
         "volume": 5.0
     },
@@ -19555,7 +19555,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": null,
-        "name": "Basic Energized Thermic Membrane",
+        "name": "Basic Energized Thermal Membrane",
         "skill_id": null,
         "volume": 25.0
     },
@@ -19563,7 +19563,7 @@
         "batch": 1,
         "market_group_id": 1543,
         "meta": null,
-        "name": "Basic Energized Thermic Membrane Blueprint",
+        "name": "Basic Energized Thermal Membrane Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -19571,7 +19571,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": null,
-        "name": "Energized Thermic Membrane I",
+        "name": "Energized Thermal Membrane I",
         "skill_id": null,
         "volume": 25.0
     },
@@ -19579,7 +19579,7 @@
         "batch": 1,
         "market_group_id": 1543,
         "meta": null,
-        "name": "Energized Thermic Membrane I Blueprint",
+        "name": "Energized Thermal Membrane I Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -19587,7 +19587,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 5,
-        "name": "Energized Thermic Membrane II",
+        "name": "Energized Thermal Membrane II",
         "skill_id": null,
         "volume": 5.0
     },
@@ -19635,7 +19635,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": null,
-        "name": "Armor Thermic Hardener I",
+        "name": "Armor Thermal Hardener I",
         "skill_id": null,
         "volume": 20.0
     },
@@ -19643,7 +19643,7 @@
         "batch": 1,
         "market_group_id": 1540,
         "meta": null,
-        "name": "Armor Thermic Hardener I Blueprint",
+        "name": "Armor Thermal Hardener I Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -20715,7 +20715,7 @@
         "batch": 1,
         "market_group_id": 1747,
         "meta": null,
-        "name": "Thermic Shield Compensation",
+        "name": "Thermal Shield Compensation",
         "skill_id": null,
         "volume": 0.01
     },
@@ -20995,7 +20995,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 5,
-        "name": "Armor Thermic Hardener II",
+        "name": "Armor Thermal Hardener II",
         "skill_id": null,
         "volume": 5.0
     },
@@ -21429,7 +21429,7 @@
         "meta": 9,
         "name": "Gold Magnate",
         "skill_id": null,
-        "volume": 28100.0
+        "volume": 22100.0
     },
     "11942": {
         "batch": 1,
@@ -21437,7 +21437,7 @@
         "meta": 9,
         "name": "Silver Magnate",
         "skill_id": null,
-        "volume": 28100.0
+        "volume": 22100.0
     },
     "11944": {
         "batch": 1,
@@ -24819,7 +24819,7 @@
         "batch": 1,
         "market_group_id": 1692,
         "meta": 9,
-        "name": "Dread Guristas Thermic Dissipation Field",
+        "name": "Dread Guristas Thermal Dissipation Field",
         "skill_id": null,
         "volume": 5.0
     },
@@ -24899,7 +24899,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 9,
-        "name": "True Sansha Armor Thermic Hardener",
+        "name": "True Sansha Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -24907,7 +24907,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 9,
-        "name": "Dark Blood Armor Thermic Hardener",
+        "name": "Dark Blood Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -24939,7 +24939,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 8,
-        "name": "Domination Armor Thermic Hardener",
+        "name": "Domination Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -24955,7 +24955,7 @@
         "batch": 1,
         "market_group_id": 1692,
         "meta": 8,
-        "name": "Domination Thermic Dissipation Field",
+        "name": "Domination Thermal Dissipation Field",
         "skill_id": null,
         "volume": 5.0
     },
@@ -25083,7 +25083,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 8,
-        "name": "Domination Thermic Plating",
+        "name": "Domination Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -25091,7 +25091,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 9,
-        "name": "True Sansha Thermic Plating",
+        "name": "True Sansha Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -25099,7 +25099,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 9,
-        "name": "Dark Blood Thermic Plating",
+        "name": "Dark Blood Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -25123,7 +25123,7 @@
         "batch": 1,
         "market_group_id": 1688,
         "meta": 8,
-        "name": "Domination Thermic Dissipation Amplifier",
+        "name": "Domination Thermal Dissipation Amplifier",
         "skill_id": null,
         "volume": 5.0
     },
@@ -25131,7 +25131,7 @@
         "batch": 1,
         "market_group_id": 1688,
         "meta": 9,
-        "name": "Dread Guristas Thermic Dissipation Amplifier",
+        "name": "Dread Guristas Thermal Dissipation Amplifier",
         "skill_id": null,
         "volume": 5.0
     },
@@ -25219,7 +25219,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 8,
-        "name": "Shadow Serpentis Thermic Plating",
+        "name": "Shadow Serpentis Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -25251,7 +25251,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 9,
-        "name": "Shadow Serpentis Armor Thermic Hardener",
+        "name": "Shadow Serpentis Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -25379,7 +25379,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 9,
-        "name": "Dark Blood Energized Thermic Membrane",
+        "name": "Dark Blood Energized Thermal Membrane",
         "skill_id": null,
         "volume": 5.0
     },
@@ -25387,7 +25387,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 9,
-        "name": "True Sansha Energized Thermic Membrane",
+        "name": "True Sansha Energized Thermal Membrane",
         "skill_id": null,
         "volume": 5.0
     },
@@ -25395,7 +25395,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 8,
-        "name": "Shadow Serpentis Energized Thermic Membrane",
+        "name": "Shadow Serpentis Energized Thermal Membrane",
         "skill_id": null,
         "volume": 5.0
     },
@@ -27003,7 +27003,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 11,
-        "name": "Mizuro's Modified Thermic Plating",
+        "name": "Mizuro's Modified Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -27011,7 +27011,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 13,
-        "name": "Gotan's Modified Thermic Plating",
+        "name": "Gotan's Modified Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -27067,7 +27067,7 @@
         "batch": 1,
         "market_group_id": 1688,
         "meta": 12,
-        "name": "Hakim's Modified Thermic Dissipation Amplifier",
+        "name": "Hakim's Modified Thermal Dissipation Amplifier",
         "skill_id": null,
         "volume": 5.0
     },
@@ -27075,7 +27075,7 @@
         "batch": 1,
         "market_group_id": 1688,
         "meta": 14,
-        "name": "Tobias' Modified Thermic Dissipation Amplifier",
+        "name": "Tobias' Modified Thermal Dissipation Amplifier",
         "skill_id": null,
         "volume": 5.0
     },
@@ -27515,7 +27515,7 @@
         "batch": 1,
         "market_group_id": 1688,
         "meta": 11,
-        "name": "Kaikka's Modified Thermic Dissipation Amplifier",
+        "name": "Kaikka's Modified Thermal Dissipation Amplifier",
         "skill_id": null,
         "volume": 5.0
     },
@@ -27523,7 +27523,7 @@
         "batch": 1,
         "market_group_id": 1688,
         "meta": 12,
-        "name": "Thon's Modified Thermic Dissipation Amplifier",
+        "name": "Thon's Modified Thermal Dissipation Amplifier",
         "skill_id": null,
         "volume": 5.0
     },
@@ -27531,7 +27531,7 @@
         "batch": 1,
         "market_group_id": 1688,
         "meta": 13,
-        "name": "Vepas' Modified Thermic Dissipation Amplifier",
+        "name": "Vepas' Modified Thermal Dissipation Amplifier",
         "skill_id": null,
         "volume": 5.0
     },
@@ -27539,7 +27539,7 @@
         "batch": 1,
         "market_group_id": 1688,
         "meta": 14,
-        "name": "Estamel's Modified Thermic Dissipation Amplifier",
+        "name": "Estamel's Modified Thermal Dissipation Amplifier",
         "skill_id": null,
         "volume": 5.0
     },
@@ -27707,7 +27707,7 @@
         "batch": 1,
         "market_group_id": 1692,
         "meta": 11,
-        "name": "Kaikka's Modified Thermic Dissipation Field",
+        "name": "Kaikka's Modified Thermal Dissipation Field",
         "skill_id": null,
         "volume": 5.0
     },
@@ -27715,7 +27715,7 @@
         "batch": 1,
         "market_group_id": 1692,
         "meta": 12,
-        "name": "Thon's Modified Thermic Dissipation Field",
+        "name": "Thon's Modified Thermal Dissipation Field",
         "skill_id": null,
         "volume": 5.0
     },
@@ -27723,7 +27723,7 @@
         "batch": 1,
         "market_group_id": 1692,
         "meta": 13,
-        "name": "Vepas's Modified Thermic Dissipation Field",
+        "name": "Vepas's Modified Thermal Dissipation Field",
         "skill_id": null,
         "volume": 5.0
     },
@@ -27731,7 +27731,7 @@
         "batch": 1,
         "market_group_id": 1692,
         "meta": 14,
-        "name": "Estamel's Modified Thermic Dissipation Field",
+        "name": "Estamel's Modified Thermal Dissipation Field",
         "skill_id": null,
         "volume": 5.0
     },
@@ -28411,7 +28411,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 11,
-        "name": "Brokara's Modified Thermic Plating",
+        "name": "Brokara's Modified Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -28419,7 +28419,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 11,
-        "name": "Tairei's Modified Thermic Plating",
+        "name": "Tairei's Modified Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -28427,7 +28427,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 12,
-        "name": "Selynne's Modified Thermic Plating",
+        "name": "Selynne's Modified Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -28435,7 +28435,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 12,
-        "name": "Raysere's Modified Thermic Plating",
+        "name": "Raysere's Modified Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -28443,7 +28443,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 13,
-        "name": "Vizan's Modified Thermic Plating",
+        "name": "Vizan's Modified Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -28451,7 +28451,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 13,
-        "name": "Ahremen's Modified Thermic Plating",
+        "name": "Ahremen's Modified Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -28459,7 +28459,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 14,
-        "name": "Chelm's Modified Thermic Plating",
+        "name": "Chelm's Modified Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -28467,7 +28467,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 14,
-        "name": "Draclira's Modified Thermic Plating",
+        "name": "Draclira's Modified Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -28539,7 +28539,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 11,
-        "name": "Brokara's Modified Energized Thermic Membrane",
+        "name": "Brokara's Modified Energized Thermal Membrane",
         "skill_id": null,
         "volume": 5.0
     },
@@ -28547,7 +28547,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 11,
-        "name": "Tairei's Modified Energized Thermic Membrane",
+        "name": "Tairei's Modified Energized Thermal Membrane",
         "skill_id": null,
         "volume": 5.0
     },
@@ -28555,7 +28555,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 12,
-        "name": "Selynne's Modified Energized Thermic Membrane",
+        "name": "Selynne's Modified Energized Thermal Membrane",
         "skill_id": null,
         "volume": 5.0
     },
@@ -28563,7 +28563,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 12,
-        "name": "Raysere's Modified Energized Thermic Membrane",
+        "name": "Raysere's Modified Energized Thermal Membrane",
         "skill_id": null,
         "volume": 5.0
     },
@@ -28571,7 +28571,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 13,
-        "name": "Vizan's Modified Energized Thermic Membrane",
+        "name": "Vizan's Modified Energized Thermal Membrane",
         "skill_id": null,
         "volume": 5.0
     },
@@ -28579,7 +28579,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 13,
-        "name": "Ahremen's Modified Energized Thermic Membrane",
+        "name": "Ahremen's Modified Energized Thermal Membrane",
         "skill_id": null,
         "volume": 5.0
     },
@@ -28587,7 +28587,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 14,
-        "name": "Chelm's Modified Energized Thermic Membrane",
+        "name": "Chelm's Modified Energized Thermal Membrane",
         "skill_id": null,
         "volume": 5.0
     },
@@ -28595,7 +28595,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 14,
-        "name": "Draclira's Modified Energized Thermic Membrane",
+        "name": "Draclira's Modified Energized Thermal Membrane",
         "skill_id": null,
         "volume": 5.0
     },
@@ -28859,7 +28859,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 11,
-        "name": "Brokara's Modified Armor Thermic Hardener",
+        "name": "Brokara's Modified Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -28867,7 +28867,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 11,
-        "name": "Tairei's Modified Armor Thermic Hardener",
+        "name": "Tairei's Modified Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -28875,7 +28875,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 12,
-        "name": "Selynne's Modified Armor Thermic Hardener",
+        "name": "Selynne's Modified Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -28883,7 +28883,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 12,
-        "name": "Raysere's Modified Armor Thermic Hardener",
+        "name": "Raysere's Modified Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -28891,7 +28891,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 13,
-        "name": "Vizan's Modified Armor Thermic Hardener",
+        "name": "Vizan's Modified Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -28899,7 +28899,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 13,
-        "name": "Ahremen's Modified Armor Thermic Hardener",
+        "name": "Ahremen's Modified Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -28907,7 +28907,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 14,
-        "name": "Chelm's Modified Armor Thermic Hardener",
+        "name": "Chelm's Modified Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -28915,7 +28915,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 14,
-        "name": "Draclira's Modified Armor Thermic Hardener",
+        "name": "Draclira's Modified Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -29435,7 +29435,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 11,
-        "name": "Brynn's Modified Thermic Plating",
+        "name": "Brynn's Modified Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -29443,7 +29443,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 12,
-        "name": "Tuvan's Modified Thermic Plating",
+        "name": "Tuvan's Modified Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -29451,7 +29451,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 13,
-        "name": "Setele's Modified Thermic Plating",
+        "name": "Setele's Modified Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -29459,7 +29459,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 14,
-        "name": "Cormack's Modified Thermic Plating",
+        "name": "Cormack's Modified Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -29595,7 +29595,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 11,
-        "name": "Brynn's Modified Energized Thermic Membrane",
+        "name": "Brynn's Modified Energized Thermal Membrane",
         "skill_id": null,
         "volume": 5.0
     },
@@ -29603,7 +29603,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 12,
-        "name": "Tuvan's Modified Energized Thermic Membrane",
+        "name": "Tuvan's Modified Energized Thermal Membrane",
         "skill_id": null,
         "volume": 5.0
     },
@@ -29611,7 +29611,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 13,
-        "name": "Setele's Modified Energized Thermic Membrane",
+        "name": "Setele's Modified Energized Thermal Membrane",
         "skill_id": null,
         "volume": 5.0
     },
@@ -29619,7 +29619,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 14,
-        "name": "Cormack's Modified Energized Thermic Membrane",
+        "name": "Cormack's Modified Energized Thermal Membrane",
         "skill_id": null,
         "volume": 5.0
     },
@@ -29755,7 +29755,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 11,
-        "name": "Brynn's Modified Armor Thermic Hardener",
+        "name": "Brynn's Modified Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -29763,7 +29763,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 12,
-        "name": "Tuvan's Modified Armor Thermic Hardener",
+        "name": "Tuvan's Modified Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -29771,7 +29771,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 13,
-        "name": "Setele's Modified Armor Thermic Hardener",
+        "name": "Setele's Modified Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -29779,7 +29779,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 14,
-        "name": "Cormack's Modified Armor Thermic Hardener",
+        "name": "Cormack's Modified Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -30099,7 +30099,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 14,
-        "name": "Shaqil's Modified Energized Thermic Membrane",
+        "name": "Shaqil's Modified Energized Thermal Membrane",
         "skill_id": null,
         "volume": 5.0
     },
@@ -30915,7 +30915,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 9,
-        "name": "Imperial Navy Thermic Plating",
+        "name": "Imperial Navy Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -30955,7 +30955,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 8,
-        "name": "Republic Fleet Thermic Plating",
+        "name": "Republic Fleet Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -30995,7 +30995,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 9,
-        "name": "Imperial Navy Armor Thermic Hardener",
+        "name": "Imperial Navy Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -31027,7 +31027,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 8,
-        "name": "Republic Fleet Armor Thermic Hardener",
+        "name": "Republic Fleet Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -31059,7 +31059,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 9,
-        "name": "Imperial Navy Energized Thermic Membrane",
+        "name": "Imperial Navy Energized Thermal Membrane",
         "skill_id": null,
         "volume": 5.0
     },
@@ -31099,7 +31099,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 8,
-        "name": "Federation Navy Energized Thermic Membrane",
+        "name": "Federation Navy Energized Thermal Membrane",
         "skill_id": null,
         "volume": 5.0
     },
@@ -32099,7 +32099,7 @@
         "batch": 1,
         "market_group_id": 1688,
         "meta": 9,
-        "name": "Caldari Navy Thermic Dissipation Amplifier",
+        "name": "Caldari Navy Thermal Dissipation Amplifier",
         "skill_id": null,
         "volume": 5.0
     },
@@ -32131,7 +32131,7 @@
         "batch": 1,
         "market_group_id": 1688,
         "meta": 8,
-        "name": "Republic Fleet Thermic Dissipation Amplifier",
+        "name": "Republic Fleet Thermal Dissipation Amplifier",
         "skill_id": null,
         "volume": 5.0
     },
@@ -33307,7 +33307,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 1,
-        "name": "Upgraded Thermic Plating I",
+        "name": "Upgraded Thermal Plating I",
         "skill_id": null,
         "volume": 5.0
     },
@@ -33315,7 +33315,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 2,
-        "name": "Limited Thermic Plating I",
+        "name": "Limited Thermal Plating I",
         "skill_id": null,
         "volume": 5.0
     },
@@ -33323,7 +33323,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 3,
-        "name": "Experimental Thermic Plating I",
+        "name": "Experimental Thermal Plating I",
         "skill_id": null,
         "volume": 5.0
     },
@@ -33331,7 +33331,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 4,
-        "name": "Prototype Thermic Plating I",
+        "name": "Prototype Thermal Plating I",
         "skill_id": null,
         "volume": 5.0
     },
@@ -33467,7 +33467,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 1,
-        "name": "Upgraded Armor Thermic Hardener I",
+        "name": "Upgraded Armor Thermal Hardener I",
         "skill_id": null,
         "volume": 5.0
     },
@@ -33475,7 +33475,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 2,
-        "name": "Limited Armor Thermic Hardener I",
+        "name": "Limited Armor Thermal Hardener I",
         "skill_id": null,
         "volume": 5.0
     },
@@ -33483,7 +33483,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 3,
-        "name": "Experimental Armor Thermic Hardener I",
+        "name": "Experimental Armor Thermal Hardener I",
         "skill_id": null,
         "volume": 5.0
     },
@@ -33491,7 +33491,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 4,
-        "name": "Prototype Armor Thermic Hardener I",
+        "name": "Prototype Armor Thermal Hardener I",
         "skill_id": null,
         "volume": 5.0
     },
@@ -33659,7 +33659,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 1,
-        "name": "Upgraded Energized Thermic Membrane I",
+        "name": "Upgraded Energized Thermal Membrane I",
         "skill_id": null,
         "volume": 5.0
     },
@@ -33667,7 +33667,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 2,
-        "name": "Limited Energized Thermic Membrane I",
+        "name": "Limited Energized Thermal Membrane I",
         "skill_id": null,
         "volume": 5.0
     },
@@ -33675,7 +33675,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 3,
-        "name": "Experimental Energized Thermic Membrane I",
+        "name": "Experimental Energized Thermal Membrane I",
         "skill_id": null,
         "volume": 5.0
     },
@@ -33683,7 +33683,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 4,
-        "name": "Prototype Energized Thermic Membrane I",
+        "name": "Prototype Energized Thermal Membrane I",
         "skill_id": null,
         "volume": 5.0
     },
@@ -36363,7 +36363,7 @@
         "batch": 1,
         "market_group_id": 1692,
         "meta": 9,
-        "name": "Caldari Navy Thermic Dissipation Field",
+        "name": "Caldari Navy Thermal Dissipation Field",
         "skill_id": null,
         "volume": 5.0
     },
@@ -36419,7 +36419,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 9,
-        "name": "Ammatar Navy Armor Thermic Hardener",
+        "name": "Ammatar Navy Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -36539,7 +36539,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 9,
-        "name": "Ammatar Navy Energized Thermic Membrane",
+        "name": "Ammatar Navy Energized Thermal Membrane",
         "skill_id": null,
         "volume": 5.0
     },
@@ -36603,7 +36603,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 8,
-        "name": "Federation Navy Thermic Plating",
+        "name": "Federation Navy Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -37395,7 +37395,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 9,
-        "name": "Federation Navy Armor Thermic Hardener",
+        "name": "Federation Navy Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -38787,7 +38787,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 11,
-        "name": "Corpii C-Type Thermic Plating",
+        "name": "Corpii C-Type Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -38795,7 +38795,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 11,
-        "name": "Centii C-Type Thermic Plating",
+        "name": "Centii C-Type Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -38803,7 +38803,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 12,
-        "name": "Corpii B-Type Thermic Plating",
+        "name": "Corpii B-Type Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -38811,7 +38811,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 12,
-        "name": "Centii B-Type Thermic Plating",
+        "name": "Centii B-Type Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -38915,7 +38915,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 13,
-        "name": "Corpii A-Type Thermic Plating",
+        "name": "Corpii A-Type Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -38923,7 +38923,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 13,
-        "name": "Centii A-Type Thermic Plating",
+        "name": "Centii A-Type Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -38963,7 +38963,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 11,
-        "name": "Coreli C-Type Thermic Plating",
+        "name": "Coreli C-Type Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -39003,7 +39003,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 12,
-        "name": "Coreli B-Type Thermic Plating",
+        "name": "Coreli B-Type Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -39043,7 +39043,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 13,
-        "name": "Coreli A-Type Thermic Plating",
+        "name": "Coreli A-Type Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -39083,7 +39083,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 11,
-        "name": "Corelum C-Type Energized Thermic Membrane",
+        "name": "Corelum C-Type Energized Thermal Membrane",
         "skill_id": null,
         "volume": 5.0
     },
@@ -39123,7 +39123,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 12,
-        "name": "Corelum B-Type Energized Thermic Membrane",
+        "name": "Corelum B-Type Energized Thermal Membrane",
         "skill_id": null,
         "volume": 5.0
     },
@@ -39163,7 +39163,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 13,
-        "name": "Corelum A-Type Energized Thermic Membrane",
+        "name": "Corelum A-Type Energized Thermal Membrane",
         "skill_id": null,
         "volume": 5.0
     },
@@ -39235,7 +39235,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 11,
-        "name": "Corpum C-Type Energized Thermic Membrane",
+        "name": "Corpum C-Type Energized Thermal Membrane",
         "skill_id": null,
         "volume": 5.0
     },
@@ -39243,7 +39243,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 11,
-        "name": "Centum C-Type Energized Thermic Membrane",
+        "name": "Centum C-Type Energized Thermal Membrane",
         "skill_id": null,
         "volume": 5.0
     },
@@ -39299,7 +39299,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 12,
-        "name": "Corpum B-Type Energized Thermic Membrane",
+        "name": "Corpum B-Type Energized Thermal Membrane",
         "skill_id": null,
         "volume": 5.0
     },
@@ -39307,7 +39307,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 12,
-        "name": "Centum B-Type Energized Thermic Membrane",
+        "name": "Centum B-Type Energized Thermal Membrane",
         "skill_id": null,
         "volume": 5.0
     },
@@ -39315,7 +39315,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 13,
-        "name": "Corpum A-Type Energized Thermic Membrane",
+        "name": "Corpum A-Type Energized Thermal Membrane",
         "skill_id": null,
         "volume": 5.0
     },
@@ -39323,7 +39323,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 13,
-        "name": "Centum A-Type Energized Thermic Membrane",
+        "name": "Centum A-Type Energized Thermal Membrane",
         "skill_id": null,
         "volume": 5.0
     },
@@ -39443,7 +39443,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 11,
-        "name": "Corpus C-Type Armor Thermic Hardener",
+        "name": "Corpus C-Type Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -39451,7 +39451,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 11,
-        "name": "Centus C-Type Armor Thermic Hardener",
+        "name": "Centus C-Type Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -39507,7 +39507,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 12,
-        "name": "Corpus B-Type Armor Thermic Hardener",
+        "name": "Corpus B-Type Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -39515,7 +39515,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 12,
-        "name": "Centus B-Type Armor Thermic Hardener",
+        "name": "Centus B-Type Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -39523,7 +39523,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 13,
-        "name": "Corpus A-Type Armor Thermic Hardener",
+        "name": "Corpus A-Type Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -39531,7 +39531,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 13,
-        "name": "Centus A-Type Armor Thermic Hardener",
+        "name": "Centus A-Type Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -39635,7 +39635,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 14,
-        "name": "Corpus X-Type Armor Thermic Hardener",
+        "name": "Corpus X-Type Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -39643,7 +39643,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 14,
-        "name": "Centus X-Type Armor Thermic Hardener",
+        "name": "Centus X-Type Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -39675,7 +39675,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 11,
-        "name": "Core C-Type Armor Thermic Hardener",
+        "name": "Core C-Type Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -39707,7 +39707,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 12,
-        "name": "Core B-Type Armor Thermic Hardener",
+        "name": "Core B-Type Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -39739,7 +39739,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 13,
-        "name": "Core A-Type Armor Thermic Hardener",
+        "name": "Core A-Type Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -39771,7 +39771,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 14,
-        "name": "Core X-Type Armor Thermic Hardener",
+        "name": "Core X-Type Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -40619,7 +40619,7 @@
         "batch": 1,
         "market_group_id": 1688,
         "meta": 11,
-        "name": "Pithum C-Type Thermic Dissipation Amplifier",
+        "name": "Pithum C-Type Thermal Dissipation Amplifier",
         "skill_id": null,
         "volume": 5.0
     },
@@ -40651,7 +40651,7 @@
         "batch": 1,
         "market_group_id": 1688,
         "meta": 12,
-        "name": "Pithum B-Type Thermic Dissipation Amplifier",
+        "name": "Pithum B-Type Thermal Dissipation Amplifier",
         "skill_id": null,
         "volume": 5.0
     },
@@ -40683,7 +40683,7 @@
         "batch": 1,
         "market_group_id": 1688,
         "meta": 13,
-        "name": "Pithum A-Type Thermic Dissipation Amplifier",
+        "name": "Pithum A-Type Thermal Dissipation Amplifier",
         "skill_id": null,
         "volume": 5.0
     },
@@ -40723,7 +40723,7 @@
         "batch": 1,
         "market_group_id": 1688,
         "meta": 11,
-        "name": "Gistum C-Type Thermic Dissipation Amplifier",
+        "name": "Gistum C-Type Thermal Dissipation Amplifier",
         "skill_id": null,
         "volume": 5.0
     },
@@ -40731,7 +40731,7 @@
         "batch": 1,
         "market_group_id": 1688,
         "meta": 12,
-        "name": "Gistum B-Type Thermic Dissipation Amplifier",
+        "name": "Gistum B-Type Thermal Dissipation Amplifier",
         "skill_id": null,
         "volume": 5.0
     },
@@ -40779,7 +40779,7 @@
         "batch": 1,
         "market_group_id": 1688,
         "meta": 13,
-        "name": "Gistum A-Type Thermic Dissipation Amplifier",
+        "name": "Gistum A-Type Thermal Dissipation Amplifier",
         "skill_id": null,
         "volume": 5.0
     },
@@ -40835,7 +40835,7 @@
         "batch": 1,
         "market_group_id": 1692,
         "meta": 11,
-        "name": "Gist C-Type Thermic Dissipation Field",
+        "name": "Gist C-Type Thermal Dissipation Field",
         "skill_id": null,
         "volume": 5.0
     },
@@ -40843,7 +40843,7 @@
         "batch": 1,
         "market_group_id": 1692,
         "meta": 11,
-        "name": "Pith C-Type Thermic Dissipation Field",
+        "name": "Pith C-Type Thermal Dissipation Field",
         "skill_id": null,
         "volume": 5.0
     },
@@ -40883,7 +40883,7 @@
         "batch": 1,
         "market_group_id": 1692,
         "meta": 12,
-        "name": "Gist B-Type Thermic Dissipation Field",
+        "name": "Gist B-Type Thermal Dissipation Field",
         "skill_id": null,
         "volume": 5.0
     },
@@ -40891,7 +40891,7 @@
         "batch": 1,
         "market_group_id": 1692,
         "meta": 12,
-        "name": "Pith B-Type Thermic Dissipation Field",
+        "name": "Pith B-Type Thermal Dissipation Field",
         "skill_id": null,
         "volume": 5.0
     },
@@ -40963,7 +40963,7 @@
         "batch": 1,
         "market_group_id": 1692,
         "meta": 13,
-        "name": "Gist A-Type Thermic Dissipation Field",
+        "name": "Gist A-Type Thermal Dissipation Field",
         "skill_id": null,
         "volume": 5.0
     },
@@ -40971,7 +40971,7 @@
         "batch": 1,
         "market_group_id": 1692,
         "meta": 13,
-        "name": "Pith A-Type Thermic Dissipation Field",
+        "name": "Pith A-Type Thermal Dissipation Field",
         "skill_id": null,
         "volume": 5.0
     },
@@ -41011,7 +41011,7 @@
         "batch": 1,
         "market_group_id": 1692,
         "meta": 14,
-        "name": "Gist X-Type Thermic Dissipation Field",
+        "name": "Gist X-Type Thermal Dissipation Field",
         "skill_id": null,
         "volume": 5.0
     },
@@ -41019,7 +41019,7 @@
         "batch": 1,
         "market_group_id": 1692,
         "meta": 14,
-        "name": "Pith X-Type Thermic Dissipation Field",
+        "name": "Pith X-Type Thermal Dissipation Field",
         "skill_id": null,
         "volume": 5.0
     },
@@ -43867,7 +43867,7 @@
         "batch": 1,
         "market_group_id": 1688,
         "meta": 6,
-        "name": "'High Noon' Thermic Dissipation Amplifier",
+        "name": "'High Noon' Thermal Dissipation Amplifier",
         "skill_id": null,
         "volume": 5.0
     },
@@ -43971,7 +43971,7 @@
         "batch": 1,
         "market_group_id": 1692,
         "meta": 6,
-        "name": "'Desert Heat' Thermic Dissipation Field",
+        "name": "'Desert Heat' Thermal Dissipation Field",
         "skill_id": null,
         "volume": 5.0
     },
@@ -48947,7 +48947,7 @@
         "batch": 1,
         "market_group_id": 1745,
         "meta": null,
-        "name": "Thermic Armor Compensation",
+        "name": "Thermal Armor Compensation",
         "skill_id": null,
         "volume": 0.01
     },
@@ -48995,7 +48995,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 6,
-        "name": "'Moonshine' Energized Thermic Membrane I",
+        "name": "'Moonshine' Energized Thermal Membrane I",
         "skill_id": null,
         "volume": 5.0
     },
@@ -53555,7 +53555,7 @@
         "batch": 1,
         "market_group_id": 1208,
         "meta": null,
-        "name": "Large Anti-Thermic Pump I",
+        "name": "Large Anti-Thermal Pump I",
         "skill_id": null,
         "volume": 20.0
     },
@@ -53563,7 +53563,7 @@
         "batch": 1,
         "market_group_id": 1202,
         "meta": null,
-        "name": "Large Anti-Thermic Pump I Blueprint",
+        "name": "Large Anti-Thermal Pump I Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -54851,7 +54851,7 @@
         "batch": 1,
         "market_group_id": 1208,
         "meta": 5,
-        "name": "Large Anti-Thermic Pump II",
+        "name": "Large Anti-Thermal Pump II",
         "skill_id": null,
         "volume": 20.0
     },
@@ -59987,7 +59987,7 @@
         "batch": 1,
         "market_group_id": 1678,
         "meta": 9,
-        "name": "Khanid Navy Armor Thermic Hardener",
+        "name": "Khanid Navy Armor Thermal Hardener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -60043,7 +60043,7 @@
         "batch": 1,
         "market_group_id": 1683,
         "meta": 9,
-        "name": "Khanid Navy Energized Thermic Membrane",
+        "name": "Khanid Navy Energized Thermal Membrane",
         "skill_id": null,
         "volume": 5.0
     },
@@ -60123,7 +60123,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 9,
-        "name": "Khanid Navy Thermic Plating",
+        "name": "Khanid Navy Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -63067,7 +63067,7 @@
         "batch": 1,
         "market_group_id": 1692,
         "meta": null,
-        "name": "Civilian Thermic Dissipation Field",
+        "name": "Civilian Thermal Dissipation Field",
         "skill_id": null,
         "volume": 20.0
     },
@@ -63075,7 +63075,7 @@
         "batch": 1,
         "market_group_id": 1548,
         "meta": null,
-        "name": "Civilian Thermic Dissipation Field Blueprint",
+        "name": "Civilian Thermal Dissipation Field Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -64075,7 +64075,7 @@
         "batch": 1,
         "market_group_id": 1206,
         "meta": null,
-        "name": "Small Anti-Thermic Pump I",
+        "name": "Small Anti-Thermal Pump I",
         "skill_id": null,
         "volume": 5.0
     },
@@ -64083,7 +64083,7 @@
         "batch": 1,
         "market_group_id": 1203,
         "meta": null,
-        "name": "Small Anti-Thermic Pump I Blueprint",
+        "name": "Small Anti-Thermal Pump I Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -64091,7 +64091,7 @@
         "batch": 1,
         "market_group_id": 1207,
         "meta": null,
-        "name": "Medium Anti-Thermic Pump I",
+        "name": "Medium Anti-Thermal Pump I",
         "skill_id": null,
         "volume": 10.0
     },
@@ -64099,7 +64099,7 @@
         "batch": 1,
         "market_group_id": 1204,
         "meta": null,
-        "name": "Medium Anti-Thermic Pump I Blueprint",
+        "name": "Medium Anti-Thermal Pump I Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -64107,7 +64107,7 @@
         "batch": 1,
         "market_group_id": 1730,
         "meta": null,
-        "name": "Capital Anti-Thermic Pump I",
+        "name": "Capital Anti-Thermal Pump I",
         "skill_id": null,
         "volume": 40.0
     },
@@ -64115,7 +64115,7 @@
         "batch": 1,
         "market_group_id": 1719,
         "meta": null,
-        "name": "Capital Anti-Thermic Pump I Blueprint",
+        "name": "Capital Anti-Thermal Pump I Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -64123,7 +64123,7 @@
         "batch": 1,
         "market_group_id": 1206,
         "meta": 5,
-        "name": "Small Anti-Thermic Pump II",
+        "name": "Small Anti-Thermal Pump II",
         "skill_id": null,
         "volume": 5.0
     },
@@ -64131,7 +64131,7 @@
         "batch": 1,
         "market_group_id": 1207,
         "meta": 5,
-        "name": "Medium Anti-Thermic Pump II",
+        "name": "Medium Anti-Thermal Pump II",
         "skill_id": null,
         "volume": 10.0
     },
@@ -64139,7 +64139,7 @@
         "batch": 1,
         "market_group_id": 1730,
         "meta": 5,
-        "name": "Capital Anti-Thermic Pump II",
+        "name": "Capital Anti-Thermal Pump II",
         "skill_id": null,
         "volume": 40.0
     },
@@ -70355,7 +70355,7 @@
         "batch": 1,
         "market_group_id": 1665,
         "meta": 9,
-        "name": "Ammatar Navy Thermic Plating",
+        "name": "Ammatar Navy Thermal Plating",
         "skill_id": null,
         "volume": 5.0
     },
@@ -73627,7 +73627,7 @@
         "batch": 1,
         "market_group_id": 1405,
         "meta": null,
-        "name": "Women's 'Sanctity' Dress (dark green/gold)",
+        "name": "Women's 'Sanctity' Dress (green/gold)",
         "skill_id": null,
         "volume": 0.1
     },
@@ -73635,7 +73635,7 @@
         "batch": 1,
         "market_group_id": 1405,
         "meta": null,
-        "name": "Women's 'Sanctity' Dress (dark red/gold)",
+        "name": "Women's 'Sanctity' Dress (red/gold)",
         "skill_id": null,
         "volume": 0.1
     },
@@ -73643,7 +73643,7 @@
         "batch": 1,
         "market_group_id": 1405,
         "meta": null,
-        "name": "Women's 'Sanctity' Dress (green/gold)",
+        "name": "Women's 'Sanctity' Dress (olive/gold)",
         "skill_id": null,
         "volume": 0.1
     },
@@ -77595,7 +77595,7 @@
         "batch": 1,
         "market_group_id": 2000,
         "meta": null,
-        "name": "Federation Navy Comet Police Pursuit SKIN (Permanent)",
+        "name": "Federation Navy Comet Police SKIN (Permanent)",
         "skill_id": null,
         "volume": 0.01
     },
@@ -78035,7 +78035,7 @@
         "batch": 1,
         "market_group_id": 2024,
         "meta": null,
-        "name": "Paladin Blood Raider SKIN (Permanent)",
+        "name": "Paladin Blood Raiders SKIN (Permanent)",
         "skill_id": null,
         "volume": 0.01
     },
@@ -78545,7 +78545,7 @@
     },
     "35781": {
         "batch": 1,
-        "market_group_id": 1699,
+        "market_group_id": 2115,
         "meta": 8,
         "name": "Fiend",
         "skill_id": null,
@@ -79935,6 +79935,62 @@
         "skill_id": null,
         "volume": 0.01
     },
+    "36639": {
+        "batch": 1,
+        "market_group_id": 2048,
+        "meta": null,
+        "name": "Harpy Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36640": {
+        "batch": 1,
+        "market_group_id": 2048,
+        "meta": null,
+        "name": "Hawk Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36641": {
+        "batch": 1,
+        "market_group_id": 2052,
+        "meta": null,
+        "name": "Buzzard Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36642": {
+        "batch": 1,
+        "market_group_id": 2052,
+        "meta": null,
+        "name": "Manticore Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36643": {
+        "batch": 1,
+        "market_group_id": 2056,
+        "meta": null,
+        "name": "Kitsune Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36644": {
+        "batch": 1,
+        "market_group_id": 2060,
+        "meta": null,
+        "name": "Crow Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36645": {
+        "batch": 1,
+        "market_group_id": 2060,
+        "meta": null,
+        "name": "Raptor Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
     "36646": {
         "batch": 1,
         "market_group_id": 1995,
@@ -79948,6 +80004,14 @@
         "market_group_id": 1995,
         "meta": null,
         "name": "Cormorant Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36648": {
+        "batch": 1,
+        "market_group_id": 2039,
+        "meta": null,
+        "name": "Flycatcher Raata Sunset SKIN (Permanent)",
         "skill_id": null,
         "volume": 0.01
     },
@@ -79983,6 +80047,54 @@
         "skill_id": null,
         "volume": 0.01
     },
+    "36653": {
+        "batch": 1,
+        "market_group_id": 2070,
+        "meta": null,
+        "name": "Cerberus Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36654": {
+        "batch": 1,
+        "market_group_id": 2070,
+        "meta": null,
+        "name": "Eagle Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36655": {
+        "batch": 1,
+        "market_group_id": 2074,
+        "meta": null,
+        "name": "Onyx Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36656": {
+        "batch": 1,
+        "market_group_id": 2078,
+        "meta": null,
+        "name": "Basilisk Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36657": {
+        "batch": 1,
+        "market_group_id": 2082,
+        "meta": null,
+        "name": "Falcon Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36658": {
+        "batch": 1,
+        "market_group_id": 2082,
+        "meta": null,
+        "name": "Rook Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
     "36659": {
         "batch": 1,
         "market_group_id": 1957,
@@ -80007,6 +80119,22 @@
         "skill_id": null,
         "volume": 0.01
     },
+    "36662": {
+        "batch": 1,
+        "market_group_id": 2105,
+        "meta": null,
+        "name": "Nighthawk Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36663": {
+        "batch": 1,
+        "market_group_id": 2105,
+        "meta": null,
+        "name": "Vulture Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
     "36664": {
         "batch": 1,
         "market_group_id": 1965,
@@ -80028,6 +80156,22 @@
         "market_group_id": 1965,
         "meta": null,
         "name": "Scorpion Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36667": {
+        "batch": 1,
+        "market_group_id": 2111,
+        "meta": null,
+        "name": "Widow Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36668": {
+        "batch": 1,
+        "market_group_id": 2025,
+        "meta": null,
+        "name": "Golem Raata Sunset SKIN (Permanent)",
         "skill_id": null,
         "volume": 0.01
     },
@@ -80063,11 +80207,2067 @@
         "skill_id": null,
         "volume": 0.01
     },
+    "36673": {
+        "batch": 1,
+        "market_group_id": 2008,
+        "meta": null,
+        "name": "Badger Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36674": {
+        "batch": 1,
+        "market_group_id": 2008,
+        "meta": null,
+        "name": "Tayra Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36675": {
+        "batch": 1,
+        "market_group_id": 2089,
+        "meta": null,
+        "name": "Crane Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36676": {
+        "batch": 1,
+        "market_group_id": 2089,
+        "meta": null,
+        "name": "Bustard Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
     "36677": {
         "batch": 1,
         "market_group_id": 1985,
         "meta": null,
         "name": "Charon Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36678": {
+        "batch": 1,
+        "market_group_id": 2096,
+        "meta": null,
+        "name": "Rhea Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36705": {
+        "batch": 1,
+        "market_group_id": 2003,
+        "meta": null,
+        "name": "Bantam Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36706": {
+        "batch": 1,
+        "market_group_id": 2003,
+        "meta": null,
+        "name": "Condor Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36707": {
+        "batch": 1,
+        "market_group_id": 2003,
+        "meta": null,
+        "name": "Griffin Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36708": {
+        "batch": 1,
+        "market_group_id": 2003,
+        "meta": null,
+        "name": "Heron Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36709": {
+        "batch": 1,
+        "market_group_id": 2003,
+        "meta": null,
+        "name": "Kestrel Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36710": {
+        "batch": 1,
+        "market_group_id": 2003,
+        "meta": null,
+        "name": "Merlin Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36711": {
+        "batch": 1,
+        "market_group_id": 2048,
+        "meta": null,
+        "name": "Harpy Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36712": {
+        "batch": 1,
+        "market_group_id": 2048,
+        "meta": null,
+        "name": "Hawk Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36713": {
+        "batch": 1,
+        "market_group_id": 2052,
+        "meta": null,
+        "name": "Buzzard Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36714": {
+        "batch": 1,
+        "market_group_id": 2052,
+        "meta": null,
+        "name": "Manticore Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36715": {
+        "batch": 1,
+        "market_group_id": 2056,
+        "meta": null,
+        "name": "Kitsune Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36716": {
+        "batch": 1,
+        "market_group_id": 2060,
+        "meta": null,
+        "name": "Crow Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36717": {
+        "batch": 1,
+        "market_group_id": 2060,
+        "meta": null,
+        "name": "Raptor Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36718": {
+        "batch": 1,
+        "market_group_id": 1995,
+        "meta": null,
+        "name": "Corax Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36719": {
+        "batch": 1,
+        "market_group_id": 1995,
+        "meta": null,
+        "name": "Cormorant Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36720": {
+        "batch": 1,
+        "market_group_id": 2039,
+        "meta": null,
+        "name": "Flycatcher Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36721": {
+        "batch": 1,
+        "market_group_id": 1991,
+        "meta": null,
+        "name": "Blackbird Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36722": {
+        "batch": 1,
+        "market_group_id": 1991,
+        "meta": null,
+        "name": "Caracal Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36723": {
+        "batch": 1,
+        "market_group_id": 1991,
+        "meta": null,
+        "name": "Moa Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36724": {
+        "batch": 1,
+        "market_group_id": 1991,
+        "meta": null,
+        "name": "Osprey Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36725": {
+        "batch": 1,
+        "market_group_id": 2070,
+        "meta": null,
+        "name": "Cerberus Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36726": {
+        "batch": 1,
+        "market_group_id": 2070,
+        "meta": null,
+        "name": "Eagle Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36727": {
+        "batch": 1,
+        "market_group_id": 2074,
+        "meta": null,
+        "name": "Onyx Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36728": {
+        "batch": 1,
+        "market_group_id": 2078,
+        "meta": null,
+        "name": "Basilisk Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36729": {
+        "batch": 1,
+        "market_group_id": 2082,
+        "meta": null,
+        "name": "Falcon Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36730": {
+        "batch": 1,
+        "market_group_id": 2082,
+        "meta": null,
+        "name": "Rook Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36731": {
+        "batch": 1,
+        "market_group_id": 1957,
+        "meta": null,
+        "name": "Drake Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36732": {
+        "batch": 1,
+        "market_group_id": 1957,
+        "meta": null,
+        "name": "Ferox Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36733": {
+        "batch": 1,
+        "market_group_id": 1957,
+        "meta": null,
+        "name": "Naga Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36734": {
+        "batch": 1,
+        "market_group_id": 2105,
+        "meta": null,
+        "name": "Nighthawk Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36735": {
+        "batch": 1,
+        "market_group_id": 2105,
+        "meta": null,
+        "name": "Vulture Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36736": {
+        "batch": 1,
+        "market_group_id": 1965,
+        "meta": null,
+        "name": "Raven Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36737": {
+        "batch": 1,
+        "market_group_id": 1965,
+        "meta": null,
+        "name": "Rokh Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36738": {
+        "batch": 1,
+        "market_group_id": 1965,
+        "meta": null,
+        "name": "Scorpion Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36739": {
+        "batch": 1,
+        "market_group_id": 2111,
+        "meta": null,
+        "name": "Widow Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36740": {
+        "batch": 1,
+        "market_group_id": 2025,
+        "meta": null,
+        "name": "Golem Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36741": {
+        "batch": 1,
+        "market_group_id": 1981,
+        "meta": null,
+        "name": "Phoenix Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36742": {
+        "batch": 1,
+        "market_group_id": 1975,
+        "meta": null,
+        "name": "Chimera Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36743": {
+        "batch": 1,
+        "market_group_id": 1975,
+        "meta": null,
+        "name": "Wyvern Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36744": {
+        "batch": 1,
+        "market_group_id": 2092,
+        "meta": null,
+        "name": "Leviathan Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36745": {
+        "batch": 1,
+        "market_group_id": 2008,
+        "meta": null,
+        "name": "Badger Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36746": {
+        "batch": 1,
+        "market_group_id": 2008,
+        "meta": null,
+        "name": "Tayra Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36747": {
+        "batch": 1,
+        "market_group_id": 2089,
+        "meta": null,
+        "name": "Crane Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36748": {
+        "batch": 1,
+        "market_group_id": 2089,
+        "meta": null,
+        "name": "Bustard Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36749": {
+        "batch": 1,
+        "market_group_id": 1985,
+        "meta": null,
+        "name": "Charon Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36750": {
+        "batch": 1,
+        "market_group_id": 2096,
+        "meta": null,
+        "name": "Rhea Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36751": {
+        "batch": 1,
+        "market_group_id": 2005,
+        "meta": null,
+        "name": "Breacher Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36752": {
+        "batch": 1,
+        "market_group_id": 2005,
+        "meta": null,
+        "name": "Burst Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36753": {
+        "batch": 1,
+        "market_group_id": 2005,
+        "meta": null,
+        "name": "Probe Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36754": {
+        "batch": 1,
+        "market_group_id": 2005,
+        "meta": null,
+        "name": "Rifter Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36755": {
+        "batch": 1,
+        "market_group_id": 2005,
+        "meta": null,
+        "name": "Slasher Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36756": {
+        "batch": 1,
+        "market_group_id": 2005,
+        "meta": null,
+        "name": "Vigil Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36757": {
+        "batch": 1,
+        "market_group_id": 2050,
+        "meta": null,
+        "name": "Jaguar Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36758": {
+        "batch": 1,
+        "market_group_id": 2050,
+        "meta": null,
+        "name": "Wolf Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36759": {
+        "batch": 1,
+        "market_group_id": 2054,
+        "meta": null,
+        "name": "Cheetah Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36760": {
+        "batch": 1,
+        "market_group_id": 2054,
+        "meta": null,
+        "name": "Hound Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36761": {
+        "batch": 1,
+        "market_group_id": 2058,
+        "meta": null,
+        "name": "Hyena Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36762": {
+        "batch": 1,
+        "market_group_id": 2062,
+        "meta": null,
+        "name": "Claw Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36763": {
+        "batch": 1,
+        "market_group_id": 2062,
+        "meta": null,
+        "name": "Stiletto Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36764": {
+        "batch": 1,
+        "market_group_id": 1997,
+        "meta": null,
+        "name": "Talwar Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36765": {
+        "batch": 1,
+        "market_group_id": 1997,
+        "meta": null,
+        "name": "Thrasher Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36766": {
+        "batch": 1,
+        "market_group_id": 2041,
+        "meta": null,
+        "name": "Sabre Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36767": {
+        "batch": 1,
+        "market_group_id": 1993,
+        "meta": null,
+        "name": "Bellicose Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36768": {
+        "batch": 1,
+        "market_group_id": 1993,
+        "meta": null,
+        "name": "Rupture Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36769": {
+        "batch": 1,
+        "market_group_id": 1993,
+        "meta": null,
+        "name": "Scythe Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36770": {
+        "batch": 1,
+        "market_group_id": 1993,
+        "meta": null,
+        "name": "Stabber Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36771": {
+        "batch": 1,
+        "market_group_id": 2072,
+        "meta": null,
+        "name": "Muninn Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36772": {
+        "batch": 1,
+        "market_group_id": 2072,
+        "meta": null,
+        "name": "Vagabond Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36773": {
+        "batch": 1,
+        "market_group_id": 2076,
+        "meta": null,
+        "name": "Broadsword Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36774": {
+        "batch": 1,
+        "market_group_id": 2080,
+        "meta": null,
+        "name": "Scimitar Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36775": {
+        "batch": 1,
+        "market_group_id": 2084,
+        "meta": null,
+        "name": "Huginn Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36776": {
+        "batch": 1,
+        "market_group_id": 2084,
+        "meta": null,
+        "name": "Rapier Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36777": {
+        "batch": 1,
+        "market_group_id": 1959,
+        "meta": null,
+        "name": "Cyclone Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36778": {
+        "batch": 1,
+        "market_group_id": 1959,
+        "meta": null,
+        "name": "Hurricane Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36779": {
+        "batch": 1,
+        "market_group_id": 1959,
+        "meta": null,
+        "name": "Tornado Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36780": {
+        "batch": 1,
+        "market_group_id": 2107,
+        "meta": null,
+        "name": "Claymore Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36781": {
+        "batch": 1,
+        "market_group_id": 2107,
+        "meta": null,
+        "name": "Sleipnir Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36782": {
+        "batch": 1,
+        "market_group_id": 1967,
+        "meta": null,
+        "name": "Maelstrom Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36783": {
+        "batch": 1,
+        "market_group_id": 1967,
+        "meta": null,
+        "name": "Tempest Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36784": {
+        "batch": 1,
+        "market_group_id": 1967,
+        "meta": null,
+        "name": "Typhoon Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36785": {
+        "batch": 1,
+        "market_group_id": 2113,
+        "meta": null,
+        "name": "Panther Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36786": {
+        "batch": 1,
+        "market_group_id": 2027,
+        "meta": null,
+        "name": "Vargur Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36787": {
+        "batch": 1,
+        "market_group_id": 1983,
+        "meta": null,
+        "name": "Naglfar Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36788": {
+        "batch": 1,
+        "market_group_id": 1977,
+        "meta": null,
+        "name": "Nidhoggur Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36789": {
+        "batch": 1,
+        "market_group_id": 1977,
+        "meta": null,
+        "name": "Hel Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36790": {
+        "batch": 1,
+        "market_group_id": 2093,
+        "meta": null,
+        "name": "Ragnarok Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36791": {
+        "batch": 1,
+        "market_group_id": 2010,
+        "meta": null,
+        "name": "Hoarder Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36792": {
+        "batch": 1,
+        "market_group_id": 2010,
+        "meta": null,
+        "name": "Mammoth Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36793": {
+        "batch": 1,
+        "market_group_id": 2010,
+        "meta": null,
+        "name": "Wreathe Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36794": {
+        "batch": 1,
+        "market_group_id": 2091,
+        "meta": null,
+        "name": "Prowler Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36795": {
+        "batch": 1,
+        "market_group_id": 2091,
+        "meta": null,
+        "name": "Mastodon Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36796": {
+        "batch": 1,
+        "market_group_id": 1987,
+        "meta": null,
+        "name": "Fenrir Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36797": {
+        "batch": 1,
+        "market_group_id": 2098,
+        "meta": null,
+        "name": "Nomad Valklear Glory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36798": {
+        "batch": 1,
+        "market_group_id": 2005,
+        "meta": null,
+        "name": "Breacher Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36799": {
+        "batch": 1,
+        "market_group_id": 2005,
+        "meta": null,
+        "name": "Burst Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36800": {
+        "batch": 1,
+        "market_group_id": 2005,
+        "meta": null,
+        "name": "Probe Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36801": {
+        "batch": 1,
+        "market_group_id": 2005,
+        "meta": null,
+        "name": "Rifter Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36802": {
+        "batch": 1,
+        "market_group_id": 2005,
+        "meta": null,
+        "name": "Slasher Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36803": {
+        "batch": 1,
+        "market_group_id": 2005,
+        "meta": null,
+        "name": "Vigil Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36804": {
+        "batch": 1,
+        "market_group_id": 2050,
+        "meta": null,
+        "name": "Jaguar Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36805": {
+        "batch": 1,
+        "market_group_id": 2050,
+        "meta": null,
+        "name": "Wolf Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36806": {
+        "batch": 1,
+        "market_group_id": 2054,
+        "meta": null,
+        "name": "Cheetah Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36807": {
+        "batch": 1,
+        "market_group_id": 2054,
+        "meta": null,
+        "name": "Hound Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36808": {
+        "batch": 1,
+        "market_group_id": 2058,
+        "meta": null,
+        "name": "Hyena Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36809": {
+        "batch": 1,
+        "market_group_id": 2062,
+        "meta": null,
+        "name": "Claw Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36810": {
+        "batch": 1,
+        "market_group_id": 2062,
+        "meta": null,
+        "name": "Stiletto Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36811": {
+        "batch": 1,
+        "market_group_id": 1997,
+        "meta": null,
+        "name": "Talwar Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36812": {
+        "batch": 1,
+        "market_group_id": 1997,
+        "meta": null,
+        "name": "Thrasher Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36813": {
+        "batch": 1,
+        "market_group_id": 2041,
+        "meta": null,
+        "name": "Sabre Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36814": {
+        "batch": 1,
+        "market_group_id": 1993,
+        "meta": null,
+        "name": "Bellicose Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36815": {
+        "batch": 1,
+        "market_group_id": 1993,
+        "meta": null,
+        "name": "Rupture Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36816": {
+        "batch": 1,
+        "market_group_id": 1993,
+        "meta": null,
+        "name": "Scythe Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36817": {
+        "batch": 1,
+        "market_group_id": 1993,
+        "meta": null,
+        "name": "Stabber Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36818": {
+        "batch": 1,
+        "market_group_id": 2072,
+        "meta": null,
+        "name": "Muninn Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36819": {
+        "batch": 1,
+        "market_group_id": 2072,
+        "meta": null,
+        "name": "Vagabond Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36820": {
+        "batch": 1,
+        "market_group_id": 2076,
+        "meta": null,
+        "name": "Broadsword Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36821": {
+        "batch": 1,
+        "market_group_id": 2080,
+        "meta": null,
+        "name": "Scimitar Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36822": {
+        "batch": 1,
+        "market_group_id": 2084,
+        "meta": null,
+        "name": "Huginn Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36823": {
+        "batch": 1,
+        "market_group_id": 2084,
+        "meta": null,
+        "name": "Rapier Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36824": {
+        "batch": 1,
+        "market_group_id": 1959,
+        "meta": null,
+        "name": "Cyclone Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36825": {
+        "batch": 1,
+        "market_group_id": 1959,
+        "meta": null,
+        "name": "Hurricane Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36826": {
+        "batch": 1,
+        "market_group_id": 1959,
+        "meta": null,
+        "name": "Tornado Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36827": {
+        "batch": 1,
+        "market_group_id": 2107,
+        "meta": null,
+        "name": "Claymore Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36828": {
+        "batch": 1,
+        "market_group_id": 2107,
+        "meta": null,
+        "name": "Sleipnir Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36829": {
+        "batch": 1,
+        "market_group_id": 1967,
+        "meta": null,
+        "name": "Maelstrom Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36830": {
+        "batch": 1,
+        "market_group_id": 1967,
+        "meta": null,
+        "name": "Tempest Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36831": {
+        "batch": 1,
+        "market_group_id": 1967,
+        "meta": null,
+        "name": "Typhoon Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36832": {
+        "batch": 1,
+        "market_group_id": 2113,
+        "meta": null,
+        "name": "Panther Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36833": {
+        "batch": 1,
+        "market_group_id": 2027,
+        "meta": null,
+        "name": "Vargur Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36834": {
+        "batch": 1,
+        "market_group_id": 1983,
+        "meta": null,
+        "name": "Naglfar Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36835": {
+        "batch": 1,
+        "market_group_id": 1977,
+        "meta": null,
+        "name": "Nidhoggur Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36836": {
+        "batch": 1,
+        "market_group_id": 1977,
+        "meta": null,
+        "name": "Hel Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36837": {
+        "batch": 1,
+        "market_group_id": 2093,
+        "meta": null,
+        "name": "Ragnarok Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36838": {
+        "batch": 1,
+        "market_group_id": 2010,
+        "meta": null,
+        "name": "Hoarder Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36839": {
+        "batch": 1,
+        "market_group_id": 2010,
+        "meta": null,
+        "name": "Mammoth Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36840": {
+        "batch": 1,
+        "market_group_id": 2010,
+        "meta": null,
+        "name": "Wreathe Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36841": {
+        "batch": 1,
+        "market_group_id": 2091,
+        "meta": null,
+        "name": "Prowler Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36842": {
+        "batch": 1,
+        "market_group_id": 2091,
+        "meta": null,
+        "name": "Mastodon Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36843": {
+        "batch": 1,
+        "market_group_id": 1987,
+        "meta": null,
+        "name": "Fenrir Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36844": {
+        "batch": 1,
+        "market_group_id": 2098,
+        "meta": null,
+        "name": "Nomad Blue Tiger SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36902": {
+        "batch": 1,
+        "market_group_id": 2013,
+        "meta": null,
+        "name": "Coalesced Element",
+        "skill_id": null,
+        "volume": 0.1
+    },
+    "36908": {
+        "batch": 1,
+        "market_group_id": 977,
+        "meta": null,
+        "name": "Antipharmakon Thureo",
+        "skill_id": null,
+        "volume": 1.0
+    },
+    "36909": {
+        "batch": 1,
+        "market_group_id": 977,
+        "meta": null,
+        "name": "Antipharmakon Kosybo",
+        "skill_id": null,
+        "volume": 1.0
+    },
+    "36910": {
+        "batch": 1,
+        "market_group_id": 977,
+        "meta": null,
+        "name": "Antipharmakon Iokira",
+        "skill_id": null,
+        "volume": 1.0
+    },
+    "36911": {
+        "batch": 1,
+        "market_group_id": 977,
+        "meta": null,
+        "name": "Antipharmakon Toxot",
+        "skill_id": null,
+        "volume": 1.0
+    },
+    "36912": {
+        "batch": 1,
+        "market_group_id": 977,
+        "meta": null,
+        "name": "Antipharmakon Aeolis",
+        "skill_id": null,
+        "volume": 1.0
+    },
+    "36913": {
+        "batch": 1,
+        "market_group_id": 1964,
+        "meta": null,
+        "name": "Abaddon Blood Raiders SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36914": {
+        "batch": 1,
+        "market_group_id": 2002,
+        "meta": null,
+        "name": "Executioner Blood Raiders SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36915": {
+        "batch": 1,
+        "market_group_id": 1956,
+        "meta": null,
+        "name": "Harbinger Blood Raiders SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36916": {
+        "batch": 1,
+        "market_group_id": 1990,
+        "meta": null,
+        "name": "Omen Blood Raiders SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "36946": {
+        "batch": 1,
+        "market_group_id": 1661,
+        "meta": null,
+        "name": "Expired Blood Raider Cerebral Accelerator",
+        "skill_id": null,
+        "volume": 1.0
+    },
+    "36948": {
+        "batch": 1,
+        "market_group_id": 1661,
+        "meta": null,
+        "name": "Expired Blood Raider Advanced Cerebral Accelerator",
+        "skill_id": null,
+        "volume": 1.0
+    },
+    "36949": {
+        "batch": 1,
+        "market_group_id": 2020,
+        "meta": null,
+        "name": "Coalesced Element Blueprint",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37055": {
+        "batch": 1,
+        "market_group_id": 2004,
+        "meta": null,
+        "name": "Incursus Quafe SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37056": {
+        "batch": 1,
+        "market_group_id": 1966,
+        "meta": null,
+        "name": "Hyperion Quafe SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37057": {
+        "batch": 1,
+        "market_group_id": 1992,
+        "meta": null,
+        "name": "Thorax Quafe SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37135": {
+        "batch": 1,
+        "market_group_id": 1924,
+        "meta": null,
+        "name": "Discovery",
+        "skill_id": null,
+        "volume": 50000.0
+    },
+    "37484": {
+        "batch": 1,
+        "market_group_id": 2002,
+        "meta": null,
+        "name": "Crucifier Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37485": {
+        "batch": 1,
+        "market_group_id": 2002,
+        "meta": null,
+        "name": "Executioner Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37486": {
+        "batch": 1,
+        "market_group_id": 2002,
+        "meta": null,
+        "name": "Inquisitor Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37487": {
+        "batch": 1,
+        "market_group_id": 2002,
+        "meta": null,
+        "name": "Magnate Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37488": {
+        "batch": 1,
+        "market_group_id": 2002,
+        "meta": null,
+        "name": "Punisher Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37489": {
+        "batch": 1,
+        "market_group_id": 2002,
+        "meta": null,
+        "name": "Tormentor Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37490": {
+        "batch": 1,
+        "market_group_id": 2047,
+        "meta": null,
+        "name": "Retribution Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37491": {
+        "batch": 1,
+        "market_group_id": 2047,
+        "meta": null,
+        "name": "Vengeance Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37492": {
+        "batch": 1,
+        "market_group_id": 2051,
+        "meta": null,
+        "name": "Anathema Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37493": {
+        "batch": 1,
+        "market_group_id": 2051,
+        "meta": null,
+        "name": "Purifier Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37494": {
+        "batch": 1,
+        "market_group_id": 2055,
+        "meta": null,
+        "name": "Sentinel Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37495": {
+        "batch": 1,
+        "market_group_id": 2059,
+        "meta": null,
+        "name": "Crusader Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37496": {
+        "batch": 1,
+        "market_group_id": 2059,
+        "meta": null,
+        "name": "Malediction Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37497": {
+        "batch": 1,
+        "market_group_id": 1994,
+        "meta": null,
+        "name": "Coercer Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37498": {
+        "batch": 1,
+        "market_group_id": 1994,
+        "meta": null,
+        "name": "Dragoon Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37499": {
+        "batch": 1,
+        "market_group_id": 2038,
+        "meta": null,
+        "name": "Heretic Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37500": {
+        "batch": 1,
+        "market_group_id": 1990,
+        "meta": null,
+        "name": "Arbitrator Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37501": {
+        "batch": 1,
+        "market_group_id": 1990,
+        "meta": null,
+        "name": "Augoror Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37502": {
+        "batch": 1,
+        "market_group_id": 1990,
+        "meta": null,
+        "name": "Maller Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37503": {
+        "batch": 1,
+        "market_group_id": 1990,
+        "meta": null,
+        "name": "Omen Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37504": {
+        "batch": 1,
+        "market_group_id": 2069,
+        "meta": null,
+        "name": "Sacrilege Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37505": {
+        "batch": 1,
+        "market_group_id": 2069,
+        "meta": null,
+        "name": "Zealot Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37506": {
+        "batch": 1,
+        "market_group_id": 2073,
+        "meta": null,
+        "name": "Devoter Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37507": {
+        "batch": 1,
+        "market_group_id": 2077,
+        "meta": null,
+        "name": "Guardian Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37508": {
+        "batch": 1,
+        "market_group_id": 2081,
+        "meta": null,
+        "name": "Curse Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37509": {
+        "batch": 1,
+        "market_group_id": 2081,
+        "meta": null,
+        "name": "Pilgrim Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37510": {
+        "batch": 1,
+        "market_group_id": 1956,
+        "meta": null,
+        "name": "Harbinger Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37511": {
+        "batch": 1,
+        "market_group_id": 1956,
+        "meta": null,
+        "name": "Oracle Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37512": {
+        "batch": 1,
+        "market_group_id": 1956,
+        "meta": null,
+        "name": "Prophecy Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37513": {
+        "batch": 1,
+        "market_group_id": 2104,
+        "meta": null,
+        "name": "Absolution Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37514": {
+        "batch": 1,
+        "market_group_id": 2104,
+        "meta": null,
+        "name": "Damnation Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37515": {
+        "batch": 1,
+        "market_group_id": 1964,
+        "meta": null,
+        "name": "Abaddon Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37516": {
+        "batch": 1,
+        "market_group_id": 1964,
+        "meta": null,
+        "name": "Apocalypse Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37517": {
+        "batch": 1,
+        "market_group_id": 1964,
+        "meta": null,
+        "name": "Armageddon Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37518": {
+        "batch": 1,
+        "market_group_id": 2110,
+        "meta": null,
+        "name": "Redeemer Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37519": {
+        "batch": 1,
+        "market_group_id": 2024,
+        "meta": null,
+        "name": "Paladin Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37520": {
+        "batch": 1,
+        "market_group_id": 1980,
+        "meta": null,
+        "name": "Revelation Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37521": {
+        "batch": 1,
+        "market_group_id": 1974,
+        "meta": null,
+        "name": "Archon Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37522": {
+        "batch": 1,
+        "market_group_id": 1974,
+        "meta": null,
+        "name": "Aeon Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37523": {
+        "batch": 1,
+        "market_group_id": 1978,
+        "meta": null,
+        "name": "Avatar Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37524": {
+        "batch": 1,
+        "market_group_id": 2007,
+        "meta": null,
+        "name": "Bestower Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37525": {
+        "batch": 1,
+        "market_group_id": 2007,
+        "meta": null,
+        "name": "Sigil Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37526": {
+        "batch": 1,
+        "market_group_id": 2088,
+        "meta": null,
+        "name": "Prorator Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37527": {
+        "batch": 1,
+        "market_group_id": 2088,
+        "meta": null,
+        "name": "Impel Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37528": {
+        "batch": 1,
+        "market_group_id": 1984,
+        "meta": null,
+        "name": "Providence Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37529": {
+        "batch": 1,
+        "market_group_id": 2095,
+        "meta": null,
+        "name": "Ark Raata Sunset SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37547": {
+        "batch": 1,
+        "market_group_id": 2004,
+        "meta": null,
+        "name": "Atron Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37548": {
+        "batch": 1,
+        "market_group_id": 2004,
+        "meta": null,
+        "name": "Imicus Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37549": {
+        "batch": 1,
+        "market_group_id": 2004,
+        "meta": null,
+        "name": "Incursus Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37550": {
+        "batch": 1,
+        "market_group_id": 2004,
+        "meta": null,
+        "name": "Maulus Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37551": {
+        "batch": 1,
+        "market_group_id": 2004,
+        "meta": null,
+        "name": "Navitas Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37552": {
+        "batch": 1,
+        "market_group_id": 2004,
+        "meta": null,
+        "name": "Tristan Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37553": {
+        "batch": 1,
+        "market_group_id": 2049,
+        "meta": null,
+        "name": "Enyo Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37554": {
+        "batch": 1,
+        "market_group_id": 2049,
+        "meta": null,
+        "name": "Ishkur Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37555": {
+        "batch": 1,
+        "market_group_id": 2053,
+        "meta": null,
+        "name": "Helios Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37556": {
+        "batch": 1,
+        "market_group_id": 2053,
+        "meta": null,
+        "name": "Nemesis Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37557": {
+        "batch": 1,
+        "market_group_id": 2057,
+        "meta": null,
+        "name": "Keres Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37558": {
+        "batch": 1,
+        "market_group_id": 2061,
+        "meta": null,
+        "name": "Ares Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37559": {
+        "batch": 1,
+        "market_group_id": 2061,
+        "meta": null,
+        "name": "Taranis Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37560": {
+        "batch": 1,
+        "market_group_id": 1996,
+        "meta": null,
+        "name": "Algos Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37561": {
+        "batch": 1,
+        "market_group_id": 1996,
+        "meta": null,
+        "name": "Catalyst Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37562": {
+        "batch": 1,
+        "market_group_id": 2040,
+        "meta": null,
+        "name": "Eris Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37563": {
+        "batch": 1,
+        "market_group_id": 1992,
+        "meta": null,
+        "name": "Celestis Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37564": {
+        "batch": 1,
+        "market_group_id": 1992,
+        "meta": null,
+        "name": "Exequror Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37565": {
+        "batch": 1,
+        "market_group_id": 1992,
+        "meta": null,
+        "name": "Thorax Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37566": {
+        "batch": 1,
+        "market_group_id": 1992,
+        "meta": null,
+        "name": "Vexor Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37567": {
+        "batch": 1,
+        "market_group_id": 2071,
+        "meta": null,
+        "name": "Deimos Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37568": {
+        "batch": 1,
+        "market_group_id": 2071,
+        "meta": null,
+        "name": "Ishtar Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37569": {
+        "batch": 1,
+        "market_group_id": 2075,
+        "meta": null,
+        "name": "Phobos Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37570": {
+        "batch": 1,
+        "market_group_id": 2079,
+        "meta": null,
+        "name": "Oneiros Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37571": {
+        "batch": 1,
+        "market_group_id": 2083,
+        "meta": null,
+        "name": "Arazu Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37572": {
+        "batch": 1,
+        "market_group_id": 2083,
+        "meta": null,
+        "name": "Lachesis Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37573": {
+        "batch": 1,
+        "market_group_id": 1958,
+        "meta": null,
+        "name": "Brutix Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37574": {
+        "batch": 1,
+        "market_group_id": 1958,
+        "meta": null,
+        "name": "Myrmidon Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37575": {
+        "batch": 1,
+        "market_group_id": 1958,
+        "meta": null,
+        "name": "Talos Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37576": {
+        "batch": 1,
+        "market_group_id": 2106,
+        "meta": null,
+        "name": "Astarte Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37577": {
+        "batch": 1,
+        "market_group_id": 2106,
+        "meta": null,
+        "name": "Eos Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37578": {
+        "batch": 1,
+        "market_group_id": 1966,
+        "meta": null,
+        "name": "Dominix Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37579": {
+        "batch": 1,
+        "market_group_id": 1966,
+        "meta": null,
+        "name": "Hyperion Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37580": {
+        "batch": 1,
+        "market_group_id": 1966,
+        "meta": null,
+        "name": "Megathron Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37581": {
+        "batch": 1,
+        "market_group_id": 2112,
+        "meta": null,
+        "name": "Sin Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37582": {
+        "batch": 1,
+        "market_group_id": 2026,
+        "meta": null,
+        "name": "Kronos Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37583": {
+        "batch": 1,
+        "market_group_id": 1982,
+        "meta": null,
+        "name": "Moros Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37584": {
+        "batch": 1,
+        "market_group_id": 1976,
+        "meta": null,
+        "name": "Thanatos Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37585": {
+        "batch": 1,
+        "market_group_id": 1976,
+        "meta": null,
+        "name": "Nyx Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37586": {
+        "batch": 1,
+        "market_group_id": 1979,
+        "meta": null,
+        "name": "Erebus Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37587": {
+        "batch": 1,
+        "market_group_id": 2009,
+        "meta": null,
+        "name": "Epithal Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37588": {
+        "batch": 1,
+        "market_group_id": 2009,
+        "meta": null,
+        "name": "Iteron Mark V Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37589": {
+        "batch": 1,
+        "market_group_id": 2009,
+        "meta": null,
+        "name": "Kryos Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37590": {
+        "batch": 1,
+        "market_group_id": 2009,
+        "meta": null,
+        "name": "Miasmos Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37591": {
+        "batch": 1,
+        "market_group_id": 2009,
+        "meta": null,
+        "name": "Nereus Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37592": {
+        "batch": 1,
+        "market_group_id": 2090,
+        "meta": null,
+        "name": "Viator Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37593": {
+        "batch": 1,
+        "market_group_id": 2090,
+        "meta": null,
+        "name": "Occator Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37594": {
+        "batch": 1,
+        "market_group_id": 1986,
+        "meta": null,
+        "name": "Obelisk Valimor Legacy SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37595": {
+        "batch": 1,
+        "market_group_id": 2097,
+        "meta": null,
+        "name": "Anshar Valimor Legacy SKIN (Permanent)",
         "skill_id": null,
         "volume": 0.01
     },
@@ -94987,7 +97187,7 @@
         "batch": 1,
         "market_group_id": 369215,
         "meta": null,
-        "name": "'Tash Murkon' AM-L SKIN",
+        "name": "'Tash-Murkon' AM-L SKIN",
         "skill_id": null,
         "volume": 0.01
     },
@@ -95159,6 +97359,38 @@
         "skill_id": null,
         "volume": 0.01
     },
+    "369259": {
+        "batch": 1,
+        "market_group_id": 369215,
+        "meta": null,
+        "name": "'Legacy' AM-H SKIN",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "369260": {
+        "batch": 1,
+        "market_group_id": 369215,
+        "meta": null,
+        "name": "'Legacy' CA-L SKIN",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "369261": {
+        "batch": 1,
+        "market_group_id": 369215,
+        "meta": null,
+        "name": "'Legacy' GA-M SKIN",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "369262": {
+        "batch": 1,
+        "market_group_id": 369215,
+        "meta": null,
+        "name": "'Legacy' MN-H SKIN",
+        "skill_id": null,
+        "volume": 0.01
+    },
     "369263": {
         "batch": 1,
         "market_group_id": 369215,
@@ -95319,6 +97551,38 @@
         "skill_id": null,
         "volume": 0.0
     },
+    "369290": {
+        "batch": 1,
+        "market_group_id": 369215,
+        "meta": null,
+        "name": "'Ardishapur' AM-M SKIN",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "369291": {
+        "batch": 1,
+        "market_group_id": 369215,
+        "meta": null,
+        "name": "'Wiyrkomi' CA-M SKIN",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "369292": {
+        "batch": 1,
+        "market_group_id": 369215,
+        "meta": null,
+        "name": "'Intaki' GA-H SKIN",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "369293": {
+        "batch": 1,
+        "market_group_id": 369215,
+        "meta": null,
+        "name": "'Sebiestor' MN-L SKIN",
+        "skill_id": null,
+        "volume": 0.01
+    },
     "369294": {
         "batch": 1,
         "market_group_id": 369215,
@@ -95339,7 +97603,7 @@
         "batch": 1,
         "market_group_id": 369215,
         "meta": null,
-        "name": "'Valor' GA-H SKIN",
+        "name": "'Raven' GA-H SKIN",
         "skill_id": null,
         "volume": 0.01
     },
@@ -95347,7 +97611,7 @@
         "batch": 1,
         "market_group_id": 369215,
         "meta": null,
-        "name": "'Raven' MN-L SKIN",
+        "name": "'Valor' MN-L SKIN",
         "skill_id": null,
         "volume": 0.01
     },
@@ -95355,7 +97619,31 @@
         "batch": 1,
         "market_group_id": 369215,
         "meta": null,
-        "name": "'SOCOM' AM-H SKIN",
+        "name": "'Cyber Knight' AM-H SKIN",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "369303": {
+        "batch": 1,
+        "market_group_id": 369215,
+        "meta": null,
+        "name": "'Home Guard' CA-M SKIN",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "369304": {
+        "batch": 1,
+        "market_group_id": 369215,
+        "meta": null,
+        "name": "'Bravo Company' GA-L SKIN",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "369305": {
+        "batch": 1,
+        "market_group_id": 369215,
+        "meta": null,
+        "name": "'Valklear' MN-M SKIN",
         "skill_id": null,
         "volume": 0.01
     },
@@ -95892,6 +98180,22 @@
         "market_group_id": 368020,
         "meta": null,
         "name": "'Loceros' Basic-H mk.0",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "370308": {
+        "batch": 1,
+        "market_group_id": 369215,
+        "meta": null,
+        "name": "'Deathshroud' AM-M SKIN",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "370488": {
+        "batch": 1,
+        "market_group_id": 369215,
+        "meta": null,
+        "name": "\u0091Tairei\u0092s Crimson\u0092 AM-L SKIN",
         "skill_id": null,
         "volume": 0.01
     }
