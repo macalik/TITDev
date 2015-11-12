@@ -297,7 +297,8 @@ def search():
     regex_search = re.compile(request.args.get("name", ""), re.IGNORECASE)
     item_list = {}
     for item in g.mongo.db.items.find({"name": regex_search}):
-        item_list[item["_id"]] = [item["name"], "{:,.02f}".format(item["volume"])]
+        if item["name"].find("SKIN") == -1 and item["name"].lower().find("blueprint") == -1:
+            item_list[item["_id"]] = [item["name"], "{:,.02f}".format(item["volume"])]
 
     prices, prices_usable = market_hub_prices(list(item_list.keys()))
     search_table = []
