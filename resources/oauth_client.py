@@ -15,7 +15,7 @@ remote = oauth.remote_app(
     'remote',
     consumer_key=CLIENT_ID,
     consumer_secret=CLIENT_SECRET,
-    request_token_params={'scope': 'users'},
+    # request_token_params={'scope': 'users'},
     base_url='http://localhost:5000/api/',
     request_token_url=None,
     access_token_url='http://localhost:5000/oauth/token',

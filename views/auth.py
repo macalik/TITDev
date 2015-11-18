@@ -102,7 +102,7 @@ def requires_sso(*roles):
                     session["UI_Roles"].append(role_ui["_id"])
 
             # Auth check after checking if user exists and updating cache if necessary
-            if not any([auth_check(x) for x in roles]):
+            if not any([auth_check(x) for x in roles]) and "forum" not in roles:
                 abort(403)
 
             return function(*args, **kwargs)
