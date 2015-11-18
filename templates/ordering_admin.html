@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+{% block defaults %}
+<script src="{{url_for('static', filename='datatables-ordering-admin.js')}}"></script>
+{% endblock defaults %}
 {% block content %}
     <div class="container">
         {% if is_admin %}

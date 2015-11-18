@@ -3,7 +3,7 @@ import json
 import logging
 import datetime
 
-from flask import Flask, render_template, g, session, jsonify
+from flask import Flask, render_template, g, session, jsonify, request
 from flask_bootstrap import Bootstrap
 from flask_pymongo import PyMongo
 from flask_oauthlib.provider import OAuth2Provider
@@ -214,28 +214,30 @@ def load_grant(client_id, code):
     return OAuth2Grant(client_id, code)
 
 
+# noinspection PyUnusedLocal
 @oauth.grantsetter
-def save_grant(client_id, code, request, *args, **kwargs):
+def save_grant(client_id, code, inner_request, *args, **kwargs):
     expires = datetime.datetime.utcnow() + datetime.timedelta(seconds=300)
     g.mongo.db.oauth2_grants.insert({
         "client_id": client_id,
         "code": code["code"],
-        "redirect_uri": request.redirect_uri,
-        "scopes": request.scopes,
+        "redirect_uri": inner_request.redirect_uri,
+        "scopes": inner_request.scopes,
         "user": session["CharacterName"],
         "expires": expires
     })
     grant = OAuth2Grant()
     grant.client_id = client_id
     grant.code = code["code"]
-    grant.redirect_uri = request.redirect_uri,
-    grant.scopes = request.scopes
+    grant.redirect_uri = inner_request.redirect_uri,
+    grant.scopes = inner_request.scopes
     grant.user = session["CharacterName"],
     grant.expires = expires
 
     return grant
 
 
+# noinspection PyShadowingNames
 @oauth.tokengetter
 def load_token(access_token=None, refresh_token=None):
     if access_token:
@@ -244,15 +246,16 @@ def load_token(access_token=None, refresh_token=None):
         return OAuth2Token(input_refresh_token=refresh_token)
 
 
+# noinspection PyUnusedLocal
 @oauth.tokensetter
-def save_token(token, request, *args, **kwargs):
-    g.mongo.db.oauth2_tokens.remove({"client_id": request.client.client_id, "user": request.user})
+def save_token(token, inner_request, *args, **kwargs):
+    g.mongo.db.oauth2_tokens.remove({"client_id": inner_request.client.client_id, "user": inner_request.user})
 
     expires_in = token.get("expires_in")
     expires = datetime.datetime.utcnow() + datetime.timedelta(seconds=expires_in)
     g.mongo.db.oauth2_tokens.insert({
-        "client_id": request.client_id,
-        "user": request.user,
+        "client_id": inner_request.client_id,
+        "user": inner_request.user,
         "token_type": token["token_type"],
         "access_token": token["access_token"],
         "refresh_token": token["refresh_token"],
@@ -266,14 +269,15 @@ def save_token(token, request, *args, **kwargs):
     tok.token_type = token["token_type"]
     tok.scopes = token["scope"].split()
     tok.expires = expires
-    tok.client_id = request.client.client_id
-    tok.user = request.user
+    tok.client_id = inner_request.client.client_id
+    tok.user = inner_request.user
 
     return tok
 
 
+# noinspection PyUnusedLocal
 @app.route("/oauth/authorize", methods=['GET', 'POST'])
-@requires_sso(None)
+@requires_sso("forum")
 @oauth.authorize_handler
 def authorize(*args, **kwargs):
     return True
@@ -293,33 +297,26 @@ def revoke_token(): pass
 @app.route("/api/user/<name>")
 @oauth.require_oauth()
 def api_user(name):
-    """
-    1: Guests
-    2: Registered
-    3: Super Moderators
-    4: Administrators
-    5: Awaiting Activation
-    6: Moderators
-    7: Banned
-    :param name:
-    :return:
-    """
-    with open("configs/base.json", "r") as base_config_file:
-        base_config = json.load(base_config_file)
-    db_user = g.mongo.db.users.find_one({"character_name": name})
-    if db_user:
-        if db_user.get("forum_role") == "admin":
-            group_id = 4
-        elif db_user.get("forum_role") == "moderator":
-            group_id = 3
-        elif db_user["corporation_id"] == base_config["corporation_id"]:
-            group_id = 2
-        else:
-            group_id = 7
-
-        return jsonify(username=db_user["character_name"], group_id=group_id)
+    if name == "me":
+        # noinspection PyUnresolvedReferences
+        db_user = g.mongo.db.users.find_one({"character_name": request.oauth.user})
     else:
-        return jsonify(username=name, group_id=7)
+        db_user = g.mongo.db.users.find_one({"character_name": name})
+
+    if db_user:
+        return jsonify(
+            user_id=db_user["character_id"],
+            username=db_user["character_name"],
+            name=db_user["character_name"],
+            email=db_user.get("email", "None")
+        )
+    else:
+        return jsonify(
+            user_id=0,
+            username="Null",
+            name="Null",
+            email="None"
+        )
 
 
 if not os.environ.get("HEROKU") and __name__ == "__main__":
@@ -331,9 +328,9 @@ if not os.environ.get("HEROKU") and __name__ == "__main__":
         return render_template("base.html")
 
     # Profiling
-    # from werkzeug.contrib.profiler import ProfilerMiddleware
-    # app.config["PROFILE"] = True
-    # app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[30])
+    from werkzeug.contrib.profiler import ProfilerMiddleware
+    app.config["PROFILE"] = True
+    app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[30])
 
     app.debug = True
     app.run()

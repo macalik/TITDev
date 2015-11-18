@@ -33,11 +33,19 @@ def requires_sso(*roles):
                 db_user = g.mongo.db.users.find_one({"_id": session["CharacterOwnerHash"]})
             else:
                 # Redirect if not logged in
+                if "forum" in roles:
+                    session["redirect"] = "forum"
+                else:
+                    session["redirect"] = None
                 return redirect(url_for("auth.sso_redirect"))
 
             # Check cache
             if not db_user:
                 # Redirect if user doesn't exist
+                if "forum" in roles:
+                    session["redirect"] = "forum"
+                else:
+                    session["redirect"] = None
                 return redirect(url_for("auth.sso_redirect"))
             elif db_user["cached_until"] < time.time():
                 # Refresh character if cache expires.
@@ -232,7 +240,10 @@ def sso_response():
             for role_ui in g.mongo.db.eve_auth.find():
                 session["UI_Roles"].append(role_ui["_id"])
 
-        return redirect(url_for("account.home"))
+        if session.get("redirect") == "forum":
+            return redirect(base_config["forum_url"])
+        else:
+            return redirect(url_for("account.home"))
 
     else:
         abort(400)
