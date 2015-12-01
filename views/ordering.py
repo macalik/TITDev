@@ -18,7 +18,7 @@ ordering = Blueprint("ordering", __name__, template_folder="templates")
 
 @ordering.route("/", methods=["GET", "POST"])
 @ordering.route("/<item>", methods=["GET", "POST"])
-@requires_sso("corporation")
+@requires_sso("alliance")
 def home(item=""):
     cart_item_list = {}
     error_string = None
@@ -285,7 +285,7 @@ def home(item=""):
 
 
 @ordering.route("/search")
-@requires_sso("corporation")
+@requires_sso("alliance")
 def search():
     if request.args.get("id"):
         return redirect(url_for("ordering.home",
@@ -316,7 +316,7 @@ def search():
 
 @ordering.route("/invoice/<invoice_id>", methods=["GET", "POST"])
 @ordering.route("/invoice")
-@requires_sso("corporation")
+@requires_sso("alliance")
 def invoice(invoice_id=""):
     timestamp = None
 

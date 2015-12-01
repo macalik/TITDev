@@ -241,8 +241,10 @@ def sso_response():
                 session["UI_Roles"].append(role_ui["_id"])
 
         if session.get("redirect") == "forum":
-            return redirect(base_config["forum_url"])
+            session.pop("redirect", None)
+            return redirect(url_for("app.authorize"))
         else:
+            session.pop("redirect", None)
             return redirect(url_for("account.home"))
 
     else:
