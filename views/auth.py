@@ -242,7 +242,7 @@ def sso_response():
 
         if session.get("redirect") == "forum":
             session.pop("redirect", None)
-            return redirect(url_for("app.authorize"))
+            return redirect(url_for("authorize"))
         else:
             session.pop("redirect", None)
             return redirect(url_for("account.home"))
