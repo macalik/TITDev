@@ -1,15 +1,20 @@
+import json
+
 from flask_nav import Nav
-from flask_nav.elements import Navbar, View, Subgroup
+from flask_nav.elements import Navbar, View, Subgroup, Link
 from flask import session
 
 
 class Navigation:
 
+    with open("configs/base.json", "r") as base_config_file:
+        base_config = json.load(base_config_file)
+
     base = ['TiT', View('Home', 'home'),  View('Account', "account.home")]
     after_base = [View('JF Service', "jf.home"), View('Buyback Service', 'buyback.home'),
-                  View('Fittings', "fittings.home")]
+                  View('Fittings', "fittings.home"), View("Market Service", "ordering.home")]
     alliance = base + after_base
-    corp = base + [View('Corp Main', "corp.home"), View("Market Service", "ordering.home")] + after_base
+    corp = base + [View('Corp Main', "corp.home"), Link("Corp Forums", base_config["forum_url"])] + after_base
 
     def __init__(self, app):
         nav = Nav()
