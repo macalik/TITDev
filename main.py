@@ -280,8 +280,10 @@ def save_token(token, inner_request, *args, **kwargs):
 @requires_sso("forum")
 @oauth.authorize_handler
 def authorize(*args, **kwargs):
+    with open("configs/base.json", "r") as base_config_file:
+        base_config = json.load(base_config_file)
     user = g.mongo.db.users.find_one({"_id": session["CharacterOwnerHash"]})
-    if user and user.get("email"):
+    if user and user.get("email") and user["corporation_id"] == base_config["corporation_id"]:
         return True
     return False
 
