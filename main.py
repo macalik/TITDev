@@ -280,9 +280,10 @@ def save_token(token, inner_request, *args, **kwargs):
 @requires_sso("forum")
 @oauth.authorize_handler
 def authorize(*args, **kwargs):
-    user = g.mongo.db.users.find({"_id": ["CharacterOwnerHash"]})
+    user = g.mongo.db.users.find_one({"_id": session["CharacterOwnerHash"]})
     if user and user.get("email"):
         return True
+    return False
 
 
 @app.route("/oauth/token", methods=['POST'])
