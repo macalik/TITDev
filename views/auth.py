@@ -35,6 +35,11 @@ def requires_sso(*roles):
                 # Redirect if not logged in
                 if "forum" in roles:
                     session["redirect"] = "forum"
+                    session["client_id"] = request.args.get("client_id")
+                    session["redirect_uri"] = request.args.get("redirect_uri")
+                    session["response_type"] = request.args.get("response_type")
+                    session["scope"] = request.args.get("scope")
+                    session["state"] = request.args.get("state")
                 else:
                     session["redirect"] = None
                 return redirect(url_for("auth.sso_redirect"))
@@ -242,7 +247,17 @@ def sso_response():
 
         if session.get("redirect") == "forum":
             session.pop("redirect", None)
-            return redirect(url_for("authorize"))
+            client_id = session.pop("client_id", None)
+            redirect_uri = session.pop("redirect_uri", None)
+            response_type = session.pop("response_type", None)
+            scope = session.pop("scope", None)
+            forum_state = session.pop("state", None)
+            return redirect(url_for("authorize",
+                                    client_id=client_id,
+                                    redirect_uri=redirect_uri,
+                                    response_type=response_type,
+                                    scope=scope,
+                                    state=forum_state))
         else:
             session.pop("redirect", None)
             return redirect(url_for("account.home"))
