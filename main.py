@@ -333,9 +333,9 @@ if not os.environ.get("HEROKU") and __name__ == "__main__":
         return render_template("base.html")
 
     # Profiling
-    from werkzeug.contrib.profiler import ProfilerMiddleware
-    app.config["PROFILE"] = True
-    app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[30])
+    # from werkzeug.contrib.profiler import ProfilerMiddleware
+    # app.config["PROFILE"] = True
+    # app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[30])
 
     app.debug = True
     app.run()

@@ -4,7 +4,6 @@ import base64
 import time
 import calendar
 from functools import wraps
-
 from defusedxml import ElementTree
 from flask import redirect, request, Blueprint, abort, g, session, url_for
 import requests
@@ -75,6 +74,7 @@ def requires_sso(*roles):
                                                 "corporation_name": xml_tree[1][8].text,
                                                 "alliance_id": int(xml_tree[1][10].text),
                                                 "alliance_name": xml_tree[1][11].text,
+                                                "last_sign_on": int(time.time()),
                                                 "cached_until": int(calendar.timegm(time.strptime(xml_tree[2].text,
                                                                                                   xml_time_pattern)))
                                             }})
@@ -89,6 +89,7 @@ def requires_sso(*roles):
                     session["UI_Corporation"] = True
                 else:
                     session["UI_Corporation"] = False
+                    forum_edit(db_user, "log_out")
                 if db_user["alliance_id"] == base_config["alliance_id"]:
                     session["UI_Alliance"] = True
                 else:
@@ -111,7 +112,9 @@ def requires_sso(*roles):
                 abort(403)
 
             return function(*args, **kwargs)
+
         return decorated_function
+
     return decorator
 
 
@@ -137,6 +140,60 @@ def auth_check(role):
         return True
 
     return False
+
+
+def forum_edit(current_user, action, *parameters):
+    # current_user = g.mongo.db.users.find_one({"_id": session["CharacterOwnerHash"]})
+    with open("configs/base.json", "r") as base_config_file:
+        base_config = json.load(base_config_file)
+
+    used_forum = False
+    if os.environ.get("HEROKU"):
+        search_payload = {
+            "api_key": os.environ.get("DISCOURSE_API_KEY"),
+            "api_username": os.environ.get("DISCOURSE_API_USERNAME"),
+            "filter": current_user.get("email", "")
+        }
+        api_payload = {
+            "api_key": os.environ.get("DISCOURSE_API_KEY"),
+            "api_username": os.environ.get("DISCOURSE_API_USERNAME")
+        }
+    else:
+        with open("../Other-Secrets/TITDev.json") as log_out_secrets_file:
+            log_out_secrets = json.load(log_out_secrets_file)
+        search_payload = {
+            "api_key": log_out_secrets.get("discourse_api_key"),
+            "api_username": log_out_secrets.get("discourse_api_username"),
+            "filter": current_user.get("email", "")
+        }
+        api_payload = {
+            "api_key": log_out_secrets.get("discourse_api_key"),
+            "api_username": log_out_secrets.get("discourse_api_username")
+        }
+
+    forum_id = None
+    forum_username = None
+    if not current_user.get("forum_id"):
+        forum_response = requests.get(base_config["forum_url"] + "/admin/users/list/active.json",
+                                      params=search_payload)
+        if len(forum_response.json()) == 1:
+            forum_id = forum_response.json()[0]["id"]
+            forum_username = forum_response.json()[0]["username"]
+            g.mongo.db.users.update({"_id": session["CharacterOwnerHash"]},
+                                    {"$set": {"forum_id": forum_id, "forum_username": forum_username}})
+            used_forum = True
+    else:
+        forum_id = current_user.get("forum_id")
+        forum_username = current_user.get("forum_username").lower().strip()
+        used_forum = True
+
+    if used_forum:
+        if action == "log_out":
+            requests.post(base_config["forum_url"] + "/admin/users/" + str(forum_id) + "/log_out", params=api_payload)
+        elif action == "email_edit":
+            api_payload.update({"email": parameters[0]})
+            requests.put(base_config["forum_url"] + "/users/" + forum_username + "/preferences/email",
+                         params=api_payload)
 
 
 @auth.route("/")
@@ -205,17 +262,20 @@ def sso_response():
             # Update Database
             xml_time_pattern = "%Y-%m-%d %H:%M:%S"
             g.mongo.db.users.update({"_id": crest_char["CharacterOwnerHash"]},
-                                    {"character_id": crest_char["CharacterID"],
-                                     "character_name": crest_char["CharacterName"],
-                                     "corporation_id": int(xml_tree[1][7].text),
-                                     "corporation_name": xml_tree[1][8].text.strip(),
-                                     "alliance_id": int(xml_tree[1][10].text),
-                                     "alliance_name": xml_tree[1][11].text.strip(),
-                                     "refresh_token": auth_token["refresh_token"],
-                                     "last_sign_on": int(time.time()),
-                                     "cached_until": int(calendar.timegm(time.strptime(xml_tree[2].text,
-                                                                                       xml_time_pattern)))
-                                     }, upsert=True)
+                                    {
+                                        "$set": {
+                                            "character_id": crest_char["CharacterID"],
+                                            "character_name": crest_char["CharacterName"],
+                                            "corporation_id": int(xml_tree[1][7].text),
+                                            "corporation_name": xml_tree[1][8].text.strip(),
+                                            "alliance_id": int(xml_tree[1][10].text),
+                                            "alliance_name": xml_tree[1][11].text.strip(),
+                                            "refresh_token": auth_token["refresh_token"],
+                                            "last_sign_on": int(time.time()),
+                                            "cached_until": int(calendar.timegm(time.strptime(xml_tree[2].text,
+                                                                                              xml_time_pattern)))
+                                        }
+                                    }, upsert=True)
 
             # Refresh current user
             db_user = g.mongo.db.users.find_one({"_id": crest_char["CharacterOwnerHash"]})
@@ -268,5 +328,10 @@ def sso_response():
 
 @auth.route("/log_out")
 def log_out():
+    current_user = g.mongo.db.users.find_one({"_id": session["CharacterOwnerHash"]})
+
+    if current_user and current_user.get("email"):
+        forum_edit(current_user, "log_out")
+
     session.clear()
     return redirect(url_for("home"))

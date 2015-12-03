@@ -508,3 +508,9 @@ def admin():
     return render_template("ordering_admin.html", invoice_table=invoice_table, tax=tax, is_admin=is_admin,
                            marketeer_invoice_table=marketeer_invoice_table, new_invoice_table=new_invoice_table,
                            tax_corp=tax_corp)
+
+
+@ordering.route("/custom")
+@requires_sso("alliance")
+def custom():
+    pass

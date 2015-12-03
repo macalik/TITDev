@@ -319,8 +319,8 @@ def home():
     # Images
     with open("configs/base.json", "r") as base_config_file:
         base_config = json.load(base_config_file)
-    corporation_logo = base_config["image_server"] + "Corporation/" + str(base_config["corporation_id"]) + "_128.png"
-    alliance_logo = base_config["image_server"] + "Alliance/" + str(base_config["alliance_id"]) + "_128.png"
+    corporation_logo = base_config["image_server"] + "/Corporation/" + str(base_config["corporation_id"]) + "_128.png"
+    alliance_logo = base_config["image_server"] + "/Alliance/" + str(base_config["alliance_id"]) + "_128.png"
 
     return render_template("jf.html", start_list=start_list, end_list=end_list, general_rate=general_rate,
                            volume=volume, contract_list=contract_list, next_update=next_update, admin=jf_admin,

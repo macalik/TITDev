@@ -14,7 +14,7 @@ class Navigation:
     after_base = [View('JF Service', "jf.home"), View('Buyback Service', 'buyback.home'),
                   View('Fittings', "fittings.home"), View("Market Service", "ordering.home")]
     alliance = base + after_base
-    corp = base + [View('Corp Main', "corp.home"), Link("Corp Forums", base_config["forum_url"])] + after_base
+    corp = base + [View('Corp Main', "corp.home"), Link("Corp Forums (Testing)", base_config["forum_url"])] + after_base
 
     def __init__(self, app):
         nav = Nav()

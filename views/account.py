@@ -4,7 +4,7 @@ import datetime
 from flask import Blueprint, render_template, session, request, g
 from bson.objectid import ObjectId
 
-from views.auth import requires_sso
+from views.auth import requires_sso, forum_edit
 from helpers import caches
 
 account = Blueprint("account", __name__, template_folder="templates")
@@ -27,12 +27,14 @@ def home():
                                            }
                                        })
         elif request.form.get("action") == "email":
+            pre_user = g.mongo.db.users.find_one({"_id": session["CharacterOwnerHash"]})
             g.mongo.db.users.update({"_id": session["CharacterOwnerHash"]},
                                     {
                                         "$set": {
                                             "email": request.form.get("email", "").strip()
                                         }
                                     })
+            forum_edit(pre_user, "email_edit", request.form.get("email", "").strip())
         elif request.form.get("action") == "slack":
             g.mongo.db.users.update({"_id": session["CharacterOwnerHash"]},
                                     {
@@ -63,9 +65,9 @@ def home():
     # Images
     with open("configs/base.json", "r") as base_config_file:
         base_config = json.load(base_config_file)
-    image_list = [base_config["image_server"] + "Character/" + str(db_user_info["character_id"]) + "_256.jpg",
-                  base_config["image_server"] + "Corporation/" + str(db_user_info["corporation_id"]) + "_128.png",
-                  base_config["image_server"] + "Alliance/" + str(db_user_info["alliance_id"]) + "_128.png"]
+    image_list = [base_config["image_server"] + "/Character/" + str(db_user_info["character_id"]) + "_256.jpg",
+                  base_config["image_server"] + "/Corporation/" + str(db_user_info["corporation_id"]) + "_128.png",
+                  base_config["image_server"] + "/Alliance/" + str(db_user_info["alliance_id"]) + "_128.png"]
 
     access_mask = base_config["access_mask"]
 
