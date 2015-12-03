@@ -328,10 +328,11 @@ def sso_response():
 
 @auth.route("/log_out")
 def log_out():
-    current_user = g.mongo.db.users.find_one({"_id": session["CharacterOwnerHash"]})
+    if session.get("CharacterOwnerHash"):
+        current_user = g.mongo.db.users.find_one({"_id": session["CharacterOwnerHash"]})
 
-    if current_user and current_user.get("email"):
-        forum_edit(current_user, "log_out")
+        if current_user and current_user.get("email"):
+            forum_edit(current_user, "log_out")
 
     session.clear()
     return redirect(url_for("home"))
