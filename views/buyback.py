@@ -127,32 +127,7 @@ def home():
             jf_rate = 0
 
         # Parsing
-        item_names = [x.split("\t")[0].strip() if x.find("\t") != -1
-                      else (" ".join(x.split(" ")[:-1]).strip() if conversions.is_a_number(x.split(" ")[-1])
-                            else x.strip())
-                      for x in request.form.get("input").splitlines()]
-        item_input = [re.compile("^" + x.split("\t")[0].strip() + "$", re.IGNORECASE) if x.find("\t") != -1
-                      else re.compile("^" + " ".join(x.split(" ")[:-1]).strip() + "$"
-                                      if conversions.is_a_number(x.split(" ")[-1]) else
-                                      "^" + x.strip() + "$", re.IGNORECASE)
-                      for x in request.form.get("input").splitlines()]
-        item_qty = {}
-        for input_line in request.form.get("input").splitlines():
-            try:
-                if input_line.find("\t") != -1:
-                    input_split = [y.strip() for y in input_line.split("\t")]
-                elif conversions.is_a_number(input_line.split(" ")[-1]):
-                    input_split = [" ".join(input_line.split(" ")[:-1]).strip(), input_line.split(" ")[-1]]
-                else:
-                    input_split = [input_line.strip(), "1"]
-                item_qty.setdefault(input_split[0].upper(), 0)
-                try:
-                    qty_clean = int(input_split[1].strip().replace(",", "")) if len(input_split) > 1 else 1
-                except ValueError:
-                    qty_clean = int(input_split[2].strip().replace(",", "")) if len(input_split) > 2 else 1
-                item_qty[input_split[0].upper()] += qty_clean
-            except (IndexError, ValueError):
-                error_list.append("The line '{}' could not be processed.".format(input_line))
+        item_names, item_input, item_qty, extra_errors = conversions.manual_parsing(request.form.get("input"))
 
         refine_character = g.mongo.db.preferences.find_one({"_id": "refine_character"})
         if refine_character:

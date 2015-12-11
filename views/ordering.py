@@ -21,7 +21,7 @@ ordering = Blueprint("ordering", __name__, template_folder="templates")
 @requires_sso("alliance")
 def home(item=""):
     cart_item_list = {}
-    error_string = None
+    error_string = request.args.get("error_string")
 
     bulk_op_update = g.mongo.db.carts.initialize_unordered_bulk_op()
     bulk_run_update = False
@@ -60,9 +60,23 @@ def home(item=""):
                 error_string = "Was not able to add {}".format(item)
         elif input_string:
             session.pop("fitting", None)
-            parse_result = conversions.eft_parsing(input_string)[3]  # DNA String
+            try:
+                if input_string.startswith("["):
+                    parse_result = conversions.eft_parsing(input_string)[3]  # DNA String
+                else:
+                    parse_array = []
+                    item_input, item_qty = conversions.manual_parsing(input_string)[1:3]
+                    pre_parse_db = g.mongo.db.items.find({"name": {"$in": item_input}})
+                    for pre_parse_item in pre_parse_db:
+                        parse_array.append(str(pre_parse_item["_id"]) + ";" +
+                                           str(item_qty[pre_parse_item["name"].upper()]))
+                    parse_result = ":".join(parse_array)
+            except KeyError:
+                error_string = "Could not parse the input. Please ensure it is correctly formatted."
+                return redirect(url_for("ordering.home", error_string=error_string))
             if not parse_result:
-                return redirect(url_for("ordering.home"))
+                error_string = "Could not parse the EFT-Formatted fit. Please ensure it is correctly formatted."
+                return redirect(url_for("ordering.home", error_string=error_string))
             parse_item_list = parse_result.split(":")
             for parse_item in parse_item_list:
                 if parse_item:
@@ -209,13 +223,17 @@ def home(item=""):
 
     valid_stations = []
     route_name = ""
-    current_route = g.mongo.db.carts.find_one({"_id": session["CharacterOwnerHash"]})
+    new_cart = g.mongo.db.carts.find_one({"_id": session["CharacterOwnerHash"]})
     for route in market_hub_routes:
-        if request.args.get("end") and route["_id"] == int(request.args.get("end")):
-            valid_stations.append([route["_id"], route["end"], True])
-            route_name = route["end"]
-        elif current_route:
-            if route["_id"] == current_route.get("route"):
+        if request.args.get("end"):
+            if route["_id"] == int(request.args.get("end")):
+                valid_stations.append([route["_id"], route["end"], True])
+                selected_route = route["_id"] if selected_route == 0 else selected_route
+                route_name = route["end"]
+            else:
+                valid_stations.append([route["_id"], route["end"], False])
+        elif new_cart:
+            if route["_id"] == new_cart.get("route"):
                 valid_stations.append([route["_id"], route["end"], True])
                 selected_route = route["_id"] if selected_route == 0 else selected_route
                 route_name = route["end"]
@@ -240,12 +258,33 @@ def home(item=""):
             jf_rate = rate_info["general"]
 
         jf_total = jf_rate * total_volume
+        # Min 1 Mil Isk
+        if jf_total < 1000000:
+            jf_total = 1000000
     else:
         jf_rate = 0
         jf_total = 0
 
     order_tax_total = sell_price * order_tax / 100
     order_total = jf_total + sell_price + order_tax_total
+
+    # List of characters and notes
+    character_list = []
+    db_api_list = g.mongo.db.api_keys.find_one({"_id": session["CharacterOwnerHash"]})
+    if not request.args.get("action") == "character" and current_cart and request.args.get("action") != "order":
+        current_character = current_cart.get("contract_to")
+    else:
+        current_character = request.args.get("character")
+    if not request.args.get("action") == "notes" and current_cart and request.args.get("action") != "order":
+        notes = current_cart.get("notes", "")
+    else:
+        notes = request.args.get("notes", "")
+    if db_api_list:
+        for character in db_api_list["keys"]:
+            if character["character_name"] == current_character:
+                character_list.append((character["character_name"], True))
+            else:
+                character_list.append((character["character_name"], False))
 
     # Update DB
     g.mongo.db.carts.update({"_id": session["CharacterOwnerHash"]},
@@ -260,8 +299,10 @@ def home(item=""):
                                 "jf_end": route_name,
                                 "order_tax": order_tax,
                                 "order_tax_total": order_tax_total,
-                                "prices_usable": prices_usable
-                            }})
+                                "prices_usable": prices_usable,
+                                "notes": notes,
+                                "contract_to": current_character
+                            }}, upsert=True)
 
     if request.args.get("action") == "order":
         return redirect(url_for("ordering.invoice"))
@@ -281,7 +322,8 @@ def home(item=""):
                            sell_price=sell_price, valid_stations=valid_stations, jf_rate=jf_rate,
                            jf_total=jf_total, order_total=order_total, market_hub_name=market_hub_name,
                            prices_usable=prices_usable, error_string=error_string, breakdown_info=breakdown_info,
-                           order_tax=order_tax, order_tax_total=order_tax_total)
+                           order_tax=order_tax, order_tax_total=order_tax_total, character_list=character_list,
+                           notes=notes)
 
 
 @ordering.route("/search")
@@ -339,7 +381,7 @@ def invoice(invoice_id=""):
                     (base_config.get("marketeer_slack_url") or base_config.get("market_service_slack_url"))):
                 user = g.mongo.db.users.find_one({"_id": session["CharacterOwnerHash"]})
                 if base_config.get("marketeer_slack_url"):
-                    payload = {"text": "@channel: " + user["character_name"] + " created a invoice. <" +
+                    payload = {"text": "<!channel|channel>: " + user["character_name"] + " created a invoice. <" +
                                url_for("ordering.invoice", invoice_id=invoice_id, _external=True) + "|Invoice Link>"}
                     requests.post(base_config["marketeer_slack_url"], json=payload)
                 if base_config.get("market_service_slack_url") and user.get("slack"):
@@ -458,7 +500,8 @@ def invoice(invoice_id=""):
                            order_total="{:,.02f}".format(cart["order_total"]),
                            timestamp=timestamp, can_delete=can_delete, editor=editor,
                            status=status, button=button, marketeer=cart.get("marketeer"), reason=cart.get("reason"),
-                           external=cart.get("external", False), can_edit=can_edit, character=cart.get("character"))
+                           external=cart.get("external", False), can_edit=can_edit, character=cart.get("character"),
+                           contract_to=cart.get("contract_to"), notes=cart.get("notes"))
 
 
 @ordering.route("/admin", methods=["GET", "POST"])

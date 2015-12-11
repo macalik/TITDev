@@ -5339,11 +5339,11 @@
     ],
     "1227": [
         {
-            "amount": 85,
+            "amount": 800,
             "type_id": 34
         },
         {
-            "amount": 34,
+            "amount": 100,
             "type_id": 35
         },
         {
@@ -72097,11 +72097,11 @@
     ],
     "17867": [
         {
-            "amount": 90,
+            "amount": 840,
             "type_id": 34
         },
         {
-            "amount": 36,
+            "amount": 105,
             "type_id": 35
         },
         {
@@ -72111,11 +72111,11 @@
     ],
     "17868": [
         {
-            "amount": 94,
+            "amount": 880,
             "type_id": 34
         },
         {
-            "amount": 38,
+            "amount": 110,
             "type_id": 35
         },
         {
@@ -97221,7 +97221,15 @@
             "type_id": 23154
         },
         {
+            "amount": 2,
+            "type_id": 23156
+        },
+        {
             "amount": 1,
+            "type_id": 23164
+        },
+        {
+            "amount": 3,
             "type_id": 23166
         }
     ],
@@ -97247,7 +97255,7 @@
             "type_id": 40
         },
         {
-            "amount": 1,
+            "amount": 3,
             "type_id": 23154
         },
         {
@@ -124927,11 +124935,11 @@
     ],
     "28415": [
         {
-            "amount": 94,
+            "amount": 880,
             "type_id": 34
         },
         {
-            "amount": 38,
+            "amount": 110,
             "type_id": 35
         },
         {
@@ -124941,11 +124949,11 @@
     ],
     "28416": [
         {
-            "amount": 85,
+            "amount": 800,
             "type_id": 34
         },
         {
-            "amount": 34,
+            "amount": 100,
             "type_id": 35
         },
         {
@@ -124955,11 +124963,11 @@
     ],
     "28417": [
         {
-            "amount": 90,
+            "amount": 840,
             "type_id": 34
         },
         {
-            "amount": 36,
+            "amount": 105,
             "type_id": 35
         },
         {
@@ -149526,6 +149534,2318 @@
         }
     ],
     "35795": [
+        {
+            "amount": 4,
+            "type_id": 35
+        },
+        {
+            "amount": 3,
+            "type_id": 37
+        },
+        {
+            "amount": 3,
+            "type_id": 38
+        },
+        {
+            "amount": 2,
+            "type_id": 39
+        },
+        {
+            "amount": 2,
+            "type_id": 40
+        }
+    ],
+    "37135": [
+        {
+            "amount": 24889,
+            "type_id": 34
+        },
+        {
+            "amount": 7444,
+            "type_id": 35
+        },
+        {
+            "amount": 744,
+            "type_id": 36
+        },
+        {
+            "amount": 444,
+            "type_id": 37
+        },
+        {
+            "amount": 50,
+            "type_id": 38
+        },
+        {
+            "amount": 22,
+            "type_id": 39
+        },
+        {
+            "amount": 20,
+            "type_id": 3828
+        },
+        {
+            "amount": 35,
+            "type_id": 11399
+        },
+        {
+            "amount": 18,
+            "type_id": 11531
+        },
+        {
+            "amount": 15,
+            "type_id": 11535
+        },
+        {
+            "amount": 170,
+            "type_id": 11541
+        },
+        {
+            "amount": 200,
+            "type_id": 11545
+        },
+        {
+            "amount": 3,
+            "type_id": 11547
+        },
+        {
+            "amount": 42,
+            "type_id": 11553
+        },
+        {
+            "amount": 22,
+            "type_id": 11556
+        }
+    ],
+    "37288": [
+        {
+            "amount": 3207807,
+            "type_id": 34
+        },
+        {
+            "amount": 833323,
+            "type_id": 35
+        },
+        {
+            "amount": 330823,
+            "type_id": 36
+        },
+        {
+            "amount": 49357,
+            "type_id": 37
+        },
+        {
+            "amount": 13933,
+            "type_id": 38
+        },
+        {
+            "amount": 4866,
+            "type_id": 39
+        },
+        {
+            "amount": 2214,
+            "type_id": 40
+        }
+    ],
+    "37289": [
+        {
+            "amount": 2603723,
+            "type_id": 34
+        },
+        {
+            "amount": 624357,
+            "type_id": 35
+        },
+        {
+            "amount": 249990,
+            "type_id": 36
+        },
+        {
+            "amount": 33740,
+            "type_id": 37
+        },
+        {
+            "amount": 9433,
+            "type_id": 38
+        },
+        {
+            "amount": 3646,
+            "type_id": 39
+        },
+        {
+            "amount": 1280,
+            "type_id": 40
+        }
+    ],
+    "37290": [
+        {
+            "amount": 2452300,
+            "type_id": 34
+        },
+        {
+            "amount": 808817,
+            "type_id": 35
+        },
+        {
+            "amount": 296600,
+            "type_id": 36
+        },
+        {
+            "amount": 48300,
+            "type_id": 37
+        },
+        {
+            "amount": 13807,
+            "type_id": 38
+        },
+        {
+            "amount": 4946,
+            "type_id": 39
+        },
+        {
+            "amount": 2100,
+            "type_id": 40
+        }
+    ],
+    "37291": [
+        {
+            "amount": 6561767,
+            "type_id": 34
+        },
+        {
+            "amount": 541157,
+            "type_id": 35
+        },
+        {
+            "amount": 184617,
+            "type_id": 36
+        },
+        {
+            "amount": 26283,
+            "type_id": 37
+        },
+        {
+            "amount": 7483,
+            "type_id": 38
+        },
+        {
+            "amount": 2146,
+            "type_id": 39
+        },
+        {
+            "amount": 1846,
+            "type_id": 40
+        }
+    ],
+    "37292": [
+        {
+            "amount": 3207807,
+            "type_id": 34
+        },
+        {
+            "amount": 833323,
+            "type_id": 35
+        },
+        {
+            "amount": 330823,
+            "type_id": 36
+        },
+        {
+            "amount": 49357,
+            "type_id": 37
+        },
+        {
+            "amount": 13933,
+            "type_id": 38
+        },
+        {
+            "amount": 4866,
+            "type_id": 39
+        },
+        {
+            "amount": 2214,
+            "type_id": 40
+        }
+    ],
+    "37293": [
+        {
+            "amount": 3207807,
+            "type_id": 34
+        },
+        {
+            "amount": 833323,
+            "type_id": 35
+        },
+        {
+            "amount": 330823,
+            "type_id": 36
+        },
+        {
+            "amount": 49357,
+            "type_id": 37
+        },
+        {
+            "amount": 13933,
+            "type_id": 38
+        },
+        {
+            "amount": 4866,
+            "type_id": 39
+        },
+        {
+            "amount": 2214,
+            "type_id": 40
+        }
+    ],
+    "37294": [
+        {
+            "amount": 3207807,
+            "type_id": 34
+        },
+        {
+            "amount": 833323,
+            "type_id": 35
+        },
+        {
+            "amount": 330823,
+            "type_id": 36
+        },
+        {
+            "amount": 49357,
+            "type_id": 37
+        },
+        {
+            "amount": 13933,
+            "type_id": 38
+        },
+        {
+            "amount": 4866,
+            "type_id": 39
+        },
+        {
+            "amount": 2214,
+            "type_id": 40
+        }
+    ],
+    "37295": [
+        {
+            "amount": 3207807,
+            "type_id": 34
+        },
+        {
+            "amount": 833323,
+            "type_id": 35
+        },
+        {
+            "amount": 330823,
+            "type_id": 36
+        },
+        {
+            "amount": 49357,
+            "type_id": 37
+        },
+        {
+            "amount": 13933,
+            "type_id": 38
+        },
+        {
+            "amount": 4866,
+            "type_id": 39
+        },
+        {
+            "amount": 2214,
+            "type_id": 40
+        }
+    ],
+    "37296": [
+        {
+            "amount": 2452300,
+            "type_id": 34
+        },
+        {
+            "amount": 808817,
+            "type_id": 35
+        },
+        {
+            "amount": 296600,
+            "type_id": 36
+        },
+        {
+            "amount": 48300,
+            "type_id": 37
+        },
+        {
+            "amount": 13807,
+            "type_id": 38
+        },
+        {
+            "amount": 4946,
+            "type_id": 39
+        },
+        {
+            "amount": 2100,
+            "type_id": 40
+        }
+    ],
+    "37297": [
+        {
+            "amount": 2452300,
+            "type_id": 34
+        },
+        {
+            "amount": 808817,
+            "type_id": 35
+        },
+        {
+            "amount": 296600,
+            "type_id": 36
+        },
+        {
+            "amount": 48300,
+            "type_id": 37
+        },
+        {
+            "amount": 13807,
+            "type_id": 38
+        },
+        {
+            "amount": 4946,
+            "type_id": 39
+        },
+        {
+            "amount": 2100,
+            "type_id": 40
+        }
+    ],
+    "37298": [
+        {
+            "amount": 2452300,
+            "type_id": 34
+        },
+        {
+            "amount": 808817,
+            "type_id": 35
+        },
+        {
+            "amount": 296600,
+            "type_id": 36
+        },
+        {
+            "amount": 48300,
+            "type_id": 37
+        },
+        {
+            "amount": 13807,
+            "type_id": 38
+        },
+        {
+            "amount": 4946,
+            "type_id": 39
+        },
+        {
+            "amount": 2100,
+            "type_id": 40
+        }
+    ],
+    "37299": [
+        {
+            "amount": 2452300,
+            "type_id": 34
+        },
+        {
+            "amount": 808817,
+            "type_id": 35
+        },
+        {
+            "amount": 296600,
+            "type_id": 36
+        },
+        {
+            "amount": 48300,
+            "type_id": 37
+        },
+        {
+            "amount": 13807,
+            "type_id": 38
+        },
+        {
+            "amount": 4946,
+            "type_id": 39
+        },
+        {
+            "amount": 2100,
+            "type_id": 40
+        }
+    ],
+    "37300": [
+        {
+            "amount": 6561767,
+            "type_id": 34
+        },
+        {
+            "amount": 541157,
+            "type_id": 35
+        },
+        {
+            "amount": 184617,
+            "type_id": 36
+        },
+        {
+            "amount": 26283,
+            "type_id": 37
+        },
+        {
+            "amount": 7483,
+            "type_id": 38
+        },
+        {
+            "amount": 2146,
+            "type_id": 39
+        },
+        {
+            "amount": 1846,
+            "type_id": 40
+        }
+    ],
+    "37301": [
+        {
+            "amount": 6561767,
+            "type_id": 34
+        },
+        {
+            "amount": 541157,
+            "type_id": 35
+        },
+        {
+            "amount": 184617,
+            "type_id": 36
+        },
+        {
+            "amount": 26283,
+            "type_id": 37
+        },
+        {
+            "amount": 7483,
+            "type_id": 38
+        },
+        {
+            "amount": 2146,
+            "type_id": 39
+        },
+        {
+            "amount": 1846,
+            "type_id": 40
+        }
+    ],
+    "37302": [
+        {
+            "amount": 6561767,
+            "type_id": 34
+        },
+        {
+            "amount": 541157,
+            "type_id": 35
+        },
+        {
+            "amount": 184617,
+            "type_id": 36
+        },
+        {
+            "amount": 26283,
+            "type_id": 37
+        },
+        {
+            "amount": 7483,
+            "type_id": 38
+        },
+        {
+            "amount": 2146,
+            "type_id": 39
+        },
+        {
+            "amount": 1846,
+            "type_id": 40
+        }
+    ],
+    "37303": [
+        {
+            "amount": 6561767,
+            "type_id": 34
+        },
+        {
+            "amount": 541157,
+            "type_id": 35
+        },
+        {
+            "amount": 184617,
+            "type_id": 36
+        },
+        {
+            "amount": 26283,
+            "type_id": 37
+        },
+        {
+            "amount": 7483,
+            "type_id": 38
+        },
+        {
+            "amount": 2146,
+            "type_id": 39
+        },
+        {
+            "amount": 1846,
+            "type_id": 40
+        }
+    ],
+    "37304": [
+        {
+            "amount": 2603723,
+            "type_id": 34
+        },
+        {
+            "amount": 624357,
+            "type_id": 35
+        },
+        {
+            "amount": 249990,
+            "type_id": 36
+        },
+        {
+            "amount": 33740,
+            "type_id": 37
+        },
+        {
+            "amount": 9433,
+            "type_id": 38
+        },
+        {
+            "amount": 3646,
+            "type_id": 39
+        },
+        {
+            "amount": 1280,
+            "type_id": 40
+        }
+    ],
+    "37305": [
+        {
+            "amount": 2603723,
+            "type_id": 34
+        },
+        {
+            "amount": 624357,
+            "type_id": 35
+        },
+        {
+            "amount": 249990,
+            "type_id": 36
+        },
+        {
+            "amount": 33740,
+            "type_id": 37
+        },
+        {
+            "amount": 9433,
+            "type_id": 38
+        },
+        {
+            "amount": 3646,
+            "type_id": 39
+        },
+        {
+            "amount": 1280,
+            "type_id": 40
+        }
+    ],
+    "37306": [
+        {
+            "amount": 2603723,
+            "type_id": 34
+        },
+        {
+            "amount": 624357,
+            "type_id": 35
+        },
+        {
+            "amount": 249990,
+            "type_id": 36
+        },
+        {
+            "amount": 33740,
+            "type_id": 37
+        },
+        {
+            "amount": 9433,
+            "type_id": 38
+        },
+        {
+            "amount": 3646,
+            "type_id": 39
+        },
+        {
+            "amount": 1280,
+            "type_id": 40
+        }
+    ],
+    "37307": [
+        {
+            "amount": 2603723,
+            "type_id": 34
+        },
+        {
+            "amount": 624357,
+            "type_id": 35
+        },
+        {
+            "amount": 249990,
+            "type_id": 36
+        },
+        {
+            "amount": 33740,
+            "type_id": 37
+        },
+        {
+            "amount": 9433,
+            "type_id": 38
+        },
+        {
+            "amount": 3646,
+            "type_id": 39
+        },
+        {
+            "amount": 1280,
+            "type_id": 40
+        }
+    ],
+    "37450": [
+        {
+            "amount": 30710,
+            "type_id": 34
+        },
+        {
+            "amount": 17250,
+            "type_id": 35
+        },
+        {
+            "amount": 4921,
+            "type_id": 36
+        },
+        {
+            "amount": 1527,
+            "type_id": 37
+        },
+        {
+            "amount": 597,
+            "type_id": 38
+        },
+        {
+            "amount": 300,
+            "type_id": 39
+        },
+        {
+            "amount": 512,
+            "type_id": 40
+        }
+    ],
+    "37451": [
+        {
+            "amount": 30710,
+            "type_id": 34
+        },
+        {
+            "amount": 17250,
+            "type_id": 35
+        },
+        {
+            "amount": 4921,
+            "type_id": 36
+        },
+        {
+            "amount": 1527,
+            "type_id": 37
+        },
+        {
+            "amount": 597,
+            "type_id": 38
+        },
+        {
+            "amount": 300,
+            "type_id": 39
+        },
+        {
+            "amount": 512,
+            "type_id": 40
+        }
+    ],
+    "37452": [
+        {
+            "amount": 30710,
+            "type_id": 34
+        },
+        {
+            "amount": 17250,
+            "type_id": 35
+        },
+        {
+            "amount": 4921,
+            "type_id": 36
+        },
+        {
+            "amount": 1527,
+            "type_id": 37
+        },
+        {
+            "amount": 597,
+            "type_id": 38
+        },
+        {
+            "amount": 300,
+            "type_id": 39
+        },
+        {
+            "amount": 512,
+            "type_id": 40
+        }
+    ],
+    "37453": [
+        {
+            "amount": 13333,
+            "type_id": 34
+        },
+        {
+            "amount": 12222,
+            "type_id": 35
+        },
+        {
+            "amount": 1333,
+            "type_id": 36
+        },
+        {
+            "amount": 278,
+            "type_id": 37
+        },
+        {
+            "amount": 83,
+            "type_id": 38
+        },
+        {
+            "amount": 22,
+            "type_id": 39
+        },
+        {
+            "amount": 12,
+            "type_id": 40
+        }
+    ],
+    "37454": [
+        {
+            "amount": 14444,
+            "type_id": 34
+        },
+        {
+            "amount": 5111,
+            "type_id": 35
+        },
+        {
+            "amount": 2778,
+            "type_id": 36
+        },
+        {
+            "amount": 278,
+            "type_id": 37
+        },
+        {
+            "amount": 83,
+            "type_id": 38
+        },
+        {
+            "amount": 22,
+            "type_id": 39
+        },
+        {
+            "amount": 8,
+            "type_id": 40
+        }
+    ],
+    "37455": [
+        {
+            "amount": 13333,
+            "type_id": 34
+        },
+        {
+            "amount": 12778,
+            "type_id": 35
+        },
+        {
+            "amount": 1667,
+            "type_id": 36
+        },
+        {
+            "amount": 222,
+            "type_id": 37
+        },
+        {
+            "amount": 56,
+            "type_id": 38
+        },
+        {
+            "amount": 22,
+            "type_id": 39
+        },
+        {
+            "amount": 6,
+            "type_id": 40
+        }
+    ],
+    "37456": [
+        {
+            "amount": 15556,
+            "type_id": 34
+        },
+        {
+            "amount": 13333,
+            "type_id": 35
+        },
+        {
+            "amount": 2222,
+            "type_id": 36
+        },
+        {
+            "amount": 56,
+            "type_id": 37
+        },
+        {
+            "amount": 2,
+            "type_id": 38
+        },
+        {
+            "amount": 4,
+            "type_id": 39
+        }
+    ],
+    "37457": [
+        {
+            "amount": 16667,
+            "type_id": 34
+        },
+        {
+            "amount": 12222,
+            "type_id": 35
+        },
+        {
+            "amount": 2778,
+            "type_id": 36
+        },
+        {
+            "amount": 11,
+            "type_id": 37
+        },
+        {
+            "amount": 6,
+            "type_id": 38
+        },
+        {
+            "amount": 2,
+            "type_id": 39
+        },
+        {
+            "amount": 2,
+            "type_id": 40
+        },
+        {
+            "amount": 25,
+            "type_id": 3828
+        },
+        {
+            "amount": 15,
+            "type_id": 11399
+        },
+        {
+            "amount": 25,
+            "type_id": 11532
+        },
+        {
+            "amount": 60,
+            "type_id": 11537
+        },
+        {
+            "amount": 125,
+            "type_id": 11539
+        },
+        {
+            "amount": 375,
+            "type_id": 11543
+        },
+        {
+            "amount": 4,
+            "type_id": 11549
+        },
+        {
+            "amount": 125,
+            "type_id": 11554
+        },
+        {
+            "amount": 15,
+            "type_id": 11557
+        }
+    ],
+    "37458": [
+        {
+            "amount": 22222,
+            "type_id": 34
+        },
+        {
+            "amount": 8000,
+            "type_id": 35
+        },
+        {
+            "amount": 2444,
+            "type_id": 36
+        },
+        {
+            "amount": 500,
+            "type_id": 37
+        },
+        {
+            "amount": 2,
+            "type_id": 38
+        },
+        {
+            "amount": 4,
+            "type_id": 39
+        },
+        {
+            "amount": 25,
+            "type_id": 3828
+        },
+        {
+            "amount": 15,
+            "type_id": 11399
+        },
+        {
+            "amount": 25,
+            "type_id": 11533
+        },
+        {
+            "amount": 60,
+            "type_id": 11534
+        },
+        {
+            "amount": 125,
+            "type_id": 11540
+        },
+        {
+            "amount": 375,
+            "type_id": 11544
+        },
+        {
+            "amount": 4,
+            "type_id": 11550
+        },
+        {
+            "amount": 125,
+            "type_id": 11552
+        },
+        {
+            "amount": 15,
+            "type_id": 11558
+        }
+    ],
+    "37459": [
+        {
+            "amount": 18889,
+            "type_id": 34
+        },
+        {
+            "amount": 4667,
+            "type_id": 35
+        },
+        {
+            "amount": 3556,
+            "type_id": 36
+        },
+        {
+            "amount": 278,
+            "type_id": 37
+        },
+        {
+            "amount": 33,
+            "type_id": 38
+        },
+        {
+            "amount": 12,
+            "type_id": 39
+        },
+        {
+            "amount": 25,
+            "type_id": 3828
+        },
+        {
+            "amount": 15,
+            "type_id": 11399
+        },
+        {
+            "amount": 25,
+            "type_id": 11531
+        },
+        {
+            "amount": 60,
+            "type_id": 11535
+        },
+        {
+            "amount": 125,
+            "type_id": 11541
+        },
+        {
+            "amount": 375,
+            "type_id": 11545
+        },
+        {
+            "amount": 4,
+            "type_id": 11547
+        },
+        {
+            "amount": 125,
+            "type_id": 11553
+        },
+        {
+            "amount": 15,
+            "type_id": 11556
+        }
+    ],
+    "37460": [
+        {
+            "amount": 17778,
+            "type_id": 34
+        },
+        {
+            "amount": 3333,
+            "type_id": 35
+        },
+        {
+            "amount": 4444,
+            "type_id": 36
+        },
+        {
+            "amount": 167,
+            "type_id": 37
+        },
+        {
+            "amount": 22,
+            "type_id": 38
+        },
+        {
+            "amount": 6,
+            "type_id": 39
+        },
+        {
+            "amount": 2,
+            "type_id": 40
+        },
+        {
+            "amount": 25,
+            "type_id": 3828
+        },
+        {
+            "amount": 15,
+            "type_id": 11399
+        },
+        {
+            "amount": 25,
+            "type_id": 11530
+        },
+        {
+            "amount": 60,
+            "type_id": 11536
+        },
+        {
+            "amount": 125,
+            "type_id": 11538
+        },
+        {
+            "amount": 375,
+            "type_id": 11542
+        },
+        {
+            "amount": 4,
+            "type_id": 11548
+        },
+        {
+            "amount": 125,
+            "type_id": 11551
+        },
+        {
+            "amount": 15,
+            "type_id": 11555
+        }
+    ],
+    "37479": [
+        {
+            "amount": 24444,
+            "type_id": 34
+        },
+        {
+            "amount": 20000,
+            "type_id": 35
+        },
+        {
+            "amount": 89,
+            "type_id": 36
+        },
+        {
+            "amount": 33,
+            "type_id": 37
+        },
+        {
+            "amount": 2,
+            "type_id": 38
+        },
+        {
+            "amount": 44,
+            "type_id": 39
+        },
+        {
+            "amount": 22,
+            "type_id": 40
+        }
+    ],
+    "37480": [
+        {
+            "amount": 61500,
+            "type_id": 34
+        },
+        {
+            "amount": 16800,
+            "type_id": 35
+        },
+        {
+            "amount": 6000,
+            "type_id": 36
+        },
+        {
+            "amount": 960,
+            "type_id": 37
+        },
+        {
+            "amount": 360,
+            "type_id": 38
+        },
+        {
+            "amount": 92,
+            "type_id": 39
+        },
+        {
+            "amount": 6,
+            "type_id": 40
+        },
+        {
+            "amount": 25,
+            "type_id": 3828
+        },
+        {
+            "amount": 16,
+            "type_id": 11399
+        },
+        {
+            "amount": 60,
+            "type_id": 11530
+        },
+        {
+            "amount": 75,
+            "type_id": 11536
+        },
+        {
+            "amount": 360,
+            "type_id": 11538
+        },
+        {
+            "amount": 1640,
+            "type_id": 11542
+        },
+        {
+            "amount": 17,
+            "type_id": 11548
+        },
+        {
+            "amount": 150,
+            "type_id": 11551
+        },
+        {
+            "amount": 43,
+            "type_id": 11555
+        }
+    ],
+    "37481": [
+        {
+            "amount": 61500,
+            "type_id": 34
+        },
+        {
+            "amount": 16500,
+            "type_id": 35
+        },
+        {
+            "amount": 7800,
+            "type_id": 36
+        },
+        {
+            "amount": 1080,
+            "type_id": 37
+        },
+        {
+            "amount": 92,
+            "type_id": 38
+        },
+        {
+            "amount": 240,
+            "type_id": 39
+        },
+        {
+            "amount": 26,
+            "type_id": 3828
+        },
+        {
+            "amount": 16,
+            "type_id": 11399
+        },
+        {
+            "amount": 60,
+            "type_id": 11532
+        },
+        {
+            "amount": 75,
+            "type_id": 11537
+        },
+        {
+            "amount": 360,
+            "type_id": 11539
+        },
+        {
+            "amount": 1630,
+            "type_id": 11543
+        },
+        {
+            "amount": 17,
+            "type_id": 11549
+        },
+        {
+            "amount": 155,
+            "type_id": 11554
+        },
+        {
+            "amount": 42,
+            "type_id": 11557
+        }
+    ],
+    "37482": [
+        {
+            "amount": 57000,
+            "type_id": 34
+        },
+        {
+            "amount": 24000,
+            "type_id": 35
+        },
+        {
+            "amount": 8400,
+            "type_id": 36
+        },
+        {
+            "amount": 1590,
+            "type_id": 37
+        },
+        {
+            "amount": 7,
+            "type_id": 38
+        },
+        {
+            "amount": 14,
+            "type_id": 39
+        },
+        {
+            "amount": 14,
+            "type_id": 40
+        },
+        {
+            "amount": 27,
+            "type_id": 3828
+        },
+        {
+            "amount": 16,
+            "type_id": 11399
+        },
+        {
+            "amount": 60,
+            "type_id": 11533
+        },
+        {
+            "amount": 79,
+            "type_id": 11534
+        },
+        {
+            "amount": 370,
+            "type_id": 11540
+        },
+        {
+            "amount": 1630,
+            "type_id": 11544
+        },
+        {
+            "amount": 18,
+            "type_id": 11550
+        },
+        {
+            "amount": 150,
+            "type_id": 11552
+        },
+        {
+            "amount": 38,
+            "type_id": 11558
+        }
+    ],
+    "37483": [
+        {
+            "amount": 63000,
+            "type_id": 34
+        },
+        {
+            "amount": 17100,
+            "type_id": 35
+        },
+        {
+            "amount": 8100,
+            "type_id": 36
+        },
+        {
+            "amount": 900,
+            "type_id": 37
+        },
+        {
+            "amount": 210,
+            "type_id": 38
+        },
+        {
+            "amount": 60,
+            "type_id": 39
+        },
+        {
+            "amount": 6,
+            "type_id": 40
+        },
+        {
+            "amount": 25,
+            "type_id": 3828
+        },
+        {
+            "amount": 16,
+            "type_id": 11399
+        },
+        {
+            "amount": 62,
+            "type_id": 11531
+        },
+        {
+            "amount": 75,
+            "type_id": 11535
+        },
+        {
+            "amount": 360,
+            "type_id": 11541
+        },
+        {
+            "amount": 1640,
+            "type_id": 11545
+        },
+        {
+            "amount": 17,
+            "type_id": 11547
+        },
+        {
+            "amount": 160,
+            "type_id": 11553
+        },
+        {
+            "amount": 43,
+            "type_id": 11556
+        }
+    ],
+    "37543": [
+        {
+            "amount": 322,
+            "type_id": 34
+        },
+        {
+            "amount": 69,
+            "type_id": 35
+        },
+        {
+            "amount": 166,
+            "type_id": 36
+        },
+        {
+            "amount": 1,
+            "type_id": 37
+        },
+        {
+            "amount": 1,
+            "type_id": 40
+        }
+    ],
+    "37544": [
+        {
+            "amount": 322,
+            "type_id": 34
+        },
+        {
+            "amount": 69,
+            "type_id": 35
+        },
+        {
+            "amount": 166,
+            "type_id": 36
+        },
+        {
+            "amount": 1,
+            "type_id": 37
+        },
+        {
+            "amount": 1,
+            "type_id": 40
+        }
+    ],
+    "37545": [
+        {
+            "amount": 322,
+            "type_id": 34
+        },
+        {
+            "amount": 69,
+            "type_id": 35
+        },
+        {
+            "amount": 166,
+            "type_id": 36
+        },
+        {
+            "amount": 1,
+            "type_id": 37
+        },
+        {
+            "amount": 1,
+            "type_id": 40
+        }
+    ],
+    "37546": [
+        {
+            "amount": 322,
+            "type_id": 34
+        },
+        {
+            "amount": 69,
+            "type_id": 35
+        },
+        {
+            "amount": 166,
+            "type_id": 36
+        },
+        {
+            "amount": 1,
+            "type_id": 37
+        },
+        {
+            "amount": 1,
+            "type_id": 40
+        },
+        {
+            "amount": 8,
+            "type_id": 9840
+        },
+        {
+            "amount": 14,
+            "type_id": 9842
+        },
+        {
+            "amount": 8,
+            "type_id": 11399
+        },
+        {
+            "amount": 6,
+            "type_id": 11535
+        },
+        {
+            "amount": 5,
+            "type_id": 11541
+        }
+    ],
+    "37604": [
+        {
+            "amount": 7,
+            "type_id": 21009
+        },
+        {
+            "amount": 3,
+            "type_id": 21013
+        },
+        {
+            "amount": 11,
+            "type_id": 21017
+        },
+        {
+            "amount": 10,
+            "type_id": 21019
+        },
+        {
+            "amount": 11,
+            "type_id": 21021
+        },
+        {
+            "amount": 4,
+            "type_id": 21023
+        },
+        {
+            "amount": 11,
+            "type_id": 21025
+        },
+        {
+            "amount": 49,
+            "type_id": 21029
+        },
+        {
+            "amount": 3,
+            "type_id": 21035
+        },
+        {
+            "amount": 8,
+            "type_id": 21037
+        },
+        {
+            "amount": 11,
+            "type_id": 24558
+        },
+        {
+            "amount": 11,
+            "type_id": 24560
+        }
+    ],
+    "37605": [
+        {
+            "amount": 4,
+            "type_id": 21009
+        },
+        {
+            "amount": 11,
+            "type_id": 21013
+        },
+        {
+            "amount": 4,
+            "type_id": 21017
+        },
+        {
+            "amount": 6,
+            "type_id": 21019
+        },
+        {
+            "amount": 4,
+            "type_id": 21021
+        },
+        {
+            "amount": 11,
+            "type_id": 21023
+        },
+        {
+            "amount": 11,
+            "type_id": 21025
+        },
+        {
+            "amount": 41,
+            "type_id": 21029
+        },
+        {
+            "amount": 11,
+            "type_id": 21035
+        },
+        {
+            "amount": 6,
+            "type_id": 21037
+        },
+        {
+            "amount": 11,
+            "type_id": 24558
+        },
+        {
+            "amount": 11,
+            "type_id": 24560
+        }
+    ],
+    "37606": [
+        {
+            "amount": 11,
+            "type_id": 21009
+        },
+        {
+            "amount": 6,
+            "type_id": 21013
+        },
+        {
+            "amount": 7,
+            "type_id": 21017
+        },
+        {
+            "amount": 3,
+            "type_id": 21019
+        },
+        {
+            "amount": 9,
+            "type_id": 21021
+        },
+        {
+            "amount": 9,
+            "type_id": 21023
+        },
+        {
+            "amount": 11,
+            "type_id": 21025
+        },
+        {
+            "amount": 53,
+            "type_id": 21029
+        },
+        {
+            "amount": 7,
+            "type_id": 21035
+        },
+        {
+            "amount": 3,
+            "type_id": 21037
+        },
+        {
+            "amount": 11,
+            "type_id": 24558
+        },
+        {
+            "amount": 11,
+            "type_id": 24560
+        }
+    ],
+    "37607": [
+        {
+            "amount": 8,
+            "type_id": 21009
+        },
+        {
+            "amount": 8,
+            "type_id": 21013
+        },
+        {
+            "amount": 9,
+            "type_id": 21017
+        },
+        {
+            "amount": 8,
+            "type_id": 21019
+        },
+        {
+            "amount": 7,
+            "type_id": 21021
+        },
+        {
+            "amount": 7,
+            "type_id": 21023
+        },
+        {
+            "amount": 11,
+            "type_id": 21025
+        },
+        {
+            "amount": 61,
+            "type_id": 21029
+        },
+        {
+            "amount": 8,
+            "type_id": 21035
+        },
+        {
+            "amount": 10,
+            "type_id": 21037
+        },
+        {
+            "amount": 11,
+            "type_id": 24558
+        },
+        {
+            "amount": 11,
+            "type_id": 24560
+        }
+    ],
+    "37608": [
+        {
+            "amount": 66156,
+            "type_id": 34
+        },
+        {
+            "amount": 36064,
+            "type_id": 35
+        },
+        {
+            "amount": 17147,
+            "type_id": 36
+        },
+        {
+            "amount": 9360,
+            "type_id": 37
+        },
+        {
+            "amount": 2824,
+            "type_id": 38
+        },
+        {
+            "amount": 204,
+            "type_id": 39
+        },
+        {
+            "amount": 40,
+            "type_id": 40
+        }
+    ],
+    "37610": [
+        {
+            "amount": 66156,
+            "type_id": 34
+        },
+        {
+            "amount": 36064,
+            "type_id": 35
+        },
+        {
+            "amount": 17147,
+            "type_id": 36
+        },
+        {
+            "amount": 9360,
+            "type_id": 37
+        },
+        {
+            "amount": 2824,
+            "type_id": 38
+        },
+        {
+            "amount": 204,
+            "type_id": 39
+        },
+        {
+            "amount": 40,
+            "type_id": 40
+        }
+    ],
+    "37611": [
+        {
+            "amount": 66156,
+            "type_id": 34
+        },
+        {
+            "amount": 36064,
+            "type_id": 35
+        },
+        {
+            "amount": 17147,
+            "type_id": 36
+        },
+        {
+            "amount": 9360,
+            "type_id": 37
+        },
+        {
+            "amount": 2824,
+            "type_id": 38
+        },
+        {
+            "amount": 204,
+            "type_id": 39
+        },
+        {
+            "amount": 40,
+            "type_id": 40
+        }
+    ],
+    "37612": [
+        {
+            "amount": 66156,
+            "type_id": 34
+        },
+        {
+            "amount": 36064,
+            "type_id": 35
+        },
+        {
+            "amount": 17147,
+            "type_id": 36
+        },
+        {
+            "amount": 9360,
+            "type_id": 37
+        },
+        {
+            "amount": 2824,
+            "type_id": 38
+        },
+        {
+            "amount": 204,
+            "type_id": 39
+        },
+        {
+            "amount": 40,
+            "type_id": 40
+        }
+    ],
+    "37613": [
+        {
+            "amount": 66156,
+            "type_id": 34
+        },
+        {
+            "amount": 36064,
+            "type_id": 35
+        },
+        {
+            "amount": 17147,
+            "type_id": 36
+        },
+        {
+            "amount": 9360,
+            "type_id": 37
+        },
+        {
+            "amount": 2824,
+            "type_id": 38
+        },
+        {
+            "amount": 204,
+            "type_id": 39
+        },
+        {
+            "amount": 40,
+            "type_id": 40
+        }
+    ],
+    "37622": [
+        {
+            "amount": 520,
+            "type_id": 34
+        },
+        {
+            "amount": 39,
+            "type_id": 35
+        },
+        {
+            "amount": 198,
+            "type_id": 36
+        },
+        {
+            "amount": 96,
+            "type_id": 37
+        },
+        {
+            "amount": 2,
+            "type_id": 39
+        },
+        {
+            "amount": 2,
+            "type_id": 40
+        }
+    ],
+    "37623": [
+        {
+            "amount": 520,
+            "type_id": 34
+        },
+        {
+            "amount": 39,
+            "type_id": 35
+        },
+        {
+            "amount": 198,
+            "type_id": 36
+        },
+        {
+            "amount": 96,
+            "type_id": 37
+        },
+        {
+            "amount": 2,
+            "type_id": 39
+        },
+        {
+            "amount": 2,
+            "type_id": 40
+        }
+    ],
+    "37624": [
+        {
+            "amount": 520,
+            "type_id": 34
+        },
+        {
+            "amount": 39,
+            "type_id": 35
+        },
+        {
+            "amount": 198,
+            "type_id": 36
+        },
+        {
+            "amount": 96,
+            "type_id": 37
+        },
+        {
+            "amount": 2,
+            "type_id": 39
+        },
+        {
+            "amount": 2,
+            "type_id": 40
+        }
+    ],
+    "37625": [
+        {
+            "amount": 1484,
+            "type_id": 34
+        },
+        {
+            "amount": 211,
+            "type_id": 35
+        },
+        {
+            "amount": 397,
+            "type_id": 36
+        },
+        {
+            "amount": 198,
+            "type_id": 37
+        },
+        {
+            "amount": 40,
+            "type_id": 39
+        },
+        {
+            "amount": 6,
+            "type_id": 40
+        }
+    ],
+    "37626": [
+        {
+            "amount": 1484,
+            "type_id": 34
+        },
+        {
+            "amount": 211,
+            "type_id": 35
+        },
+        {
+            "amount": 397,
+            "type_id": 36
+        },
+        {
+            "amount": 198,
+            "type_id": 37
+        },
+        {
+            "amount": 40,
+            "type_id": 39
+        },
+        {
+            "amount": 6,
+            "type_id": 40
+        }
+    ],
+    "37627": [
+        {
+            "amount": 1484,
+            "type_id": 34
+        },
+        {
+            "amount": 211,
+            "type_id": 35
+        },
+        {
+            "amount": 397,
+            "type_id": 36
+        },
+        {
+            "amount": 198,
+            "type_id": 37
+        },
+        {
+            "amount": 40,
+            "type_id": 39
+        },
+        {
+            "amount": 6,
+            "type_id": 40
+        }
+    ],
+    "37628": [
+        {
+            "amount": 1486,
+            "type_id": 34
+        },
+        {
+            "amount": 1486,
+            "type_id": 35
+        },
+        {
+            "amount": 1486,
+            "type_id": 36
+        },
+        {
+            "amount": 1486,
+            "type_id": 37
+        },
+        {
+            "amount": 100,
+            "type_id": 39
+        },
+        {
+            "amount": 48,
+            "type_id": 40
+        }
+    ],
+    "37629": [
+        {
+            "amount": 1486,
+            "type_id": 34
+        },
+        {
+            "amount": 1486,
+            "type_id": 35
+        },
+        {
+            "amount": 1486,
+            "type_id": 36
+        },
+        {
+            "amount": 1486,
+            "type_id": 37
+        },
+        {
+            "amount": 100,
+            "type_id": 39
+        },
+        {
+            "amount": 48,
+            "type_id": 40
+        }
+    ],
+    "37630": [
+        {
+            "amount": 1486,
+            "type_id": 34
+        },
+        {
+            "amount": 1486,
+            "type_id": 35
+        },
+        {
+            "amount": 1486,
+            "type_id": 36
+        },
+        {
+            "amount": 1486,
+            "type_id": 37
+        },
+        {
+            "amount": 100,
+            "type_id": 39
+        },
+        {
+            "amount": 48,
+            "type_id": 40
+        }
+    ],
+    "37631": [
+        {
+            "amount": 1486,
+            "type_id": 34
+        },
+        {
+            "amount": 1486,
+            "type_id": 35
+        },
+        {
+            "amount": 1486,
+            "type_id": 36
+        },
+        {
+            "amount": 1486,
+            "type_id": 37
+        },
+        {
+            "amount": 100,
+            "type_id": 39
+        },
+        {
+            "amount": 48,
+            "type_id": 40
+        }
+    ],
+    "40307": [
+        {
+            "amount": 10000,
+            "type_id": 34
+        },
+        {
+            "amount": 10000,
+            "type_id": 35
+        },
+        {
+            "amount": 10000,
+            "type_id": 36
+        },
+        {
+            "amount": 35000,
+            "type_id": 37
+        },
+        {
+            "amount": 10000,
+            "type_id": 38
+        },
+        {
+            "amount": 6000,
+            "type_id": 39
+        },
+        {
+            "amount": 4000,
+            "type_id": 40
+        },
+        {
+            "amount": 1,
+            "type_id": 34575
+        }
+    ],
+    "40308": [
+        {
+            "amount": 10000,
+            "type_id": 34
+        },
+        {
+            "amount": 10000,
+            "type_id": 35
+        },
+        {
+            "amount": 10000,
+            "type_id": 36
+        },
+        {
+            "amount": 35000,
+            "type_id": 37
+        },
+        {
+            "amount": 10000,
+            "type_id": 38
+        },
+        {
+            "amount": 6000,
+            "type_id": 39
+        },
+        {
+            "amount": 4000,
+            "type_id": 40
+        },
+        {
+            "amount": 1,
+            "type_id": 34575
+        }
+    ],
+    "40309": [
+        {
+            "amount": 10000,
+            "type_id": 34
+        },
+        {
+            "amount": 10000,
+            "type_id": 35
+        },
+        {
+            "amount": 10000,
+            "type_id": 36
+        },
+        {
+            "amount": 35000,
+            "type_id": 37
+        },
+        {
+            "amount": 10000,
+            "type_id": 38
+        },
+        {
+            "amount": 6000,
+            "type_id": 39
+        },
+        {
+            "amount": 4000,
+            "type_id": 40
+        },
+        {
+            "amount": 1,
+            "type_id": 34575
+        }
+    ],
+    "40310": [
+        {
+            "amount": 10000,
+            "type_id": 34
+        },
+        {
+            "amount": 10000,
+            "type_id": 35
+        },
+        {
+            "amount": 10000,
+            "type_id": 36
+        },
+        {
+            "amount": 35000,
+            "type_id": 37
+        },
+        {
+            "amount": 10000,
+            "type_id": 38
+        },
+        {
+            "amount": 6000,
+            "type_id": 39
+        },
+        {
+            "amount": 4000,
+            "type_id": 40
+        },
+        {
+            "amount": 1,
+            "type_id": 34575
+        }
+    ],
+    "40334": [
+        {
+            "amount": 4,
+            "type_id": 35
+        },
+        {
+            "amount": 3,
+            "type_id": 37
+        },
+        {
+            "amount": 3,
+            "type_id": 38
+        },
+        {
+            "amount": 2,
+            "type_id": 39
+        },
+        {
+            "amount": 2,
+            "type_id": 40
+        }
+    ],
+    "40335": [
         {
             "amount": 4,
             "type_id": 35

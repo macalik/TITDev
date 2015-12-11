@@ -34,7 +34,7 @@ def home():
         fit_name, ship, item_counter, dna_string = conversions.eft_parsing(request.form.get("fit_string"))
 
         if not fit_name:  # Error in parsing
-            redirect(url_for("fittings.home", error="parsing"))
+            return redirect(url_for("fittings.home", error="parsing"))
 
         fit_id = g.mongo.db.fittings.insert({
             "fit": request.form.get("fit_string"),

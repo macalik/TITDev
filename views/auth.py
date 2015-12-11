@@ -40,7 +40,7 @@ def requires_sso(*roles):
                     session["scope"] = request.args.get("scope")
                     session["state"] = request.args.get("state")
                 else:
-                    session["redirect"] = None
+                    session["redirect"] = request.path
                 return redirect(url_for("auth.sso_redirect"))
 
             # Check cache
@@ -49,7 +49,7 @@ def requires_sso(*roles):
                 if "forum" in roles:
                     session["redirect"] = "forum"
                 else:
-                    session["redirect"] = None
+                    session["redirect"] = request.path
                 return redirect(url_for("auth.sso_redirect"))
             elif db_user["cached_until"] < time.time():
                 # Refresh character if cache expires.
@@ -319,8 +319,7 @@ def sso_response():
                                     scope=scope,
                                     state=forum_state))
         else:
-            session.pop("redirect", None)
-            return redirect(url_for("account.home"))
+            return redirect(session.pop("redirect", url_for("account.home")))
 
     else:
         abort(400)

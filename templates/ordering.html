@@ -126,6 +126,32 @@
                 <form class="form-inline" method="get" action="{{url_for('ordering.home')}}">
                     <table class="table table-condensed table-bordered">
                         <tr>
+                            <td>Contract To:</td>
+                            <td>
+                                <div class="form-group">
+                                    <select class="form-control" name="character">
+                                        {% for character in character_list %}
+                                        {% if character[1] %}
+                                        <option value="{{character[0]}}" selected>{{character[0]}}</option>
+                                        {% else %}
+                                        <option value="{{character[0]}}">{{character[0]}}</option>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-warning" name="action" value="character">Change</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Notes:</td>
+                            <td>
+                                <div class="form-group">
+                                    <input name="notes" class="form-control" placeholder="Ex. I am a spy" value="{{notes}}">
+                                </div>
+                                <button type="submit" class="btn btn-warning" name="action" value="notes">Change</button>
+                            </td>
+                        </tr>
+                        <tr>
                             <td>Total volume of items:</td>
                             <td>{{total_volume}}</td>
                         </tr>

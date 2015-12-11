@@ -196,7 +196,7 @@
     "12092": "Interceptors",
     "12093": "Covert Ops",
     "12095": "Assault Frigates",
-    "12096": "Logistics",
+    "12096": "Logistics Cruisers",
     "12097": "Destroyers",
     "12098": "Interdictors",
     "12099": "Battlecruisers",
@@ -273,7 +273,7 @@
     "19760": "Frequency Modulation",
     "19761": "Signal Dispersion",
     "19766": "Signal Suppression",
-    "19767": "Turret Destabilization",
+    "19767": "Weapon Destabilization",
     "19921": "Target Painting",
     "19922": "Signature Focusing",
     "20127": "Stealth Bombers Fake Skill",
@@ -453,5 +453,11 @@
     "34390": "Amarr Tactical Destroyer",
     "34533": "Minmatar Tactical Destroyer",
     "35680": "Caldari Tactical Destroyer",
-    "35685": "Gallente Tactical Destroyer"
+    "35685": "Gallente Tactical Destroyer",
+    "37615": "Command Destroyers",
+    "37796": "Structure Offensive Systems",
+    "37797": "Structure Defensive Systems",
+    "37798": "Structure Electronic Systems",
+    "37799": "Structure Engineering Systems",
+    "40328": "Logistics Frigates"
 }

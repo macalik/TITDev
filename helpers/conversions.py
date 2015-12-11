@@ -169,7 +169,42 @@ def eft_parsing(input_string):
         name_id_conversion[db_item["name"]] = db_item["_id"]
     dna_string_list = [str(name_id_conversion[ship])]
     for item in dna_fittings:
-        dna_string_list.append(str(name_id_conversion[item]) + ";" + str(item_counter[item]))
+        if item in name_id_conversion:
+            dna_string_list.append(str(name_id_conversion[item]) + ";" + str(item_counter[item]))
+        else:
+            return None, None, None, None
     dna_string = ":".join(dna_string_list) + "::"
 
     return fit_name, ship, item_counter, dna_string
+
+
+def manual_parsing(input_string):
+    error_list = []
+    item_names = [x.split("\t")[0].strip() if x.find("\t") != -1
+                  else (" ".join(x.split(" ")[:-1]).strip() if is_a_number(x.split(" ")[-1])
+                        else x.strip())
+                  for x in input_string.splitlines()]
+    item_input = [re.compile("^" + x.split("\t")[0].strip() + "$", re.IGNORECASE) if x.find("\t") != -1
+                  else re.compile("^" + " ".join(x.split(" ")[:-1]).strip() + "$"
+                                  if is_a_number(x.split(" ")[-1]) else
+                                  "^" + x.strip() + "$", re.IGNORECASE)
+                  for x in input_string.splitlines()]
+    item_qty = {}
+    for input_line in input_string.splitlines():
+        try:
+            if input_line.find("\t") != -1:
+                input_split = [y.strip() for y in input_line.split("\t")]
+            elif is_a_number(input_line.split(" ")[-1]):
+                input_split = [" ".join(input_line.split(" ")[:-1]).strip(), input_line.split(" ")[-1]]
+            else:
+                input_split = [input_line.strip(), "1"]
+            item_qty.setdefault(input_split[0].upper(), 0)
+            try:
+                qty_clean = int(input_split[1].strip().replace(",", "")) if len(input_split) > 1 else 1
+            except ValueError:
+                qty_clean = int(input_split[2].strip().replace(",", "")) if len(input_split) > 2 else 1
+            item_qty[input_split[0].upper()] += qty_clean
+        except (IndexError, ValueError):
+            error_list.append("The line '{}' could not be processed.".format(input_line))
+
+    return item_names, item_input, item_qty, error_list
