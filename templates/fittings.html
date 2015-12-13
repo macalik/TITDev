@@ -213,6 +213,33 @@
                 </div>
                 <div id="packs" class="tab-pane">
                     <h3>Packs</h3>
+                    <table class="table table-hover table-condensed datatables">
+                        <thead>
+                        <tr>
+                            {% for header in packs[0] %}
+                            <th>{{header}}</th>
+                            {% endfor %}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in packs[1:] %}
+                        <tr>
+                            {% for info in item[:-3] %}
+                            <td>{{info}}</td>
+                            {% endfor %}
+                            <td>
+                                <a class="btn btn-success" href="{{url_for('fittings.fit', fit_id=item[-2])}}" role="button">
+                                View</a>
+                                {% if item[-3] %}
+                                <form action="{{url_for('fittings.fit', fit_id=item[-2])}}" method="get">
+                                    <button type="submit" class="btn btn-danger" name="action" value="delete">Delete</button>
+                                </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

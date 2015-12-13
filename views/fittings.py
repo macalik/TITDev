@@ -66,6 +66,7 @@ def home():
     corporation_fits = [header]
     alliance_fits = [header]
     all_fits = [header]
+    packs = [header]
     for db_fit in all_fittings:
         submitter = g.mongo.db.users.find_one({"_id": db_fit["submitter"]})
         # Delete Check
@@ -84,11 +85,15 @@ def home():
             corporation_fits.append(fit_info)
         else:
             alliance_fits.append(fit_info)
-        all_fits.append(fit_info)
+
+        if db_fit["ship"] == "Pack":
+            packs.append(fit_info)
+        else:
+            all_fits.append(fit_info)
 
     return render_template("fittings.html", doctrine_fits=doctrine_fits, corporation_fits=corporation_fits,
                            alliance_fits=alliance_fits, dna_string=dna_string, personal_fits=personal_fits,
-                           all_fits=all_fits, error_string=error_string, admin=admin)
+                           all_fits=all_fits, error_string=error_string, admin=admin, packs=packs)
 
 
 @fittings.route("/fit/<fit_id>", methods=["GET", "POST"])
@@ -109,6 +114,10 @@ def fit(fit_id=None):
 
     if not selected_fit:
         return redirect(url_for("fittings.home", error="not_found"))
+    elif request.method == "GET" and request.args.get("action") == "direct":
+        # Use direct to cart
+        session["fitting"] = selected_fit["fit"]
+        return redirect(url_for("ordering.home"))
 
     # Check if fittings admin
     admin = auth_check("fittings_admin")

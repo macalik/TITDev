@@ -29,7 +29,11 @@
                 <li class="list-group-item"><b>Character:</b> {{user_info[1]}}</li>
                 <li class="list-group-item"><b>Corporation:</b> {{user_info[2]}}</li>
                 <li class="list-group-item"><b>Alliance:</b> {{user_info[3]}}</li>
+                {% if user_info[4] %}
                 <li class="list-group-item"><b>Email:</b> {{user_info[4]}}</li>
+                {% else %}
+                <li class="list-group-item"><b>Email:</b> NONE! THIS MUST BE FILLED IN ORDER TO LOG INTO FORUMS!</li>
+                {% endif %}
                 <li class="list-group-item"><b>Slack:</b> {{user_info[5]}}</li>
             </ul>
             <div>

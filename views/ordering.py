@@ -102,6 +102,36 @@ def home(item=""):
     current_cart = g.mongo.db.carts.find_one({"_id": session["CharacterOwnerHash"]})
     fittings_info = []
     fittings_breakdown = {}
+
+    # Redirect to fittings if saving pack
+    ordering_admin = auth_check("ordering_admin")
+    if ordering_admin and request.form.get("action") == "pack":
+        pack_fit = {
+            "fit": "",
+            "items": {},
+            "submitter": session["CharacterOwnerHash"],
+            "price": 0,
+            "volume": 0,
+            "name": request.form.get("pack"),
+            "notes": None,
+            "dna": None,
+            "ship": "Pack",
+            "source": None,
+            "doctrine": False
+        }
+        fit_array = []
+        dna_array = []
+        for table_key, table_info in current_cart.get("item_table", {}).items():
+            pack_fit["items"][table_info["name"]] = table_info["qty"]
+            fit_array.append(table_info["name"] + " " + str(table_info["qty"]))
+            dna_array.append(table_key + ";" + str(table_info["qty"]))
+        pack_fit["fit"] = "\n".join(fit_array)
+        pack_fit["dna"] = ":".join(dna_array)
+
+        fit_id = g.mongo.db.fittings.insert(pack_fit)
+        return redirect(url_for("fittings.fit", fit_id=fit_id))
+
+    # Continue loading cart
     if current_cart and current_cart.get("items"):
         cart_item_list_pre = current_cart["items"]
 
@@ -273,8 +303,10 @@ def home(item=""):
     db_api_list = g.mongo.db.api_keys.find_one({"_id": session["CharacterOwnerHash"]})
     if not request.args.get("action") == "character" and current_cart and request.args.get("action") != "order":
         current_character = current_cart.get("contract_to")
-    else:
+    elif request.args.get("character"):
         current_character = request.args.get("character")
+    else:
+        current_character = session["CharacterName"]
     if not request.args.get("action") == "notes" and current_cart and request.args.get("action") != "order":
         notes = current_cart.get("notes", "")
     else:
@@ -323,7 +355,7 @@ def home(item=""):
                            jf_total=jf_total, order_total=order_total, market_hub_name=market_hub_name,
                            prices_usable=prices_usable, error_string=error_string, breakdown_info=breakdown_info,
                            order_tax=order_tax, order_tax_total=order_tax_total, character_list=character_list,
-                           notes=notes)
+                           notes=notes, ordering_admin=ordering_admin)
 
 
 @ordering.route("/search")

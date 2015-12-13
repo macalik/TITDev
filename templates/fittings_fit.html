@@ -17,9 +17,11 @@
     <div class="row">
         <div class="col-md-4">
             <h3>{{fit_name}}</h3>
+            {% if dna_string %}
             <button type="button" class="btn btn-primary"
                     onclick="CCPEVE.showFitting('{{dna_string}}')">In-Game Fit
             </button>
+            {% endif %}
             <address>
                 <small>
                     {% for line in fit_string %}
@@ -140,8 +142,10 @@
                         <td>
                             {% if prices_usable %}
                             <button type="submit" class="btn btn-success" name="action" value="purchase">Add to Cart</button>
+                            <button type="submit" class="btn btn-warning" name="action" value="direct">Add as Items</button>
                             {% else %}
                             <button class="btn btn-success" disabled>Add to Cart</button>
+                            <button class="btn btn-warning" disabled>Add as Items</button>
                             {% endif %}
                         </td>
                     </tr>

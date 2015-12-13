@@ -80,6 +80,10 @@
                                 <tr>
                                     <td>Cart Actions:</td>
                                     <td>
+                                        {% if ordering_admin %}
+                                        <input class="form-control" name="pack" placeholder="Pack Name">
+                                        <button type="submit" class="btn btn-success" name="action" value="pack">Save Pack</button>
+                                        {% endif %}
                                         <button type="submit" class="btn btn-success" name="action" value="qty">Save Qtys</button>
                                         <button type="reset" class="btn btn-warning" name="action" value="qty">Reset Qtys</button>
                                         <button type="submit" class="btn btn-danger" name="action" value="clear">Remove All</button>
@@ -109,16 +113,6 @@
                                 </tr>
                                 {% endfor %}
                                 </tbody>
-                            </table>
-                            <table class="table table-condensed table-bordered">
-                                <tr>
-                                    <td>Cart Actions:</td>
-                                    <td>
-                                        <button type="submit" class="btn btn-success" name="action" value="qty">Save Qtys</button>
-                                        <button type="reset" class="btn btn-warning" name="action" value="qty">Reset Qtys</button>
-                                        <button type="submit" class="btn btn-danger" name="action" value="clear">Remove All</button>
-                                    </td>
-                                </tr>
                             </table>
                         </form>
                     </div>
