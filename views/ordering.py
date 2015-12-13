@@ -137,6 +137,13 @@ def home(item=""):
         fit_id = g.mongo.db.fittings.insert(pack_fit)
         return redirect(url_for("fittings.fit", fit_id=fit_id))
 
+    # Determine processing cost
+    order_db = g.mongo.db.preferences.find_one({"_id": "ordering"})
+    if session["UI_Corporation"]:
+        order_tax = order_db.get("tax_corp", 0) if order_db else 0
+    else:
+        order_tax = order_db.get("tax", 0) if order_db else 0
+
     # Continue loading cart
     if current_cart and current_cart.get("items"):
         cart_item_list_pre = current_cart["items"]
@@ -156,11 +163,12 @@ def home(item=""):
                                   "[Fit] " + selected_fit["name"],
                                   current_cart["items"][str(selected_fit["_id"])],
                                   "{:,.02f}".format(selected_fit["volume"]),
-                                  "{:,.02f}".format(selected_fit["price"]),
+                                  "{:,.02f}".format(selected_fit["price"] * (1 + order_tax/100)),
                                   "{:,.02f}".format(selected_fit["volume"] *
                                                     current_cart["items"][str(selected_fit["_id"])]),
                                   "{:,.02f}".format(selected_fit["price"] *
-                                                    current_cart["items"][str(selected_fit["_id"])])
+                                                    current_cart["items"][str(selected_fit["_id"])] *
+                                                    (1 + order_tax/100))
                                   ])
             total_volume += selected_fit["volume"] * current_cart["items"][str(selected_fit["_id"])]
             sell_price += selected_fit["price"] * current_cart["items"][str(selected_fit["_id"])]
@@ -180,12 +188,6 @@ def home(item=""):
     prices, prices_usable = market_hub_prices(prices_int) if prices_int else ({}, True)
 
     full_cart = {}
-
-    order_db = g.mongo.db.preferences.find_one({"_id": "ordering"})
-    if session["UI_Corporation"]:
-        order_tax = order_db.get("tax_corp", 0) if order_db else 0
-    else:
-        order_tax = order_db.get("tax", 0) if order_db else 0
 
     invoice_info = [["Name", "Qty", "Vol/Item", "Isk/Item + Markup",
                      "Vol Subtotal", "Isk Subtotal w/ Markup"]] + fittings_info
