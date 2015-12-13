@@ -60,9 +60,12 @@ def home(item=""):
                 error_string = "Was not able to add {}".format(item)
         elif input_string:
             session.pop("fitting", None)
+            parse_error = None
             try:
                 if input_string.startswith("["):
-                    parse_result = conversions.eft_parsing(input_string)[3]  # DNA String
+                    eft_parser = conversions.eft_parsing(input_string)
+                    parse_result = eft_parser[3]  # DNA String
+                    parse_error = eft_parser[4]
                 else:
                     parse_array = []
                     item_input, item_qty = conversions.manual_parsing(input_string)[1:3]
@@ -75,7 +78,10 @@ def home(item=""):
                 error_string = "Could not parse the input. Please ensure it is correctly formatted."
                 return redirect(url_for("ordering.home", error_string=error_string))
             if not parse_result:
-                error_string = "Could not parse the EFT-Formatted fit. Please ensure it is correctly formatted."
+                if parse_error == "parsing":
+                    error_string = "Could not parse the EFT-Formatted fit. Please ensure it is correctly formatted."
+                else:
+                    error_string = parse_error
                 return redirect(url_for("ordering.home", error_string=error_string))
             parse_item_list = parse_result.split(":")
             for parse_item in parse_item_list:

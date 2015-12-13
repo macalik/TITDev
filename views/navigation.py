@@ -45,7 +45,7 @@ class Navigation:
             market_service = False
             for role in session.get("UI_Roles"):
                 if role == "jf_admin":
-                    admin_elements += [View('JF Service', "jf.admin"), View('JF Stats', "jf.stats")]
+                    admin_elements += [View('JF Routes', "jf.admin"), View('JF Stats', "jf.stats")]
                 elif role == "user_admin":
                     admin_elements.append(View('User Roles', "admin.roles"))
                 elif role == "jf_pilot":

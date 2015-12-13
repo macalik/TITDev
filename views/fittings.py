@@ -26,15 +26,17 @@ def home():
             error_string = "Could not parse the EFT-Formatted fit. Please ensure it is correctly formatted."
         elif request.args.get("error") == "not_found":
             error_string = "Could not find the fit. It may have been deleted."
+        elif request.args.get("error"):
+            error_string = request.args.get("error")
 
     if request.method == "POST" and request.form.get("action") == "fit_submit":
         if not request.form.get("fit_string"):
             return redirect(url_for("fittings.home"))
 
-        fit_name, ship, item_counter, dna_string = conversions.eft_parsing(request.form.get("fit_string"))
+        fit_name, ship, item_counter, dna_string, parse_error = conversions.eft_parsing(request.form.get("fit_string"))
 
         if not fit_name:  # Error in parsing
-            return redirect(url_for("fittings.home", error="parsing"))
+            return redirect(url_for("fittings.home", error=parse_error))
 
         fit_id = g.mongo.db.fittings.insert({
             "fit": request.form.get("fit_string"),
@@ -146,8 +148,18 @@ def fit(fit_id=None):
 
     fit_by_line = selected_fit["fit"].splitlines()
 
+    with open("resources/nameConversions.json") as name_conversions_file:
+        name_conversions = json.load(name_conversions_file)
+    actual_fit_items = []
+    pre_name_conversion = {}
+    for pre_filter_item in selected_fit["items"].keys():
+        pre_filter_item = pre_filter_item.replace("Thermic", "Thermal")  # EVE parallax patch
+        actual_fit_items.append(name_conversions.get(pre_filter_item, pre_filter_item))
+        if name_conversions.get(pre_filter_item):
+            pre_name_conversion[name_conversions.get(pre_filter_item)] = pre_filter_item
+
     # ID Matching
-    item_list = list(g.mongo.db.items.find({"name": {"$in": list(selected_fit["items"].keys())}}))
+    item_list = list(g.mongo.db.items.find({"name": {"$in": actual_fit_items}}))
     item_prices, prices_usable = eve_central.market_hub_prices([x["_id"] for x in item_list])
 
     item_table = [["Name", "Qty", "Isk/Item", "Vol/Item", "Total Isk", "Total Volume"]]
@@ -156,7 +168,10 @@ def fit(fit_id=None):
     multiply = 1 if not request.args.get("multiply") else int(request.args.get("multiply"))
 
     for fit_item in item_list:
-        qty = selected_fit["items"][fit_item["name"]] * multiply
+        try:
+            qty = selected_fit["items"][fit_item["name"]] * multiply
+        except KeyError:
+            qty = selected_fit["items"][pre_name_conversion[fit_item["name"]]] * multiply
         isk_per_item = item_prices[fit_item["_id"]]["sell"]
         vol_per_item = fit_item["volume"]
         item_isk_total = qty * isk_per_item

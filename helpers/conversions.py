@@ -6,6 +6,7 @@ import time
 import itertools
 import re
 import collections
+import json
 
 from flask import g
 
@@ -160,22 +161,30 @@ def eft_parsing(input_string):
             if multiple_item:
                 item_counter[multiple_item.group(1).strip()] += int(multiple_item.group(2))
     except (IndexError, ValueError):
-        return None, None, None, None
+        return None, None, None, None, "parsing"
 
     # DNA Parsing
+    with open("resources/nameConversions.json") as old_name_conversions_file:
+        old_name_conversions = json.load(old_name_conversions_file)
+
     fit_db_ids = g.mongo.db.items.find({"name": {"$in": [ship] + subsystem_list + dna_fittings}})
     name_id_conversion = {}
     for db_item in fit_db_ids:
         name_id_conversion[db_item["name"]] = db_item["_id"]
     dna_string_list = [str(name_id_conversion[ship])]
     for item in dna_fittings:
+        item = item.replace("Thermic", "Thermal")  # EVE Parallax Patch
         if item in name_id_conversion:
             dna_string_list.append(str(name_id_conversion[item]) + ";" + str(item_counter[item]))
         else:
-            return None, None, None, None
+            try:
+                actual_item = g.mongo.db.items.find_one({"name": old_name_conversions[item]})
+                dna_string_list.append(str(actual_item["_id"]) + ";" + str(item_counter[item]))
+            except KeyError:
+                return None, None, None, None, "Cannot find '{0}'.".format(item)
     dna_string = ":".join(dna_string_list) + "::"
 
-    return fit_name, ship, item_counter, dna_string
+    return fit_name, ship, item_counter, dna_string, None
 
 
 def manual_parsing(input_string):
