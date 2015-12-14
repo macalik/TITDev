@@ -26,6 +26,7 @@ def home():
         user_characters = [x["character_name"] for x in api_user["keys"]]
         invalid = all([y.get("valid", True) for y in api_user["keys"]])
         api_table.append([invalid, api_user["_id"], id_to_name[api_user["_id"]], ", ".join(user_characters)])
+        characters.update(user_characters)
 
     caches.security_characters()
 
@@ -39,8 +40,11 @@ def home():
                 time.strftime(time_format, time.gmtime(corp_character["log_on_time"])),
                 time.strftime(time_format, time.gmtime(corp_character["log_off_time"]))
             ])
+    missing_count = len(missing_apis)
+    all_count = g.mongo.db.security_characters.count()
 
-    return render_template("security.html", api_table=api_table, missing_apis=missing_apis)
+    return render_template("security.html", api_table=api_table, missing_apis=missing_apis, missing_count=missing_count,
+                           all_count=all_count)
 
 
 @security.route("/user/<site_id>")
@@ -62,12 +66,15 @@ def user(site_id=""):
                           api_key["cached_str"], api_key.get("valid", True)])
         id_list.append(api_key["character_id"])
 
+    time_format = "%Y-%m-%d %H:%M:%S"
+
     location_table = []
     for security_character in g.mongo.db.security_characters.find({"_id": {"$in": id_list}}):
         location_table.append([security_character["name"], security_character["last_location_str"],
-                               security_character["last_ship_str"]])
+                               security_character["last_ship_str"],
+                               time.strftime(time_format, time.gmtime(security_character["log_on_time"])),
+                               time.strftime(time_format, time.gmtime(security_character["log_off_time"]))])
 
-    time_format = "%Y-%m-%d %H:%M:%S"
     user_table = [site_id, user_info["character_name"],
                   time.strftime(time_format, time.gmtime(user_info["last_sign_on"]))]
 
