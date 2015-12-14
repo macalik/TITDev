@@ -155,6 +155,7 @@ def eft_parsing(input_string):
 
         clean_split_fit = [ship] + [x.split(",")[0].strip() for x in comma_split_fit
                                     if x and not re.match(multi, x)]
+        # noinspection PyArgumentList
         item_counter = collections.Counter(clean_split_fit)
         for item in comma_split_fit:
             multiple_item = re.match(multi, item)
@@ -193,13 +194,14 @@ def manual_parsing(input_string):
                   else (" ".join(x.split(" ")[:-1]).strip() if is_a_number(x.split(" ")[-1])
                         else x.strip())
                   for x in input_string.splitlines()]
-    item_input = [re.compile("^" + x.split("\t")[0].strip() + "$", re.IGNORECASE) if x.find("\t") != -1
-                  else re.compile("^" + " ".join(x.split(" ")[:-1]).strip() + "$"
-                                  if is_a_number(x.split(" ")[-1]) else
+    item_input = [re.compile("^" + x.strip().split("\t")[0].strip() + "$", re.IGNORECASE) if x.strip().find("\t") != -1
+                  else re.compile("^" + " ".join(x.strip().split(" ")[:-1]).strip() + "$"
+                                  if is_a_number(x.strip().split(" ")[-1]) else
                                   "^" + x.strip() + "$", re.IGNORECASE)
                   for x in input_string.splitlines()]
     item_qty = {}
     for input_line in input_string.splitlines():
+        input_line = input_line.strip()
         try:
             if input_line.find("\t") != -1:
                 input_split = [y.strip() for y in input_line.split("\t")]

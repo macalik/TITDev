@@ -3,7 +3,7 @@ import json
 import logging
 
 from flask import render_template, g
-from flask_bootstrap import Bootstrap
+from flask_bootstrap import Bootstrap, WebCDN
 from flask_pymongo import PyMongo
 
 from app import app
@@ -22,6 +22,8 @@ from views.security import security
 # noinspection PyUnresolvedReferences
 from views import api  # Attaches API module
 Bootstrap(app)
+cdn_theme_url = "https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/slate/"
+app.extensions['bootstrap']['cdns']["theme"] = WebCDN(cdn_theme_url)  # CDN Theme
 Navigation(app)
 
 if os.environ.get("HEROKU"):
