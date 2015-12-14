@@ -22,7 +22,7 @@ from views.security import security
 # noinspection PyUnresolvedReferences
 from views import api  # Attaches API module
 Bootstrap(app)
-cdn_theme_url = "https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/slate/"
+cdn_theme_url = "https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/yeti/"
 app.extensions['bootstrap']['cdns']["theme"] = WebCDN(cdn_theme_url)  # CDN Theme
 Navigation(app)
 
