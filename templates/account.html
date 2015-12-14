@@ -12,7 +12,7 @@
             {% endif %}
             {% if keys %}
             <div class="alert alert-danger" role="alert">
-                Key(s) with ID {{keys}} has an error. It has been deleted. Please input a new key.
+                Key(s) with ID {{keys}} has an error. It has been marked as invalid and can no longer be used on the site. Please input a new key.
             </div>
             {% endif %}
         </div>
@@ -151,7 +151,7 @@
         <div class="tab-content">
             <div id="apis" class="tab-pane active">
                 <div class="col-md-12">
-                    <h2>All Valid APIs</h2>
+                    <h2>All APIs</h2>
                     <table class="table table-hover table-condensed datatables">
                         <thead>
                         <tr>
@@ -159,13 +159,14 @@
                             <th>Char Name</th>
                             <th>Key ID</th>
                             <th>vCode</th>
-                            <th>Cached Until</th>
+                            <th>Last API Check</th>
+                            <th>Valid</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         {% for key in associated_keys %}
-                        <tr>
+                        <tr class="{{'danger' if not key[-1]}}">
                             {% for info in key %}
                             <td>{{info}}</td>
                             {% endfor %}

@@ -55,7 +55,7 @@ def home():
     if db_key_doc:
         for key in db_key_doc["keys"]:
             associated_keys.append([key["character_id"], key["character_name"], key["key_id"], key["vcode"],
-                                    key["cached_str"]])
+                                    key["cached_str"], key.get("valid", True)])
 
     # User Information
     db_user_info = g.mongo.db.users.find_one({"_id": session["CharacterOwnerHash"]})

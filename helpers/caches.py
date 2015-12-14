@@ -9,6 +9,8 @@ import requests
 
 from pymongo.errors import BulkWriteError
 
+from helpers import conversions, error_handling
+
 xml_headers = {
     "User-Agent": "TiT Corp Website by Kazuki Ishikawa"
 }
@@ -16,7 +18,9 @@ xml_headers = {
 if os.environ.get("HEROKU"):
     secrets = {
         "jf_key_id": os.environ["jf_key_id"],
-        "jf_vcode": os.environ["jf_vcode"]
+        "jf_vcode": os.environ["jf_vcode"],
+        "main_key_id": os.environ["main_key_id"],
+        "main_vcode": os.environ["main_vcode"]
     }
 else:
     with open("../Other-Secrets/TITDev.json") as secrets_file:
@@ -109,12 +113,12 @@ def character(char_ids):
 def contracts(keys=None):
     """
 
-    :param keys: [("jf_service" or "personal", key_id, vcode), (), ...]
+    :param keys: [("jf_service" or "personal", key_id, vcode, character_id), (), ...]
     :return:
     """
 
     # If service is personal, uses key_caches database for cache values instead
-    invalid_apis = []
+    invalid_apis = set()
 
     if not keys:
         # Default Refreshes
@@ -160,7 +164,7 @@ def contracts(keys=None):
                 xml_contracts_tree = ElementTree.fromstring(xml_contracts_response.text)
             except ElementTree.ParseError:
                 print(xml_contracts_response.text)
-                return invalid_apis
+                return list(invalid_apis)
 
             # Store in database
             xml_time_pattern = "%Y-%m-%d %H:%M:%S"
@@ -179,8 +183,8 @@ def contracts(keys=None):
 
             if xml_contracts_tree[1].tag == "error":
                 print(xml_contracts_tree[1].attrib["code"], xml_contracts_tree[1].text, service[1])
-                g.mongo.db.api_keys.update({}, {"$pull": {"keys": {"key_id": service[1]}}}, multi=True)
-                invalid_apis.append(service[1])
+                conversions.invalidate_key([service[1]], session["CharacterOwnerHash"])
+                invalid_apis.add(service[1])
             else:
                 for contract in xml_contracts_tree[1][0]:
                     issue_time = int(calendar.timegm(time.strptime(contract.attrib["dateIssued"], xml_time_pattern)))
@@ -218,7 +222,7 @@ def contracts(keys=None):
         except BulkWriteError as bulk_op_error:
             print("error", bulk_op_error.details)
 
-    return invalid_apis
+    return list(invalid_apis)
 
 
 def api_keys(api_key_list, unassociated=False):
@@ -426,5 +430,50 @@ def character_sheet(keys):
                         }
                     })
 
+    if bulk_run:
+        bulk_op.execute()
+
+
+def security_characters():
+    db_security_characters_cache = g.mongo.db.caches.find_one({"_id": "security_characters"})
+    bulk_op = g.mongo.db.security_characters.initialize_unordered_bulk_op()
+    bulk_run = False
+    if not db_security_characters_cache or db_security_characters_cache["cached_until"] < time.time():
+        xml_security_characters_payload = {
+            "keyID": secrets["main_key_id"],
+            "vCode": secrets["main_vcode"],
+            "extended": 1
+        }
+        xml_security_characters_response = requests.get("https://api.eveonline.com/corp/MemberTracking.xml.aspx",
+                                                        data=xml_security_characters_payload, headers=xml_headers)
+        # XML Parse
+        try:
+            xml_security_characters_tree = ElementTree.fromstring(xml_security_characters_response.text)
+        except ElementTree.ParseError:
+            print(xml_security_characters_response.text)
+            return None
+
+        # Store in database
+        if xml_security_characters_tree[1].tag == "error":
+            raise error_handling.ConfigError("Main Corp API is not valid.")
+
+        g.mongo.db.caches.update({"_id": "security_characters"}, {
+            "cached_until": conversions.xml_time(xml_security_characters_tree[2].text),
+            "cached_str": xml_security_characters_tree[2].text
+        }, upsert=True)
+        for corp_char in xml_security_characters_tree[1][0]:
+            bulk_run = True
+            bulk_op.find({"_id": int(corp_char.attrib["characterID"])}).upsert().update(
+                {"$set": {
+                    "name": corp_char.attrib["name"],
+                    "join_time": conversions.xml_time(corp_char.attrib["startDateTime"]),
+                    "title": corp_char.attrib["title"],
+                    "log_on_time": conversions.xml_time(corp_char.attrib.get("logonDateTime")),
+                    "log_off_time": conversions.xml_time(corp_char.attrib.get("logoffDateTime")),
+                    "last_location_id": corp_char.attrib.get("locationID"),
+                    "last_location_str": corp_char.attrib.get("location"),
+                    "last_ship_id": corp_char.attrib.get("shipTypeID"),
+                    "last_ship_str": corp_char.attrib.get("shipType")
+                }})
     if bulk_run:
         bulk_op.execute()

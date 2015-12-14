@@ -650,7 +650,8 @@ def pilot():
     personal_api_keys = g.mongo.db.api_keys.find_one({"_id": session["CharacterOwnerHash"]})
     if personal_api_keys:
         invalid_apis = caches.contracts([("personal", api_key["key_id"], api_key["vcode"],
-                                          api_key["character_id"]) for api_key in personal_api_keys["keys"]])
+                                          api_key["character_id"]) for api_key in personal_api_keys["keys"]
+                                         if api_key.get("valid", True)])
         if invalid_apis:
             return redirect(url_for("account.home", keys=",".join([str(x) for x in invalid_apis])))
         personal_character_ids = [x["character_id"] for x in personal_api_keys["keys"]]

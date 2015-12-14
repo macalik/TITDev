@@ -8,7 +8,7 @@ import re
 import collections
 import json
 
-from flask import g
+from flask import g, session
 
 
 def character(character_id):
@@ -217,3 +217,21 @@ def manual_parsing(input_string):
             error_list.append("The line '{}' could not be processed.".format(input_line))
 
     return item_names, item_input, item_qty, error_list
+
+
+def invalidate_key(key_list, user):
+    g.mongo.db.api_keys.update({"_id": {"$ne": session["CharacterOwnerHash"]}},
+                               {"$pull": {"keys": {"key_id": {"$in": key_list}}}}, multi=True)
+    # Read document, update, push because cannot query against array elements that match condition
+    user_apis = g.mongo.db.api_keys.find_one({"_id": user})
+    if user_apis:
+        for key in user_apis["keys"]:
+            if key["key_id"] in key_list:
+                key["valid"] = False
+        g.mongo.db.api_keys.update({"_id": session["CharacterOwnerHash"]},
+                                   {"$set": {"keys": user_apis["keys"]}})
+
+
+def xml_time(text):
+    xml_time_pattern = "%Y-%m-%d %H:%M:%S"
+    return int(calendar.timegm(time.strptime(text, xml_time_pattern)))

@@ -55,6 +55,8 @@ class Navigation:
                 elif role in ["ordering_marketeer", "ordering_admin"] and not market_service:
                     admin_elements.append(View('Market Service', 'ordering.admin'))
                     market_service = True
+                elif role == "security_officer":
+                    admin_elements.append(View('Security Info', 'security.home'))
             if session["UI_Corporation"]:
                 items = Navigation.corp + [Subgroup('Admin Pages', *admin_elements),
                                            View('Log Out', 'auth.log_out')]

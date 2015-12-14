@@ -17,6 +17,7 @@ from views.corp import corp
 from views.fittings import fittings
 from views.buyback import buyback
 from views.ordering import ordering
+from views.security import security
 
 # noinspection PyUnresolvedReferences
 from views import api  # Attaches API module
@@ -45,6 +46,7 @@ app.register_blueprint(corp, url_prefix="/corp")
 app.register_blueprint(fittings, url_prefix="/fittings")
 app.register_blueprint(buyback, url_prefix="/buyback")
 app.register_blueprint(ordering, url_prefix="/ordering")
+app.register_blueprint(security, url_prefix="/security")
 
 # Set up logging
 console_logger = logging.StreamHandler()
@@ -94,6 +96,7 @@ def app_init():
     app_mongo.db.eve_auth.update({"_id": "buyback_admin"}, {"$setOnInsert": {"users": []}}, upsert=True)
     app_mongo.db.eve_auth.update({"_id": "ordering_admin"}, {"$setOnInsert": {"users": []}}, upsert=True)
     app_mongo.db.eve_auth.update({"_id": "ordering_marketeer"}, {"$setOnInsert": {"users": []}}, upsert=True)
+    app_mongo.db.eve_auth.update({"_id": "security_officer"}, {"$setOnInsert": {"users": []}}, upsert=True)
 
 
 @app.before_request
