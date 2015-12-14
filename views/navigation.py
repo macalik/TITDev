@@ -12,7 +12,8 @@ class Navigation:
 
     base = ['TiT', View('Home', 'home'),  View('Account', "account.home")]
     after_base = [View('JF Service', "jf.home"), View('Buyback Service', 'buyback.home'),
-                  View('Fittings', "fittings.home"), View("Market Service", "ordering.home")]
+                  View('Fittings', "fittings.home"), View("Market Service", "ordering.home"),
+                  View("Change Theme", "settings")]
     alliance = base + after_base
     corp = base + [View('Corp Main', "corp.home"), Link("Corp Forums (Testing)", base_config["forum_url"])] + after_base
 
@@ -22,7 +23,8 @@ class Navigation:
         @nav.navigation('anon')
         def nav_anon():
             return Navbar('TiT', View('Home', 'home'), View('JF Service', "jf.home"),
-                          View('Buyback Service', 'buyback.home'), View('Log In', 'auth.sso_redirect'))
+                          View('Buyback Service', 'buyback.home'), View("Change Theme", "settings"),
+                          View('Log In', 'auth.sso_redirect'))
 
         @nav.navigation('neut')
         def nav_neut():

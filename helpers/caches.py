@@ -476,4 +476,6 @@ def security_characters():
                     "last_ship_str": corp_char.attrib.get("shipType")
                 }})
     if bulk_run:
+        # Clear entire database first
+        g.mongo.db.security_characters.remove({})
         bulk_op.execute()

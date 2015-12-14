@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <img src="{{image}}" alt="Character">
+        </div>
+        <div class="col-md-8">
+            <h3><b>Character: </b>{{character_name}}</h3>
+            <h3><b>Last Site Log On: </b>{{site_log_in}}</h3>
+            <h3><b>Site ID: </b>{{site_id}}</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>API List</h2>
+            <table class="table table-hover table-condensed datatables">
+                <thead>
+                <tr>
+                    <th>Character Name</th>
+                    <th>Character ID</th>
+                    <th>Key ID</th>
+                    <th>vCode</th>
+                    <th>Last Verification</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for api in api_table %}
+                <tr class="{{'danger' if not api[-1]}}">
+                    {% for info in api[:-1] %}
+                    <td>{{info}}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Last Known Locations</h2>
+            <table class="table table-hover table-condensed datatables">
+                <thead>
+                <tr>
+                    <th>Character Name</th>
+                    <th>Location</th>
+                    <th>Ship</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for location in location_table %}
+                <tr>
+                    {% for info in location %}
+                    <td>{{info}}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -2,7 +2,7 @@ import os
 import json
 import logging
 
-from flask import render_template, g
+from flask import render_template, g, session, redirect, url_for, request
 from flask_bootstrap import Bootstrap, WebCDN
 from flask_pymongo import PyMongo
 
@@ -105,6 +105,16 @@ def app_init():
 def db_init():
     g.mongo = app_mongo
 
+    if request.path not in ["/settings"]:
+        session["prev_path"] = request.path
+
+    # Check css
+    if session.get("default_css", True):
+        app.extensions['bootstrap']['cdns']["theme"].baseurl = cdn_theme_url
+    else:
+        cdn_theme_dark_url = "https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/slate/"
+        app.extensions['bootstrap']['cdns']["theme"].baseurl = cdn_theme_dark_url
+
 
 @app.teardown_request
 def cleanup(exception=None):
@@ -115,6 +125,37 @@ def cleanup(exception=None):
 @app.route('/')
 def home():
     return render_template("index.html")
+
+
+@app.route("/settings")
+def settings():
+    session.setdefault("default_css", True)
+    session["default_css"] = False if session.get("default_css") else True
+    if session.get("CharacterOwnerHash"):
+        return redirect(session.get("prev_path", url_for("account.home")))
+    else:
+        return redirect(url_for("home"))
+
+
+# noinspection PyUnusedLocal
+@app.errorhandler(404)
+def error_missing(exception):
+    error_message = "This page cannot be found."
+    return render_template("error.html", error_code=404, error_message=error_message), 404
+
+
+# noinspection PyUnusedLocal
+@app.errorhandler(403)
+def error_unauthorized(exception):
+    error_message = "You are not authorized to view this page. Ensure you have the correct permissions."
+    return render_template("error.html", error_code=403, error_message=error_message), 403
+
+
+# noinspection PyUnusedLocal
+@app.errorhandler(500)
+def error_crash(exception):
+    error_message = "This page has crashed due to an exception. Contact Kazuki Ishikawa."
+    return render_template("error.html", error_code=500, error_message=error_message), 500
 
 
 if not os.environ.get("HEROKU") and __name__ == "__main__":

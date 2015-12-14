@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Associated Characters</h2>
+            <h4>Red means the user has an invalid API</h4>
+            <table class="table table-hover table-condensed datatables">
+                <thead>
+                <tr>
+                    <th>Main Character</th>
+                    <th>Associated Characters</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for api in api_table %}
+                <tr class="{{'danger' if not api[0]}}">
+                    <td><a href="{{url_for('security.user', site_id=api[1])}}">{{api[2]}}</a></td>
+                    <td>{{api[3]}}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Missing APIs</h2>
+            <table class="table table-hover table-condensed datatables">
+                <thead>
+                <tr>
+                    <th>Unassociated Character</th>
+                    <th>Join Date</th>
+                    <th>Last Log On</th>
+                    <th>Last Log Off</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for character in missing_apis %}
+                <tr>
+                    {% for info in character %}
+                    <td>{{info}}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}
