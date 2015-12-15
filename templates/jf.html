@@ -28,24 +28,20 @@
             {% endif %}
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Rules</h3>
+                    <h3 class="panel-title">Instructions</h3>
                 </div>
                 <div class="panel-body">
                     <ul>
-                        <li>Contract to: Designated Drivers</li>
-                        <li>!!NO CANS!!</li>
-                        <li>Keep contracts below 1 Billion Isk</li>
-                        <li>Contracts must be less than 300k M3</li>
-                        <li>Minimum reward must be 1M Isk</li>
+                        <li>Contract your items in a Courier contract to the corporation 'Designated Drivers'</li>
+                        <li>Maximum size of 340,000 m3 - if over this you will need to split up into multiple contracts</li>
+                        <li>Select the destination station in Ship To</li>
+                        <li>Set the Reward to the amount stated on the calculator</li>
+                        <li>Set Collateral to desired amount as set on the calculator</li>
+                        <li>Set Expiration to 1 Week</li>
+                        <li>Set Days to Complete to 7 days</li>
+                        <li>Do not include containers in the contracts!</li>
+                        <li>PLEASE NOTE: There is a minimum fee of 1,000,000 (1 million) ISK per contract.</li>
                     </ul>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Next API Update</h3>
-                </div>
-                <div class="panel-body">
-                    <p><b>{{next_update}} UTC</b></p>
                 </div>
             </div>
             {% if warning_list %}
@@ -119,9 +115,9 @@
                 {% endif %}
                 <li class="list-group-item">Collateral Cost: {{collateral_cost}} Isk [@{{collateral_rate}} %]</li>
                 {% if session.UI_Corporation %}
-                <li class="list-group-item">Total Cost: {{corp_price}} Isk</li>
+                <li class="list-group-item">Reward: {{corp_price}} Isk</li>
                 {% else %}
-                <li class="list-group-item">Total Cost: {{price}} Isk</li>
+                <li class="list-group-item">Reward: {{price}} Isk</li>
                 {% endif %}
                 <li class="list-group-item list-group-item-danger">Contract to: Designated Drivers</li>
             </ul>
@@ -168,6 +164,14 @@
                 </div>
                 {% endif %}
             </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Next API Update</h3>
+                </div>
+                <div class="panel-body">
+                    <p><b>{{next_update}} UTC</b></p>
+                </div>
+            </div>
             {% if admin or pilot %}
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -187,7 +191,7 @@
     <div class="row">
         <div class="col-md-12">
             <h2>Personal contracts issued in the past 30 days</h2>
-            <table id="jf-personal" class="table table-hover table-condensed">
+            <table id="jf-personal" class="table table-hover table-condensed dt-responsive" width="100%">
                 <thead>
                 <tr>
                     {% for header in personal_contract_list[0] %}
@@ -210,7 +214,7 @@
     <div class="row">
         <div class="col-md-12">
             <h2>All contracts issued in the past 30 days</h2>
-            <table id="jf-all" class="table table-hover table-condensed">
+            <table id="jf-all" class="table table-hover table-condensed dt-responsive" width="100%">
                 <thead>
                 <tr>
                     {% for header in contract_list[0] %}

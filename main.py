@@ -5,11 +5,12 @@ import logging
 from flask import render_template, g, session, redirect, url_for, request
 from flask_bootstrap import Bootstrap, WebCDN
 from flask_pymongo import PyMongo
+from bson.objectid import ObjectId
 
 from app import app
 
 from views.navigation import Navigation
-from views.auth import auth
+from views.auth import auth, requires_sso, auth_check
 from views.jump_freighter import jf
 from views.admin import admin
 from views.account import account
@@ -105,7 +106,11 @@ def app_init():
 def db_init():
     g.mongo = app_mongo
 
-    if request.path not in ["/settings"]:
+    if request.path not in ["/settings"] and not any([
+        request.path.endswith(".js"),
+        request.path.endswith(".css"),
+        request.path.endswith(".ico")
+    ]):
         session["prev_path"] = request.path
 
     # Check css
@@ -132,9 +137,34 @@ def settings():
     session.setdefault("default_css", True)
     session["default_css"] = False if session.get("default_css") else True
     if session.get("CharacterOwnerHash"):
+        print(session.get("prev_path"))
         return redirect(session.get("prev_path", url_for("account.home")))
     else:
         return redirect(url_for("home"))
+
+
+@requires_sso(None)
+@app.route("/issues", methods=["GET", "POST"])
+def issues():
+    editor = auth_check("user_admin")
+    if request.form.get("action") == "submit":
+        g.mongo.db.issues.insert({
+            "submitter": session["CharacterName"],
+            "issue": request.form.get("issue").strip()
+        })
+    elif request.form.get("action") == "delete":
+        if editor:
+            g.mongo.db.issues.remove({"_id": ObjectId(request.form.get("id"))})
+        else:
+            g.mongo.db.issues.remove({"_id": ObjectId(request.form.get("id")), "submitter": session["CharacterName"]})
+
+    issue_list = []
+    for db_issue in g.mongo.db.issues.find():
+        timestamp = ObjectId(db_issue["_id"]).generation_time.strftime("%Y-%m-%d %H:%M:%S")
+        can_delete = True if editor or session["CharacterName"] == db_issue["submitter"] else False
+        issue_list.append([timestamp, db_issue["issue"], db_issue["submitter"], can_delete, db_issue["_id"]])
+
+    return render_template("issues.html", issue_list=issue_list)
 
 
 # noinspection PyUnusedLocal

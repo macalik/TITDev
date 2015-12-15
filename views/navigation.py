@@ -12,10 +12,11 @@ class Navigation:
 
     base = ['TiT', View('Home', 'home'),  View('Account', "account.home")]
     after_base = [View('JF Service', "jf.home"), View('Buyback Service', 'buyback.home'),
-                  View('Fittings', "fittings.home"), View("Market Service", "ordering.home"),
-                  View("Change Theme", "settings")]
-    alliance = base + after_base
-    corp = base + [View('Corp Main', "corp.home"), Link("Corp Forums (Testing)", base_config["forum_url"])] + after_base
+                  View('Fittings', "fittings.home"), View("Market Service", "ordering.home")]
+    alliance = base + after_base + [View("Change Theme", "settings")]
+    corp = base + [Subgroup("Corporation", View('Corp Main', "corp.home"),
+                            Link("Corp Forums (Testing)", base_config["forum_url"])),
+                   Subgroup("Services", *after_base), View("Change Theme", "settings")]
 
     def __init__(self, app):
         nav = Nav()
@@ -33,12 +34,12 @@ class Navigation:
 
         @nav.navigation('corporation')
         def nav_corp():
-            items = Navigation.corp + [View('Log Out', 'auth.log_out')]
+            items = Navigation.corp + [View("Bug Report", 'issues'), View('Log Out', 'auth.log_out')]
             return Navbar(*items)
 
         @nav.navigation('alliance')
         def nav_alliance():
-            items = Navigation.alliance + [View('Log Out', 'auth.log_out')]
+            items = Navigation.alliance + [View("Bug Report", 'issues'), View('Log Out', 'auth.log_out')]
             return Navbar(*items)
 
         @nav.navigation('admin')
@@ -61,10 +62,10 @@ class Navigation:
                     admin_elements.append(View('Security Info', 'security.home'))
             if session["UI_Corporation"]:
                 items = Navigation.corp + [Subgroup('Admin Pages', *admin_elements),
-                                           View('Log Out', 'auth.log_out')]
+                                           View("Bug Report", 'issues'), View('Log Out', 'auth.log_out')]
             elif session["UI_Alliance"]:
                 items = Navigation.alliance + [Subgroup('Admin Pages', *admin_elements),
-                                               View('Log Out', 'auth.log_out')]
+                                               View("Bug Report", 'issues'), View('Log Out', 'auth.log_out')]
             else:
                 return nav_neut()
 

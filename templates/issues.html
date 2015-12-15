@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Describe your issue.</h4>
+            <form method="post">
+                <textarea class="form-control" rows="5" name="issue"></textarea>
+                <button name="action" type="submit" class="btn btn-primary" value="submit">Send</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <h3>Currently reported issues</h3>
+        <div class="col-md-12">
+            <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
+                <thead>
+                <tr>
+                    <th>Date Submitted</th>
+                    <th>Issue comment</th>
+                    <th>Submitter</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for issue in issue_list %}
+                <tr>
+                    {% for info in issue[:-2] %}
+                    <td>{{info}}</td>
+                    {% endfor %}
+                    {% if issue[-2] %}
+                    <td>
+                        <form method="post">
+                            <input type="hidden" class="form-control" name="id" value="{{issue[-1]}}">
+                            <button type="submit" class="btn btn-danger" name="action" value="delete">Delete</button>
+                        </form>
+                    </td>
+                    {% else %}
+                    <td>None</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -42,6 +42,7 @@
                     <div class="form-group">
                         <button type="submit" class="btn btn-success" name="action" value="search">Search</button>
                     </div>
+                    <a class="btn btn-primary" href="{{url_for('fittings.home')}}" role="button">Fittings/Packs</a>
                 </form>
             </div>
             <div class="row">
@@ -52,7 +53,7 @@
                 <div class="tab-content">
                     <div id="cart" class="tab-pane active">
                         <form method="post" action="{{url_for('ordering.home')}}">
-                            <table class="table table-hover table-condensed" id="cart_table">
+                            <table class="table table-hover table-condensed dt-responsive" width="100%" id="cart_table">
                                 <thead>
                                 <tr>
                                     <th class="col-xs-4">{{invoice_info[0][0]}}</th>
@@ -94,7 +95,7 @@
                     </div>
                     <div id="breakdown" class="tab-pane">
                         <form method="post" action="{{url_for('ordering.home')}}">
-                            <table class="table table-hover table-condensed datatables">
+                            <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
                                 <thead>
                                 <tr>
                                     <th class="col-xs-4">{{breakdown_info[0][0]}}</th>

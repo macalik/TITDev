@@ -22,7 +22,7 @@
             <div class="tab-content">
                 <div id="quick" class="tab-pane active">
                     <h3>Quick Prices</h3>
-                    <table class="table table-hover table-condensed" id="buyback_quick">
+                    <table class="table table-hover table-condensed dt-responsive" width="100%" id="buyback_quick">
                         <thead>
                         <tr>
                             {% for header in quick_table[0] %}
@@ -43,7 +43,7 @@
                 </div>
                 <div id="detailed" class="tab-pane">
                     <h3>Detailed</h3>
-                    <table class="table table-hover table-condensed datatables">
+                    <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
                         <thead>
                         <tr>
                             {% for header in price_table[0] %}
@@ -64,7 +64,7 @@
                 </div>
                 <div id="refine" class="tab-pane">
                     <h3>Refine</h3>
-                    <table class="table table-hover table-condensed datatables">
+                    <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
                         <thead>
                         <tr>
                             {% for header in item_table[0] %}
@@ -85,7 +85,7 @@
                 </div>
                 <div id="materials" class="tab-pane">
                     <h3>Material Costs</h3>
-                    <table class="table table-hover table-condensed datatables">
+                    <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
                         <thead>
                         <tr>
                             {% for header in material_table[0] %}
