@@ -3,7 +3,7 @@ import time
 import re
 import datetime
 
-from flask import Blueprint, render_template, session, g, request, redirect, url_for
+from flask import Blueprint, render_template, session, g, request, redirect, url_for, flash, get_flashed_messages
 
 from bson.objectid import ObjectId
 import bson.errors
@@ -61,6 +61,7 @@ def home(item=""):
         elif input_string:
             session.pop("fitting", None)
             parse_error = None
+            parse_result = ""
             try:
                 if input_string.startswith("["):
                     eft_parser = conversions.eft_parsing(input_string)
@@ -73,16 +74,16 @@ def home(item=""):
                     for pre_parse_item in pre_parse_db:
                         parse_array.append(str(pre_parse_item["_id"]) + ";" +
                                            str(item_qty[pre_parse_item["name"].upper()]))
+                    if len(parse_array) != len(item_input):
+                        error_string = "There is an item that could not be parsed. Check your input and try again."
                     parse_result = ":".join(parse_array)
             except KeyError:
                 error_string = "Could not parse the input. Please ensure it is correctly formatted."
-                return redirect(url_for("ordering.home", error_string=error_string))
-            if not parse_result:
+            if parse_error:
                 if parse_error == "parsing":
                     error_string = "Could not parse the EFT-Formatted fit. Please ensure it is correctly formatted."
                 else:
                     error_string = parse_error
-                return redirect(url_for("ordering.home", error_string=error_string))
             parse_item_list = parse_result.split(":")
             for parse_item in parse_item_list:
                 if parse_item:
@@ -100,7 +101,11 @@ def home(item=""):
         bulk_op_update.execute()
 
     if item or input_string:
+        flash(error_string)
         return redirect(url_for("ordering.home"))
+    else:
+        error_string = get_flashed_messages()
+        error_string = error_string[0] if error_string else None
 
     # Load cart
     total_volume = 0

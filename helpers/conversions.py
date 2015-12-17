@@ -173,6 +173,7 @@ def eft_parsing(input_string):
     for db_item in fit_db_ids:
         name_id_conversion[db_item["name"]] = db_item["_id"]
     dna_string_list = [str(name_id_conversion[ship])]
+    error_list = []
     for item in dna_fittings:
         item = item.replace("Thermic", "Thermal")  # EVE Parallax Patch
         if item in name_id_conversion:
@@ -182,10 +183,11 @@ def eft_parsing(input_string):
                 actual_item = g.mongo.db.items.find_one({"name": old_name_conversions[item]})
                 dna_string_list.append(str(actual_item["_id"]) + ";" + str(item_counter[item]))
             except KeyError:
-                return None, None, None, None, "Cannot find '{0}'.".format(item)
+                error_list.append(item)
+    error_string = "Cannot find " + ", ".join(error_list) + "." if error_list else None
     dna_string = ":".join(dna_string_list) + "::"
 
-    return fit_name, ship, item_counter, dna_string, None
+    return fit_name, ship, item_counter, dna_string, error_string
 
 
 def manual_parsing(input_string):

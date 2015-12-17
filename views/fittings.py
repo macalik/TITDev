@@ -35,7 +35,7 @@ def home():
 
         fit_name, ship, item_counter, dna_string, parse_error = conversions.eft_parsing(request.form.get("fit_string"))
 
-        if not fit_name:  # Error in parsing
+        if parse_error:  # Error in parsing
             return redirect(url_for("fittings.home", error=parse_error))
 
         fit_id = g.mongo.db.fittings.insert({
@@ -169,7 +169,7 @@ def fit(fit_id=None):
 
     for fit_item in item_list:
         try:
-            qty = selected_fit["items"][fit_item["name"]] * multiply
+            qty = selected_fit["items"][fit_item["name"].replace("Thermal", "Thermic")] * multiply
         except KeyError:
             qty = selected_fit["items"][pre_name_conversion[fit_item["name"]]] * multiply
         isk_per_item = item_prices[fit_item["_id"]]["sell"]

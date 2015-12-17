@@ -184,7 +184,7 @@ def error_unauthorized(exception):
 # noinspection PyUnusedLocal
 @app.errorhandler(500)
 def error_crash(exception):
-    error_message = "This page has crashed due to an exception. Contact Kazuki Ishikawa."
+    error_message = "This page has crashed due to an exception. Contact Kazuki Ishikawa and submit a bug report."
     return render_template("error.html", error_code=500, error_message=error_message), 500
 
 
@@ -196,10 +196,12 @@ if not os.environ.get("HEROKU") and __name__ == "__main__":
     def test():
         return render_template("base.html")
 
+    profile = False
     # Profiling
-    # from werkzeug.contrib.profiler import ProfilerMiddleware
-    # app.config["PROFILE"] = True
-    # app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[30])
+    if profile:
+        from werkzeug.contrib.profiler import ProfilerMiddleware
+        app.config["PROFILE"] = True
+        app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[30])
 
     app.debug = True
     app.run()
