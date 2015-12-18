@@ -68,6 +68,6 @@ def page():
 * Do not use the session keys "UI_Roles", "UI_Corporation", "UI_Alliance", and the like for authentication checks. 
 * If you must do a specific auth check, use views.auth.auth_check(role), where role is an id listed in the eve_auth collection.
   * User must currently be logged in and have a valid session cookie. Session cookie must contain a valid and non-tampered with "CharacterOwnerHash" key.
-* Do not use app.debug = True in production. It is trapped by "not os.environ.get("HEROKU")".
+* Do not use app.debug = True in production. It is trapped by "not os.environ.get("EXTERNAL")".
 * By policy, all auth points will only need the session "CharacterOwnerHash" stored locally client side.
 * CharacterOwnerHash is used so that if the character is traded away, the character will lose all roles because the new CharacterOwnerHash taken at sso log in will no longer match with any auth point.

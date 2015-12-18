@@ -15,7 +15,7 @@ xml_headers = {
     "User-Agent": "TiT Corp Website by Kazuki Ishikawa"
 }
 
-if os.environ.get("HEROKU"):
+if os.environ.get("EXTERNAL"):
     secrets = {
         "jf_key_id": os.environ["jf_key_id"],
         "jf_vcode": os.environ["jf_vcode"],

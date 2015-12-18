@@ -12,7 +12,7 @@ auth = Blueprint("auth", __name__, template_folder="templates")
 
 state = "TiTEveWebV1"
 
-if os.environ.get("HEROKU"):
+if os.environ.get("EXTERNAL"):
     secrets = {
         "client_id": os.environ["client_id"],
         "secret_key": os.environ["secret_key"],
@@ -148,7 +148,7 @@ def forum_edit(current_user, action, *parameters):
         base_config = json.load(base_config_file)
 
     used_forum = False
-    if os.environ.get("HEROKU"):
+    if os.environ.get("EXTERNAL"):
         search_payload = {
             "api_key": os.environ.get("DISCOURSE_API_KEY"),
             "api_username": os.environ.get("DISCOURSE_API_USERNAME"),

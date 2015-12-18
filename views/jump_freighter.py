@@ -11,7 +11,7 @@ from views.auth import requires_sso, auth_check
 
 jf = Blueprint("jf", __name__, template_folder="templates")
 
-if os.environ.get("HEROKU"):
+if os.environ.get("EXTERNAL"):
     secrets = {
         "jf_key_id": os.environ["jf_key_id"],
         "jf_vcode": os.environ["jf_vcode"]

@@ -27,8 +27,11 @@ cdn_theme_url = "https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/sandstone/"
 app.extensions['bootstrap']['cdns']["theme"] = WebCDN(cdn_theme_url)  # CDN Theme
 Navigation(app)
 
-if os.environ.get("HEROKU"):
-    app.config["MONGO_URI"] = os.environ["MONGOLAB_URI"]
+if os.environ.get("EXTERNAL"):
+    if os.environ.get("HEROKU"):
+        app.config["MONGO_URI"] = os.environ["MONGOLAB_URI"]
+    else:
+        app.config["MONGO_URI"] = os.environ["MONGO_URI"]
     app.secret_key = os.environ["random_key"]
 else:
     with open("../Other-Secrets/TITDev.json") as secrets_file:
@@ -188,7 +191,7 @@ def error_crash(exception):
     return render_template("error.html", error_code=500, error_message=error_message), 500
 
 
-if not os.environ.get("HEROKU") and __name__ == "__main__":
+if not os.environ.get("EXTERNAL") and __name__ == "__main__":
 
     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = 'true'
 
