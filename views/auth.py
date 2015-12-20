@@ -184,6 +184,7 @@ def forum_edit(current_user, action, *parameters):
                                         {"$set": {"forum_id": forum_id, "forum_username": forum_username}})
                 used_forum = True
         except json.JSONDecodeError:
+            print(forum_response.text)
             print("API Connection Failed")
     else:
         forum_id = current_user.get("forum_id")
