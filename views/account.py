@@ -34,7 +34,11 @@ def home():
                                             "email": request.form.get("email", "").strip()
                                         }
                                     })
-            forum_edit(pre_user, "email_edit", request.form.get("email", "").strip())
+            try:
+                forum_edit(pre_user, "email_edit", request.form.get("email", "").strip())
+            except json.JSONDecodeError:
+                print("Forum email update failed for {0}".format(session["CharacterOwnerHash"]))
+                pass
         elif request.form.get("action") == "slack":
             g.mongo.db.users.update({"_id": session["CharacterOwnerHash"]},
                                     {
