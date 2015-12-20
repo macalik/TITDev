@@ -177,7 +177,10 @@ def forum_edit(current_user, action, *parameters):
         forum_response = requests.get(base_config["forum_url"] + "/admin/users/list/active.json",
                                       params=search_payload)
         if len(forum_response.json()) == 1:
-            forum_id = forum_response.json()[0]["id"]
+            try:
+                forum_id = forum_response.json()[0]["id"]
+            except json.JSONDecodeError:
+                print("API Connection Failed")
             forum_username = forum_response.json()[0]["username"]
             g.mongo.db.users.update({"_id": session["CharacterOwnerHash"]},
                                     {"$set": {"forum_id": forum_id, "forum_username": forum_username}})
