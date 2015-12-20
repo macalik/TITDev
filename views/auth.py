@@ -176,15 +176,15 @@ def forum_edit(current_user, action, *parameters):
     if not current_user.get("forum_id"):
         forum_response = requests.get(base_config["forum_url"] + "/admin/users/list/active.json",
                                       params=search_payload)
-        if len(forum_response.json()) == 1:
-            try:
+        try:
+            if len(forum_response.json()) == 1:
                 forum_id = forum_response.json()[0]["id"]
-            except json.JSONDecodeError:
-                print("API Connection Failed")
-            forum_username = forum_response.json()[0]["username"]
-            g.mongo.db.users.update({"_id": session["CharacterOwnerHash"]},
-                                    {"$set": {"forum_id": forum_id, "forum_username": forum_username}})
-            used_forum = True
+                forum_username = forum_response.json()[0]["username"]
+                g.mongo.db.users.update({"_id": session["CharacterOwnerHash"]},
+                                        {"$set": {"forum_id": forum_id, "forum_username": forum_username}})
+                used_forum = True
+        except json.JSONDecodeError:
+            print("API Connection Failed")
     else:
         forum_id = current_user.get("forum_id")
         forum_username = current_user.get("forum_username").lower().strip()
