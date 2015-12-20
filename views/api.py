@@ -4,6 +4,7 @@ import json
 from flask import g, session, jsonify, request
 from flask_oauthlib.provider import OAuth2Provider
 from bson.objectid import ObjectId
+from bson.errors import InvalidId
 
 from app import app
 
@@ -30,7 +31,11 @@ class OAuth2Client:
 
     def __init__(self, input_client_id=None):
         if input_client_id:
-            db_info = g.mongo.db.oauth2_clients.find_one({"_id": ObjectId(input_client_id)})
+            try:
+                actual_id = ObjectId(input_client_id)
+            except InvalidId:
+                actual_id = input_client_id
+            db_info = g.mongo.db.oauth2_clients.find_one({"_id": actual_id})
             self.name = db_info.get("name")
             self.description = db_info.get("description")
             self.user_id = db_info.get("user_id")
