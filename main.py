@@ -123,6 +123,9 @@ def db_init():
         cdn_theme_dark_url = "https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/slate/"
         app.extensions['bootstrap']['cdns']["theme"].baseurl = cdn_theme_dark_url
 
+    if os.environ.get("maintenance") == "True":
+        return render_template("maintenance.html")
+
 
 @app.teardown_request
 def cleanup(exception=None):
@@ -194,6 +197,7 @@ def error_crash(exception):
 if not os.environ.get("EXTERNAL") and __name__ == "__main__":
 
     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = 'true'
+    os.environ["maintenance"] = 'False'
 
     @app.route('/test')
     def test():
