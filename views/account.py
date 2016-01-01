@@ -42,6 +42,18 @@ def home():
                                             "slack": request.form.get("slack", "").strip()
                                         }
                                     })
+        elif request.form.get("action") == "mumble":
+            try:
+                mumble_id = int(request.form.get("mumble", "").strip())
+            except ValueError:
+                pass
+            else:
+                g.mongo.db.users.update({"_id": session["CharacterOwnerHash"]},
+                                        {
+                                            "$set": {
+                                                "mumble": mumble_id
+                                            }
+                                        })
 
     # List of roles
     given_roles = []
@@ -60,7 +72,8 @@ def home():
     # User Information
     db_user_info = g.mongo.db.users.find_one({"_id": session["CharacterOwnerHash"]})
     user_info = [db_user_info["_id"], db_user_info["character_name"], db_user_info["corporation_name"],
-                 db_user_info["alliance_name"], db_user_info.get("email"), db_user_info.get("slack")]
+                 db_user_info["alliance_name"], db_user_info.get("email"), db_user_info.get("mumble"),
+                 db_user_info.get("slack")]
 
     # Images
     with open("configs/base.json", "r") as base_config_file:
