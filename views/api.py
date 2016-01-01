@@ -8,7 +8,7 @@ from bson.errors import InvalidId
 
 from app import app
 
-from views.auth import requires_sso, auth_check
+from views.auth import requires_sso
 
 oauth = OAuth2Provider(app)
 
@@ -229,10 +229,12 @@ def api_user(name):
 @app.route("/api/mumble/<mumble_id>")
 def mumble_auth(mumble_id):
     mumble_user = g.mongo.db.users.find_one({"mumble": int(mumble_id)})
+    with open("configs/base.json", "r") as base_config_file:
+        base_config = json.load(base_config_file)
     if mumble_user:
         return jsonify(
             name=mumble_user["character_name"],
-            corp=auth_check("corporation")
+            corp=mumble_user["corporation_id"] == base_config["corporation_id"]
         )
 
     return jsonify(name=None)
