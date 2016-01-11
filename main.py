@@ -32,6 +32,7 @@ if os.environ.get("EXTERNAL"):
         app.config["MONGO_URI"] = os.environ["MONGOLAB_URI"]
     else:
         app.config["MONGO_URI"] = os.environ["MONGO_URI"]
+    app.config["MONGO_CONNECT"] = False
     app.secret_key = os.environ["random_key"]
 else:
     with open("../Other-Secrets/TITDev.json") as secrets_file:
@@ -41,6 +42,7 @@ else:
     app.config["MONGO_USERNAME"] = secrets["mongo-user"]
     app.config["MONGO_PASSWORD"] = secrets["mongo-password"]
     app.config["MONGO_PORT"] = secrets["mongo-port"]
+    app.config["MONGO_CONNECT"] = False
     app.secret_key = secrets["random_key"]
 app_mongo = PyMongo(app)
 
