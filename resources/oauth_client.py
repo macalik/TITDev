@@ -2,8 +2,8 @@ from flask import Flask, url_for, session, request, jsonify
 from flask_oauthlib.client import OAuth
 
 
-CLIENT_ID = '563c118a5277486ea82990e2'
-CLIENT_SECRET = 'sosecret'
+CLIENT_ID = "id_563c118a5277486ea82990e2"
+CLIENT_SECRET = "DH4W732WVN8XHQZL6OBZ8NDS"
 
 
 app = Flask(__name__)
@@ -16,17 +16,17 @@ remote = oauth.remote_app(
     consumer_key=CLIENT_ID,
     consumer_secret=CLIENT_SECRET,
     request_token_params={'scope': 'users'},
-    base_url='http://www.tritaniumindustries.com/api/',
+    base_url='http://rhitgaming.com/api/',
     request_token_url=None,
-    access_token_url='http://localhost:5000/oauth/token',
-    authorize_url='http://localhost:5000/oauth/authorize'
+    access_token_url='http://rhitgaming.com/oauth/token',
+    authorize_url='http://rhitgaming.com/oauth/authorize'
 )
 
 
 @app.route('/')
 def index():
     if 'remote_oauth' in session:
-        resp = remote.get('user/Kazuki%20Ishikawa')
+        resp = remote.get('user/me')
         print(resp.data)
         return jsonify(resp.data)
     next_url = request.args.get('next') or request.referrer or None

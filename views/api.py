@@ -73,6 +73,9 @@ class OAuth2Grant:
         g.mongo.db.oauth2_grants.remove({"_id": self.grant_id})
         return self
 
+    def validate_redirect_uri(self, redirect_uri):
+        return redirect_uri.split("?")[0] == self.redirect_uri
+
 
 class OAuth2Token:
 
