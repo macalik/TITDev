@@ -5,6 +5,13 @@
 {% endblock head %}
 {% block content %}
 <div class="container">
+    {% for station in no_matches %}
+    <div class="row">
+        <div class="alert alert-danger">
+            This station could not be found: {{station}}
+        </div>
+    </div>
+    {% endfor %}
     <div class="row">
         <div class="col-md-6">
             <div class="jf-form">
@@ -21,6 +28,24 @@
                         {% endif %}
                     </div>
                     <div class="input-group">
+                        <span class="input-group-addon">Start</span>
+                        {% if edit %}
+                        <input class="form-control" placeholder="{{start}}" disabled>
+                        <input type="hidden" class="form-control" value="{{start}}" name="start">
+                        {% else %}
+                        <input class="form-control" placeholder="Station Start" name="start" value="{{start}}">
+                        {% endif %}
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">End</span>
+                        {% if edit %}
+                        <input class="form-control" placeholder="{{end}}" disabled>
+                        <input type="hidden" class="form-control" name="end" value="{{end}}">
+                        {% else %}
+                        <input class="form-control" placeholder="Station End" name="end" value="{{end}}">
+                        {% endif %}
+                    </div>
+                    <div class="input-group">
                         <span class="input-group-addon">Alliance</span>
                         <input type="number" class="form-control" placeholder="Alliance Cost" name="general"
                                value="{{general}}" step="0.01" min="0">
@@ -31,14 +56,6 @@
                         <input type="number" class="form-control" placeholder="Corp Cost" name="corp" value="{{corp}}"
                                step="0.01" min="0">
                         <span class="input-group-addon">isk/m3</span>
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-addon">Start</span>
-                        <input class="form-control" placeholder="Station Start" name="start" value="{{start}}">
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-addon">End</span>
-                        <input class="form-control" placeholder="Station End" name="end" value="{{end}}">
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon">Collateral</span>

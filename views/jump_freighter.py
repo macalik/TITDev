@@ -335,6 +335,7 @@ def home():
 @requires_sso('jf_admin')
 def admin():
     route_list = []  # route = [_id, name, m3, corp]
+    no_matches = []
     general = ""
     corp = ""
     _id = ""
@@ -445,10 +446,16 @@ def admin():
                                                         }]
                                                     }
                                                 }, upsert=True)
+                else:
+                    if not db_start:
+                        no_matches.append(request.form.get("start").strip())
+                    if not db_end:
+                        no_matches.append(request.form.get("end").strip())
         elif request.form.get("action") == "multiple":
+            request_station_split = request.form.get("stations").split("\n")
             station_list = [g.mongo.db.stations.find_one({"name": x.strip()})
-                            for x in request.form.get("stations").split("\n")]
-            if station_list:  # Ensure there are stations to parse
+                            for x in request_station_split]
+            if station_list and None not in station_list:  # Ensure there are stations to parse and all are matched
                 bulk_run = False
                 bulk_op = g.mongo.db.jf_routes.initialize_unordered_bulk_op()
                 for start_station in station_list:
@@ -458,6 +465,9 @@ def admin():
                             route_name_start = start_station["name"].split(" - ")[0]
                             route_name_end = end_station["name"].split(" - ")[0]
                             bulk_run = True
+                            prices = [request.form.get("corp", 0), request.form.get("general", 0),
+                                      request.form.get("collateral", 0)]
+                            prices = [float(x) if x.strip() else 0 for x in prices]
                             bulk_op.find({"_id": route_id}).upsert().update({
                                 "$setOnInsert": {
                                     "name": route_name_start + " >> " + route_name_end,
@@ -465,14 +475,17 @@ def admin():
                                     "end": end_station["name"].strip(),
                                     "prices": [{
                                         "valid_after": int(time.time()),
-                                        "corp": float(request.form.get("corp", 0)),
-                                        "general": float(request.form.get("general", 0)),
-                                        "collateral": float(request.form.get("collateral", 0))
+                                        "corp": prices[0],
+                                        "general": prices[1],
+                                        "collateral": prices[2]
                                     }]
                                 }
                             })
                 if bulk_run:
                     bulk_op.execute()
+            else:
+                no_match_indexes = [i for i, x in enumerate(station_list) if x is None]
+                no_matches = [request_station_split[n] for n in no_match_indexes]
 
         # Clear all after post
         general = ""
@@ -521,7 +534,7 @@ def admin():
 
     return render_template("jf_admin.html", route_list=route_list, general=general, corp=corp, _id=_id, name=name,
                            start=start, end=end, edit=edit, collateral=collateral, jf_insurance=jf_insurance,
-                           jf_tax=jf_tax, jf_reimbursement=jf_reimbursement)
+                           jf_tax=jf_tax, jf_reimbursement=jf_reimbursement, no_matches=no_matches)
 
 
 @jf.route('/pilot', methods=["GET", "POST"])
