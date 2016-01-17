@@ -47,7 +47,7 @@ def home():
                            all_count=all_count)
 
 
-@security.route("/user/<site_id>")
+@security.route("/user/<path:site_id>")
 def user(site_id=""):
     if not site_id:
         return redirect(url_for("security.home"))

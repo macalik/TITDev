@@ -8,7 +8,7 @@ import re
 import collections
 import json
 
-from flask import g, session
+from flask import g
 
 
 def character(character_id):
@@ -224,7 +224,7 @@ def manual_parsing(input_string):
 
 
 def invalidate_key(key_list, user):
-    g.mongo.db.api_keys.update({"_id": {"$ne": session["CharacterOwnerHash"]}},
+    g.mongo.db.api_keys.update({"_id": {"$ne": user}},
                                {"$pull": {"keys": {"key_id": {"$in": key_list}}}}, multi=True)
     # Read document, update, push because cannot query against array elements that match condition
     user_apis = g.mongo.db.api_keys.find_one({"_id": user})
@@ -232,7 +232,7 @@ def invalidate_key(key_list, user):
         for key in user_apis["keys"]:
             if key["key_id"] in key_list:
                 key["valid"] = False
-        g.mongo.db.api_keys.update({"_id": session["CharacterOwnerHash"]},
+        g.mongo.db.api_keys.update({"_id": user},
                                    {"$set": {"keys": user_apis["keys"]}})
 
 

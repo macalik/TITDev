@@ -28,10 +28,7 @@ app.extensions['bootstrap']['cdns']["theme"] = WebCDN(cdn_theme_url)  # CDN Them
 Navigation(app)
 
 if os.environ.get("EXTERNAL"):
-    if os.environ.get("HEROKU"):
-        app.config["MONGO_URI"] = os.environ["MONGOLAB_URI"]
-    else:
-        app.config["MONGO_URI"] = os.environ["MONGO_URI"]
+    app.config["MONGO_URI"] = os.environ["MONGO_URI"]
     app.config["MONGO_CONNECT"] = False
     app.secret_key = os.environ["random_key"]
 else:
