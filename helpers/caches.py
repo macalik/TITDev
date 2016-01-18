@@ -183,9 +183,9 @@ def contracts(keys=None, celery_time=0):
                     "key": int(service[1])}
                 }, upsert=True)
             else:
-                g.mongo.db.caches.update({"_id": service[0]}, {"cached_until": int(
+                g.mongo.db.caches.update({"_id": service[0]}, {"$set": {"cached_until": int(
                     calendar.timegm(time.strptime(xml_contracts_tree[2].text, xml_time_pattern))),
-                    "cached_str": xml_contracts_tree[2].text}, upsert=True)
+                    "cached_str": xml_contracts_tree[2].text}}, upsert=True)
 
             if xml_contracts_tree[1].tag == "error":
                 print(xml_contracts_tree[1].attrib["code"], xml_contracts_tree[1].text, service[1])

@@ -188,7 +188,12 @@ def authorize(*args, **kwargs):
     with open("configs/base.json", "r") as base_config_file:
         base_config = json.load(base_config_file)
     user = g.mongo.db.users.find_one({"_id": session["CharacterOwnerHash"]})
-    if user and user.get("email") and user["corporation_id"] == base_config["corporation_id"]:
+    if user and user["corporation_id"] == base_config["corporation_id"]:
+        if not user.get("email"):
+            g.mongo.db.users.update({"_id": session["CharacterOwnerHash"]},
+                                    {"$set": {
+                                        "email": user["character_name"].replace(" ", "_") + "@tritaniumindustries.com"
+                                    }})
         return True
     return False
 
