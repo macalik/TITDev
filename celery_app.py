@@ -21,5 +21,6 @@ class ContextTask(task_base):
 celery.Task = ContextTask
 
 # Security Concerns (http://docs.celeryproject.org/en/latest/faq.html#is-celery-dependent-on-pickle)
+celery.conf.CELERY_ACCEPT_CONTENT = ["json", "application/json"]
 celery.conf.CELERY_TASK_SERIALIZER = "json"
 celery.conf.CELERY_RESULT_SERIALIZER = "json"
