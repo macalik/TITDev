@@ -1,16 +1,13 @@
 import os
 import json
-import logging
 
 from flask import render_template, g, session, redirect, url_for, request
-from flask_bootstrap import Bootstrap, WebCDN
-from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 
-from app import app
+from app import app, app_mongo, cdn_theme_url
 
 from views.navigation import Navigation
-from views.auth import auth, requires_sso, auth_check
+from views.auth import auth
 from views.jump_freighter import jf
 from views.admin import admin
 from views.account import account
@@ -19,29 +16,10 @@ from views.fittings import fittings
 from views.buyback import buyback
 from views.ordering import ordering
 from views.security import security
-
+from views.auth import requires_sso, auth_check
 # noinspection PyUnresolvedReferences
 from views import api  # Attaches API module
-Bootstrap(app)
-cdn_theme_url = "https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/sandstone/"
-app.extensions['bootstrap']['cdns']["theme"] = WebCDN(cdn_theme_url)  # CDN Theme
-Navigation(app)
 
-if os.environ.get("EXTERNAL"):
-    app.config["MONGO_URI"] = os.environ["MONGO_URI"]
-    app.config["MONGO_CONNECT"] = False
-    app.secret_key = os.environ["random_key"]
-else:
-    with open("../Other-Secrets/TITDev.json") as secrets_file:
-        secrets = json.load(secrets_file)
-    app.config["MONGO_HOST"] = secrets["mongo-host"]
-    app.config["MONGO_DBNAME"] = secrets["mongo-db"]
-    app.config["MONGO_USERNAME"] = secrets["mongo-user"]
-    app.config["MONGO_PASSWORD"] = secrets["mongo-password"]
-    app.config["MONGO_PORT"] = secrets["mongo-port"]
-    app.config["MONGO_CONNECT"] = False
-    app.secret_key = secrets["random_key"]
-app_mongo = PyMongo(app)
 
 app.register_blueprint(auth, url_prefix="/auth")
 app.register_blueprint(jf, url_prefix="/jf")
@@ -52,13 +30,7 @@ app.register_blueprint(fittings, url_prefix="/fittings")
 app.register_blueprint(buyback, url_prefix="/buyback")
 app.register_blueprint(ordering, url_prefix="/ordering")
 app.register_blueprint(security, url_prefix="/security")
-
-# Set up logging
-console_logger = logging.StreamHandler()
-console_format = logging.Formatter(" %(asctime)s %(levelname)s: %(message)s [in %(module)s:%(lineno)d]")
-console_logger.setFormatter(console_format)
-console_logger.setLevel(logging.WARNING)
-app.logger.addHandler(console_logger)
+Navigation(app)
 
 
 @app.before_first_request
@@ -200,6 +172,8 @@ if not os.environ.get("EXTERNAL") and __name__ == "__main__":
 
     @app.route('/test')
     def test():
+        from helpers.background import add_together
+        print(add_together.delay(1, 2).wait())
         return render_template("base.html")
 
     profile = False

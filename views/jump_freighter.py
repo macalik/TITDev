@@ -240,7 +240,7 @@ def home():
     # Contract History
 
     next_update_query = g.mongo.db.caches.find_one({"_id": "jf_service"})
-    next_update = next_update_query["cached_str"] if next_update_query else "Unknown"
+    next_update = next_update_query.get("next_check", "Not Scheduled") if next_update_query else "Unknown"
 
     if session.get("UI_Alliance"):
         # Check Caches

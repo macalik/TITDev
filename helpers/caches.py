@@ -110,14 +110,19 @@ def character(char_ids):
         bulk_op.execute()
 
 
-def contracts(keys=None):
+def contracts(keys=None, celery_time=0):
     """
 
     :param keys: [("jf_service" or "personal", key_id, vcode, character_id), (), ...]
+    :param celery_time: Set to the next run time instance
     :return:
     """
+    if celery_time:
+        g.mongo.db.caches.update({"_id": "jf_service"},
+                                 {"$set": {
+                                     "next_check": time.strftime("%Y-%m-%d %H:%M:%S",
+                                                                 time.gmtime(int(time.time()) + celery_time))}})
 
-    # If service is personal, uses key_caches database for cache values instead
     invalid_apis = set()
 
     if not keys:
@@ -127,6 +132,7 @@ def contracts(keys=None):
     bulk_run = False
     for service in keys:
         if service[0] == "personal":
+            # If service is personal, uses key_caches database for cache values instead
             db_cache = g.mongo.db.key_caches.find_one({"_id": service[3]})
             cache_time = db_cache.get("contracts", 0) if db_cache else 0
         else:
