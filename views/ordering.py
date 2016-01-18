@@ -515,7 +515,6 @@ def invoice(invoice_id=""):
 
     # Check shipping
     if not cart.get("external") and status == "Processing":
-        caches.contracts()
         shipping_contract = g.mongo.db.contracts.find_one({"title": invoice_id})
         if shipping_contract:
             status = "Shipping - " + shipping_contract["status"]

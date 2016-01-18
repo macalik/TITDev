@@ -245,7 +245,6 @@ def home():
     if session.get("UI_Alliance"):
         # Check Caches
         caches.stations()
-        caches.contracts()
 
         users_set = set()
         # Find all users
@@ -558,7 +557,6 @@ def pilot():
             bulk_op.execute()
 
     # JF Corporation Contracts
-    caches.contracts()
     jf_contracts = g.mongo.db.contracts.find({
         "_id.service": "jf_service",
         "status": "Outstanding",
