@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-danger" href="{{url_for('security.home')}}" role="button">Back to Security Info Page</a>
+            <h2>Inactive Mail Format</h2>
+            <form method="post">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon">Subject</span>
+                        <input class="form-control" placeholder="ex. Kicked for Inactivity" name="evemail_subject" value="{{evemail_subject}}">
+                    </div>
+                </div>
+                <label for="evemail_text">Text:</label>
+                <textarea id="evemail_text" class="form-control" rows="10" name="evemail_text" placeholder="Use {character} as a placeholder for the applicable character.">{{evemail_text}}</textarea>
+                <button name="action" type="submit" class="btn btn-primary" value="save">Save</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

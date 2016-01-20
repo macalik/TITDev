@@ -1,8 +1,0 @@
-Automated Message: Kicked due to Inactivity
-
-Dear {character},
-
-You have been kicked from corp.
-
-Sincerely,
-The security officer

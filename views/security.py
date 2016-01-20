@@ -2,7 +2,7 @@ import json
 import time
 import calendar
 
-from flask import Blueprint, render_template, g, redirect, url_for
+from flask import Blueprint, render_template, g, redirect, url_for, request
 
 from views.auth import requires_sso
 from helpers import caches
@@ -101,18 +101,21 @@ def home():
         if color == "success":
             pass
         elif corp_character["log_on_time"] < time.time() - 5184000:
-            with open("configs/inactivity_mail.txt") as inactivity_mail:
-                evemail_subject = next(inactivity_mail)
-                spacer = next(inactivity_mail).strip()
-                if spacer:
-                    evemail_lines = [spacer] + [line.strip() for line in inactivity_mail]
-                else:
-                    evemail_lines = [line.strip() for line in inactivity_mail]
-                evemail_call = "CCPEVE.sendMail({0}, '{1}', '{2}')".format(
-                    corp_character["_id"],
-                    evemail_subject.strip(),
-                    "\\n".join(evemail_lines).format(character=corp_character["name"])
-                )
+            evemail_setting = g.mongo.db.preferences.find_one({"_id": "inactivity_mail"})
+            evemail_subject = ""
+            evemail_lines = ""
+            if evemail_setting:
+                evemail_subject = evemail_setting.get("subject", "")
+                evemail_lines = evemail_setting.get("text", "")
+            # Defaults
+            evemail_subject = "Automated Message" if not evemail_subject.strip() else evemail_subject.strip()
+            evemail_lines = "Empty Message" if not evemail_lines.strip() else evemail_lines.strip()
+
+            evemail_call = "CCPEVE.sendMail({0}, '{1}', '{2}')".format(
+                corp_character["_id"],
+                evemail_subject.strip(),
+                "\\n".join([x.strip() for x in evemail_lines.format(character=corp_character["name"]).split("\n")])
+            )
             inactivity_60_days.append(api_row + [evemail_call])
         elif corp_character["log_on_time"] < time.time() - 2592000:
             inactivity_30_days.append(api_row)
@@ -199,3 +202,25 @@ def user(site_id=""):
                            site_log_in=time.strftime(time_format, time.gmtime(user_info["last_sign_on"])),
                            site_id=site_id, character_name=user_info["character_name"], location_table=location_table,
                            vacation_text=vacation_text, vacation_date=vacation_date)
+
+
+@security.route("/settings", methods=["GET", "POST"])
+@requires_sso("security_officer")
+def settings():
+    if request.form.get("action") == "save":
+        g.mongo.db.preferences.update({"_id": "inactivity_mail"},
+                                      {
+                                          "subject": request.form.get("evemail_subject", ""),
+                                          "text": request.form.get("evemail_text")
+                                      },
+                                      upsert=True)
+
+    inactivity_mail = g.mongo.db.preferences.find_one({"_id": "inactivity_mail"})
+    if not inactivity_mail:
+        inactivity_mail = {
+            "subject": "",
+            "text": ""
+        }
+
+    return render_template("security_settings.html", evemail_subject=inactivity_mail.get("subject", ""),
+                           evemail_text=inactivity_mail.get("text", ""))
