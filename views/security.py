@@ -145,7 +145,7 @@ def home():
 
     with open("configs/base.json") as base_config_file:
         base_config = json.load(base_config_file)
-        trust_call = "CCPEVE.requestTrust('{0}');".format(base_config["site_url"])
+        trust_call = "CCPEVE.requestTrust('{0}');".format(base_config["dashboard_url"])
 
     return render_template("security.html", api_table=api_table, missing_apis=missing_apis, missing_count=missing_count,
                            all_count=all_count, inactivity_30_days=inactivity_30_days,
