@@ -1,51 +1,289 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container">
+    <h2>Security Info</h2>
+    <h4>Red - Invalid API, Grey - Inactive but has active character on same account</h4>
+    <h4>Yellow - Expired Vacation, Blue - Unreadable Vacation, Green - Valid Vacation</h4>
     <div class="row">
-        <div class="col-md-12">
-            <h2>Associated Characters</h2>
-            <h4>Red means the user has an invalid API</h4>
-            <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
-                <thead>
-                <tr>
-                    <th>Main Character</th>
-                    <th>Associated Characters</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for api in api_table %}
-                <tr class="{{'danger' if not api[0]}}">
-                    <td><a href="{{url_for('security.user', site_id=api[1])}}">{{api[2]}}</a></td>
-                    <td>{{api[3]}}</td>
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#associations">Associated Characters</a></li>
+            <li><a data-toggle="tab" href="#active_characters">Active Characters</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="associations" class="tab-pane active">
+                <div class="col-md-12">
+                    <h3>Associated Characters</h3>
+                    <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
+                        <thead>
+                        <tr>
+                            <th>Main Character</th>
+                            <th>Associated Characters</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for api in api_table %}
+                        <tr class="{{'danger' if api[0]}}">
+                            <td><a href="{{url_for('security.user', site_id=api[1])}}">{{api[2]}}</a></td>
+                            <td>{{api[3]}}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="active_characters" class="tab-pane">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Active Characters</h3>
+                        <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
+                            <thead>
+                            <tr>
+                                <th>Character</th>
+                                <th>Main</th>
+                                <th>Join Date</th>
+                                <th>Last Log On</th>
+                                <th>Last Log Off</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for character in active %}
+                            <tr class="{{character[0]}}">
+                                <td>{{character[2]}}</td>
+                                {% if character[1] %}
+                                <td><a href="{{url_for('security.user', site_id=character[1])}}">{{character[3]}}</a></td>
+                                {% else %}
+                                <td>{{character[3]}}</td>
+                                {% endif %}
+                                {% for info in character[4:] %}
+                                <td>{{info}}</td>
+                                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    <h2>Problems</h2>
     <div class="row">
-        <div class="col-md-12">
-            <h2>Missing APIs</h2>
-            <h4># of unassociated characters: {{missing_count}}/{{all_count}}</h4>
-            <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
-                <thead>
-                <tr>
-                    <th>Unassociated Character</th>
-                    <th>Join Date</th>
-                    <th>Last Log On</th>
-                    <th>Last Log Off</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for character in missing_apis %}
-                <tr>
-                    {% for info in character %}
-                    <td>{{info}}</td>
-                    {% endfor %}
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#missing_apis">Missing APIs</a></li>
+            <li><a data-toggle="tab" href="#inactivity_30_days">30 Day Inactivity</a></li>
+            <li><a data-toggle="tab" href="#inactivity_60_days">60 Day Inactivity</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="missing_apis" class="tab-pane active">
+                <div class="col-md-12">
+                    <h3>Missing APIs</h3>
+                    <h4># of unassociated characters: {{missing_count}}/{{all_count}}</h4>
+                    <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
+                        <thead>
+                        <tr>
+                            <th>Character</th>
+                            <th>Main</th>
+                            <th>Join Date</th>
+                            <th>Last Log On</th>
+                            <th>Last Log Off</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for character in missing_apis %}
+                            <tr class="{{character[0]}}">
+                                <td>{{character[2]}}</td>
+                                {% if character[1] %}
+                                <td><a href="{{url_for('security.user', site_id=character[1])}}">{{character[3]}}</a></td>
+                                {% else %}
+                                <td>{{character[3]}}</td>
+                                {% endif %}
+                                {% for info in character[4:] %}
+                                <td>{{info}}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="inactivity_30_days" class="tab-pane">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>30 Day Inactivity</h3>
+                        <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
+                            <thead>
+                            <tr>
+                                <th>Character</th>
+                                <th>Main</th>
+                                <th>Join Date</th>
+                                <th>Last Log On</th>
+                                <th>Last Log Off</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for character in inactivity_30_days %}
+                            <tr class="{{character[0]}}">
+                                <td>{{character[2]}}</td>
+                                {% if character[1] %}
+                                <td><a href="{{url_for('security.user', site_id=character[1])}}">{{character[3]}}</a></td>
+                                {% else %}
+                                <td>{{character[3]}}</td>
+                                {% endif %}
+                                {% for info in character[4:] %}
+                                <td>{{info}}</td>
+                                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="inactivity_60_days" class="tab-pane">
+                <button type="button" onclick="{{trust_call}}" class="btn btn-primary">Check Trust</button>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>60 Day Inactivity</h3>
+                        <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
+                            <thead>
+                            <tr>
+                                <th>Character</th>
+                                <th>Main</th>
+                                <th>Join Date</th>
+                                <th>Last Log On</th>
+                                <th>Last Log Off</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for character in inactivity_60_days %}
+                            <tr class="{{character[0]}}">
+                                <td>{{character[2]}}</td>
+                                {% if character[1] %}
+                                <td><a href="{{url_for('security.user', site_id=character[1])}}">{{character[3]}}</a></td>
+                                {% else %}
+                                <td>{{character[3]}}</td>
+                                {% endif %}
+                                {% for info in character[4:-1] %}
+                                <td>{{info}}</td>
+                                {% endfor %}
+                                <td>
+                                    <button type="button" onclick="{{character[-1]|safe}}" class="btn btn-success">Format Mail</button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2>Vacations</h2>
+    <div class="row">
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#valid_vacations">Valid Vacations</a></li>
+            <li><a data-toggle="tab" href="#expired_vacations">Expired Vacations</a></li>
+            <li><a data-toggle="tab" href="#unknown_vacations">Unknown Vacations</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="valid_vacations" class="tab-pane active">
+                <div class="col-md-12">
+                    <h3>Valid Vacations</h3>
+                    <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
+                        <thead>
+                        <tr>
+                            <th>Character</th>
+                            <th>Main</th>
+                            <th>Join Date</th>
+                            <th>Last Log On</th>
+                            <th>Last Log Off</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for character in valid_vacation_table %}
+                            <tr class="{{character[0]}}">
+                                <td>{{character[2]}}</td>
+                                {% if character[1] %}
+                                <td><a href="{{url_for('security.user', site_id=character[1])}}">{{character[3]}}</a></td>
+                                {% else %}
+                                <td>{{character[3]}}</td>
+                                {% endif %}
+                                {% for info in character[4:] %}
+                                <td>{{info}}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="expired_vacations" class="tab-pane">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Expired Vacations</h3>
+                        <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
+                            <thead>
+                            <tr>
+                                <th>Character</th>
+                                <th>Main</th>
+                                <th>Join Date</th>
+                                <th>Last Log On</th>
+                                <th>Last Log Off</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for character in expired_vacation_table %}
+                            <tr class="{{character[0]}}">
+                                <td>{{character[2]}}</td>
+                                {% if character[1] %}
+                                <td><a href="{{url_for('security.user', site_id=character[1])}}">{{character[3]}}</a></td>
+                                {% else %}
+                                <td>{{character[3]}}</td>
+                                {% endif %}
+                                {% for info in character[4:] %}
+                                <td>{{info}}</td>
+                                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="unknown_vacations" class="tab-pane">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Unknown Vacations</h3>
+                        <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
+                            <thead>
+                            <tr>
+                                <th>Character</th>
+                                <th>Main</th>
+                                <th>Join Date</th>
+                                <th>Last Log On</th>
+                                <th>Last Log Off</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for character in unknown_vacation_table %}
+                            <tr class="{{character[0]}}">
+                                <td>{{character[2]}}</td>
+                                {% if character[1] %}
+                                <td><a href="{{url_for('security.user', site_id=character[1])}}">{{character[3]}}</a></td>
+                                {% else %}
+                                <td>{{character[3]}}</td>
+                                {% endif %}
+                                {% for info in character[4:] %}
+                                <td>{{info}}</td>
+                                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
