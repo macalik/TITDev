@@ -161,7 +161,7 @@ def home():
 
     # Check api validation status
     updates = g.mongo.db.preferences.find_one({"_id": "updates"})
-    last_validation = updates.get("api_validation") if updates else None
+    last_validation = updates.get("api_validation", "Has never run") if updates else "Has never run"
     validation_disable = "disabled" if last_validation.startswith("running") else ""
     force_disable = "disabled" if not last_validation.startswith("running") else ""
 
