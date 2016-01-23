@@ -2,37 +2,24 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                <h2>Personal invoices in the last 30 days</h2>
+            <div class="col-md-5">
+                <h2>Missing APIs</h2>
                 <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
                     <thead>
                         <tr>
-                            <th>Creation Date</th>
-                            <th>ID</th>
-                            <th>Destination</th>
-                            <th>Price</th>
-                            <th>Marketeer</th>
-                            <th>Status</th>
-                            <th>Link</th>
+                            <th>Character</th>
                         </tr>
                     </thead>
                     <tbody>
-                    {% for invoice in invoice_table %}
+                    {% for character in missing_apis %}
                         <tr>
-                            {% for info in invoice[1:] %}
-                            <td class="{{invoice[0]}}">{{info}}</td>
-                            {% endfor %}
-                            <td class="{{invoice[0]}}">
-                                <form action="{{url_for('ordering.invoice', invoice_id=invoice[2])}}" method="get">
-                                    <button type="submit" class="btn btn-success">Link</button>
-                                </form>
-                            </td>
+                            <td>{{character}}</td>
                         </tr>
                     {% endfor %}
                     </tbody>
                 </table>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-7">
                 <h2>Players Away From EVE</h2>
                 <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
                     <thead>

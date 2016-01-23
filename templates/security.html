@@ -77,6 +77,7 @@
     <div class="row">
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#missing_apis">Missing APIs</a></li>
+            <li><a data-toggle="tab" href="#invalid_apis">Invalid APIs</a></li>
             <li><a data-toggle="tab" href="#inactivity_30_days">30 Day Inactivity</a></li>
             <li><a data-toggle="tab" href="#inactivity_60_days">60 Day Inactivity</a></li>
         </ul>
@@ -97,6 +98,37 @@
                         </thead>
                         <tbody>
                         {% for character in missing_apis %}
+                            <tr class="{{character[0]}}">
+                                <td>{{character[2]}}</td>
+                                {% if character[1] %}
+                                <td><a href="{{url_for('security.user', site_id=character[1])}}">{{character[3]}}</a></td>
+                                {% else %}
+                                <td>{{character[3]}}</td>
+                                {% endif %}
+                                {% for info in character[4:] %}
+                                <td>{{info}}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="invalid_apis" class="tab-pane active">
+                <div class="col-md-12">
+                    <h3>Invalid APIs</h3>
+                    <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
+                        <thead>
+                        <tr>
+                            <th>Character</th>
+                            <th>Main</th>
+                            <th>Join Date</th>
+                            <th>Last Log On</th>
+                            <th>Last Log Off</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for character in invalid_apis %}
                             <tr class="{{character[0]}}">
                                 <td>{{character[2]}}</td>
                                 {% if character[1] %}

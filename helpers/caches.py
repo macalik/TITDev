@@ -296,7 +296,7 @@ def api_keys(api_key_list, unassociated=False, dashboard_id=None):
 
             # Check for fail
             if failed:
-                conversions.invalidate_key([key_id], dashboard_id)
+                conversions.invalidate_key([key_id], api_owner)
                 continue
 
             # If same character is input, remove old keys first

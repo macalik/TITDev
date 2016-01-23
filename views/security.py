@@ -72,6 +72,7 @@ def home():
 
     time_format = "%Y-%m-%d %H:%M:%S"
     missing_apis = []
+    invalid_apis = []
     inactivity_30_days = []
     inactivity_60_days = []
     active = []
@@ -103,6 +104,8 @@ def home():
         # Sorter
         if corp_character["name"] not in characters:
             missing_apis.append(api_row)
+        if corp_character["name"] in invalid_characters:
+            invalid_apis.append(api_row)
 
         if color == "success":
             pass
@@ -165,7 +168,7 @@ def home():
                            inactivity_60_days=inactivity_60_days, active=active,
                            valid_vacation_table=valid_vacation_table, unknown_vacation_table=unknown_vacation_table,
                            expired_vacation_table=expired_vacation_table, last_validation=last_validation,
-                           trust_call=trust_call)
+                           trust_call=trust_call, invalid_apis=invalid_apis)
 
 
 @security.route("/user/<path:site_id>")
@@ -202,7 +205,7 @@ def user(site_id=""):
                                time.strftime(time_format, time.gmtime(security_character["log_off_time"]))])
 
     user_table = [site_id, user_info["character_name"],
-                  time.strftime(time_format, time.gmtime(user_info["last_sign_on"]))]
+                  time.strftime(time_format, time.gmtime(user_info.get("last_sign_on", 0)))]
 
     with open("configs/base.json", "r") as base_config_file:
         base_config = json.load(base_config_file)

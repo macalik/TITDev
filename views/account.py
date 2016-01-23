@@ -16,6 +16,7 @@ def home():
 
     # API Module
     error_list = []
+    message = ""
     if request.method == "POST":
         if request.form.get("action") == "add":
             error_list = caches.api_keys([(request.form.get("key_id"), request.form.get("vcode"))])
@@ -54,6 +55,15 @@ def home():
                                                 "mumble": mumble_id
                                             }
                                         })
+        elif request.form.get("action") == "validate":
+            key_validation = set()
+            db_key_doc = g.mongo.db.api_keys.find_one({"_id": session["CharacterOwnerHash"]})
+            if db_key_doc:
+                for key in db_key_doc["keys"]:
+                    key_validation.add((key["key_id"], key["vcode"]))
+                error_list = caches.api_keys(list(key_validation))
+                if not error_list:
+                    message = "All api keys are valid."
 
     # List of roles
     given_roles = []
@@ -143,4 +153,4 @@ def home():
     return render_template("account.html", error_list=error_list, given_roles=given_roles,
                            associated_keys=associated_keys, user_info=user_info, image_list=image_list,
                            vacation=vacation, vacation_text=vacation_text, keys=keys, access_mask=access_mask,
-                           vacation_date=vacation_date, invoice_table=invoice_table)
+                           vacation_date=vacation_date, invoice_table=invoice_table, message=message)

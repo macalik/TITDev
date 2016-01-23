@@ -15,6 +15,23 @@ def home():
     with open("configs/base.json", "r") as base_config_file:
         base_config = json.load(base_config_file)
 
+    # Missing APIs
+    missing_apis = []
+    corp_ids = []
+    api_characters = set()
+    # Determine accounts in corp
+    for user_info in g.mongo.db.users.find({"corporation_id": base_config["corporation_id"]}):
+        if g.mongo.db.security_characters.find_one({"_id": user_info["character_id"]}):
+            corp_ids.append(user_info["_id"])
+    # Determine characters with an api
+    for api_user in g.mongo.db.api_keys.find({"_id": {"$in": corp_ids}}):
+        for key in api_user["keys"]:
+            api_characters.add(key["character_name"])
+    # Determine characters in corp without an api from a corp account
+    for corp_character in g.mongo.db.security_characters.find():
+        if corp_character["name"] not in api_characters:
+            missing_apis.append(corp_character["name"])
+
     # Personal Invoices
     one_month_oid = ObjectId.from_datetime(datetime.datetime.today() - datetime.timedelta(30))
     invoice_table = []
@@ -38,4 +55,5 @@ def home():
         if character["corporation_id"] == base_config["corporation_id"]:
             away_from_eve.append([character["character_name"], character["vacation"], character["vacation_date"]])
 
-    return render_template("corp.html", away_from_eve=away_from_eve, invoice_table=invoice_table)
+    return render_template("corp.html", away_from_eve=away_from_eve, invoice_table=invoice_table,
+                           missing_apis=missing_apis)

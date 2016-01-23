@@ -15,6 +15,11 @@
                 Key(s) with ID {{keys}} has an error. It has been marked as invalid and can no longer be used on the site. Please input a new key.
             </div>
             {% endif %}
+            {% if message %}
+            <div class="alert alert-success" role="alert">
+                {{message}}
+            </div>
+            {% endif %}
         </div>
     </div>
     <div class="row">
@@ -164,6 +169,11 @@
             <div id="apis" class="tab-pane">
                 <div class="col-md-12">
                     <h2>All APIs</h2>
+                    <form method="post" class="form-inline">
+                        <div class="form-group">
+                            <button name="action" type="submit" class="btn btn-warning" value="validate">Validate All APIs</button>
+                        </div>
+                    </form>
                     <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
                         <thead>
                         <tr>
@@ -171,7 +181,7 @@
                             <th>Char Name</th>
                             <th>Key ID</th>
                             <th>vCode</th>
-                            <th>Last API Check</th>
+                            <th>Cached Until</th>
                             <th>Valid</th>
                             <th>Action</th>
                         </tr>
