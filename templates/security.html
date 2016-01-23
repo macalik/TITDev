@@ -14,6 +14,7 @@
     <div class="row">
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#associations">Associated Characters</a></li>
+            <li><a data-toggle="tab" href="#affiliations">API Affiliations</a></li>
             <li><a data-toggle="tab" href="#active_characters">Active Characters</a></li>
         </ul>
         <div class="tab-content">
@@ -36,6 +37,38 @@
                         {% endfor %}
                         </tbody>
                     </table>
+                </div>
+            </div>
+            <div id="affiliations" class="tab-pane">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>APIs owned by corp dashboard accounts</h3>
+                        <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
+                            <thead>
+                            <tr>
+                                <th>Character</th>
+                                <th>Main</th>
+                                <th>Corporation</th>
+                                <th>Alliance</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for character in api_info_table %}
+                            <tr class="{{character[0]}}">
+                                <td>{{character[2]}}</td>
+                                {% if character[1] %}
+                                <td><a href="{{url_for('security.user', site_id=character[1])}}">{{character[3]}}</a></td>
+                                {% else %}
+                                <td>{{character[3]}}</td>
+                                {% endif %}
+                                {% for info in character[4:] %}
+                                <td>{{info}}</td>
+                                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div id="active_characters" class="tab-pane">
@@ -114,7 +147,7 @@
                     </table>
                 </div>
             </div>
-            <div id="invalid_apis" class="tab-pane active">
+            <div id="invalid_apis" class="tab-pane">
                 <div class="col-md-12">
                     <h3>Invalid APIs</h3>
                     <table class="table table-hover table-condensed datatables dt-responsive" width="100%">

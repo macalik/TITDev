@@ -31,6 +31,7 @@ def home():
             name_to_id[user_info["character_name"]] = user_info["_id"]
 
     api_table = []
+    api_info_table = []
     characters = set()
     id_to_chars = {}
     char_to_main = {}
@@ -45,6 +46,14 @@ def home():
             if not key.get("valid", True):
                 invalid = True
                 invalid_characters.add(key["character_name"])
+            api_info_table.append([
+                key.get("valid", True),
+                api_user["_id"],
+                key["character_name"],
+                id_to_name[api_user["_id"]],
+                key["corporation_name"],
+                key["alliance_name"]
+            ])
         api_table.append([invalid, api_user["_id"], id_to_name[api_user["_id"]], ", ".join(user_characters)])
         id_to_chars[api_user["_id"]] = user_characters
         main_to_chars[id_to_name[api_user["_id"]]] = user_characters + [id_to_name[api_user["_id"]]]
@@ -171,7 +180,7 @@ def home():
                            valid_vacation_table=valid_vacation_table, unknown_vacation_table=unknown_vacation_table,
                            expired_vacation_table=expired_vacation_table, last_validation=last_validation,
                            trust_call=trust_call, invalid_apis=invalid_apis, validation_disable=validation_disable,
-                           force_disable=force_disable)
+                           force_disable=force_disable, api_info_table=api_info_table)
 
 
 @security.route("/user/<path:site_id>")
@@ -189,10 +198,12 @@ def user(site_id=""):
 
     api_table = []
     id_list = []
+    affiliation_table = []
     for api_key in user_apis["keys"]:
         api_table.append([api_key["character_name"], api_key["character_id"], api_key["key_id"], api_key["vcode"],
                           api_key["cached_str"], api_key.get("valid", True)])
         id_list.append(api_key["character_id"])
+        affiliation_table.append([api_key["character_name"], api_key["corporation_name"], api_key["alliance_name"]])
 
     vacation_db = g.mongo.db.personals.find_one({"_id": site_id})
     vacation_text = vacation_db.get("vacation") if vacation_db else None
@@ -217,7 +228,8 @@ def user(site_id=""):
     return render_template("security_user.html", api_table=api_table, user_table=user_table, image=image,
                            site_log_in=time.strftime(time_format, time.gmtime(user_info["last_sign_on"])),
                            site_id=site_id, character_name=user_info["character_name"], location_table=location_table,
-                           vacation_text=vacation_text, vacation_date=vacation_date)
+                           vacation_text=vacation_text, vacation_date=vacation_date,
+                           affiliation_table=affiliation_table)
 
 
 @security.route("/settings", methods=["GET", "POST"])

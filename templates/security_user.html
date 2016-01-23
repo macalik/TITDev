@@ -40,7 +40,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <h2>Last Known Locations</h2>
+            <h2>Last Known Locations (Corp Members Only)</h2>
             <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
                 <thead>
                 <tr>
@@ -55,6 +55,29 @@
                 {% for location in location_table %}
                 <tr>
                     {% for info in location %}
+                    <td>{{info}}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Affiliations</h2>
+            <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
+                <thead>
+                <tr>
+                    <th>Character Name</th>
+                    <th>Corporation</th>
+                    <th>Alliance</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for api in affiliation_table %}
+                <tr>
+                    {% for info in api %}
                     <td>{{info}}</td>
                     {% endfor %}
                 </tr>
