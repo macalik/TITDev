@@ -169,9 +169,15 @@ def fit(fit_id=None):
 
     for fit_item in item_list:
         try:
-            qty = selected_fit["items"][fit_item["name"].replace("Thermal", "Thermic")] * multiply
+            # Check if thermal is correct in fit
+            qty = selected_fit["items"][fit_item["name"]] * multiply
         except KeyError:
-            qty = selected_fit["items"][pre_name_conversion[fit_item["name"]]] * multiply
+            try:
+                # Check if it's an old fit with thermic
+                qty = selected_fit["items"][fit_item["name"].replace("Thermal", "Thermic")] * multiply
+            except KeyError:
+                # Check if the item name has changed
+                qty = selected_fit["items"][pre_name_conversion[fit_item["name"]]] * multiply
         isk_per_item = item_prices[fit_item["_id"]]["sell"]
         vol_per_item = fit_item["volume"]
         item_isk_total = qty * isk_per_item
