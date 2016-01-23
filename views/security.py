@@ -51,8 +51,8 @@ def home():
                 api_user["_id"],
                 key["character_name"],
                 id_to_name[api_user["_id"]],
-                key["corporation_name"],
-                key["alliance_name"]
+                key.get("corporation_name", "unknown"),
+                key.get("alliance_name", "unknown")
             ])
         api_table.append([invalid, api_user["_id"], id_to_name[api_user["_id"]], ", ".join(user_characters)])
         id_to_chars[api_user["_id"]] = user_characters
