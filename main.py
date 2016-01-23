@@ -106,7 +106,9 @@ def cleanup(exception=None):
 
 @app.route('/')
 def home():
-    return render_template("index.html")
+    with open("configs/base.json", "r") as base_config_file:
+        base_config = json.load(base_config_file)
+    return render_template("index.html", forum_url=base_config["forum_url"])
 
 
 @app.route("/settings")
@@ -114,7 +116,6 @@ def settings():
     session.setdefault("default_css", True)
     session["default_css"] = False if session.get("default_css") else True
     if session.get("CharacterOwnerHash"):
-        print(session.get("prev_path"))
         return redirect(session.get("prev_path", url_for("account.home")))
     else:
         return redirect(url_for("home"))
