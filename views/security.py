@@ -5,22 +5,30 @@ import calendar
 from flask import Blueprint, render_template, g, redirect, url_for, request
 
 from views.auth import requires_sso
-from helpers import caches
+from helpers import caches, background
 
 security = Blueprint("security", __name__, template_folder="templates")
 
 
-@security.route("/")
+@security.route("/", methods=["GET", "POST"])
 @requires_sso("security_officer")
 def home():
     with open("configs/base.json", "r") as base_config_file:
         base_config = json.load(base_config_file)
 
+    if request.form.get("action") == "force_api_validation":
+        background.api_validation.delay()
+    elif request.form.get("action") == "force_unlock":
+        g.mongo.db.preferences.update_one({"_id": "updates"}, {"$unset": {"api_validation": True}})
+
+    caches.security_characters()
+
     id_to_name = {}
     name_to_id = {}
     for user_info in g.mongo.db.users.find({"corporation_id": base_config["corporation_id"]}):
-        id_to_name[user_info["_id"]] = user_info["character_name"]
-        name_to_id[user_info["character_name"]] = user_info["_id"]
+        if g.mongo.db.security_characters.find_one({"_id": user_info["character_id"]}):
+            id_to_name[user_info["_id"]] = user_info["character_name"]
+            name_to_id[user_info["character_name"]] = user_info["_id"]
 
     api_table = []
     characters = set()
@@ -61,8 +69,6 @@ def home():
                 expired_vacation.extend(id_to_chars[vacation_user["_id"]])
             else:
                 valid_vacation.extend(id_to_chars[vacation_user["_id"]])
-
-    caches.security_characters()
 
     time_format = "%Y-%m-%d %H:%M:%S"
     missing_apis = []
@@ -150,11 +156,15 @@ def home():
         base_config = json.load(base_config_file)
         trust_call = "CCPEVE.requestTrust('{0}');".format(base_config["dashboard_url"])
 
+    # Check api validation status
+    updates = g.mongo.db.preferences.find_one({"_id": "updates"})
+    last_validation = updates.get("api_validation") if updates else None
+
     return render_template("security.html", api_table=api_table, missing_apis=missing_apis, missing_count=missing_count,
                            all_count=all_count, inactivity_30_days=inactivity_30_days,
                            inactivity_60_days=inactivity_60_days, active=active,
                            valid_vacation_table=valid_vacation_table, unknown_vacation_table=unknown_vacation_table,
-                           expired_vacation_table=expired_vacation_table,
+                           expired_vacation_table=expired_vacation_table, last_validation=last_validation,
                            trust_call=trust_call)
 
 

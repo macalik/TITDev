@@ -14,4 +14,8 @@ celery.conf.CELERYBEAT_SCHEDULE = {
         "schedule": timedelta(seconds=update_frequency),
         "kwargs": {"celery_time": update_frequency}
     },
+    "API-Validations": {
+        "task": "helpers.background.api_validation",
+        "schedule": timedelta(days=1)
+    }
 }

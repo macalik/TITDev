@@ -172,8 +172,8 @@ if not os.environ.get("EXTERNAL") and __name__ == "__main__":
 
     @app.route('/test')
     def test():
-        from helpers.background import add_together
-        print(add_together.delay(1, 2).wait())
+        from helpers.background import api_validation
+        print(api_validation.delay().wait())
         return render_template("base.html")
 
     profile = False

@@ -4,6 +4,13 @@
     <h2>Security Info</h2>
     <h4>Red - Invalid API, Grey - Inactive but has active character on same account</h4>
     <h4>Yellow - Expired Vacation, Blue - Unreadable Vacation, Green - Valid Vacation</h4>
+    <h3>Last Site-Wide API Validation: {{last_validation}}</h3>
+    <form method="post">
+        <div class="form-group">
+            <button name="action" type="submit" class="btn btn-danger" value="force_api_validation">Force Site-Wide API Validation</button>
+            <button name="action" type="submit" class="btn btn-danger" value="force_unlock">Force Unlock</button>
+        </div>
+    </form>
     <div class="row">
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#associations">Associated Characters</a></li>

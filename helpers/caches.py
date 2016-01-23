@@ -231,14 +231,20 @@ def contracts(keys=None, celery_time=0):
     return list(invalid_apis)
 
 
-def api_keys(api_key_list, unassociated=False):
+def api_keys(api_key_list, unassociated=False, dashboard_id=None):
     """
 
     :param api_key_list: [(key_id, vcode), (), ...]
     :param unassociated: True to add to unassociated API keys
+    :param dashboard_id: Set the associated dashboard id. Defaults to the session variable.
     :return:
     """
-    api_owner = "unassociated" if unassociated else session["CharacterOwnerHash"]
+    if unassociated:
+        api_owner = "unassociated"
+    elif dashboard_id:
+        api_owner = dashboard_id
+    else:
+        api_owner = session["CharacterOwnerHash"]
 
     with open("configs/base.json", "r") as base_config_file:
         base_config = json.load(base_config_file)
@@ -273,18 +279,24 @@ def api_keys(api_key_list, unassociated=False):
 
             # Store in database
             xml_time_pattern = "%Y-%m-%d %H:%M:%S"
+            failed = False
             if xml_api_key_tree[1].tag == "error":
                 errors_list.append("CCP gave an error for key with id " +
                                    "{}. Ensure the key is not expired and is valid.".format(key_id))
-                continue
+                failed = True
             elif xml_api_key_tree[1][0].attrib["accessMask"] != str(base_config["access_mask"]):
                 errors_list.append("Key with id {} is not (or no longer) a full API key.".format(key_id))
-                continue
+                failed = True
             elif xml_api_key_tree[1][0].attrib["type"] != "Account":
                 errors_list.append("Key with id {} is not an Account API key.".format(key_id))
-                continue
+                failed = True
             elif xml_api_key_tree[1][0].attrib["expires"].strip():
                 errors_list.append("Key with id {} expires. Must be a non-expiring API key.".format(key_id))
+                failed = True
+
+            # Check for fail
+            if failed:
+                conversions.invalidate_key([key_id], dashboard_id)
                 continue
 
             # If same character is input, remove old keys first
@@ -313,7 +325,11 @@ def api_keys(api_key_list, unassociated=False):
                     "character_name": api_character.attrib["characterName"],
                     "cached_until": int(calendar.timegm(time.strptime(xml_api_key_tree[2].text,
                                                                       xml_time_pattern))),
-                    "cached_str": xml_api_key_tree[2].text
+                    "cached_str": xml_api_key_tree[2].text,
+                    "corporation_id": int(api_character.attrib["corporationID"]),
+                    "alliance_id": int(api_character.attrib["allianceID"]),
+                    "corporation_name": api_character.attrib["corporationName"].strip(),
+                    "alliance_name": api_character.attrib["allianceName"].strip()
                 }}}
                 if api_owner != "unassociated" or (api_owner == "unassociated" and not g.mongo.db.api_keys.find_one(
                         {"keys.key_id": {"$eq": int(key_id)}, "_id": {"$ne": "unassociated"}})):
