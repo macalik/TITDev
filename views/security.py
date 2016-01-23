@@ -162,13 +162,16 @@ def home():
     # Check api validation status
     updates = g.mongo.db.preferences.find_one({"_id": "updates"})
     last_validation = updates.get("api_validation") if updates else None
+    validation_disable = "disabled" if last_validation.startswith("running") else ""
+    force_disable = "disabled" if not last_validation.startswith("running") else ""
 
     return render_template("security.html", api_table=api_table, missing_apis=missing_apis, missing_count=missing_count,
                            all_count=all_count, inactivity_30_days=inactivity_30_days,
                            inactivity_60_days=inactivity_60_days, active=active,
                            valid_vacation_table=valid_vacation_table, unknown_vacation_table=unknown_vacation_table,
                            expired_vacation_table=expired_vacation_table, last_validation=last_validation,
-                           trust_call=trust_call, invalid_apis=invalid_apis)
+                           trust_call=trust_call, invalid_apis=invalid_apis, validation_disable=validation_disable,
+                           force_disable=force_disable)
 
 
 @security.route("/user/<path:site_id>")

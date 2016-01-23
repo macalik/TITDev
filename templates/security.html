@@ -7,8 +7,8 @@
     <h3>Last Site-Wide API Validation: {{last_validation}}</h3>
     <form method="post">
         <div class="form-group">
-            <button name="action" type="submit" class="btn btn-danger" value="force_api_validation">Force Site-Wide API Validation</button>
-            <button name="action" type="submit" class="btn btn-danger" value="force_unlock">Force Unlock</button>
+            <button name="action" type="submit" class="btn btn-warning" value="force_api_validation" {{validation_disable}}>Force Site-Wide API Validation</button>
+            <button name="action" type="submit" class="btn btn-danger" value="force_unlock" {{force_disable}}>Force Unlock</button>
         </div>
     </form>
     <div class="row">
