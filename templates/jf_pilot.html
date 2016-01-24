@@ -31,14 +31,14 @@
         <div class="col-md-12">
             <h2>Optimized Run</h2>
             <h3>Determines the most optimized run for valid contracts not reserved.</h3>
-            <h3>Default is random route and capacity of 300000 m3</h3>
+            <h3>Default is no route and capacity of 300000 m3</h3>
             <form method="post">
-                <div class="form-group">
+                <div class="form-group col-md-6">
                     <div class="input-group">
-                        <span class="input-group-addon">Route</span>
-                        <select class="form-control" name="route">
-                            {% for route in route_set %}
-                            {% if route[0] == optimize_route %}
+                        <span class="input-group-addon">Start</span>
+                        <select class="form-control" name="start" multiple>
+                            {% for route in route_start_set %}
+                            {% if route[0] in optimize_start_list %}
                             <option value="{{route[0]}}" selected>{{route[1]}}</option>
                             {% else %}
                             <option value="{{route[0]}}">{{route[1]}}</option>
@@ -47,7 +47,21 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon">End</span>
+                        <select class="form-control" name="end" multiple>
+                            {% for route in route_end_set %}
+                            {% if route[0] in optimize_end_list %}
+                            <option value="{{route[0]}}" selected>{{route[1]}}</option>
+                            {% else %}
+                            <option value="{{route[0]}}">{{route[1]}}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
                     <div class="input-group">
                         <span class="input-group-addon">Capacity</span>
                         <input type="number" class="form-control" placeholder="300000" name="capacity" step="0.01" min="0" value="{{capacity}}">
