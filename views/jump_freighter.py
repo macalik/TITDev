@@ -540,7 +540,9 @@ def admin():
 @requires_sso("jf_pilot")
 def pilot():
     # Reservation System
-    if request.method == "POST":
+    capacity = 300000
+    optimize_route = None
+    if request.method == "POST" and (request.form.get("add") or request.form.get("remove")):
         bulk_op = g.mongo.db.contracts.initialize_unordered_bulk_op()
         bulk_run = False
         if request.form.get("add"):
@@ -555,6 +557,13 @@ def pilot():
                 bulk_op.find({"_id.id": db_id}).update({"$unset": {"reserved_by": session["CharacterName"]}})
         if bulk_run:
             bulk_op.execute()
+    elif request.method == "POST":
+        optimize_route = request.form.get("route", "").strip()
+        capacity = request.form.get("capacity", 300000)
+    try:
+        capacity = int(capacity)
+    except ValueError:
+        capacity = 300000
 
     # JF Corporation Contracts
     jf_contracts = g.mongo.db.contracts.find({
@@ -584,16 +593,21 @@ def pilot():
     reserved_collateral = 0
     reserved_volume = 0
     reserved_ids = []
+    route_set = set()
 
     for contract in contract_list:
         # Check for non-static stations
         start_station = g.mongo.db.stations.find_one({"_id": contract["start_station_id"]})["name"]
         end_station = g.mongo.db.stations.find_one({"_id": contract["end_station_id"]})["name"]
+        current_route = "{0}{1}".format(contract["start_station_id"], contract["end_station_id"])
+        route_set.add((current_route, "{0} >> {1}".format(start_station, end_station)))
         issuer = conversions.character(contract["issuer_id"])
         color = validator(contract)
 
-        if not contract.get("reserved_by") and total_volume + contract["volume"] <= 300000 and color not in ["active",
-                                                                                                             "info"]:
+        if (not contract.get("reserved_by") and total_volume + contract["volume"] <= capacity) and (
+                    color not in ["active", "info"] and (not optimize_route or optimize_route == current_route)):
+            if not optimize_route:
+                optimize_route = current_route
             optimized_reward += contract["reward"]
             optimized_collateral += contract["collateral"]
             optimized_volume += contract["volume"]
@@ -730,7 +744,8 @@ def pilot():
                            reserved_reward=reserved_reward, reserved_collateral=reserved_collateral,
                            reserved_volume=reserved_volume, reserved_return=reserved_return,
                            personal_history=personal_history, jf_percent=[jf_percent_paid, jf_percent_owed],
-                           jf_reimbursement=jf_reimbursement, jf_taxes=[jf_paid, jf_tax_total])
+                           jf_reimbursement=jf_reimbursement, jf_taxes=[jf_paid, jf_tax_total],
+                           route_set=list(route_set), optimize_route=optimize_route, capacity=capacity)
 
 
 @jf.route('/stats', methods=["GET", "POST"])

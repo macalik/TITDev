@@ -30,8 +30,34 @@
     <div class="row">
         <div class="col-md-12">
             <h2>Optimized Run</h2>
-
             <h3>Determines the most optimized run for valid contracts not reserved.</h3>
+            <h3>Default is random route and capacity of 300000 m3</h3>
+            <form method="post">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon">Route</span>
+                        <select class="form-control" name="route">
+                            {% for route in route_set %}
+                            {% if route[0] == optimize_route %}
+                            <option value="{{route[0]}}" selected>{{route[1]}}</option>
+                            {% else %}
+                            <option value="{{route[0]}}">{{route[1]}}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon">Capacity</span>
+                        <input type="number" class="form-control" placeholder="300000" name="capacity" step="0.01" min="0" value="{{capacity}}">
+                        <span class="input-group-addon">m3</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Optimize</button>
+                </div>
+            </form>
             <table class="table table-hover table-condensed jf-pilot">
                 <thead>
                 <tr>
