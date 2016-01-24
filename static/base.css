@@ -4,3 +4,10 @@
 .jf-form{
     width: 100%;
 }
+
+@media (min-width: 768px) {
+    .nav>li>.nav-image {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+}

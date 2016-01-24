@@ -83,7 +83,8 @@ def db_init():
     if request.path not in ["/settings"] and not any([
         request.path.endswith(".js"),
         request.path.endswith(".css"),
-        request.path.endswith(".ico")
+        request.path.endswith(".ico"),
+        request.path.endswith(".png"),
     ]):
         session["prev_path"] = request.path
 
@@ -118,7 +119,7 @@ def settings():
     if session.get("CharacterOwnerHash"):
         return redirect(session.get("prev_path", url_for("account.home")))
     else:
-        return redirect(url_for("home"))
+        return redirect(session.get("prev_path", url_for("home")))
 
 
 @requires_sso(None)
@@ -173,8 +174,7 @@ if not os.environ.get("EXTERNAL") and __name__ == "__main__":
 
     @app.route('/test')
     def test():
-        from helpers.background import api_validation
-        print(api_validation.delay().wait())
+        print(app.extensions)
         return render_template("base.html")
 
     profile = False
@@ -185,4 +185,4 @@ if not os.environ.get("EXTERNAL") and __name__ == "__main__":
         app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[30])
 
     app.debug = True
-    app.run()
+    app.run(host="0.0.0.0")

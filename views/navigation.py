@@ -1,8 +1,26 @@
 import json
+from hashlib import sha1
 
 from flask_nav import Nav
-from flask_nav.elements import Navbar, View, Subgroup, Link
-from flask import session
+from flask_nav.elements import Navbar, View, Subgroup, Link, Text
+from flask_bootstrap.nav import BootstrapRenderer
+from flask import session, url_for
+from dominate import tags
+
+
+class LinkTab(Link):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+class LogIn(View):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+class SeparatorAlign(Text):
+    def __init__(self):
+        super().__init__("")
 
 
 class Navigation:
@@ -13,33 +31,111 @@ class Navigation:
     base = ['TiT', View('Home', 'home'),  View('Account', "account.home")]
     after_base = [View('JF Service', "jf.home"), View('Buyback Service', 'buyback.home'),
                   View('Fittings', "fittings.home"), View("Market Service", "ordering.home")]
-    alliance = base + after_base + [View("Change Theme", "settings")]
+    alliance = base + after_base
     corp = base + [Subgroup("Corporation", View('Corp Main', "corp.home"),
-                            Link("Corp Forums", base_config["forum_url"])),
-                   Subgroup("Services", *after_base), View("Change Theme", "settings")]
+                            LinkTab("Corp Forums", base_config["forum_url"])),
+                   Subgroup("Services", *after_base)]
 
     def __init__(self, app):
         nav = Nav()
 
+        @nav.renderer('custom')
+        class CustomRenderer(BootstrapRenderer):
+
+            # External links now open in new tab
+            def visit_LinkTab(self, node):
+                item = tags.li()
+                item.add(tags.a(node.text, href=node.get_url(), target="_blank"))
+
+                return item
+
+            def visit_LogIn(self, node):
+                item = tags.li()
+                inner = item.add(tags.a(href=node.get_url(), _class="nav-image"))
+                inner.add(tags.img(src=url_for("static", filename="sso_login.png")))
+                if node.active:
+                    item['class'] = 'active'
+                return item
+
+            def visit_SeparatorAlign(self, node):
+                return NotImplementedError
+
+            def visit_Navbar(self, node):
+                # create a navbar id that is somewhat fixed, but do not leak any
+                # information about memory contents to the outside
+                node_id = self.id or sha1(str(id(node)).encode()).hexdigest()
+
+                root = tags.nav() if self.html5 else tags.div(role='navigation')
+                root['class'] = 'navbar navbar-default'
+
+                cont = root.add(tags.div(_class='container-fluid'))
+
+                # collapse button
+                header = cont.add(tags.div(_class='navbar-header'))
+                btn = header.add(tags.button())
+                btn['type'] = 'button'
+                btn['class'] = 'navbar-toggle collapsed'
+                btn['data-toggle'] = 'collapse'
+                btn['data-target'] = '#' + node_id
+                btn['aria-expanded'] = 'false'
+                btn['aria-controls'] = 'navbar'
+
+                btn.add(tags.span('Toggle navigation', _class='sr-only'))
+                btn.add(tags.span(_class='icon-bar'))
+                btn.add(tags.span(_class='icon-bar'))
+                btn.add(tags.span(_class='icon-bar'))
+
+                # title may also have a 'get_url()' method, in which case we render
+                # a brand-link
+                if node.title is not None:
+                    if hasattr(node.title, 'get_url'):
+                        header.add(tags.a(node.title.text, _class='navbar-brand',
+                                          href=node.title.get_url()))
+                    else:
+                        header.add(tags.span(node.title, _class='navbar-brand'))
+
+                bar = cont.add(tags.div(
+                    _class='navbar-collapse collapse',
+                    id=node_id,
+                ))
+                bar_list = bar.add(tags.ul(_class='nav navbar-nav'))
+                bar_list_right = bar.add(tags.ul(_class='nav navbar-nav navbar-right'))
+
+                to_right = False
+                for item in node.items:
+                    if isinstance(item, SeparatorAlign):
+                        to_right = True
+                        continue
+                    if not to_right:
+                        bar_list.add(self.visit(item))
+                    else:
+                        bar_list_right.add(self.visit(item))
+
+                return root
+
         @nav.navigation('anon')
         def nav_anon():
             return Navbar('TiT', View('Home', 'home'), View('JF Service', "jf.home"),
-                          View('Buyback Service', 'buyback.home'), View("Change Theme", "settings"),
-                          View('Log In', 'auth.sso_redirect'))
+                          View('Buyback Service', 'buyback.home'),
+                          SeparatorAlign(), View("Change Theme", "settings"), LogIn('Log In', 'auth.sso_redirect'))
 
         @nav.navigation('neut')
         def nav_neut():
             return Navbar('TiT', View('Home', 'home'), View('Account', "account.home"), View('JF Service', "jf.home"),
-                          View('Buyback Service', 'buyback.home'), View('Log Out', 'auth.log_out'))
+                          View('Buyback Service', 'buyback.home'),
+                          SeparatorAlign(), View("Change Theme", "settings"), View('Log Out', 'auth.log_out'))
 
         @nav.navigation('corporation')
         def nav_corp():
-            items = Navigation.corp + [View("Bug Report", 'issues'), View('Log Out', 'auth.log_out')]
+            items = Navigation.corp + [SeparatorAlign(), View("Bug Report", 'issues'),
+                                       View("Change Theme", "settings"), View('Log Out', 'auth.log_out')]
             return Navbar(*items)
 
         @nav.navigation('alliance')
         def nav_alliance():
-            items = Navigation.alliance + [View("Bug Report", 'issues'), View('Log Out', 'auth.log_out')]
+            items = Navigation.alliance + [SeparatorAlign(), View("Bug Report", 'issues'),
+                                           View("Change Theme", "settings"),
+                                           View('Log Out', 'auth.log_out')]
             return Navbar(*items)
 
         @nav.navigation('admin')
@@ -61,11 +157,13 @@ class Navigation:
                 elif role == "security_officer":
                     admin_elements.append(View('Security Info', 'security.home'))
             if session["UI_Corporation"]:
-                items = Navigation.corp + [Subgroup('Admin Pages', *admin_elements),
-                                           View("Bug Report", 'issues'), View('Log Out', 'auth.log_out')]
+                items = Navigation.corp + [Subgroup('Admin Pages', *admin_elements), SeparatorAlign(),
+                                           View("Bug Report", 'issues'), View("Change Theme", "settings"),
+                                           View('Log Out', 'auth.log_out')]
             elif session["UI_Alliance"]:
-                items = Navigation.alliance + [Subgroup('Admin Pages', *admin_elements),
-                                               View("Bug Report", 'issues'), View('Log Out', 'auth.log_out')]
+                items = Navigation.alliance + [Subgroup('Admin Pages', *admin_elements), SeparatorAlign(),
+                                               View("Bug Report", 'issues'), View("Change Theme", "settings"),
+                                               View('Log Out', 'auth.log_out')]
             else:
                 return nav_neut()
 

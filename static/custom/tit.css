@@ -1,0 +1,25 @@
+﻿body {
+	color: #AAA;
+	background: #222;
+	min-width: 960px;	
+}
+
+#exelogo {
+	background: url(../splash1.png) center no-repeat;
+	height: 600px;
+	background-image: url('splash1.png');
+}
+
+.center {
+	text-align: center;
+}
+
+a {
+	font: 20px/1.5 'Helvetica Neue', Arial, 'Liberation Sans', FreeSans, sans-serif;
+  	color: #AAA;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #FFF;
+}

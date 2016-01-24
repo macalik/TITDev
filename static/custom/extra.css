@@ -1,0 +1,12 @@
+.auto-style1 {
+    font-size: 20px;
+}
+.auto-style2 {
+    display: inline;
+    float: left;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+body{
+    background-color: #282B30
+}

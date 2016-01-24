@@ -4,8 +4,8 @@
 {% block styles %}
 <link rel="stylesheet" href="{{bootstrap_find_resource('bootstrap.css', cdn='theme')}}">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.9/css/dataTables.bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='base.css')}}">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.0.0/css/responsive.bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='base.css')}}">
 {% endblock styles %}
 
 {% block scripts %}
@@ -21,15 +21,15 @@
 
 {% block navbar %}
 {% if session.UI_Roles: %}
-{{nav.admin.render()}}
+{{nav.admin.render(renderer='custom')}}
 {% elif session.UI_Corporation: %}
-{{nav.corporation.render()}}
+{{nav.corporation.render(renderer='custom')}}
 {% elif session.UI_Alliance: %}
-{{nav.alliance.render()}}
+{{nav.alliance.render(renderer='custom')}}
 {% elif session.CharacterOwnerHash %}
-{{nav.neut.render()}}
+{{nav.neut.render(renderer='custom')}}
 {% else: %}
-{{nav.anon.render()}}
+{{nav.anon.render(renderer='custom')}}
 {% endif %}
 {% endblock navbar %}
 
