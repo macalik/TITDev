@@ -36,11 +36,11 @@ def home():
                                         }
                                     })
             forum_edit(pre_user, "email_edit", request.form.get("email", "").strip())
-        elif request.form.get("action") == "slack":
+        elif request.form.get("action") == "im":
             g.mongo.db.users.update({"_id": session["CharacterOwnerHash"]},
                                     {
                                         "$set": {
-                                            "slack": request.form.get("slack", "").strip()
+                                            "im": request.form.get("im", "").strip()
                                         }
                                     })
         elif request.form.get("action") == "mumble":
@@ -83,7 +83,7 @@ def home():
     db_user_info = g.mongo.db.users.find_one({"_id": session["CharacterOwnerHash"]})
     user_info = [db_user_info["_id"], db_user_info["character_name"], db_user_info["corporation_name"],
                  db_user_info["alliance_name"], db_user_info.get("email"), db_user_info.get("mumble"),
-                 db_user_info.get("slack")]
+                 db_user_info.get("im")]
 
     # Images
     with open("configs/base.json", "r") as base_config_file:

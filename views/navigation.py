@@ -29,16 +29,19 @@ class Navigation:
         base_config = json.load(base_config_file)
 
     base = ['TiT', View('Home', 'home'),  View('Account', "account.home")]
-    after_base = [View('JF Service', "jf.home"), View('Buyback Service', 'buyback.home'),
-                  View('Fittings', "fittings.home"), View("Market Service", "ordering.home")]
-    alliance = base + after_base
+    services = [View('JF Service', "jf.home"), View('Buyback Service', 'buyback.home'),
+                View('Fittings', "fittings.home"), View("Market Service", "ordering.home")]
+    settings = [SeparatorAlign(), View("Bug Report", 'issues'), View("Change Theme", "settings"),
+                View('Log Out', 'auth.log_out')]
+    alliance = base + services
     corp = base + [Subgroup("Corporation", View('Corp Main', "corp.home"),
                             LinkTab("Corp Forums", base_config["forum_url"])),
-                   Subgroup("Services", *after_base)]
+                   Subgroup("Services", *services)]
 
     def __init__(self, app):
         nav = Nav()
 
+        # noinspection PyUnusedLocal,PyAbstractClass,PyMethodMayBeStatic,PyPep8Naming
         @nav.renderer('custom')
         class CustomRenderer(BootstrapRenderer):
 
@@ -127,20 +130,18 @@ class Navigation:
 
         @nav.navigation('corporation')
         def nav_corp():
-            items = Navigation.corp + [SeparatorAlign(), View("Bug Report", 'issues'),
-                                       View("Change Theme", "settings"), View('Log Out', 'auth.log_out')]
+            items = Navigation.corp + Navigation.settings
             return Navbar(*items)
 
         @nav.navigation('alliance')
         def nav_alliance():
-            items = Navigation.alliance + [SeparatorAlign(), View("Bug Report", 'issues'),
-                                           View("Change Theme", "settings"),
-                                           View('Log Out', 'auth.log_out')]
+            items = Navigation.alliance + Navigation.settings
             return Navbar(*items)
 
         @nav.navigation('admin')
         def nav_admin():
             admin_elements = []
+            role_elements = []
             market_service = False
             for role in session.get("UI_Roles"):
                 if role == "jf_admin":
@@ -148,22 +149,23 @@ class Navigation:
                 elif role == "user_admin":
                     admin_elements.append(View('User Roles', "admin.roles"))
                 elif role == "jf_pilot":
-                    admin_elements.append(View('JF Service', "jf.pilot"))
+                    role_elements.append(View('JF Service', "jf.pilot"))
                 elif role == "buyback_admin":
                     admin_elements.append(View('Buyback Service', 'buyback.admin'))
                 elif role in ["ordering_marketeer", "ordering_admin"] and not market_service:
-                    admin_elements.append(View('Market Service', 'ordering.admin'))
+                    role_elements.append(View('Market Service', 'ordering.admin'))
                     market_service = True
                 elif role == "security_officer":
-                    admin_elements.append(View('Security Info', 'security.home'))
+                    role_elements.append(View('Security Info', 'security.home'))
+            subs = []
+            if role_elements:
+                subs.append(Subgroup('Role Pages', *role_elements))
+            if admin_elements:
+                subs.append(Subgroup('Admin Pages', *admin_elements))
             if session["UI_Corporation"]:
-                items = Navigation.corp + [Subgroup('Admin Pages', *admin_elements), SeparatorAlign(),
-                                           View("Bug Report", 'issues'), View("Change Theme", "settings"),
-                                           View('Log Out', 'auth.log_out')]
+                items = Navigation.corp + subs + Navigation.settings
             elif session["UI_Alliance"]:
-                items = Navigation.alliance + [Subgroup('Admin Pages', *admin_elements), SeparatorAlign(),
-                                               View("Bug Report", 'issues'), View("Change Theme", "settings"),
-                                               View('Log Out', 'auth.log_out')]
+                items = Navigation.alliance + subs + Navigation.settings
             else:
                 return nav_neut()
 
