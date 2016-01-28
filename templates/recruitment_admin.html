@@ -2,38 +2,49 @@
 {% block content %}
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-12">
-            <h2>Current Recruitment Status: {{status}}</h2>
+        <h2>Recruitment Settings</h2>
+        <div class="col-lg-6">
+            <h3>Front page information</h3>
             <form method="post">
-                <button type="submit" class="btn btn-success" name="action" value="open">Open</button>
-                <button type="submit" class="btn btn-warning" name="action" value="restricted">Restrict</button>
-                <button type="submit" class="btn btn-danger" name="action" value="closed">Close</button>
+                <textarea class="form-control" rows="11" name="info">{{info}}</textarea>
+                <button name="action" type="submit" class="btn btn-primary" value="info_edit">Save</button>
             </form>
+        </div>
+        <div class="col-lg-6">
+            <div class="row">
+                <h3>Current Recruitment Status: {{status}}</h3>
+                <form method="post">
+                    <button type="submit" class="btn btn-success" name="action" value="open">Open</button>
+                    <button type="submit" class="btn btn-warning" name="action" value="restricted">Restrict</button>
+                    <button type="submit" class="btn btn-danger" name="action" value="closed">Close</button>
+                </form>
+            </div>
+            <div class="row">
+                <h3>New Question</h3>
+                <form method="post">
+                    <div class="form-group">
+                        <label for="text">Question:</label>
+                        <input class="form-control" id="text" name="text" placeholder="Ex. Explain why you are a spy.">
+                        <div class="checkbox">
+                            <label>
+                                <input name="long" type="checkbox" value="True">
+                                Long answer?
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input name="bool" type="checkbox" value="True">
+                                Boolean (Only True or False)?
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" name="action" value="add">Add</button>
+                </form>
+            </div>
         </div>
     </div>
     <div class="row">
         <div class="col-lg-12">
-            <h2>Recruitment Questions</h2>
-            <h3>New Question</h3>
-            <form method="post">
-                <div class="form-group">
-                    <label for="text">Question:</label>
-                    <input class="form-control" id="text" name="text" placeholder="Ex. Explain why you are a spy.">
-                    <div class="checkbox">
-                        <label>
-                            <input name="long" type="checkbox" value="True">
-                            Long answer?
-                        </label>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input name="bool" type="checkbox" value="True">
-                            Boolean (Only True or False)?
-                        </label>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary" name="action" value="add">Add</button>
-            </form>
             <h3>Current Questions</h3>
             <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
                 <thead>

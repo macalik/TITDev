@@ -15,9 +15,9 @@
         {% endfor %}
         <div class="col-md-12">
             <h3>Information</h3>
-            <p>
-                Hi my name is blah.
-            </p>
+            {% for line in info %}
+            <p>{{line}}</p>
+            {% endfor %}
             {% if status == "restricted" %}
             <h3>Please enter the recruitment key given to you by a recruiter in the box below.</h3>
             <form method="post">

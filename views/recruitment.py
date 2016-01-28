@@ -16,8 +16,10 @@ def home():
     recruitment_prefs = g.mongo.db.preferences.find_one({"_id": "recruitment"})
     if recruitment_prefs:
         status = recruitment_prefs.get("status", "closed")
+        info = recruitment_prefs.get("info", "No information available.").splitlines()
     else:
         status = "closed"
+        info = ["No information available."]
 
     if status == "restricted":
         key = request.form.get("key")
@@ -27,7 +29,7 @@ def home():
         if request.form.get("action") == "apply":
             return redirect(url_for("recruitment.apply"))
 
-    return render_template("recruitment.html", status=status)
+    return render_template("recruitment.html", status=status, info=info)
 
 
 @recruitment.route("/apply", methods=["GET", "POST"])
@@ -266,20 +268,27 @@ def admin():
                                                                        {"$set": {"status": "closed"}},
                                                                        upsert=True,
                                                                        return_document=ReturnDocument.AFTER)
+    elif request.form.get("action") == "info_edit":
+        recruitment_prefs = g.mongo.db.preferences.find_one_and_update({"_id": "recruitment"},
+                                                                       {"$set": {"info": request.form.get("info")}},
+                                                                       upsert=True,
+                                                                       return_document=ReturnDocument.AFTER)
     else:
         recruitment_prefs = g.mongo.db.preferences.find_one({"_id": "recruitment"})
 
     if recruitment_prefs:
         status = recruitment_prefs.get("status", "closed")
+        info = recruitment_prefs.get("info", "")
     else:
         status = "closed"
+        info = ""
 
     question_list = g.mongo.db.app_questions.find()
     question_table = [["Question", "Long", "Boolean"]]
     if question_list:
         for question in question_list:
             question_table.append([question["text"], question["long"], question["bool"], question["_id"]])
-    return render_template("recruitment_admin.html", question_table=question_table, status=status)
+    return render_template("recruitment_admin.html", question_table=question_table, status=status, info=info)
 
 
 @recruitment.route("/applications", methods=["GET", "POST"])
