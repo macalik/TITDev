@@ -286,7 +286,7 @@ def admin():
 @requires_sso("security_officer", "recruiter")
 def applications():
     recruitment_prefs = g.mongo.db.preferences.find_one({"_id": "recruitment"})
-    restricted = True if recruitment_prefs["status"] == "restricted" else False
+    restricted = True if recruitment_prefs and recruitment_prefs.get("status") == "restricted" else False
     if restricted:
         if request.form.get("action") == "create":
             g.mongo.db.applications.insert_one({"recruiter": session["CharacterName"]})
