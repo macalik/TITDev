@@ -1,0 +1,288 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        {% for category, message in get_flashed_messages(with_categories=true) %}
+        {% if category == "error" %}
+        <div class="col-md-12">
+            <div class="alert alert-danger" role="alert">{{message}}</div>
+        </div>
+        {% elif category == "success" %}
+        <div class="col-md-12">
+            <div class="alert alert-success" role="alert">{{message}}</div>
+        </div>
+        {% endif %}
+        {% endfor %}
+        <div class="col-md-6">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <img src="{{image_list[0]}}" alt="Character">
+                    <img src="{{image_list[1]}}" alt="Corporation">
+                    <img src="{{image_list[2]}}" alt="Alliance">
+                </li>
+                <li class="list-group-item"><b>Site ID:</b> {{user_info[0]}}</li>
+                <li class="list-group-item"><b>Character:</b> {{user_info[1]}}</li>
+                <li class="list-group-item"><b>Corporation:</b> {{user_info[2]}}</li>
+                <li class="list-group-item"><b>Alliance:</b> {{user_info[3]}}</li>
+                {% if role == "security_officer" %}
+                <li class="list-group-item">
+                    <a class="btn btn-warning" href="{{url_for('security.user', site_id=user_info[0])}}" role="button">Security Info</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <ul class="list-group">
+                <li class="list-group-item"><b>Recruitment Key:</b> {{app_key}}</li>
+                <li class="list-group-item"><b>Recruiter:</b> {{app_recruiter}}</li>
+                <li class="list-group-item"><b>Application Status:</b> {{app_status}}</li>
+                <li class="list-group-item"><b>Reason:</b> {{app_reason}}</li>
+                <li class="list-group-item"><b>Met Recruiter:</b> {{met_recruiter}}</li>
+                {% if role %}
+                <li class="list-group-item">
+                    <form method="post">
+                        <input type="hidden" name="submitted" value="{{submitted}}">
+                        <div class="form-group">
+                            <input type="hidden" name="met_recruiter" value="{{met_recruiter}}">
+                            {% if met_recruiter %}
+                            <button type="submit" class="btn btn-warning" name="action" value="flag">Flag as need to meet recruiter</button>
+                            {% else %}
+                            <button type="submit" class="btn btn-success" name="action" value="flag">Flag as has met recruiter</button>
+                            {% endif %}
+                        </div>
+                        {% if role == "security_officer" %}
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">Reason</span>
+                                <input class="form-control" placeholder="Ex. We hate you." name="reason">
+                            </div>
+                            <button type="submit" class="btn btn-primary" name="action" value="process">Process</button>
+                            <button type="submit" class="btn btn-danger" name="action" value="release">Release</button>
+                            <button type="submit" class="btn btn-warning" name="action" value="interview">Pend Interview</button>
+                            <button type="submit" class="btn btn-success" name="action" value="accept">Accept</button>
+                            <button type="submit" class="btn btn-danger" name="action" value="reject">Reject</button>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">Key</span>
+                                <input class="form-control" placeholder="Confirm delete by putting the key in this box." name="confirm">
+                            </div>
+                            <button type="submit" class="btn btn-danger" name="action" value="delete">Delete</button>
+                        </div>
+                        {% endif %}
+                    </form>
+                </li>
+                {% endif %}
+            </ul>
+            <div class="form-group">
+                <form method="post" class="form-inline">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon">Recruiter</span>
+                            <select class="form-control" name="recruiter">
+                                {% for recruiter in recruiter_list %}
+                                {% if recruiter == app_recruiter %}
+                                <option value="{{recruiter}}" selected>{{recruiter}}</option>
+                                {% else %}
+                                <option value="{{recruiter}}">{{recruiter}}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <button name="action" type="submit" class="btn btn-primary" value="recruiter">Edit</button>
+                </form>
+            </div>
+            {% if not role %}
+            {% for error in error_list %}
+            <div class="alert alert-danger" role="alert">{{error}}</div>
+            {% endfor %}
+            <div>
+                <form method="post">
+                    <label> Add New API:
+                        <a href="http://community.eveonline.com/support/api-key/CreatePredefined?accessMask={{access_mask}}">
+                        Predefined Link
+                        </a>
+                        [Check No Expiry]
+                    </label>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon">Key ID</span>
+                            <input class="form-control" placeholder="Key ID" name="key_id">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon">vCode</span>
+                            <input class="form-control" placeholder="vCode" name="vcode">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button name="action" type="submit" class="btn btn-primary" value="add">Add</button>
+                    </div>
+                </form>
+            </div>
+            {% else %}
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#recruiter_notes">Notes</a></li>
+                <li><a data-toggle="tab" href="#recruiter_notes_edit">Edit</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="recruiter_notes" class="tab-pane active">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Recruiter Notes</h3>
+                        </div>
+                        <div class="panel-body">
+                            {% for line in recruiter_notes[0] %}
+                            <p>{{line}}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div id="recruiter_notes_edit" class="tab-pane">
+                    <form method="post">
+                        <textarea class="form-control" rows="5" name="recruiter_edit">{{recruiter_notes[1]}}</textarea>
+                        <button name="action" type="submit" class="btn btn-primary" value="recruiter_edit">Save</button>
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>All APIs</h2>
+            <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
+                <thead>
+                <tr>
+                    <th>Char ID</th>
+                    <th>Char Name</th>
+                    <th>Key ID</th>
+                    <th>vCode</th>
+                    <th>Cached Until</th>
+                    <th>Valid</th>
+                    {% if not role %}
+                    <th>Action</th>
+                    {% endif %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for key in associated_keys %}
+                <tr class="{{'danger' if not key[-1]}}">
+                    {% for info in key %}
+                    <td>{{info}}</td>
+                    {% endfor %}
+                    {% if not role %}
+                    <td>
+                        <form method="post">
+                            <input class="form-control" name="key_id" type="hidden" value="{{key[2]}}">
+                            <input class="form-control" name="vcode" type="hidden" value="{{key[3]}}">
+                            <button name="action" type="submit" class="btn btn-danger" value="remove">Remove</button>
+                        </form>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        {% if not role %}
+        <div class="col-md-12">
+            <h2>Questions</h2>
+            <form method="post">
+                {% for question in question_table %}
+                <h3>{{question[0]}}</h3>
+                {% if question[1] == "bool" %}
+                <div class="form-group">
+                    {% if question[3] %}
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="{{question[2]}}" value="False">
+                            False
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="{{question[2]}}" value="True" checked>
+                            True
+                        </label>
+                    </div>
+                    {% else %}
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="{{question[2]}}" value="False" checked>
+                            False
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="{{question[2]}}" value="True">
+                            True
+                        </label>
+                    </div>
+                    {% endif %}
+                </div>
+                {% elif question[1] == "long" %}
+                <textarea class="form-control" rows="5" name="{{question[2]}}">{{question[3]}}</textarea>
+                {% else %}
+                <div class="form-group">
+                    <input class="form-control" name="{{question[2]}}" value="{{question[3]}}">
+                </div>
+                {% endif %}
+                {% endfor %}
+                <input type="hidden" name="submitted" value="{{submitted}}">
+                {% if submitted %}
+                <button name="action" type="submit" class="btn btn-primary" value="submit">Edit Answers</button>
+                {% else %}
+                <button name="action" type="submit" class="btn btn-primary" value="submit">Submit Application</button>
+                {% endif %}
+            </form>
+        </div>
+        {% else %}
+        <div class="col-md-6">
+            <h2>Questions</h2>
+            {% for question in question_table %}
+            <h3>{{question[0]}}</h3>
+            {% if question[1] == "long" %}
+                {% for line in question[4] %}
+                <p>{{line}}</p>
+                {% endfor %}
+            {% else %}
+            <p>{{question[3]}}</p>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <div class="col-md-6">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#officer_notes">Notes</a></li>
+                <li><a data-toggle="tab" href="#officer_notes_edit">Edit</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="officer_notes" class="tab-pane active">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Secuirty Officer Notes</h3>
+                        </div>
+                        <div class="panel-body">
+                            {% for line in officer_notes[0] %}
+                            <p>{{line}}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div id="officer_notes_edit" class="tab-pane">
+                    <form method="post">
+                        <textarea class="form-control" rows="20" name="officer_edit">{{officer_notes[1]}}</textarea>
+                        <button name="action" type="submit" class="btn btn-primary" value="officer_edit">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

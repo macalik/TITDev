@@ -118,14 +118,16 @@ class Navigation:
 
         @nav.navigation('anon')
         def nav_anon():
-            return Navbar('TiT', View('Home', 'home'), View('JF Service', "jf.home"),
-                          View('Buyback Service', 'buyback.home'),
+            return Navbar('TiT', View('Home', 'home'),
+                          View('Buyback Service', 'buyback.home'), View('JF Service', "jf.home"),
+                          View('Recruitment', 'recruitment.home'),
                           SeparatorAlign(), View("Change Theme", "settings"), LogIn('Log In', 'auth.sso_redirect'))
 
         @nav.navigation('neut')
         def nav_neut():
-            return Navbar('TiT', View('Home', 'home'), View('Account', "account.home"), View('JF Service', "jf.home"),
-                          View('Buyback Service', 'buyback.home'),
+            return Navbar('TiT', View('Home', 'home'), View('Account', "account.home"),
+                          View('Buyback Service', 'buyback.home'), View('JF Service', "jf.home"),
+                          View('Recruitment', 'recruitment.home'),
                           SeparatorAlign(), View("Change Theme", "settings"), View('Log Out', 'auth.log_out'))
 
         @nav.navigation('corporation')
@@ -157,6 +159,9 @@ class Navigation:
                     market_service = True
                 elif role == "security_officer":
                     role_elements.append(View('Security Info', 'security.home'))
+                    admin_elements.append(View('Recruitment Settings', 'recruitment.admin'))
+                elif role in ["recruiter", "security_officer"]:
+                    role_elements.append(View('Recruitment Apps', 'recruitment.applications'))
             subs = []
             if role_elements:
                 subs.append(Subgroup('Role Pages', *role_elements))

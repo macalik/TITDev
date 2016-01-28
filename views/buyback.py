@@ -109,7 +109,7 @@ def home():
     else:
         error_list = ["Quote of id '{}' cannot be found. It's probably really old.".format(error_id)]
 
-    if request.method == "POST":
+    if request.method == "POST" or request.form.get("action") == "quote":
         quote_ran = True
         with open("configs/base.json", "r") as base_config_file:
             base_config = json.load(base_config_file)
@@ -127,7 +127,11 @@ def home():
             jf_rate = 0
 
         # Parsing
-        item_names, item_input, item_qty, extra_errors = conversions.manual_parsing(request.form.get("input"))
+        if request.form.get("action") != "quote":
+            input_string = request.form.get("input")
+        else:
+            input_string = request.form.get("saved_input").replace("|", "\n")
+        item_names, item_input, item_qty, extra_errors = conversions.manual_parsing(input_string)
 
         refine_character = g.mongo.db.preferences.find_one({"_id": "refine_character"})
         if refine_character:
@@ -221,9 +225,19 @@ def home():
 
         # GUI Tables
         quick_table = [x[:3] + [x[-1]] for x in price_table]
+    else:
+        item_table = []
+        price_table = []
+        material_table = []
+        total_buy_delta = 0
+        total_sell_delta = 0
+        total_price = 0
+        quick_table = []
+        input_string = None
 
-        # Quote Saving
-        quote_id = g.mongo.db.buyback_quotes.insert({
+    # Quote Saving
+    if request.form.get("action") == "quote":
+        quote_id = g.mongo.db.buyback_quotes.insert_one({
             "item_table": item_table,
             "price_table": price_table,
             "material_table": material_table,
@@ -233,24 +247,15 @@ def home():
             "quick_table": quick_table,
             "date_added": time.time()
         })
-    else:
-        item_table = []
-        price_table = []
-        material_table = []
-        total_buy_delta = 0
-        total_sell_delta = 0
-        total_price = 0
-        quick_table = []
-        quote_id = 0
+        return redirect(url_for("buyback.quote", quote_id=quote_id.inserted_id))
 
-    # Quote Saving
-    if request.method == "GET" and request.args.get("action") == "quote":
-        return redirect(url_for("buyback.quote", quote_id=request.args.get("quote_id", "0")))
+    input_string = input_string.strip().replace("\r\n", "\n").replace("\n", "|") if input_string else None
 
     return render_template("buyback.html", item_table=item_table, price_table=price_table,
                            material_table=material_table, total_buy_delta=total_buy_delta,
                            total_sell_delta=total_sell_delta, total_price=total_price,
-                           quick_table=quick_table, error_list=error_list, quote=quote_ran, quote_id=quote_id,
+                           quick_table=quick_table, error_list=error_list, quote=quote_ran,
+                           input_string=input_string,
                            prices_usable=prices_usable)
 
 

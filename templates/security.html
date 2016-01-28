@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container">
+    {% for error in get_flashed_messages() %}
+    <div class="col-md-12">
+        <div class="alert alert-danger" role="alert">{{error}}</div>
+    </div>
+    {% endfor %}
     <h2>Security Info</h2>
     <h4>Red - Invalid API, Grey - Inactive but has active character on same account</h4>
     <h4>Yellow - Expired Vacation, Blue - Unreadable Vacation, Green - Valid Vacation</h4>

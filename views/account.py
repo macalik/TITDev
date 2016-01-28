@@ -150,7 +150,14 @@ def home():
         invoice_table.append([invoice_color, invoice_timestamp, invoice["_id"], invoice["jf_end"],
                               "{:,.02f}".format(invoice["order_total"]), invoice.get("marketeer"), invoice_status])
 
+    # Recruitment IDs
+    recruitment_ids = []
+    application_list = g.mongo.db.applications.find({"owner": session["CharacterOwnerHash"]})
+    for form in application_list:
+        recruitment_ids.append(form["_id"])
+
     return render_template("account.html", error_list=error_list, given_roles=given_roles,
                            associated_keys=associated_keys, user_info=user_info, image_list=image_list,
                            vacation=vacation, vacation_text=vacation_text, keys=keys, access_mask=access_mask,
-                           vacation_date=vacation_date, invoice_table=invoice_table, message=message)
+                           vacation_date=vacation_date, invoice_table=invoice_table, message=message,
+                           recruitment_ids=recruitment_ids)

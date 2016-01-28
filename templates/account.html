@@ -37,6 +37,12 @@
                 <li class="list-group-item"><b>Email:</b> {{user_info[4]}}</li>
                 <li class="list-group-item"><b>Mumble ID:</b> {{user_info[5]}}</li>
                 <li class="list-group-item"><b>IM Username:</b> {{user_info[6]}}</li>
+                <li class="list-group-item">
+                    <b>Recruitment IDs:</b>
+                    {% for id in recruitment_ids %}
+                    <a href="{{url_for('recruitment.form', key=id)}}">{{id}}</a>
+                    {% endfor %}
+                </li>
             </ul>
         </div>
         <div class="col-md-6">
@@ -125,6 +131,9 @@
                     </div>
                 </form>
             </div>
+            {% for error in error_list %}
+            <div class="alert alert-danger" role="alert">{{error}}</div>
+            {% endfor %}
             <div>
                 <form method="post">
                     <label> Add New API:
@@ -151,9 +160,6 @@
                     </div>
                 </form>
             </div>
-            {% for error in error_list %}
-            <div class="alert alert-danger" role="alert">{{error}}</div>
-            {% endfor %}
         </div>
     </div>
     <div class="row">

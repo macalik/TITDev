@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        {% for category, message in get_flashed_messages(with_categories=true) %}
+        {% if category == "error" %}
+        <div class="col-md-12">
+            <div class="alert alert-danger" role="alert">{{message}}</div>
+        </div>
+        {% elif category == "success" %}
+        <div class="col-md-12">
+            <div class="alert alert-success" role="alert">{{message}}</div>
+        </div>
+        {% endif %}
+        {% endfor %}
+        <div class="col-md-12">
+            <h3>Information</h3>
+            <p>
+                Hi my name is blah.
+            </p>
+            {% if status == "restricted" %}
+            <h3>Please enter the recruitment key given to you by a recruiter in the box below.</h3>
+            <form method="post">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon">Key</span>
+                        <input class="form-control" placeholder="Ask a recruiter for this code." name="key">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+            {% elif status == "open" %}
+            <h3>Click the button below to create a recruitment form or open a previous one.</h3>
+            <form method="post">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary" name="action" value="apply">Open Recruitment Form</button>
+                </div>
+            </form>
+            {% else %}
+            <h3>Recruitment is not open at this time.</h3>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

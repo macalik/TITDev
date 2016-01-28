@@ -2,7 +2,7 @@ import json
 import time
 import calendar
 
-from flask import Blueprint, render_template, g, redirect, url_for, request
+from flask import Blueprint, render_template, g, redirect, url_for, request, flash
 
 from views.auth import requires_sso
 from helpers import caches, background
@@ -149,14 +149,14 @@ def home():
 
     # Determine inactive characters with active characters on same account
     for character_30 in inactivity_30_days:
-        # If doesn't have a color and a main is associated with the character
-        if not character_30[0] and char_to_main.get(character_30[3]):
+        # If color is not danger and a main is associated with the character
+        if character_30[0] != "danger" and char_to_main.get(character_30[3]):
             # if at least one character associated with the main is active
             if set(main_to_chars[char_to_main.get(character_30[3])]) & set([x[2] for x in active]):
                 character_30[0] = "active"
     for character_60 in inactivity_60_days:
-        # If doesn't have a color and a main is associated with the character
-        if not character_60[0] and char_to_main.get(character_60[3]):
+        # If color is not danger and a main is associated with the character
+        if character_60[0] != "danger" and char_to_main.get(character_60[3]):
             # if at least one character associated with the main is active
             if set(main_to_chars[char_to_main.get(character_60[3])]) & set([x[2] for x in active]):
                 character_60[0] = "active"
@@ -187,23 +187,26 @@ def home():
 @requires_sso("security_officer")
 def user(site_id=""):
     if not site_id:
+        flash("No site id given.", "error")
         return redirect(url_for("security.home"))
     else:
         site_id = site_id.strip()
 
     user_apis = g.mongo.db.api_keys.find_one({"_id": site_id})
     user_info = g.mongo.db.users.find_one({"_id": site_id})
-    if not user_apis and user_info:
+    if not user_info:
+        flash("No user found.", "error")
         return redirect(url_for("security.home"))
 
     api_table = []
     id_list = []
     affiliation_table = []
-    for api_key in user_apis["keys"]:
-        api_table.append([api_key["character_name"], api_key["character_id"], api_key["key_id"], api_key["vcode"],
-                          api_key["cached_str"], api_key.get("valid", True)])
-        id_list.append(api_key["character_id"])
-        affiliation_table.append([api_key["character_name"], api_key["corporation_name"], api_key["alliance_name"]])
+    if user_apis:
+        for api_key in user_apis["keys"]:
+            api_table.append([api_key["character_name"], api_key["character_id"], api_key["key_id"], api_key["vcode"],
+                              api_key["cached_str"], api_key.get("valid", True)])
+            id_list.append(api_key["character_id"])
+            affiliation_table.append([api_key["character_name"], api_key["corporation_name"], api_key["alliance_name"]])
 
     vacation_db = g.mongo.db.personals.find_one({"_id": site_id})
     vacation_text = vacation_db.get("vacation") if vacation_db else None

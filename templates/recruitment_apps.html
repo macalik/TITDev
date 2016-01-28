@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#in_progress">In Progress</a></li>
+            <li><a data-toggle="tab" href="#accepted">Accepted</a></li>
+            <li><a data-toggle="tab" href="#rejected">Rejected</a></li>
+            <li><a data-toggle="tab" href="#all">All</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="in_progress" class="tab-pane active">
+                <div class="col-md-12">
+                    <h3>Applications In Progress</h3>
+                    <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
+                        <thead>
+                        <tr>
+                            <th>Application Key</th>
+                            <th>Applicant</th>
+                            <th>Submitted</th>
+                            <th>Recruiter</th>
+                            <th>Met Recruiter</th>
+                            <th>Status</th>
+                            <th>Reason</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for app in in_progress_table %}
+                        <tr>
+                            <td><a href="{{url_for('recruitment.form', key=app[0])}}">{{app[0]}}</a></td>
+                            {% for info in app[1:] %}
+                            <td>{{info}}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="accepted" class="tab-pane">
+                <div class="col-md-12">
+                    <h3>History - Applications Accepted</h3>
+                    <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
+                        <thead>
+                        <tr>
+                            <th>Application Key</th>
+                            <th>Applicant</th>
+                            <th>Submitted</th>
+                            <th>Recruiter</th>
+                            <th>Met Recruiter</th>
+                            <th>Status</th>
+                            <th>Reason</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for app in accepted_table %}
+                        <tr>
+                            <td><a href="{{url_for('recruitment.form', key=app[0])}}">{{app[0]}}</a></td>
+                            {% for info in app[1:] %}
+                            <td>{{info}}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="rejected" class="tab-pane">
+                <div class="col-md-12">
+                    <h3>History - Applications Rejected</h3>
+                    <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
+                        <thead>
+                        <tr>
+                            <th>Application Key</th>
+                            <th>Applicant</th>
+                            <th>Submitted</th>
+                            <th>Recruiter</th>
+                            <th>Met Recruiter</th>
+                            <th>Status</th>
+                            <th>Reason</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for app in rejected_table %}
+                        <tr>
+                            <td><a href="{{url_for('recruitment.form', key=app[0])}}">{{app[0]}}</a></td>
+                            {% for info in app[1:] %}
+                            <td>{{info}}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="all" class="tab-pane">
+                <div class="col-md-12">
+                    <h3>History - All Applications</h3>
+                    <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
+                        <thead>
+                        <tr>
+                            <th>Application Key</th>
+                            <th>Applicant</th>
+                            <th>Submitted</th>
+                            <th>Recruiter</th>
+                            <th>Met Recruiter</th>
+                            <th>Status</th>
+                            <th>Reason</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for app in app_table %}
+                        <tr>
+                            <td><a href="{{url_for('recruitment.form', key=app[0])}}">{{app[0]}}</a></td>
+                            {% for info in app[1:] %}
+                            <td>{{info}}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if restricted %}
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Open Application Keys</h3>
+            <form method="post">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary" name="action" value="create">Create Key</button>
+                </div>
+            </form>
+            <table class="table table-hover table-condensed" width="100%">
+                <thead>
+                <tr>
+                    <th>Application Key</th>
+                    <th>Creator</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for key in new_key_list %}
+                <tr>
+                    {% for info in key %}
+                    <td>{{info}}</td>
+                    {% endfor %}
+                    <td>
+                        <form method="post">
+                            <input type="hidden" name="key" value="{{key[0]}}">
+                            <button type="submit" class="btn btn-danger" name="action" value="delete">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

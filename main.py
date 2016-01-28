@@ -16,6 +16,7 @@ from views.fittings import fittings
 from views.buyback import buyback
 from views.ordering import ordering
 from views.security import security
+from views.recruitment import recruitment
 from views.auth import requires_sso, auth_check
 # noinspection PyUnresolvedReferences
 from views import api  # Attaches API module
@@ -30,6 +31,7 @@ app.register_blueprint(fittings, url_prefix="/fittings")
 app.register_blueprint(buyback, url_prefix="/buyback")
 app.register_blueprint(ordering, url_prefix="/ordering")
 app.register_blueprint(security, url_prefix="/security")
+app.register_blueprint(recruitment, url_prefix="/recruitment")
 Navigation(app)
 
 
@@ -43,26 +45,25 @@ def app_init():
             stations_list = json.load(staStations_file)
         app_mongo.db.stations.insert([{"_id": int(key), "name": value} for key, value in stations_list.items()])
 
-    # Check if items are loaded
-    db_check_items = app_mongo.db.items.find_one({"_id": 34})  # Use Tritanium as check
-    if not db_check_items:
-        with open("resources/invTypes.json", "r") as invTypes_file:
-            items_list = json.load(invTypes_file)
-        # Adjust packed volumes of ships
-        with open("resources/invVolumes.json", "r") as invVolumes_file:
-            volumes_list = json.load(invVolumes_file)
-        # Open refine amounts
-        with open("resources/invTypeMaterials.json", "r") as invTypesMaterials_file:
-            materials_list = json.load(invTypesMaterials_file)
+    # Refresh Items
+    app_mongo.db.items.drop()
+    with open("resources/invTypes.json", "r") as invTypes_file:
+        items_list = json.load(invTypes_file)
+    # Adjust packed volumes of ships
+    with open("resources/invVolumes.json", "r") as invVolumes_file:
+        volumes_list = json.load(invVolumes_file)
+    # Open refine amounts
+    with open("resources/invTypeMaterials.json", "r") as invTypesMaterials_file:
+        materials_list = json.load(invTypesMaterials_file)
 
-        adjusted_items_list = []
-        for key, value in items_list.items():
-            corrected_volume = volumes_list[key] if volumes_list.get(key) else value["volume"]
-            adjusted_items_list.append({"_id": int(key), "name": value["name"], "volume": corrected_volume,
-                                        "meta": value["meta"], "materials": materials_list.get(key, []),
-                                        "market_group_id": value["market_group_id"], "skill_id": value["skill_id"],
-                                        "batch": value["batch"]})
-        app_mongo.db.items.insert(adjusted_items_list)
+    adjusted_items_list = []
+    for key, value in items_list.items():
+        corrected_volume = volumes_list[key] if volumes_list.get(key) else value["volume"]
+        adjusted_items_list.append({"_id": int(key), "name": value["name"], "volume": corrected_volume,
+                                    "meta": value["meta"], "materials": materials_list.get(key, []),
+                                    "market_group_id": value["market_group_id"], "skill_id": value["skill_id"],
+                                    "batch": value["batch"]})
+    app_mongo.db.items.insert(adjusted_items_list)
 
     # Check if roles are loaded
     app_mongo.db.eve_auth.update({"_id": "super_admin"}, {"$setOnInsert": {"users": []}}, upsert=True)
@@ -74,6 +75,7 @@ def app_init():
     app_mongo.db.eve_auth.update({"_id": "ordering_admin"}, {"$setOnInsert": {"users": []}}, upsert=True)
     app_mongo.db.eve_auth.update({"_id": "ordering_marketeer"}, {"$setOnInsert": {"users": []}}, upsert=True)
     app_mongo.db.eve_auth.update({"_id": "security_officer"}, {"$setOnInsert": {"users": []}}, upsert=True)
+    app_mongo.db.eve_auth.update({"_id": "recruiter"}, {"$setOnInsert": {"users": []}}, upsert=True)
 
 
 @app.before_request
@@ -174,7 +176,7 @@ if not os.environ.get("EXTERNAL") and __name__ == "__main__":
 
     @app.route('/test')
     def test():
-        print(app.extensions)
+        print(g.mongo.db.applications.insert_one({}).inserted_id)
         return render_template("base.html")
 
     profile = False

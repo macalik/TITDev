@@ -38,10 +38,10 @@
         </div>
         <div class="col-md-9">
             <h2>Contract Price: {{total_price}}</h2>
-            <form>
+            <form method="post">
                 <div class="form-group">
-                    <input name="quote_id" value="{{quote_id}}" hidden>
-                    {% if quote and prices_usable %}
+                    <input name="saved_input" value="{{input_string}}" hidden>
+                    {% if input_string and prices_usable %}
                     <button type="submit" class="btn btn-success" name="action" value="quote">Save Quote</button>
                     {% else %}
                     <button type="submit" class="btn btn-success" name="action" value="quote" disabled>Save Quote</button>
