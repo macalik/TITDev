@@ -3,6 +3,7 @@ import time
 import calendar
 
 from flask import Blueprint, render_template, g, redirect, url_for, request, flash
+from pymongo import ReturnDocument
 
 from views.auth import requires_sso
 from helpers import caches, background
@@ -130,9 +131,9 @@ def home():
             evemail_lines = "Empty Message" if not evemail_lines.strip() else evemail_lines.strip()
 
             evemail_call = "CCPEVE.sendMail({0}, '{1}', '{2}')".format(
-                corp_character["_id"],
-                evemail_subject.strip(),
-                "\\n".join([x.strip() for x in evemail_lines.format(character=corp_character["name"]).split("\n")])
+                    corp_character["_id"],
+                    evemail_subject.strip(),
+                    "\\n".join([x.strip() for x in evemail_lines.format(character=corp_character["name"]).split("\n")])
             )
             inactivity_60_days.append(api_row + [evemail_call])
         elif corp_character["log_on_time"] < time.time() - 2592000:
@@ -183,7 +184,7 @@ def home():
                            force_disable=force_disable, api_info_table=api_info_table)
 
 
-@security.route("/user/<path:site_id>")
+@security.route("/user/<path:site_id>", methods=["GET", "POST"])
 @requires_sso("security_officer")
 def user(site_id=""):
     if not site_id:
@@ -192,11 +193,42 @@ def user(site_id=""):
     else:
         site_id = site_id.strip()
 
-    user_apis = g.mongo.db.api_keys.find_one({"_id": site_id})
+    error_list = []
+    # Users
+    if request.form.get("action") == "delete":
+        if request.form.get("confirm") == site_id:
+            g.mongo.db.users.delete_one({"_id": site_id})
+            flash("Account Deleted", "success")
+            return redirect(url_for("security.home"))
+        else:
+            flash("Site ID didn't match.", "error")
     user_info = g.mongo.db.users.find_one({"_id": site_id})
+    # Vacation
+    if request.form.get("action") == "vacation":
+        vacation_db = g.mongo.db.personals.find_one_and_update(
+                {"_id": site_id}, {"$unset": {"vacation": True, "vacation_date": True}},
+                return_document=ReturnDocument.AFTER)
+        flash("Vacation reset.", "success")
+    else:
+        vacation_db = g.mongo.db.personals.find_one({"_id": site_id})
     if not user_info:
         flash("No user found.", "error")
         return redirect(url_for("security.home"))
+    # APIs
+    if request.form.get("action") == "add":
+        error_list = caches.api_keys([(request.form.get("key_id"), request.form.get("vcode"))],
+                                     dashboard_id=site_id)
+    if request.form.get("action") == "remove":
+        user_apis = g.mongo.db.api_keys.find_one_and_update({"_id": site_id},
+                                                            {
+                                                                "$pull": {
+                                                                    "keys": {"key_id": int(request.form.get("key_id"))}
+                                                                }
+                                                            },
+                                                            return_document=ReturnDocument.AFTER)
+        flash("Removed key id {0}".format(request.form.get("key_id")), "success")
+    else:
+        user_apis = g.mongo.db.api_keys.find_one({"_id": site_id})
 
     api_table = []
     id_list = []
@@ -208,7 +240,6 @@ def user(site_id=""):
             id_list.append(api_key["character_id"])
             affiliation_table.append([api_key["character_name"], api_key["corporation_name"], api_key["alliance_name"]])
 
-    vacation_db = g.mongo.db.personals.find_one({"_id": site_id})
     vacation_text = vacation_db.get("vacation") if vacation_db else None
     vacation_date = vacation_db.get("vacation_date") if vacation_db else None
 
@@ -229,10 +260,10 @@ def user(site_id=""):
     image = base_config["image_server"] + "/Character/" + str(user_info["character_id"]) + "_256.jpg"
 
     return render_template("security_user.html", api_table=api_table, user_table=user_table, image=image,
-                           site_log_in=time.strftime(time_format, time.gmtime(user_info["last_sign_on"])),
+                           site_log_in=time.strftime(time_format, time.gmtime(user_info.get("last_sign_on", 0))),
                            site_id=site_id, character_name=user_info["character_name"], location_table=location_table,
                            vacation_text=vacation_text, vacation_date=vacation_date,
-                           affiliation_table=affiliation_table)
+                           affiliation_table=affiliation_table, error_list=error_list)
 
 
 @security.route("/settings", methods=["GET", "POST"])

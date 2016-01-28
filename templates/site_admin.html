@@ -115,7 +115,8 @@
                     <tbody>
                     {% for user in user_list %}
                         <tr>
-                            {% for info in user %}
+                            <td><a href="{{url_for('security.user', site_id=user[1])}}">{{user[0]}}</a></td>
+                            {% for info in user[1:] %}
                             <td>{{info}}</td>
                             {% endfor %}
                         </tr>

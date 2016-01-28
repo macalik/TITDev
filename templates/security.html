@@ -1,10 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container">
-    {% for error in get_flashed_messages() %}
+    {% for category, message in get_flashed_messages(with_categories=true) %}
+    {% if category == "error" %}
     <div class="col-md-12">
-        <div class="alert alert-danger" role="alert">{{error}}</div>
+        <div class="alert alert-danger" role="alert">{{message}}</div>
     </div>
+    {% elif category == "success" %}
+    <div class="col-md-12">
+        <div class="alert alert-success" role="alert">{{message}}</div>
+    </div>
+    {% endif %}
     {% endfor %}
     <h2>Security Info</h2>
     <h4>Red - Invalid API, Grey - Inactive but has active character on same account</h4>

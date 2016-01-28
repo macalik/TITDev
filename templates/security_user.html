@@ -1,6 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container">
+    {% for category, message in get_flashed_messages(with_categories=true) %}
+    {% if category == "error" %}
+    <div class="col-md-12">
+        <div class="alert alert-danger" role="alert">{{message}}</div>
+    </div>
+    {% elif category == "success" %}
+    <div class="col-md-12">
+        <div class="alert alert-success" role="alert">{{message}}</div>
+    </div>
+    {% endif %}
+    {% endfor %}
     <div class="row">
         <div class="col-md-4">
             <img src="{{image}}" alt="Character">
@@ -15,23 +26,61 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <h2>API List</h2>
+            {% for error in error_list %}
+            <div class="alert alert-danger" role="alert">{{error}}</div>
+            {% endfor %}
+            <div>
+                <form method="post">
+                    <label> Add New API:
+                        <a href="http://community.eveonline.com/support/api-key/CreatePredefined?accessMask={{access_mask}}">
+                        Predefined Link
+                        </a>
+                        [Check No Expiry]
+                    </label>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon">Key ID</span>
+                            <input class="form-control" placeholder="Key ID" name="key_id">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon">vCode</span>
+                            <input class="form-control" placeholder="vCode" name="vcode">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button name="action" type="submit" class="btn btn-primary" value="add">Add</button>
+                    </div>
+                </form>
+            </div>
+            <h2>All APIs</h2>
             <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
                 <thead>
                 <tr>
-                    <th>Character Name</th>
-                    <th>Character ID</th>
+                    <th>Char Name</th>
+                    <th>Char ID</th>
                     <th>Key ID</th>
                     <th>vCode</th>
                     <th>Cached Until</th>
+                    <th>Valid</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for api in api_table %}
-                <tr class="{{'danger' if not api[-1]}}">
-                    {% for info in api[:-1] %}
+                {% for key in api_table %}
+                <tr class="{{'danger' if not key[-1]}}">
+                    {% for info in key %}
                     <td>{{info}}</td>
                     {% endfor %}
+                    <td>
+                        <form method="post">
+                            <input class="form-control" name="key_id" type="hidden" value="{{key[2]}}">
+                            <input class="form-control" name="vcode" type="hidden" value="{{key[3]}}">
+                            <button name="action" type="submit" class="btn btn-danger" value="remove">Remove</button>
+                        </form>
+                    </td>
                 </tr>
                 {% endfor %}
                 </tbody>
@@ -84,6 +133,23 @@
                 {% endfor %}
                 </tbody>
             </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>DANGER ZONE!</h2>
+            <h3>Reset Vacation</h3>
+            <form class="form-inline" method="post">
+                <button type="submit" class="btn btn-danger" name="action" value="vacation">Reset Vacation</button>
+            </form>
+            <h3>Delete account (Paste their Site ID in the box below to confirm)</h3>
+            <form class="form-inline" method="post">
+                <div class="input-group">
+                    <span class="input-group-addon">Site ID</span>
+                    <input class="form-control" placeholder="Confirm delete." name="confirm">
+                </div>
+                <button type="submit" class="btn btn-danger" name="action" value="delete">Delete Account</button>
+            </form>
         </div>
     </div>
 </div>
