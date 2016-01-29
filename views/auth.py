@@ -72,7 +72,7 @@ def requires_sso(*roles):
                                             {
                                                 "corporation_id": int(xml_tree[1][7].text),
                                                 "corporation_name": xml_tree[1][8].text,
-                                                "alliance_id": int(xml_tree[1][10].text),
+                                                "alliance_id": int(float(xml_tree[1][10].text)),
                                                 "alliance_name": xml_tree[1][11].text,
                                                 "last_sign_on": int(time.time()),
                                                 "cached_until": int(calendar.timegm(time.strptime(xml_tree[2].text,
@@ -272,7 +272,7 @@ def sso_response():
                                             "character_name": crest_char["CharacterName"],
                                             "corporation_id": int(xml_tree[1][7].text),
                                             "corporation_name": xml_tree[1][8].text.strip(),
-                                            "alliance_id": int(xml_tree[1][10].text),
+                                            "alliance_id": int(float(xml_tree[1][10].text)),
                                             "alliance_name": xml_tree[1][11].text.strip(),
                                             "refresh_token": auth_token["refresh_token"],
                                             "last_sign_on": int(time.time()),
