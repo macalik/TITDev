@@ -3,14 +3,43 @@
 <div class="container">
     <div class="row">
         <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#in_progress">In Progress</a></li>
-            <li><a data-toggle="tab" href="#not_started">Not Started</a></li>
+            <li class="active"><a data-toggle="tab" href="#started">Started</a></li>
+            <li><a data-toggle="tab" href="#in_progress">In Progress</a></li>
             <li><a data-toggle="tab" href="#accepted">Accepted</a></li>
             <li><a data-toggle="tab" href="#rejected">Rejected</a></li>
+            <li><a data-toggle="tab" href="#not_started">Not Started</a></li>
             <li><a data-toggle="tab" href="#all">All</a></li>
         </ul>
         <div class="tab-content">
-            <div id="in_progress" class="tab-pane active">
+            <div id="started" class="tab-pane active">
+                <div class="col-md-12">
+                    <h3>Applications Not Started</h3>
+                    <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
+                        <thead>
+                        <tr>
+                            <th>Application Key</th>
+                            <th>Applicant</th>
+                            <th>Submitted</th>
+                            <th>Recruiter</th>
+                            <th>Met Recruiter</th>
+                            <th>Status</th>
+                            <th>Reason</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for app in started_table %}
+                        <tr>
+                            <td><a href="{{url_for('recruitment.form', key=app[0])}}">{{app[0]}}</a></td>
+                            {% for info in app[1:] %}
+                            <td>{{info}}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="in_progress" class="tab-pane">
                 <div class="col-md-12">
                     <h3>Applications In Progress</h3>
                     <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
@@ -27,34 +56,6 @@
                         </thead>
                         <tbody>
                         {% for app in in_progress_table %}
-                        <tr>
-                            <td><a href="{{url_for('recruitment.form', key=app[0])}}">{{app[0]}}</a></td>
-                            {% for info in app[1:] %}
-                            <td>{{info}}</td>
-                            {% endfor %}
-                        </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div id="not_started" class="tab-pane">
-                <div class="col-md-12">
-                    <h3>Applications Not Started</h3>
-                    <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
-                        <thead>
-                        <tr>
-                            <th>Application Key</th>
-                            <th>Applicant</th>
-                            <th>Submitted</th>
-                            <th>Recruiter</th>
-                            <th>Met Recruiter</th>
-                            <th>Status</th>
-                            <th>Reason</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for app in not_started_table %}
                         <tr>
                             <td><a href="{{url_for('recruitment.form', key=app[0])}}">{{app[0]}}</a></td>
                             {% for info in app[1:] %}
@@ -111,6 +112,34 @@
                         </thead>
                         <tbody>
                         {% for app in rejected_table %}
+                        <tr>
+                            <td><a href="{{url_for('recruitment.form', key=app[0])}}">{{app[0]}}</a></td>
+                            {% for info in app[1:] %}
+                            <td>{{info}}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="not_started" class="tab-pane">
+                <div class="col-md-12">
+                    <h3>Applications Not Started</h3>
+                    <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
+                        <thead>
+                        <tr>
+                            <th>Application Key</th>
+                            <th>Applicant</th>
+                            <th>Submitted</th>
+                            <th>Recruiter</th>
+                            <th>Met Recruiter</th>
+                            <th>Status</th>
+                            <th>Reason</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for app in not_started_table %}
                         <tr>
                             <td><a href="{{url_for('recruitment.form', key=app[0])}}">{{app[0]}}</a></td>
                             {% for info in app[1:] %}

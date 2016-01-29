@@ -145,6 +145,7 @@ class Navigation:
             admin_elements = []
             role_elements = []
             market_service = False
+            security = False
             for role in session.get("UI_Roles"):
                 if role == "jf_admin":
                     admin_elements += [View('JF Routes', "jf.admin"), View('JF Stats', "jf.stats")]
@@ -157,10 +158,13 @@ class Navigation:
                 elif role in ["ordering_marketeer", "ordering_admin"] and not market_service:
                     role_elements.append(View('Market Service', 'ordering.admin'))
                     market_service = True
-                elif role == "security_officer":
-                    role_elements.append(View('Security Info', 'security.home'))
-                    admin_elements.append(View('Recruitment Settings', 'recruitment.admin'))
-                elif role in ["recruiter", "security_officer"]:
+                elif role in ["security_officer", "recruiter"] and not security:
+                    role_elements.append(View('Recruitment Apps', 'recruitment.applications'))
+                    if role == "security_officer":
+                        role_elements.append(View('Security Info', 'security.home'))
+                        admin_elements.append(View('Recruitment Settings', 'recruitment.admin'))
+                    security = True
+                elif role == "recruiter" and not security:
                     role_elements.append(View('Recruitment Apps', 'recruitment.applications'))
             subs = []
             if role_elements:

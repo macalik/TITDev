@@ -312,6 +312,7 @@ def applications():
     not_started_table = []
     accepted_table = []
     rejected_table = []
+    started_table = []
     for app in g.mongo.db.applications.find({"owner": {"$exists": True}}):
         row = [app["_id"], app["character_name"], app.get("submitted", False), app.get("recruiter"),
                app.get("met_recruiter", False), app.get("status", "Not Submitted"), app.get("reason")]
@@ -320,10 +321,12 @@ def applications():
             accepted_table.append(row)
         elif app.get("status") == "Rejected":
             rejected_table.append(row)
-        elif app.get("status") == "Submitted":
-            in_progress_table.append(row)
-        else:
+        elif app.get("status", "Not Submitted") == "Not Submitted":
             not_started_table.append(row)
+        elif app.get("status") == "Submitted":
+            started_table.append(row)
+        else:
+            in_progress_table.append(row)
     return render_template("recruitment_apps.html", app_table=app_table, in_progress_table=in_progress_table,
                            accepted_table=accepted_table, rejected_table=rejected_table, restricted=restricted,
-                           new_key_list=new_key_list, not_started_table=not_started_table)
+                           new_key_list=new_key_list, not_started_table=not_started_table, started_table=started_table)
