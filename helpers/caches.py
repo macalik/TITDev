@@ -143,10 +143,8 @@ def contracts(keys=None, celery_time=0):
             # Clean contract history
             month_ago = int(time.time()) - 2629743  # Services are 1 month
             two_weeks_ago = int(time.time()) - 1512000  # Personals are 2 1/2 weeks
-            g.mongo.db.contracts.remove({"issued_int": {"$lt": month_ago}})
             filter_time = month_ago
             if service[0] == "personal":
-                g.mongo.db.contracts.remove({"_id.service": "personal", "issued_int": {"$lt": two_weeks_ago}})
                 filter_time = two_weeks_ago
 
             if service[0] == "personal":
