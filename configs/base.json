@@ -10,9 +10,6 @@
   "market_hub_name": "Jita",
   "default_ship_to": "3KNA-N II - Naughty Nurse Academy",
   "home_station": 61000712,
-  "marketeer_slack_url": "https://hooks.slack.com/services/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",
-  "market_service_slack_url": "https://hooks.slack.com/services/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",
-  "slack_enable": true,
   "forum_url": "http://rhitgaming.com",
   "dashboard_url": "http://localhost:5000"
 }

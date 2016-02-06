@@ -421,19 +421,12 @@ def invoice(invoice_id=""):
             invoice_id = g.mongo.db.invoices.insert(cart)
             g.mongo.db.carts.remove({"_id": cart["user"]})
 
-            # Slack Integration
-            if (base_config.get("slack_enable") and
-                    (base_config.get("marketeer_slack_url") or base_config.get("market_service_slack_url"))):
-                user = g.mongo.db.users.find_one({"_id": session["CharacterOwnerHash"]})
-                if base_config.get("marketeer_slack_url"):
-                    payload = {"text": "<!channel|channel>: " + user["character_name"] + " created a invoice. <" +
-                               url_for("ordering.invoice", invoice_id=invoice_id, _external=True) + "|Invoice Link>"}
-                    requests.post(base_config["marketeer_slack_url"], json=payload)
-                if base_config.get("market_service_slack_url") and user.get("slack"):
-                    payload = {"text": "@" + user["slack"] + ": You created a invoice. <" +
-                               url_for("ordering.invoice", invoice_id=invoice_id, _external=True) + "|Invoice Link>"}
-                    requests.post(base_config["market_service_slack_url"], json=payload)
-
+            # Discord Integration
+            g.redis.publish('titdev-marketeer',
+                            "{0} has created an invoice: {1}".format(
+                                session["CharacterName"],
+                                url_for("ordering.invoice", invoice_id=invoice_id, _external=True)
+                            ))
             return redirect(url_for("ordering.invoice", invoice_id=invoice_id))
     else:
         cart = g.mongo.db.invoices.find_one({"_id": ObjectId(invoice_id)})
@@ -460,14 +453,12 @@ def invoice(invoice_id=""):
                                                                                 "marketeer": session["CharacterName"],
                                                                                 "reason": request.form.get("reason")
                                                                                 }})
-            # Slack Integration
-            if base_config.get("slack_enable") and base_config.get("market_service_slack_url") and cart.get("user"):
-                notify_user = g.mongo.db.users.find_one({"_id": cart.get("user")})
-                if base_config.get("market_service_slack_url") and notify_user.get("slack"):
-                    payload = {"text": "@{}: Your order has been rejected by {}. <{}|Invoice Link>".format(
-                        notify_user["slack"], session["CharacterName"],
-                        url_for("ordering.invoice", invoice_id=invoice_id, _external=True))}
-                    requests.post(base_config["market_service_slack_url"], json=payload)
+            # Discord Integration
+            g.redis.publish('titdev-marketeer',
+                            "{0} has rejected an invoice: {1}".format(
+                                session["CharacterName"],
+                                url_for("ordering.invoice", invoice_id=invoice_id, _external=True)
+                            ))
         elif request.form.get("action") == "process" and status in ["Not Processed", "Failed", "Rejected",
                                                                     "Submitted"] and editor:
             g.mongo.db.invoices.update({"_id": ObjectId(invoice_id)}, {"$set": {"status": "Processing",
@@ -487,27 +478,23 @@ def invoice(invoice_id=""):
                                                                                 "marketeer": session["CharacterName"],
                                                                                 "reason": request.form.get("reason")
                                                                                 }})
-            # Slack Integration
-            if base_config.get("slack_enable") and base_config.get("market_service_slack_url") and cart.get("user"):
-                notify_user = g.mongo.db.users.find_one({"_id": cart.get("user")})
-                if base_config.get("market_service_slack_url") and notify_user.get("slack"):
-                    payload = {"text": "@{}: Your order has been marked as failed by {}. <{}|Invoice Link>".format(
-                        notify_user["slack"], session["CharacterName"],
-                        url_for("ordering.invoice", invoice_id=invoice_id, _external=True))}
-                    requests.post(base_config["market_service_slack_url"], json=payload)
+            # Discord Integration
+            g.redis.publish('titdev-marketeer',
+                            "{0} has failed an invoice: {1}".format(
+                                session["CharacterName"],
+                                url_for("ordering.invoice", invoice_id=invoice_id, _external=True)
+                            ))
         elif request.form.get("action") == "complete" and editor:
             g.mongo.db.invoices.update({"_id": ObjectId(invoice_id)}, {"$set": {"status": "Completed",
                                                                                 "marketeer": session["CharacterName"]},
                                                                        "$unset": {
                                                                            "reason": request.form.get("reason")}})
-            # Slack Integration
-            if base_config.get("slack_enable") and base_config.get("market_service_slack_url") and cart.get("user"):
-                notify_user = g.mongo.db.users.find_one({"_id": cart.get("user")})
-                if base_config.get("market_service_slack_url") and notify_user.get("slack"):
-                    payload = {"text": "@{}: Your order has been completed by {}. <{}|Invoice Link>".format(
-                        notify_user["slack"], session["CharacterName"],
-                        url_for("ordering.invoice", invoice_id=invoice_id, _external=True))}
-                    requests.post(base_config["market_service_slack_url"], json=payload)
+            # Discord Integration
+            g.redis.publish('titdev-marketeer',
+                            "{0} has completed an invoice: {1}".format(
+                                session["CharacterName"],
+                                url_for("ordering.invoice", invoice_id=invoice_id, _external=True)
+                            ))
         elif request.form.get("action") == "shipping" and editor:
             g.mongo.db.invoices.update({"_id": ObjectId(invoice_id)}, {"$set": {
                 "external": not cart.get("external", False)}})
