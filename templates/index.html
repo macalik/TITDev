@@ -1,30 +1,26 @@
 {% extends "base.html" %}
-{% block navbar %}
-{% endblock navbar %}
-{% block styles %}
-{{super()}}
-<link rel="stylesheet" type="text/css" media="all" href="{{url_for('static', filename='custom/reset.css')}}">
-<link rel="stylesheet" type="text/css" media="all" href="{{url_for('static', filename='custom/text.css')}}">
-<link rel="stylesheet" type="text/css" media="all" href="{{url_for('static', filename='custom/960.css')}}">
-<link rel="stylesheet" type="text/css" media="all" href="{{url_for('static', filename='custom/tit.css')}}">
-<link rel="stylesheet" type="text/css" media="all" href="{{url_for('static', filename='custom/extra.css')}}">
-{% endblock styles %}
 {% block content %}
-    <div class="container_12" style="height: 150px"></div>
-    <div class="container_12">
-        <div class="grid_2" style="width: 100px">&nbsp;</div>
-        <div id="splash" class="auto-style2" style="width: 700px; height: 313px; background-image: url({{url_for('static', filename='custom/splash1.png')}});"></div>
-        <div class="grid_2" style="width: 100px">&nbsp;</div>
-        <div class="grid_4 center" style="width: 180px; text-align: center; height: 19px;"></div>
-        <div class="grid_4 center" style="width: 150px; text-align: center;"><a href="https://zkillboard.com/corporation/98117593/" target="_blank">Killboard</a></div>
-        <div class="grid_4 center" style="width: 150px; font-size: 20px;"><a href="https://forums.eveonline.com/default.aspx?g=posts&amp;t=405912">Recruitment</a></div>
-        <div class="grid_4 center" style="width: 150px">
-            <a href="{{url_for('buyback.home')}}">
-                <span class="auto-style1">Dashboard</span>
-            </a>
+    <div class="container">
+        <div class="tit-container">
+            <h1>Welcome to the Tritanium Industries and Technology Website.</h1>
+            <p class="lead">Log in using the button above through the EVE SSO to continue.</p>
+            <p class="lead">Tip: If you want to use a different account than the one you are logged in as when redirected to the SSO, hit the cancel button.</p>
+            <div class="jumbotron">
+                <h2>Why do we use SSO and is it safe?</h2>
+                <p> First, read this:
+                    <a href="http://community.eveonline.com/news/dev-blogs/eve-online-sso-and-what-you-need-to-know/">http://community.eveonline.com/news/dev-blogs/eve-online-sso-and-what-you-need-to-know/</a>
+                </p>
+                <p>It's a little old since it says something about a "SSO Limited Trial", but it is now open to all developers.</p>
+                <p>TL;DR: <b>We NEVER see your username or password.</b></p>
+                <p>You can also stop giving us your information whenever you want, just like your api keys.</p>
+                <p>Similar link used for SSO: <a href="https://community.eveonline.com/support/third-party-applications/">https://community.eveonline.com/support/third-party-applications/</a></p>
+                <p>What does this mean for our corp?</p>
+                <ul>
+                    <li>We don't have to save your username or password. No worries about getting your creditials stolen/hacked from our databases.</li>
+                    <li>We can confirm your identity. If you ever change your corp/alliance, you will automatically have no access to our services.</li>
+                    <li>It's safer. We don't have to ever worry about encrypting your connection. We won't have to pass around log-in credentials.</li>
+                </ul>
+            </div>
         </div>
-
-        <div class="grid_4 center" style="width: 150px; text-align: center;">
-            <a href="{{forum_url}}" target="_blank">Forums</a></div>
     </div>
 {% endblock content %}
