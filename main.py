@@ -3,6 +3,7 @@ import json
 
 from flask import render_template, g, session, redirect, url_for, request
 from bson.objectid import ObjectId
+import redis
 
 from app import app, app_mongo, cdn_theme_url
 
@@ -100,6 +101,19 @@ def db_init():
     if os.environ.get("maintenance") == "True":
         return render_template("maintenance.html")
 
+    # Redis
+    # read url
+    try:
+        redis_host = app.config["CELERY_BROKER_URL"][8:].split("@")[1].split(":")[0]
+        redis_password = app.config["CELERY_BROKER_URL"][9:].split("@")[0]
+    except IndexError:
+        redis_host = app.config["CELERY_BROKER_URL"][8:].split(":")[0]
+        redis_password = None
+    redis_port = int(app.config["CELERY_BROKER_URL"][9:].split(":")[1].split("/")[0])
+    redis_db = int(app.config["CELERY_BROKER_URL"][9:].split("/")[1])
+
+    g.redis = redis.StrictRedis(host=redis_host, port=redis_port, db=redis_db, password=redis_password)
+
 
 @app.teardown_request
 def cleanup(exception=None):
@@ -176,7 +190,8 @@ if not os.environ.get("EXTERNAL") and __name__ == "__main__":
 
     @app.route('/test')
     def test():
-        print(g.mongo.db.applications.insert_one({}).inserted_id)
+        g.redis.publish('titdev-test', 'Look at this. Very " \'cool # message;. ')
+        g.redis.publish('titdev-marketeer', 'This is a test of the emergency annoyance system.')
         return render_template("base.html")
 
     profile = False
