@@ -532,7 +532,7 @@ def invoice(invoice_id=""):
                            timestamp=timestamp, can_delete=can_delete, editor=editor,
                            status=status, button=button, marketeer=cart.get("marketeer"), reason=cart.get("reason"),
                            external=cart.get("external", False), can_edit=can_edit, character=cart.get("character"),
-                           contract_to=cart.get("contract_to"), notes=cart.get("notes"))
+                           contract_to=cart.get("contract_to"), notes=cart.get("notes"), invoice_id=invoice_id)
 
 
 @ordering.route("/admin", methods=["GET", "POST"])
