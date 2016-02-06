@@ -423,7 +423,7 @@ def invoice(invoice_id=""):
 
             # Discord Integration
             g.redis.publish('titdev-marketeer',
-                            "{0} has created an invoice: {1}".format(
+                            "@everyone: {0} has created an invoice: {1}".format(
                                 session["CharacterName"],
                                 url_for("ordering.invoice", invoice_id=invoice_id, _external=True)
                             ))
