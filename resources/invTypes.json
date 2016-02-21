@@ -907,7 +907,7 @@
         "batch": 1,
         "market_group_id": 603,
         "meta": 6,
-        "name": "Micro' Remote Shield Booster",
+        "name": "'Micro' Remote Shield Booster",
         "skill_id": null,
         "volume": 2.5
     },
@@ -14731,7 +14731,7 @@
         "batch": 1,
         "market_group_id": 680,
         "meta": 1,
-        "name": "C-IR Compact Guidance Disruptor I",
+        "name": "C-IR Compact Guidance Disruptor",
         "skill_id": null,
         "volume": 5.0
     },
@@ -19781,7 +19781,7 @@
         "meta": null,
         "name": "Large Remote Armor Repairer I",
         "skill_id": null,
-        "volume": 50.0
+        "volume": 25.0
     },
     "11360": {
         "batch": 1,
@@ -22189,7 +22189,7 @@
         "meta": null,
         "name": "Large Remote Capacitor Transmitter I",
         "skill_id": null,
-        "volume": 50.0
+        "volume": 5.0
     },
     "12226": {
         "batch": 1,
@@ -33546,10 +33546,10 @@
     "16449": {
         "batch": 1,
         "market_group_id": 1057,
-        "meta": null,
+        "meta": 1,
         "name": "Large I-ax Enduring Remote Armor Repairer",
         "skill_id": null,
-        "volume": 50.0
+        "volume": 25.0
     },
     "16451": {
         "batch": 1,
@@ -33557,7 +33557,7 @@
         "meta": 1,
         "name": "Large Coaxial Compact Remote Armor Repairer",
         "skill_id": null,
-        "volume": 50.0
+        "volume": 25.0
     },
     "16455": {
         "batch": 1,
@@ -33565,7 +33565,7 @@
         "meta": 1,
         "name": "Large Solace Scoped Remote Armor Repairer",
         "skill_id": null,
-        "volume": 50.0
+        "volume": 25.0
     },
     "16457": {
         "batch": 1,
@@ -48891,7 +48891,7 @@
         "batch": 1,
         "market_group_id": 680,
         "meta": 6,
-        "name": "'Distributor' Guidance Disruptor I",
+        "name": "'Distributor' Guidance Disruptor",
         "skill_id": null,
         "volume": 5.0
     },
@@ -50053,7 +50053,7 @@
         "meta": 6,
         "name": "'Peace' Large Remote Armor Repairer",
         "skill_id": null,
-        "volume": 50.0
+        "volume": 25.0
     },
     "23418": {
         "batch": 1,
@@ -55242,7 +55242,7 @@
     "26914": {
         "batch": 1,
         "market_group_id": 1057,
-        "meta": null,
+        "meta": 5,
         "name": "Large Remote Armor Repairer II",
         "skill_id": null,
         "volume": 25.0
@@ -60422,6 +60422,30 @@
         "name": "Sisters Core Probe Launcher",
         "skill_id": null,
         "volume": 5.0
+    },
+    "28770": {
+        "batch": 1,
+        "market_group_id": 405,
+        "meta": 6,
+        "name": "Syndicate Mobile Large Warp Disruptor",
+        "skill_id": null,
+        "volume": 585.0
+    },
+    "28772": {
+        "batch": 1,
+        "market_group_id": 405,
+        "meta": 6,
+        "name": "Syndicate Mobile Medium Warp Disruptor",
+        "skill_id": null,
+        "volume": 195.0
+    },
+    "28774": {
+        "batch": 1,
+        "market_group_id": 405,
+        "meta": 6,
+        "name": "Syndicate Mobile Small Warp Disruptor",
+        "skill_id": null,
+        "volume": 65.0
     },
     "28776": {
         "batch": 1,
@@ -68733,7 +68757,7 @@
         "meta": 6,
         "name": "Imperial Navy Large Remote Capacitor Transmitter",
         "skill_id": null,
-        "volume": 50.0
+        "volume": 5.0
     },
     "31948": {
         "batch": 1,
@@ -76295,6 +76319,86 @@
         "skill_id": null,
         "volume": 0.01
     },
+    "34540": {
+        "batch": 1,
+        "market_group_id": 2013,
+        "meta": null,
+        "name": "Sentinel Sequence 0",
+        "skill_id": null,
+        "volume": 0.1
+    },
+    "34541": {
+        "batch": 1,
+        "market_group_id": 2013,
+        "meta": null,
+        "name": "Sentinel Sequence 1",
+        "skill_id": null,
+        "volume": 0.1
+    },
+    "34542": {
+        "batch": 1,
+        "market_group_id": 2013,
+        "meta": null,
+        "name": "Barbican Sequence 0",
+        "skill_id": null,
+        "volume": 0.1
+    },
+    "34543": {
+        "batch": 1,
+        "market_group_id": 2013,
+        "meta": null,
+        "name": "Barbican Sequence 1",
+        "skill_id": null,
+        "volume": 0.1
+    },
+    "34544": {
+        "batch": 1,
+        "market_group_id": 2013,
+        "meta": null,
+        "name": "Vidette Sequence 0",
+        "skill_id": null,
+        "volume": 0.1
+    },
+    "34545": {
+        "batch": 1,
+        "market_group_id": 2013,
+        "meta": null,
+        "name": "Vidette Sequence 1",
+        "skill_id": null,
+        "volume": 0.1
+    },
+    "34546": {
+        "batch": 1,
+        "market_group_id": 2013,
+        "meta": null,
+        "name": "Conflux Sequence 0",
+        "skill_id": null,
+        "volume": 0.1
+    },
+    "34547": {
+        "batch": 1,
+        "market_group_id": 2013,
+        "meta": null,
+        "name": "Conflux Sequence 1",
+        "skill_id": null,
+        "volume": 0.1
+    },
+    "34548": {
+        "batch": 1,
+        "market_group_id": 2013,
+        "meta": null,
+        "name": "Redoubt Sequence 0",
+        "skill_id": null,
+        "volume": 0.1
+    },
+    "34549": {
+        "batch": 1,
+        "market_group_id": 2013,
+        "meta": null,
+        "name": "Redoubt Sequence 1",
+        "skill_id": null,
+        "volume": 0.1
+    },
     "34551": {
         "batch": 1,
         "market_group_id": 2013,
@@ -81177,7 +81281,7 @@
     },
     "36949": {
         "batch": 1,
-        "market_group_id": 2020,
+        "market_group_id": 2013,
         "meta": null,
         "name": "Coalesced Element Blueprint",
         "skill_id": null,
@@ -81939,7 +82043,7 @@
         "batch": 1,
         "market_group_id": 680,
         "meta": 1,
-        "name": "Highstroke Scoped Guidance Disruptor I",
+        "name": "Highstroke Scoped Guidance Disruptor",
         "skill_id": null,
         "volume": 5.0
     },
@@ -81947,7 +82051,7 @@
         "batch": 1,
         "market_group_id": 680,
         "meta": 1,
-        "name": "A-211 Enduring Guidance Disruptor I",
+        "name": "A-211 Enduring Guidance Disruptor",
         "skill_id": null,
         "volume": 5.0
     },
@@ -82355,7 +82459,7 @@
         "batch": 1,
         "market_group_id": 818,
         "meta": null,
-        "name": "Amarr Force Auxiliary",
+        "name": "Apostle",
         "skill_id": null,
         "volume": 1.0
     },
@@ -82363,7 +82467,7 @@
         "batch": 1,
         "market_group_id": 819,
         "meta": null,
-        "name": "Caldari Force Auxiliary",
+        "name": "Minokawa",
         "skill_id": null,
         "volume": 1.0
     },
@@ -82371,7 +82475,7 @@
         "batch": 1,
         "market_group_id": 821,
         "meta": null,
-        "name": "Minmatar Force Auxiliary",
+        "name": "Lif",
         "skill_id": null,
         "volume": 1.0
     },
@@ -82379,7 +82483,7 @@
         "batch": 1,
         "market_group_id": 820,
         "meta": null,
-        "name": "Gallente Force Auxiliary",
+        "name": "Sekhmet",
         "skill_id": null,
         "volume": 1.0
     },
@@ -82437,7 +82541,7 @@
         "meta": null,
         "name": "Micro Jump Field Generator Blueprint",
         "skill_id": null,
-        "volume": 0.0
+        "volume": 0.01
     },
     "37622": {
         "batch": 1,
@@ -82605,7 +82709,7 @@
         "meta": null,
         "name": "Project Compass Star Charts",
         "skill_id": null,
-        "volume": 0.0
+        "volume": 0.01
     },
     "37875": {
         "batch": 1,
@@ -82613,7 +82717,7 @@
         "meta": null,
         "name": "Contraband Amarrian Walnuts",
         "skill_id": null,
-        "volume": 0.0
+        "volume": 0.01
     },
     "37877": {
         "batch": 1,
@@ -82621,7 +82725,7 @@
         "meta": null,
         "name": "Cerebrum In A Container",
         "skill_id": null,
-        "volume": 0.0
+        "volume": 0.01
     },
     "37878": {
         "batch": 1,
@@ -82629,7 +82733,7 @@
         "meta": null,
         "name": "Sansha Claws Fairytale Book",
         "skill_id": null,
-        "volume": 0.0
+        "volume": 0.01
     },
     "37879": {
         "batch": 1,
@@ -82637,7 +82741,7 @@
         "meta": null,
         "name": "Festive Firecrackers",
         "skill_id": null,
-        "volume": 0.0
+        "volume": 0.01
     },
     "37880": {
         "batch": 1,
@@ -82645,7 +82749,7 @@
         "meta": null,
         "name": "Max Amarria",
         "skill_id": null,
-        "volume": 0.0
+        "volume": 0.01
     },
     "37881": {
         "batch": 1,
@@ -82653,7 +82757,7 @@
         "meta": null,
         "name": "Grand Teigjon Casino Chip",
         "skill_id": null,
-        "volume": 0.0
+        "volume": 0.01
     },
     "37882": {
         "batch": 1,
@@ -82661,7 +82765,7 @@
         "meta": null,
         "name": "YC117 Symposium On Emergent Threats Access Pass",
         "skill_id": null,
-        "volume": 0.0
+        "volume": 0.01
     },
     "37883": {
         "batch": 1,
@@ -82669,7 +82773,7 @@
         "meta": null,
         "name": "95th Interstellar Mindclash Championship Tickets",
         "skill_id": null,
-        "volume": 0.0
+        "volume": 0.01
     },
     "37884": {
         "batch": 1,
@@ -82677,7 +82781,7 @@
         "meta": null,
         "name": "Feawen's Approval Documentation",
         "skill_id": null,
-        "volume": 0.0
+        "volume": 0.01
     },
     "37885": {
         "batch": 1,
@@ -82685,7 +82789,7 @@
         "meta": null,
         "name": "Meat Popsicle",
         "skill_id": null,
-        "volume": 0.0
+        "volume": 0.01
     },
     "37886": {
         "batch": 1,
@@ -82693,7 +82797,7 @@
         "meta": null,
         "name": "Capital Parking Ticket",
         "skill_id": null,
-        "volume": 0.0
+        "volume": 0.01
     },
     "37887": {
         "batch": 1,
@@ -82701,7 +82805,7 @@
         "meta": null,
         "name": "Counterfeit Dominix Model",
         "skill_id": null,
-        "volume": 0.0
+        "volume": 0.01
     },
     "37888": {
         "batch": 1,
@@ -82709,7 +82813,7 @@
         "meta": null,
         "name": "Starsi",
         "skill_id": null,
-        "volume": 0.0
+        "volume": 0.01
     },
     "37889": {
         "batch": 1,
@@ -82717,7 +82821,7 @@
         "meta": null,
         "name": "YC118 Succession Trial Champion\u0092s Decree \u0096 House Tash-Murkon",
         "skill_id": null,
-        "volume": 0.0
+        "volume": 0.01
     },
     "37892": {
         "batch": 1,
@@ -82725,7 +82829,7 @@
         "meta": null,
         "name": "YC118 Succession Trial Champion\u0092s Decree \u0096 House Ardishapur",
         "skill_id": null,
-        "volume": 0.0
+        "volume": 0.01
     },
     "37893": {
         "batch": 1,
@@ -82733,7 +82837,7 @@
         "meta": null,
         "name": "YC118 Succession Trial Champion\u0092s Decree \u0096 House Kador",
         "skill_id": null,
-        "volume": 0.0
+        "volume": 0.01
     },
     "37894": {
         "batch": 1,
@@ -82741,7 +82845,7 @@
         "meta": null,
         "name": "YC118 Succession Trial Champion\u0092s Decree \u0096 House Khanid",
         "skill_id": null,
-        "volume": 0.0
+        "volume": 0.01
     },
     "37895": {
         "batch": 1,
@@ -82749,7 +82853,7 @@
         "meta": null,
         "name": "YC118 Succession Trial Champion\u0092s Decree \u0096 House Kor-Azor",
         "skill_id": null,
-        "volume": 0.0
+        "volume": 0.01
     },
     "37896": {
         "batch": 1,
@@ -82757,7 +82861,7 @@
         "meta": null,
         "name": "YC118 Succession Trial Champion\u0092s Decree \u0096 House Sarum",
         "skill_id": null,
-        "volume": 0.0
+        "volume": 0.01
     },
     "37965": {
         "batch": 1,
@@ -83012,6 +83116,870 @@
         "market_group_id": 1574,
         "meta": null,
         "name": "Guidance Disruptor I Blueprint",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40456": {
+        "batch": 1,
+        "market_group_id": 20,
+        "meta": null,
+        "name": "Research Component",
+        "skill_id": null,
+        "volume": 1.0
+    },
+    "40467": {
+        "batch": 1,
+        "market_group_id": 2005,
+        "meta": null,
+        "name": "Breacher Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40468": {
+        "batch": 1,
+        "market_group_id": 2005,
+        "meta": null,
+        "name": "Burst Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40469": {
+        "batch": 1,
+        "market_group_id": 2005,
+        "meta": null,
+        "name": "Probe Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40470": {
+        "batch": 1,
+        "market_group_id": 2005,
+        "meta": null,
+        "name": "Rifter Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40471": {
+        "batch": 1,
+        "market_group_id": 2005,
+        "meta": null,
+        "name": "Slasher Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40472": {
+        "batch": 1,
+        "market_group_id": 2005,
+        "meta": null,
+        "name": "Vigil Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40473": {
+        "batch": 1,
+        "market_group_id": 2050,
+        "meta": null,
+        "name": "Jaguar Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40474": {
+        "batch": 1,
+        "market_group_id": 2050,
+        "meta": null,
+        "name": "Wolf Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40475": {
+        "batch": 1,
+        "market_group_id": 2054,
+        "meta": null,
+        "name": "Cheetah Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40476": {
+        "batch": 1,
+        "market_group_id": 2054,
+        "meta": null,
+        "name": "Hound Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40477": {
+        "batch": 1,
+        "market_group_id": 2058,
+        "meta": null,
+        "name": "Hyena Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40478": {
+        "batch": 1,
+        "market_group_id": 2062,
+        "meta": null,
+        "name": "Claw Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40479": {
+        "batch": 1,
+        "market_group_id": 2062,
+        "meta": null,
+        "name": "Stiletto Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40480": {
+        "batch": 1,
+        "market_group_id": 1997,
+        "meta": null,
+        "name": "Talwar Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40481": {
+        "batch": 1,
+        "market_group_id": 1997,
+        "meta": null,
+        "name": "Thrasher Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40482": {
+        "batch": 1,
+        "market_group_id": 2041,
+        "meta": null,
+        "name": "Sabre Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40484": {
+        "batch": 1,
+        "market_group_id": 1993,
+        "meta": null,
+        "name": "Bellicose Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40485": {
+        "batch": 1,
+        "market_group_id": 1993,
+        "meta": null,
+        "name": "Rupture Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40486": {
+        "batch": 1,
+        "market_group_id": 1993,
+        "meta": null,
+        "name": "Scythe Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40487": {
+        "batch": 1,
+        "market_group_id": 1993,
+        "meta": null,
+        "name": "Stabber Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40488": {
+        "batch": 1,
+        "market_group_id": 2072,
+        "meta": null,
+        "name": "Muninn Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40489": {
+        "batch": 1,
+        "market_group_id": 2072,
+        "meta": null,
+        "name": "Vagabond Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40490": {
+        "batch": 1,
+        "market_group_id": 2076,
+        "meta": null,
+        "name": "Broadsword Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40491": {
+        "batch": 1,
+        "market_group_id": 2080,
+        "meta": null,
+        "name": "Scimitar Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40492": {
+        "batch": 1,
+        "market_group_id": 2084,
+        "meta": null,
+        "name": "Huginn Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40493": {
+        "batch": 1,
+        "market_group_id": 2084,
+        "meta": null,
+        "name": "Rapier Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40495": {
+        "batch": 1,
+        "market_group_id": 1959,
+        "meta": null,
+        "name": "Cyclone Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40496": {
+        "batch": 1,
+        "market_group_id": 1959,
+        "meta": null,
+        "name": "Hurricane Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40497": {
+        "batch": 1,
+        "market_group_id": 1959,
+        "meta": null,
+        "name": "Tornado Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40498": {
+        "batch": 1,
+        "market_group_id": 2107,
+        "meta": null,
+        "name": "Claymore Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40499": {
+        "batch": 1,
+        "market_group_id": 2107,
+        "meta": null,
+        "name": "Sleipnir Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40500": {
+        "batch": 1,
+        "market_group_id": 1967,
+        "meta": null,
+        "name": "Maelstrom Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40501": {
+        "batch": 1,
+        "market_group_id": 1967,
+        "meta": null,
+        "name": "Tempest Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40502": {
+        "batch": 1,
+        "market_group_id": 1967,
+        "meta": null,
+        "name": "Typhoon Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40503": {
+        "batch": 1,
+        "market_group_id": 2113,
+        "meta": null,
+        "name": "Panther Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40504": {
+        "batch": 1,
+        "market_group_id": 2027,
+        "meta": null,
+        "name": "Vargur Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40505": {
+        "batch": 1,
+        "market_group_id": 1983,
+        "meta": null,
+        "name": "Naglfar Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40506": {
+        "batch": 1,
+        "market_group_id": 1977,
+        "meta": null,
+        "name": "Nidhoggur Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40507": {
+        "batch": 1,
+        "market_group_id": 1977,
+        "meta": null,
+        "name": "Hel Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40508": {
+        "batch": 1,
+        "market_group_id": 2093,
+        "meta": null,
+        "name": "Ragnarok Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40509": {
+        "batch": 1,
+        "market_group_id": 2010,
+        "meta": null,
+        "name": "Hoarder Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40510": {
+        "batch": 1,
+        "market_group_id": 2010,
+        "meta": null,
+        "name": "Mammoth Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40511": {
+        "batch": 1,
+        "market_group_id": 2010,
+        "meta": null,
+        "name": "Wreathe Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40512": {
+        "batch": 1,
+        "market_group_id": 2091,
+        "meta": null,
+        "name": "Prowler Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40513": {
+        "batch": 1,
+        "market_group_id": 2091,
+        "meta": null,
+        "name": "Mastodon Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40514": {
+        "batch": 1,
+        "market_group_id": 1987,
+        "meta": null,
+        "name": "Fenrir Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40515": {
+        "batch": 1,
+        "market_group_id": 2098,
+        "meta": null,
+        "name": "Nomad Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40516": {
+        "batch": 1,
+        "market_group_id": 2140,
+        "meta": null,
+        "name": "Scalpel Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40517": {
+        "batch": 1,
+        "market_group_id": 2145,
+        "meta": null,
+        "name": "Bifrost Tronhadar Ink SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40519": {
+        "batch": 1,
+        "market_group_id": 1942,
+        "meta": null,
+        "name": "Skill Extractor",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40520": {
+        "batch": 1,
+        "market_group_id": 1942,
+        "meta": null,
+        "name": "Skill Injector",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40535": {
+        "batch": 1,
+        "market_group_id": 377,
+        "meta": null,
+        "name": "Amarr Force Auxiliary",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40536": {
+        "batch": 1,
+        "market_group_id": 377,
+        "meta": null,
+        "name": "Caldari Force Auxiliary",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40537": {
+        "batch": 1,
+        "market_group_id": 377,
+        "meta": null,
+        "name": "Gallente Force Auxiliary",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40538": {
+        "batch": 1,
+        "market_group_id": 377,
+        "meta": null,
+        "name": "Minmatar Force Auxiliary",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40548": {
+        "batch": 1,
+        "market_group_id": 20,
+        "meta": null,
+        "name": "Medium 'Astrahus' Citadel BPC Token",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40549": {
+        "batch": 1,
+        "market_group_id": 20,
+        "meta": null,
+        "name": "Large 'Fortizar' Citadel BPC Token",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40572": {
+        "batch": 1,
+        "market_group_id": 366,
+        "meta": null,
+        "name": "Light Fighters",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40573": {
+        "batch": 1,
+        "market_group_id": 366,
+        "meta": null,
+        "name": "Support Fighters",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40579": {
+        "batch": 1,
+        "market_group_id": 2003,
+        "meta": null,
+        "name": "Bantam Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40580": {
+        "batch": 1,
+        "market_group_id": 2003,
+        "meta": null,
+        "name": "Condor Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40581": {
+        "batch": 1,
+        "market_group_id": 2003,
+        "meta": null,
+        "name": "Griffin Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40582": {
+        "batch": 1,
+        "market_group_id": 2003,
+        "meta": null,
+        "name": "Heron Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40583": {
+        "batch": 1,
+        "market_group_id": 2003,
+        "meta": null,
+        "name": "Kestrel Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40584": {
+        "batch": 1,
+        "market_group_id": 2003,
+        "meta": null,
+        "name": "Merlin Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40585": {
+        "batch": 1,
+        "market_group_id": 2048,
+        "meta": null,
+        "name": "Harpy Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40586": {
+        "batch": 1,
+        "market_group_id": 2048,
+        "meta": null,
+        "name": "Hawk Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40587": {
+        "batch": 1,
+        "market_group_id": 2052,
+        "meta": null,
+        "name": "Buzzard Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40588": {
+        "batch": 1,
+        "market_group_id": 2052,
+        "meta": null,
+        "name": "Manticore Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40589": {
+        "batch": 1,
+        "market_group_id": 2056,
+        "meta": null,
+        "name": "Kitsune Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40590": {
+        "batch": 1,
+        "market_group_id": 2060,
+        "meta": null,
+        "name": "Crow Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40591": {
+        "batch": 1,
+        "market_group_id": 2060,
+        "meta": null,
+        "name": "Raptor Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40592": {
+        "batch": 1,
+        "market_group_id": 2138,
+        "meta": null,
+        "name": "Kirin Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40593": {
+        "batch": 1,
+        "market_group_id": 1995,
+        "meta": null,
+        "name": "Corax Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40594": {
+        "batch": 1,
+        "market_group_id": 1995,
+        "meta": null,
+        "name": "Cormorant Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40595": {
+        "batch": 1,
+        "market_group_id": 2143,
+        "meta": null,
+        "name": "Stork Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40596": {
+        "batch": 1,
+        "market_group_id": 2039,
+        "meta": null,
+        "name": "Flycatcher Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40597": {
+        "batch": 1,
+        "market_group_id": 1991,
+        "meta": null,
+        "name": "Blackbird Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40598": {
+        "batch": 1,
+        "market_group_id": 1991,
+        "meta": null,
+        "name": "Caracal Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40599": {
+        "batch": 1,
+        "market_group_id": 1991,
+        "meta": null,
+        "name": "Moa Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40600": {
+        "batch": 1,
+        "market_group_id": 1991,
+        "meta": null,
+        "name": "Osprey Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40601": {
+        "batch": 1,
+        "market_group_id": 2070,
+        "meta": null,
+        "name": "Cerberus Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40602": {
+        "batch": 1,
+        "market_group_id": 2070,
+        "meta": null,
+        "name": "Eagle Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40603": {
+        "batch": 1,
+        "market_group_id": 2074,
+        "meta": null,
+        "name": "Onyx Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40604": {
+        "batch": 1,
+        "market_group_id": 2078,
+        "meta": null,
+        "name": "Basilisk Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40605": {
+        "batch": 1,
+        "market_group_id": 2082,
+        "meta": null,
+        "name": "Falcon Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40606": {
+        "batch": 1,
+        "market_group_id": 2082,
+        "meta": null,
+        "name": "Rook Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40607": {
+        "batch": 1,
+        "market_group_id": 1957,
+        "meta": null,
+        "name": "Drake Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40608": {
+        "batch": 1,
+        "market_group_id": 1957,
+        "meta": null,
+        "name": "Ferox Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40609": {
+        "batch": 1,
+        "market_group_id": 1957,
+        "meta": null,
+        "name": "Naga Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40610": {
+        "batch": 1,
+        "market_group_id": 2105,
+        "meta": null,
+        "name": "Nighthawk Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40611": {
+        "batch": 1,
+        "market_group_id": 2105,
+        "meta": null,
+        "name": "Vulture Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40612": {
+        "batch": 1,
+        "market_group_id": 1965,
+        "meta": null,
+        "name": "Raven Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40613": {
+        "batch": 1,
+        "market_group_id": 1965,
+        "meta": null,
+        "name": "Rokh Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40614": {
+        "batch": 1,
+        "market_group_id": 1965,
+        "meta": null,
+        "name": "Scorpion Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40615": {
+        "batch": 1,
+        "market_group_id": 2111,
+        "meta": null,
+        "name": "Widow Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40616": {
+        "batch": 1,
+        "market_group_id": 2025,
+        "meta": null,
+        "name": "Golem Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40617": {
+        "batch": 1,
+        "market_group_id": 1981,
+        "meta": null,
+        "name": "Phoenix Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40618": {
+        "batch": 1,
+        "market_group_id": 1975,
+        "meta": null,
+        "name": "Chimera Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40619": {
+        "batch": 1,
+        "market_group_id": 1975,
+        "meta": null,
+        "name": "Wyvern Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40620": {
+        "batch": 1,
+        "market_group_id": 2092,
+        "meta": null,
+        "name": "Leviathan Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40621": {
+        "batch": 1,
+        "market_group_id": 2008,
+        "meta": null,
+        "name": "Badger Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40622": {
+        "batch": 1,
+        "market_group_id": 2008,
+        "meta": null,
+        "name": "Tayra Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40623": {
+        "batch": 1,
+        "market_group_id": 2089,
+        "meta": null,
+        "name": "Crane Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40624": {
+        "batch": 1,
+        "market_group_id": 2089,
+        "meta": null,
+        "name": "Bustard Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40625": {
+        "batch": 1,
+        "market_group_id": 1985,
+        "meta": null,
+        "name": "Charon Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40626": {
+        "batch": 1,
+        "market_group_id": 2096,
+        "meta": null,
+        "name": "Rhea Matigu Seabeast SKIN (Permanent)",
         "skill_id": null,
         "volume": 0.01
     },
@@ -98948,6 +99916,14 @@
         "market_group_id": 354414,
         "meta": null,
         "name": "Council's Modified Repair Tool",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "371027": {
+        "batch": 1,
+        "market_group_id": 354620,
+        "meta": null,
+        "name": "X-MS16 Snowball Launcher",
         "skill_id": null,
         "volume": 0.01
     }

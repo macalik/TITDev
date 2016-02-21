@@ -459,5 +459,11 @@
     "37797": "Structure Defensive Systems",
     "37798": "Structure Electronic Systems",
     "37799": "Structure Engineering Systems",
-    "40328": "Logistics Frigates"
+    "40328": "Logistics Frigates",
+    "40535": "Amarr Force Auxiliary",
+    "40536": "Caldari Force Auxiliary",
+    "40537": "Gallente Force Auxiliary",
+    "40538": "Minmatar Force Auxiliary",
+    "40572": "Light Fighters",
+    "40573": "Support Fighters"
 }

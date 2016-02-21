@@ -1,5 +1,3 @@
-import tkinter
-from tkinter.filedialog import askopenfilename
 import sqlite3
 import json
 
@@ -9,8 +7,7 @@ Run this file separately. Extracts needed data from fuzzwork's sde sqlite conver
 
 
 def ccp_sde():
-    tkinter.Tk().withdraw()
-    filename = askopenfilename()
+    filename = input("Path to SDE File: ").strip('"')
 
     connection = sqlite3.connect(filename)
     connection.text_factory = lambda x: str(x, 'iso-8859-1')
@@ -59,8 +56,7 @@ def ccp_sde():
 
 
 def fuzzwork_volumes():
-    tkinter.Tk().withdraw()
-    filename = askopenfilename()
+    filename = input("Path to SDE File: ")
 
     connection = sqlite3.connect(filename)
     connection.text_factory = lambda x: str(x, 'iso-8859-1')
