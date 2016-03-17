@@ -1306,8 +1306,8 @@
     "518": {
         "batch": 1,
         "market_group_id": 646,
-        "meta": null,
-        "name": "Basic Gyrostabilizer",
+        "meta": 6,
+        "name": "'Basic' Gyrostabilizer",
         "skill_id": null,
         "volume": 5.0
     },
@@ -1330,16 +1330,16 @@
     "521": {
         "batch": 1,
         "market_group_id": 615,
-        "meta": null,
-        "name": "Basic Damage Control",
+        "meta": 6,
+        "name": "'Basic' Damage Control",
         "skill_id": null,
         "volume": 5.0
     },
     "522": {
         "batch": 1,
         "market_group_id": 702,
-        "meta": null,
-        "name": "Micro Capacitor Battery I",
+        "meta": 6,
+        "name": "'Micro' Cap Battery",
         "skill_id": null,
         "volume": 2.5
     },
@@ -1539,7 +1539,7 @@
         "batch": 1,
         "market_group_id": 678,
         "meta": null,
-        "name": "ECM Burst I",
+        "name": "Burst Jammer I",
         "skill_id": null,
         "volume": 5.0
     },
@@ -3747,7 +3747,7 @@
         "batch": 1,
         "market_group_id": 703,
         "meta": null,
-        "name": "Small Capacitor Battery I",
+        "name": "Small Cap Battery I",
         "skill_id": null,
         "volume": 5.0
     },
@@ -3755,7 +3755,7 @@
         "batch": 1,
         "market_group_id": 1558,
         "meta": null,
-        "name": "Small Capacitor Battery I Blueprint",
+        "name": "Small Cap Battery I Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -3851,7 +3851,7 @@
         "batch": 1,
         "market_group_id": 1568,
         "meta": null,
-        "name": "ECM Burst I Blueprint",
+        "name": "Burst Jammer I Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -4794,8 +4794,8 @@
     "1893": {
         "batch": 1,
         "market_group_id": 647,
-        "meta": null,
-        "name": "Basic Heat Sink",
+        "meta": 6,
+        "name": "'Basic' Heat Sink",
         "skill_id": null,
         "volume": 5.0
     },
@@ -4815,43 +4815,27 @@
         "skill_id": null,
         "volume": 0.01
     },
-    "1946": {
-        "batch": 1,
-        "market_group_id": 722,
-        "meta": null,
-        "name": "Basic RADAR Backup Array",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "1947": {
-        "batch": 1,
-        "market_group_id": 729,
-        "meta": null,
-        "name": "ECCM - Radar I",
-        "skill_id": null,
-        "volume": 5.0
-    },
     "1948": {
         "batch": 1,
         "market_group_id": 715,
         "meta": null,
-        "name": "ECM - Ion Field Projector I",
+        "name": "Magnetometric ECM I",
         "skill_id": null,
         "volume": 5.0
     },
     "1949": {
         "batch": 1,
         "market_group_id": 669,
-        "meta": null,
-        "name": "Basic Signal Amplifier",
+        "meta": 6,
+        "name": "'Basic' Signal Amplifier",
         "skill_id": null,
         "volume": 5.0
     },
     "1951": {
         "batch": 1,
         "market_group_id": 707,
-        "meta": null,
-        "name": "Basic Tracking Enhancer",
+        "meta": 6,
+        "name": "'Basic' Tracking Enhancer",
         "skill_id": null,
         "volume": 5.0
     },
@@ -4867,7 +4851,7 @@
         "batch": 1,
         "market_group_id": 717,
         "meta": null,
-        "name": "ECM - Spatial Destabilizer I",
+        "name": "Gravimetric ECM I",
         "skill_id": null,
         "volume": 5.0
     },
@@ -4875,7 +4859,7 @@
         "batch": 1,
         "market_group_id": 718,
         "meta": null,
-        "name": "ECM - White Noise Generator I",
+        "name": "Radar ECM I",
         "skill_id": null,
         "volume": 5.0
     },
@@ -4883,7 +4867,7 @@
         "batch": 1,
         "market_group_id": 719,
         "meta": null,
-        "name": "ECM - Multispectral Jammer I",
+        "name": "Multispectral ECM I",
         "skill_id": null,
         "volume": 5.0
     },
@@ -4891,23 +4875,7 @@
         "batch": 1,
         "market_group_id": 716,
         "meta": null,
-        "name": "ECM - Phase Inverter I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "1959": {
-        "batch": 1,
-        "market_group_id": 686,
-        "meta": null,
-        "name": "ECCM Projector I",
-        "skill_id": null,
-        "volume": 20.0
-    },
-    "1960": {
-        "batch": 1,
-        "market_group_id": 686,
-        "meta": 5,
-        "name": "ECCM Projector II",
+        "name": "Ladar ECM I",
         "skill_id": null,
         "volume": 5.0
     },
@@ -4967,38 +4935,6 @@
         "skill_id": null,
         "volume": 5.0
     },
-    "1982": {
-        "batch": 1,
-        "market_group_id": 721,
-        "meta": null,
-        "name": "Basic Ladar Backup Array",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "1983": {
-        "batch": 1,
-        "market_group_id": 720,
-        "meta": null,
-        "name": "Basic Gravimetric Backup Array",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "1984": {
-        "batch": 1,
-        "market_group_id": 723,
-        "meta": null,
-        "name": "Basic Magnetometric Backup Array",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "1985": {
-        "batch": 1,
-        "market_group_id": 724,
-        "meta": null,
-        "name": "Basic Multi Sensor Backup Array",
-        "skill_id": null,
-        "volume": 5.0
-    },
     "1986": {
         "batch": 1,
         "market_group_id": 669,
@@ -5039,38 +4975,6 @@
         "skill_id": null,
         "volume": 200000.0
     },
-    "2002": {
-        "batch": 1,
-        "market_group_id": 726,
-        "meta": null,
-        "name": "ECCM - Ladar I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "2003": {
-        "batch": 1,
-        "market_group_id": 727,
-        "meta": null,
-        "name": "ECCM - Magnetometric I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "2004": {
-        "batch": 1,
-        "market_group_id": 725,
-        "meta": null,
-        "name": "ECCM - Gravimetric I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "2005": {
-        "batch": 1,
-        "market_group_id": 728,
-        "meta": null,
-        "name": "ECCM - Omni I",
-        "skill_id": null,
-        "volume": 5.0
-    },
     "2006": {
         "batch": 1,
         "market_group_id": 74,
@@ -5107,7 +5011,7 @@
         "batch": 1,
         "market_group_id": 704,
         "meta": null,
-        "name": "Medium Capacitor Battery I",
+        "name": "Medium Cap Battery I",
         "skill_id": null,
         "volume": 10.0
     },
@@ -5115,7 +5019,7 @@
         "batch": 1,
         "market_group_id": 1558,
         "meta": null,
-        "name": "Medium Capacitor Battery I Blueprint",
+        "name": "Medium Cap Battery I Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -5123,7 +5027,7 @@
         "batch": 1,
         "market_group_id": 705,
         "meta": null,
-        "name": "Large Capacitor Battery I",
+        "name": "Large Cap Battery I",
         "skill_id": null,
         "volume": 15.0
     },
@@ -5131,7 +5035,7 @@
         "batch": 1,
         "market_group_id": 1558,
         "meta": null,
-        "name": "Large Capacitor Battery I Blueprint",
+        "name": "Large Cap Battery I Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -5451,7 +5355,7 @@
         "batch": 1,
         "market_group_id": 678,
         "meta": 5,
-        "name": "ECM Burst II",
+        "name": "Burst Jammer II",
         "skill_id": null,
         "volume": 5.0
     },
@@ -5499,7 +5403,7 @@
         "batch": 100,
         "market_group_id": 1317,
         "meta": null,
-        "name": "Guristas Nova Citadel Cruise Missile",
+        "name": "Guristas Nova XL Cruise Missile",
         "skill_id": null,
         "volume": 0.3
     },
@@ -5507,7 +5411,7 @@
         "batch": 100,
         "market_group_id": 1317,
         "meta": null,
-        "name": "Guristas Scourge Citadel Cruise Missile",
+        "name": "Guristas Scourge XL Cruise Missile",
         "skill_id": null,
         "volume": 0.3
     },
@@ -5515,7 +5419,7 @@
         "batch": 100,
         "market_group_id": 1317,
         "meta": null,
-        "name": "Guristas Inferno Citadel Cruise Missile",
+        "name": "Guristas Inferno XL Cruise Missile",
         "skill_id": null,
         "volume": 0.3
     },
@@ -5547,7 +5451,7 @@
         "batch": 100,
         "market_group_id": 1317,
         "meta": null,
-        "name": "Guristas Mjolnir Citadel Cruise Missile",
+        "name": "Guristas Mjolnir XL Cruise Missile",
         "skill_id": null,
         "volume": 0.3
     },
@@ -5606,46 +5510,6 @@
         "name": "Temperate Command Center",
         "skill_id": null,
         "volume": 1000.0
-    },
-    "2258": {
-        "batch": 1,
-        "market_group_id": 728,
-        "meta": 5,
-        "name": "ECCM - Omni II",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "2259": {
-        "batch": 1,
-        "market_group_id": 725,
-        "meta": 5,
-        "name": "ECCM - Gravimetric II",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "2260": {
-        "batch": 1,
-        "market_group_id": 726,
-        "meta": 5,
-        "name": "ECCM - Ladar II",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "2261": {
-        "batch": 1,
-        "market_group_id": 727,
-        "meta": 5,
-        "name": "ECCM - Magnetometric II",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "2262": {
-        "batch": 1,
-        "market_group_id": 729,
-        "meta": 5,
-        "name": "ECCM - Radar II",
-        "skill_id": null,
-        "volume": 5.0
     },
     "2267": {
         "batch": 1,
@@ -6659,7 +6523,7 @@
         "batch": 1,
         "market_group_id": 716,
         "meta": 5,
-        "name": "ECM - Phase Inverter II",
+        "name": "Ladar ECM II",
         "skill_id": null,
         "volume": 5.0
     },
@@ -6667,7 +6531,7 @@
         "batch": 1,
         "market_group_id": 715,
         "meta": 5,
-        "name": "ECM - Ion Field Projector II",
+        "name": "Magnetometric ECM II",
         "skill_id": null,
         "volume": 5.0
     },
@@ -6675,7 +6539,7 @@
         "batch": 1,
         "market_group_id": 719,
         "meta": 5,
-        "name": "ECM - Multispectral Jammer II",
+        "name": "Multispectral ECM II",
         "skill_id": null,
         "volume": 5.0
     },
@@ -6683,7 +6547,7 @@
         "batch": 1,
         "market_group_id": 717,
         "meta": 5,
-        "name": "ECM - Spatial Destabilizer II",
+        "name": "Gravimetric ECM II",
         "skill_id": null,
         "volume": 5.0
     },
@@ -6691,55 +6555,7 @@
         "batch": 1,
         "market_group_id": 718,
         "meta": 5,
-        "name": "ECM - White Noise Generator II",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "2579": {
-        "batch": 1,
-        "market_group_id": 720,
-        "meta": null,
-        "name": "Gravimetric Backup Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "2580": {
-        "batch": 1,
-        "market_group_id": 720,
-        "meta": 5,
-        "name": "Gravimetric Backup Array II",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "2583": {
-        "batch": 1,
-        "market_group_id": 721,
-        "meta": null,
-        "name": "Ladar Backup Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "2584": {
-        "batch": 1,
-        "market_group_id": 721,
-        "meta": 5,
-        "name": "Ladar Backup Array II",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "2587": {
-        "batch": 1,
-        "market_group_id": 723,
-        "meta": null,
-        "name": "Magnetometric Backup Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "2588": {
-        "batch": 1,
-        "market_group_id": 723,
-        "meta": 5,
-        "name": "Magnetometric Backup Array II",
+        "name": "Radar ECM II",
         "skill_id": null,
         "volume": 5.0
     },
@@ -6750,22 +6566,6 @@
         "name": "Genolution Core Augmentation CA-2",
         "skill_id": null,
         "volume": 1.0
-    },
-    "2591": {
-        "batch": 1,
-        "market_group_id": 724,
-        "meta": null,
-        "name": "Multi Sensor Backup Array I",
-        "skill_id": null,
-        "volume": 20.0
-    },
-    "2592": {
-        "batch": 1,
-        "market_group_id": 724,
-        "meta": 5,
-        "name": "Multi Sensor Backup Array II",
-        "skill_id": null,
-        "volume": 20.0
     },
     "2603": {
         "batch": 1,
@@ -6868,14 +6668,6 @@
         "market_group_id": 1356,
         "meta": null,
         "name": "Territorial Claim Unit Blueprint",
-        "skill_id": null,
-        "volume": 0.01
-    },
-    "2738": {
-        "batch": 1,
-        "market_group_id": 1356,
-        "meta": null,
-        "name": "Sovereignty Blockade Unit Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -7515,7 +7307,7 @@
         "batch": 1,
         "market_group_id": 1349,
         "meta": null,
-        "name": "Citadel Torpedo Battery Blueprint",
+        "name": "XL Torpedo Battery Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -10001,7 +9793,7 @@
     },
     "3373": {
         "batch": 1,
-        "market_group_id": 365,
+        "market_group_id": 2152,
         "meta": null,
         "name": "Starbase Defense Management",
         "skill_id": null,
@@ -10623,14 +10415,6 @@
         "skill_id": null,
         "volume": 1.0
     },
-    "3480": {
-        "batch": 1,
-        "market_group_id": 702,
-        "meta": 5,
-        "name": "Micro Capacitor Battery II",
-        "skill_id": null,
-        "volume": 2.5
-    },
     "3481": {
         "batch": 1,
         "market_group_id": 1518,
@@ -10651,7 +10435,7 @@
         "batch": 1,
         "market_group_id": 703,
         "meta": 5,
-        "name": "Small Capacitor Battery II",
+        "name": "Small Cap Battery II",
         "skill_id": null,
         "volume": 5.0
     },
@@ -10659,7 +10443,7 @@
         "batch": 1,
         "market_group_id": 704,
         "meta": 5,
-        "name": "Medium Capacitor Battery II",
+        "name": "Medium Cap Battery II",
         "skill_id": null,
         "volume": 10.0
     },
@@ -10667,7 +10451,7 @@
         "batch": 1,
         "market_group_id": 705,
         "meta": 5,
-        "name": "Large Capacitor Battery II",
+        "name": "Large Cap Battery II",
         "skill_id": null,
         "volume": 15.0
     },
@@ -10891,7 +10675,7 @@
         "batch": 1,
         "market_group_id": 777,
         "meta": 2,
-        "name": "'Limos' Citadel Cruise Launcher I",
+        "name": "'Limos' XL Cruise Launcher I",
         "skill_id": null,
         "volume": 4000.0
     },
@@ -10899,7 +10683,7 @@
         "batch": 1,
         "market_group_id": 777,
         "meta": 2,
-        "name": "Shock 'Limos' Citadel Torpedo Bay I",
+        "name": "Shock 'Limos' XL Torpedo Bay I",
         "skill_id": null,
         "volume": 4000.0
     },
@@ -11999,22 +11783,6 @@
         "skill_id": null,
         "volume": 0.1
     },
-    "4013": {
-        "batch": 1,
-        "market_group_id": 722,
-        "meta": null,
-        "name": "RADAR Backup Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "4014": {
-        "batch": 1,
-        "market_group_id": 722,
-        "meta": 5,
-        "name": "RADAR Backup Array II",
-        "skill_id": null,
-        "volume": 5.0
-    },
     "4016": {
         "batch": 1,
         "market_group_id": 1403,
@@ -12074,8 +11842,8 @@
     "4025": {
         "batch": 1,
         "market_group_id": 683,
-        "meta": 3,
-        "name": "X5 Prototype Engine Enervator",
+        "meta": 1,
+        "name": "X5 Enduring Stasis Webifier",
         "skill_id": null,
         "volume": 5.0
     },
@@ -12090,8 +11858,8 @@
     "4027": {
         "batch": 1,
         "market_group_id": 683,
-        "meta": 4,
-        "name": "Fleeting Propulsion Inhibitor I",
+        "meta": 1,
+        "name": "Fleeting Compact Stasis Webifier",
         "skill_id": null,
         "volume": 5.0
     },
@@ -12103,14 +11871,6 @@
         "skill_id": null,
         "volume": 0.1
     },
-    "4029": {
-        "batch": 1,
-        "market_group_id": 683,
-        "meta": 1,
-        "name": "'Langour' Drive Disruptor I",
-        "skill_id": null,
-        "volume": 5.0
-    },
     "4030": {
         "batch": 1,
         "market_group_id": 1403,
@@ -12118,14 +11878,6 @@
         "name": "Women's 'Excursion' Pants (matte red)",
         "skill_id": null,
         "volume": 0.1
-    },
-    "4031": {
-        "batch": 1,
-        "market_group_id": 683,
-        "meta": 2,
-        "name": "Patterned Stasis Web I",
-        "skill_id": null,
-        "volume": 5.0
     },
     "4032": {
         "batch": 1,
@@ -12235,7 +11987,7 @@
         "batch": 40,
         "market_group_id": 1870,
         "meta": null,
-        "name": "Caldari Fuel Block",
+        "name": "Nitrogen Fuel Block",
         "skill_id": null,
         "volume": 5.0
     },
@@ -13603,7 +13355,7 @@
         "batch": 40,
         "market_group_id": 1870,
         "meta": null,
-        "name": "Minmatar Fuel Block",
+        "name": "Hydrogen Fuel Block",
         "skill_id": null,
         "volume": 5.0
     },
@@ -13611,7 +13363,7 @@
         "batch": 40,
         "market_group_id": 1870,
         "meta": null,
-        "name": "Amarr Fuel Block",
+        "name": "Helium Fuel Block",
         "skill_id": null,
         "volume": 5.0
     },
@@ -13891,7 +13643,7 @@
         "batch": 40,
         "market_group_id": 1870,
         "meta": null,
-        "name": "Gallente Fuel Block",
+        "name": "Oxygen Fuel Block",
         "skill_id": null,
         "volume": 5.0
     },
@@ -13899,7 +13651,7 @@
         "batch": 1,
         "market_group_id": 1920,
         "meta": null,
-        "name": "Gallente Fuel Block Blueprint",
+        "name": "Oxygen Fuel Block Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -13907,7 +13659,7 @@
         "batch": 1,
         "market_group_id": 1920,
         "meta": null,
-        "name": "Caldari Fuel Block Blueprint",
+        "name": "Nitrogen Fuel Block Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -13915,7 +13667,7 @@
         "batch": 1,
         "market_group_id": 1920,
         "meta": null,
-        "name": "Amarr Fuel Block Blueprint",
+        "name": "Helium Fuel Block Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -13923,7 +13675,7 @@
         "batch": 1,
         "market_group_id": 1920,
         "meta": null,
-        "name": "Minmatar Fuel Block Blueprint",
+        "name": "Hydrogen Fuel Block Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -14287,67 +14039,11 @@
         "skill_id": null,
         "volume": 50.0
     },
-    "4745": {
-        "batch": 1,
-        "market_group_id": 702,
-        "meta": 3,
-        "name": "Micro F-4a Ld-Sulfate Capacitor Charge Unit",
-        "skill_id": null,
-        "volume": 2.5
-    },
-    "4747": {
-        "batch": 1,
-        "market_group_id": 702,
-        "meta": 1,
-        "name": "Micro Ld-Acid Capacitor Battery I",
-        "skill_id": null,
-        "volume": 2.5
-    },
-    "4749": {
-        "batch": 1,
-        "market_group_id": 702,
-        "meta": 4,
-        "name": "Micro Peroxide Capacitor Power Cell",
-        "skill_id": null,
-        "volume": 2.5
-    },
-    "4751": {
-        "batch": 1,
-        "market_group_id": 702,
-        "meta": 2,
-        "name": "Micro Ohm Capacitor Reserve I",
-        "skill_id": null,
-        "volume": 2.5
-    },
-    "4785": {
-        "batch": 1,
-        "market_group_id": 703,
-        "meta": 3,
-        "name": "Small F-4a Ld-Sulfate Capacitor Charge Unit",
-        "skill_id": null,
-        "volume": 5.0
-    },
     "4787": {
         "batch": 1,
         "market_group_id": 703,
         "meta": 1,
-        "name": "Small Ld-Acid Capacitor Battery I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "4789": {
-        "batch": 1,
-        "market_group_id": 703,
-        "meta": 4,
-        "name": "Small Peroxide Capacitor Power Cell",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "4791": {
-        "batch": 1,
-        "market_group_id": 703,
-        "meta": 2,
-        "name": "Small Ohm Capacitor Reserve I",
+        "name": "Small Compact Pb-Acid Cap Battery ",
         "skill_id": null,
         "volume": 5.0
     },
@@ -14383,35 +14079,11 @@
         "skill_id": null,
         "volume": 10.0
     },
-    "4869": {
-        "batch": 1,
-        "market_group_id": 705,
-        "meta": 3,
-        "name": "Large F-4a Ld-Sulfate Capacitor Charge Unit",
-        "skill_id": null,
-        "volume": 15.0
-    },
     "4871": {
         "batch": 1,
         "market_group_id": 705,
         "meta": 1,
-        "name": "Large Ld-Acid Capacitor Battery I",
-        "skill_id": null,
-        "volume": 15.0
-    },
-    "4873": {
-        "batch": 1,
-        "market_group_id": 705,
-        "meta": 4,
-        "name": "Large Peroxide Capacitor Power Cell",
-        "skill_id": null,
-        "volume": 15.0
-    },
-    "4875": {
-        "batch": 1,
-        "market_group_id": 705,
-        "meta": 2,
-        "name": "Large Ohm Capacitor Reserve I",
+        "name": "Large Compact Pb-Acid Cap Battery",
         "skill_id": null,
         "volume": 15.0
     },
@@ -14650,16 +14322,8 @@
     "5279": {
         "batch": 1,
         "market_group_id": 673,
-        "meta": 4,
-        "name": "F-23 Reciprocal Remote Sensor Booster",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "5280": {
-        "batch": 1,
-        "market_group_id": 673,
-        "meta": 3,
-        "name": "Connected Remote Sensor Booster",
+        "meta": 1,
+        "name": "F-23 Compact Remote Sensor Booster",
         "skill_id": null,
         "volume": 5.0
     },
@@ -14667,31 +14331,23 @@
         "batch": 1,
         "market_group_id": 673,
         "meta": 1,
-        "name": "Coadjunct Linked Remote Sensor Booster",
+        "name": "Coadjunct Scoped Remote Sensor Booster",
         "skill_id": null,
         "volume": 5.0
     },
     "5282": {
         "batch": 1,
         "market_group_id": 673,
-        "meta": 2,
-        "name": "Linked Remote Sensor Booster",
+        "meta": 1,
+        "name": "Linked Enduring Sensor Booster",
         "skill_id": null,
         "volume": 5.0
     },
     "5299": {
         "batch": 1,
         "market_group_id": 679,
-        "meta": 3,
-        "name": "Low Frequency Sensor Suppressor I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "5300": {
-        "batch": 1,
-        "market_group_id": 679,
-        "meta": 2,
-        "name": "Indirect Scanning Dampening Unit I",
+        "meta": 1,
+        "name": "LFT Enduring Sensor Dampener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -14699,15 +14355,15 @@
         "batch": 1,
         "market_group_id": 679,
         "meta": 1,
-        "name": "Kapteyn Sensor Array Inhibitor I",
+        "name": "Kapteyn Compact Sensor Dampener",
         "skill_id": null,
         "volume": 5.0
     },
     "5302": {
         "batch": 1,
         "market_group_id": 679,
-        "meta": 4,
-        "name": "Phased Muon Sensor Disruptor I",
+        "meta": 1,
+        "name": "Phased Muon Scoped Sensor Dampener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -14746,48 +14402,32 @@
     "5339": {
         "batch": 1,
         "market_group_id": 708,
-        "meta": 2,
-        "name": "F-293 Nutation Remote Tracking Computer",
+        "meta": 1,
+        "name": "F-293 Scoped Remote Tracking Computer",
         "skill_id": null,
         "volume": 5.0
     },
     "5340": {
         "batch": 1,
         "market_group_id": 708,
-        "meta": 4,
-        "name": "Phase Switching Remote Tracking Computer",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "5341": {
-        "batch": 1,
-        "market_group_id": 708,
         "meta": 1,
-        "name": "'Prayer' Remote Tracking Computer",
+        "name": "P-S Compact Remote Tracking Computer",
         "skill_id": null,
         "volume": 5.0
     },
     "5342": {
         "batch": 1,
         "market_group_id": 708,
-        "meta": 3,
-        "name": "Alfven Surface Remote Tracking Computer",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "5359": {
-        "batch": 1,
-        "market_group_id": 678,
-        "meta": 3,
-        "name": "1Z-3 Subversive ECM Eruption",
+        "meta": 1,
+        "name": "Alfven Enduring Remote Tracking Computer",
         "skill_id": null,
         "volume": 5.0
     },
     "5361": {
         "batch": 1,
         "market_group_id": 678,
-        "meta": 2,
-        "name": "'Deluge' ECM Burst I",
+        "meta": 1,
+        "name": "Deluge Enduring Burst Jammer",
         "skill_id": null,
         "volume": 5.0
     },
@@ -14795,39 +14435,31 @@
         "batch": 1,
         "market_group_id": 678,
         "meta": 1,
-        "name": "'Rash' ECM Emission I",
+        "name": "Rash Compact Burst Jammer",
         "skill_id": null,
         "volume": 5.0
     },
     "5365": {
         "batch": 1,
         "market_group_id": 678,
-        "meta": 4,
-        "name": "'Cetus' ECM Shockwave I",
+        "meta": 1,
+        "name": "Cetus Scoped Burst Jammer",
         "skill_id": null,
         "volume": 5.0
     },
     "5399": {
         "batch": 1,
         "market_group_id": 1935,
-        "meta": 3,
-        "name": "J5 Prototype Warp Disruptor I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "5401": {
-        "batch": 1,
-        "market_group_id": 1935,
-        "meta": 2,
-        "name": "Fleeting Warp Disruptor I",
+        "meta": 1,
+        "name": "J5 Enduring Warp Disruptor",
         "skill_id": null,
         "volume": 5.0
     },
     "5403": {
         "batch": 1,
         "market_group_id": 1935,
-        "meta": 4,
-        "name": "Faint Warp Disruptor I",
+        "meta": 1,
+        "name": "Faint Scoped Warp Disruptor",
         "skill_id": null,
         "volume": 5.0
     },
@@ -14835,31 +14467,23 @@
         "batch": 1,
         "market_group_id": 1935,
         "meta": 1,
-        "name": "Initiated Warp Disruptor I",
+        "name": "Initiated Compact Warp Disruptor",
         "skill_id": null,
         "volume": 5.0
     },
     "5439": {
         "batch": 1,
         "market_group_id": 1936,
-        "meta": 3,
-        "name": "J5b Phased Prototype Warp Scrambler I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "5441": {
-        "batch": 1,
-        "market_group_id": 1936,
-        "meta": 2,
-        "name": "Fleeting Progressive Warp Scrambler I",
+        "meta": 1,
+        "name": "J5b Enduring Warp Scrambler",
         "skill_id": null,
         "volume": 5.0
     },
     "5443": {
         "batch": 1,
         "market_group_id": 1936,
-        "meta": 4,
-        "name": "Faint Epsilon Warp Scrambler I",
+        "meta": 1,
+        "name": "Faint Epsilon Scoped Warp Scrambler",
         "skill_id": null,
         "volume": 5.0
     },
@@ -14867,7 +14491,7 @@
         "batch": 1,
         "market_group_id": 1936,
         "meta": 1,
-        "name": "Initiated Harmonic Warp Scrambler I",
+        "name": "Initiated Compact Warp Scrambler",
         "skill_id": null,
         "volume": 5.0
     },
@@ -15015,131 +14639,19 @@
         "skill_id": null,
         "volume": 50.0
     },
-    "5829": {
-        "batch": 1,
-        "market_group_id": 615,
-        "meta": null,
-        "name": "GLFF Containment Field",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "5831": {
-        "batch": 1,
-        "market_group_id": 615,
-        "meta": null,
-        "name": "Interior Force Field Array",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "5833": {
-        "batch": 1,
-        "market_group_id": 615,
-        "meta": null,
-        "name": "Systematic Damage Control",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "5835": {
-        "batch": 1,
-        "market_group_id": 615,
-        "meta": null,
-        "name": "F84 Local Damage System",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "5837": {
-        "batch": 1,
-        "market_group_id": 615,
-        "meta": 3,
-        "name": "Pseudoelectron Containment Field I",
-        "skill_id": null,
-        "volume": 5.0
-    },
     "5839": {
         "batch": 1,
         "market_group_id": 615,
-        "meta": 4,
-        "name": "Internal Force Field Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "5841": {
-        "batch": 1,
-        "market_group_id": 615,
         "meta": 1,
-        "name": "Emergency Damage Control I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "5843": {
-        "batch": 1,
-        "market_group_id": 615,
-        "meta": 2,
-        "name": "F85 Peripheral Damage System I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "5845": {
-        "batch": 1,
-        "market_group_id": 647,
-        "meta": null,
-        "name": "Heat Exhaust System",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "5846": {
-        "batch": 1,
-        "market_group_id": 647,
-        "meta": 1,
-        "name": "Thermal Exhaust System I",
+        "name": "IFFA Compact Damage Control",
         "skill_id": null,
         "volume": 5.0
     },
     "5849": {
         "batch": 1,
         "market_group_id": 647,
-        "meta": 4,
-        "name": "Extruded Heat Sink I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "5854": {
-        "batch": 1,
-        "market_group_id": 647,
-        "meta": null,
-        "name": "Stamped Heat Sink",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "5855": {
-        "batch": 1,
-        "market_group_id": 647,
-        "meta": null,
-        "name": "'Boreas' Coolant System",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "5856": {
-        "batch": 1,
-        "market_group_id": 647,
-        "meta": null,
-        "name": "C3S Convection Thermal Radiator",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "5857": {
-        "batch": 1,
-        "market_group_id": 647,
-        "meta": 3,
-        "name": "'Skadi' Coolant System I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "5858": {
-        "batch": 1,
-        "market_group_id": 647,
-        "meta": 2,
-        "name": "C4S Coiled Circuit Thermal Radiator",
+        "meta": 1,
+        "name": "Extruded Compact Heat Sink",
         "skill_id": null,
         "volume": 5.0
     },
@@ -15175,67 +14687,11 @@
         "skill_id": null,
         "volume": 5.0
     },
-    "5913": {
-        "batch": 1,
-        "market_group_id": 646,
-        "meta": null,
-        "name": "Hydraulic Stabilization Actuator",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "5915": {
-        "batch": 1,
-        "market_group_id": 646,
-        "meta": null,
-        "name": "Lateral Gyrostabilizer",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "5917": {
-        "batch": 1,
-        "market_group_id": 646,
-        "meta": null,
-        "name": "Stabilized Weapon Mounts",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "5919": {
-        "batch": 1,
-        "market_group_id": 646,
-        "meta": null,
-        "name": "F-M2 Weapon Inertial Suspensor",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "5929": {
-        "batch": 1,
-        "market_group_id": 646,
-        "meta": 3,
-        "name": "Pneumatic Stabilization Actuator I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "5931": {
-        "batch": 1,
-        "market_group_id": 646,
-        "meta": 1,
-        "name": "Cross-Lateral Gyrostabilizer I",
-        "skill_id": null,
-        "volume": 5.0
-    },
     "5933": {
         "batch": 1,
         "market_group_id": 646,
-        "meta": 4,
-        "name": "Counterbalanced Weapon Mounts I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "5935": {
-        "batch": 1,
-        "market_group_id": 646,
-        "meta": 2,
-        "name": "F-M3 Munition Inertial Suspensor",
+        "meta": 1,
+        "name": "Counterbalanced Compact Gyrostabilizer",
         "skill_id": null,
         "volume": 5.0
     },
@@ -15339,31 +14795,7 @@
         "batch": 1,
         "market_group_id": 704,
         "meta": 1,
-        "name": "Medium Ld-Acid Capacitor Battery I",
-        "skill_id": null,
-        "volume": 10.0
-    },
-    "6083": {
-        "batch": 1,
-        "market_group_id": 704,
-        "meta": 4,
-        "name": "Medium Peroxide Capacitor Power Cell",
-        "skill_id": null,
-        "volume": 10.0
-    },
-    "6097": {
-        "batch": 1,
-        "market_group_id": 704,
-        "meta": 2,
-        "name": "Medium Ohm Capacitor Reserve I",
-        "skill_id": null,
-        "volume": 10.0
-    },
-    "6111": {
-        "batch": 1,
-        "market_group_id": 704,
-        "meta": 3,
-        "name": "Medium F-4a Ld-Sulfate Capacitor Charge Unit",
+        "name": "Medium Compact Pb-Acid Cap Battery",
         "skill_id": null,
         "volume": 10.0
     },
@@ -15383,515 +14815,51 @@
         "skill_id": null,
         "volume": 5.0
     },
-    "6157": {
-        "batch": 1,
-        "market_group_id": 671,
-        "meta": 2,
-        "name": "Supplemental Scanning CPU I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6158": {
-        "batch": 1,
-        "market_group_id": 671,
-        "meta": 1,
-        "name": "Prototype Sensor Booster",
-        "skill_id": null,
-        "volume": 5.0
-    },
     "6159": {
         "batch": 1,
         "market_group_id": 671,
-        "meta": 3,
-        "name": "Alumel-Wired Sensor Augmentation",
+        "meta": 1,
+        "name": "Alumel-Wired Enduring Sensor Booster",
         "skill_id": null,
         "volume": 5.0
     },
     "6160": {
         "batch": 1,
         "market_group_id": 671,
-        "meta": 4,
-        "name": "F-90 Positional Sensor Subroutines",
+        "meta": 1,
+        "name": "F-90 Compact Sensor Booster",
         "skill_id": null,
         "volume": 5.0
     },
     "6173": {
         "batch": 1,
         "market_group_id": 706,
-        "meta": 4,
-        "name": "Optical Tracking Computer I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6174": {
-        "batch": 1,
-        "market_group_id": 706,
         "meta": 1,
-        "name": "Monopulse Tracking Mechanism I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6175": {
-        "batch": 1,
-        "market_group_id": 706,
-        "meta": 3,
-        "name": "'Orion' Tracking CPU I",
+        "name": "Optical Compact Tracking Computer",
         "skill_id": null,
         "volume": 5.0
     },
     "6176": {
         "batch": 1,
         "market_group_id": 706,
-        "meta": 2,
-        "name": "F-12 Nonlinear Tracking Processor",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6193": {
-        "batch": 1,
-        "market_group_id": 723,
-        "meta": null,
-        "name": "Emergency Magnetometric Scanners",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6194": {
-        "batch": 1,
-        "market_group_id": 724,
-        "meta": null,
-        "name": "Emergency Multi-Frequency Scanners",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6195": {
-        "batch": 1,
-        "market_group_id": 720,
-        "meta": 2,
-        "name": "Reserve Gravimetric Scanners",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6199": {
-        "batch": 1,
-        "market_group_id": 721,
-        "meta": 2,
-        "name": "Reserve Ladar Scanners",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6202": {
-        "batch": 1,
-        "market_group_id": 722,
-        "meta": null,
-        "name": "Emergency RADAR Scanners",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6203": {
-        "batch": 1,
-        "market_group_id": 723,
-        "meta": 2,
-        "name": "Reserve Magnetometric Scanners",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6207": {
-        "batch": 1,
-        "market_group_id": 724,
-        "meta": 2,
-        "name": "Reserve Multi-Frequency Scanners",
-        "skill_id": null,
-        "volume": 20.0
-    },
-    "6212": {
-        "batch": 1,
-        "market_group_id": 722,
-        "meta": 2,
-        "name": "Reserve RADAR Scanners",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6216": {
-        "batch": 1,
-        "market_group_id": 721,
-        "meta": null,
-        "name": "Emergency Ladar Scanners",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6217": {
-        "batch": 1,
-        "market_group_id": 720,
-        "meta": null,
-        "name": "Emergency Gravimetric Scanners",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6218": {
-        "batch": 1,
-        "market_group_id": 720,
         "meta": 1,
-        "name": "Protected Gravimetric Backup Cluster I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6222": {
-        "batch": 1,
-        "market_group_id": 721,
-        "meta": 1,
-        "name": "Protected Ladar Backup Cluster I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6225": {
-        "batch": 1,
-        "market_group_id": 722,
-        "meta": null,
-        "name": "Sealed RADAR Backup Cluster",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6226": {
-        "batch": 1,
-        "market_group_id": 723,
-        "meta": 1,
-        "name": "Protected Magnetometric Backup Cluster I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6230": {
-        "batch": 1,
-        "market_group_id": 724,
-        "meta": 1,
-        "name": "Protected Multi-Frequency Backup Cluster I",
-        "skill_id": null,
-        "volume": 20.0
-    },
-    "6234": {
-        "batch": 1,
-        "market_group_id": 722,
-        "meta": 1,
-        "name": "Protected RADAR Backup Cluster I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6238": {
-        "batch": 1,
-        "market_group_id": 723,
-        "meta": null,
-        "name": "Sealed Magnetometric Backup Cluster",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6239": {
-        "batch": 1,
-        "market_group_id": 724,
-        "meta": null,
-        "name": "Sealed Multi-Frequency Backup Cluster",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6241": {
-        "batch": 1,
-        "market_group_id": 721,
-        "meta": null,
-        "name": "Sealed Ladar Backup Cluster",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6242": {
-        "batch": 1,
-        "market_group_id": 720,
-        "meta": null,
-        "name": "Sealed Gravimetric Backup Cluster",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6243": {
-        "batch": 1,
-        "market_group_id": 720,
-        "meta": 4,
-        "name": "Surrogate Gravimetric Reserve Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6244": {
-        "batch": 1,
-        "market_group_id": 720,
-        "meta": 3,
-        "name": "F-43 Repetitive Gravimetric Backup Sensors",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6251": {
-        "batch": 1,
-        "market_group_id": 721,
-        "meta": 4,
-        "name": "Surrogate Ladar Reserve Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6252": {
-        "batch": 1,
-        "market_group_id": 721,
-        "meta": 3,
-        "name": "F-43 Repetitive Ladar Backup Sensors",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6257": {
-        "batch": 1,
-        "market_group_id": 722,
-        "meta": null,
-        "name": "Surplus RADAR Reserve Array",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6258": {
-        "batch": 1,
-        "market_group_id": 722,
-        "meta": null,
-        "name": "F-42 Reiterative RADAR Backup Sensors",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6259": {
-        "batch": 1,
-        "market_group_id": 723,
-        "meta": 4,
-        "name": "Surrogate Magnetometric Reserve Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6260": {
-        "batch": 1,
-        "market_group_id": 723,
-        "meta": 3,
-        "name": "F-43 Repetitive Magnetometric Backup Sensors",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6267": {
-        "batch": 1,
-        "market_group_id": 724,
-        "meta": 4,
-        "name": "Surrogate Multi-Frequency Reserve Array I",
-        "skill_id": null,
-        "volume": 20.0
-    },
-    "6268": {
-        "batch": 1,
-        "market_group_id": 724,
-        "meta": 3,
-        "name": "F-43 Repetitive Multi-Frequency Backup Sensors",
-        "skill_id": null,
-        "volume": 20.0
-    },
-    "6275": {
-        "batch": 1,
-        "market_group_id": 722,
-        "meta": 4,
-        "name": "Surrogate RADAR Reserve Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6276": {
-        "batch": 1,
-        "market_group_id": 722,
-        "meta": 3,
-        "name": "F-43 Repetitive RADAR Backup Sensors",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6283": {
-        "batch": 1,
-        "market_group_id": 723,
-        "meta": null,
-        "name": "Surplus Magnetometric Reserve Array",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6284": {
-        "batch": 1,
-        "market_group_id": 723,
-        "meta": null,
-        "name": "F-42 Reiterative Magnetometric Backup Sensors",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6285": {
-        "batch": 1,
-        "market_group_id": 724,
-        "meta": null,
-        "name": "Surplus Multi-Frequency Reserve Array",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6286": {
-        "batch": 1,
-        "market_group_id": 724,
-        "meta": null,
-        "name": "F-42 Reiterative Multi-Frequency Backup Sensors",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6289": {
-        "batch": 1,
-        "market_group_id": 721,
-        "meta": null,
-        "name": "Surplus Ladar Reserve Array",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6290": {
-        "batch": 1,
-        "market_group_id": 721,
-        "meta": null,
-        "name": "F-42 Reiterative Ladar Backup Sensors",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6291": {
-        "batch": 1,
-        "market_group_id": 720,
-        "meta": null,
-        "name": "Surplus Gravimetric Reserve Array",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6292": {
-        "batch": 1,
-        "market_group_id": 720,
-        "meta": null,
-        "name": "F-42 Reiterative Gravimetric Backup Sensors",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6293": {
-        "batch": 1,
-        "market_group_id": 669,
-        "meta": 2,
-        "name": "Wavelength Signal Enhancer I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6294": {
-        "batch": 1,
-        "market_group_id": 669,
-        "meta": 1,
-        "name": "'Mendicant' Signal Booster I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6295": {
-        "batch": 1,
-        "market_group_id": 669,
-        "meta": 4,
-        "name": "Type-D Attenuation Signal Augmentation",
+        "name": "F-12 Enduring Tracking Computer",
         "skill_id": null,
         "volume": 5.0
     },
     "6296": {
         "batch": 1,
         "market_group_id": 669,
-        "meta": 3,
-        "name": "F-89 Synchronized Signal Amplifier",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6309": {
-        "batch": 1,
-        "market_group_id": 669,
-        "meta": null,
-        "name": "Amplitude Signal Enhancer",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6310": {
-        "batch": 1,
-        "market_group_id": 669,
-        "meta": null,
-        "name": "'Acolyth' Signal Booster",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6311": {
-        "batch": 1,
-        "market_group_id": 669,
-        "meta": null,
-        "name": "Type-E Discriminative Signal Augmentation",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6312": {
-        "batch": 1,
-        "market_group_id": 669,
-        "meta": null,
-        "name": "F-90 Positional Signal Amplifier",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6321": {
-        "batch": 1,
-        "market_group_id": 707,
-        "meta": null,
-        "name": "Beam Parallax Tracking Program",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6322": {
-        "batch": 1,
-        "market_group_id": 707,
-        "meta": null,
-        "name": "Beta-Nought Tracking Mode",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6323": {
-        "batch": 1,
-        "market_group_id": 707,
-        "meta": null,
-        "name": "Azimuth Descalloping Tracking Enhancer",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6324": {
-        "batch": 1,
-        "market_group_id": 707,
-        "meta": null,
-        "name": "F-AQ Delay-Line Scan Tracking Subroutines",
+        "meta": 1,
+        "name": "F-89 Compact Signal Amplifier",
         "skill_id": null,
         "volume": 5.0
     },
     "6325": {
         "batch": 1,
         "market_group_id": 707,
-        "meta": 4,
-        "name": "Fourier Transform Tracking Program",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6326": {
-        "batch": 1,
-        "market_group_id": 707,
         "meta": 1,
-        "name": "Sigma-Nought Tracking Mode I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6327": {
-        "batch": 1,
-        "market_group_id": 707,
-        "meta": 2,
-        "name": "Auto-Gain Control Tracking Enhancer I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "6328": {
-        "batch": 1,
-        "market_group_id": 707,
-        "meta": 3,
-        "name": "F-aQ Phase Code Tracking Subroutines",
+        "name": "Fourier Compact Tracking Enhancer",
         "skill_id": null,
         "volume": 5.0
     },
@@ -16366,38 +15334,6 @@
         "name": "Tachyon Anode Particle Stream I",
         "skill_id": null,
         "volume": 20.0
-    },
-    "7217": {
-        "batch": 1,
-        "market_group_id": 686,
-        "meta": 3,
-        "name": "Spot Pulsing ECCM I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "7218": {
-        "batch": 1,
-        "market_group_id": 686,
-        "meta": 2,
-        "name": "Piercing ECCM Emitter I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "7219": {
-        "batch": 1,
-        "market_group_id": 686,
-        "meta": 1,
-        "name": "Scattering ECCM Projector I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "7220": {
-        "batch": 1,
-        "market_group_id": 686,
-        "meta": 4,
-        "name": "Phased Muon ECCM Caster I",
-        "skill_id": null,
-        "volume": 5.0
     },
     "7247": {
         "batch": 1,
@@ -16878,166 +15814,6 @@
         "name": "Anode Mega Ion Particle Cannon I",
         "skill_id": null,
         "volume": 20.0
-    },
-    "7867": {
-        "batch": 1,
-        "market_group_id": 726,
-        "meta": 2,
-        "name": "Supplemental Ladar ECCM Scanning Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "7869": {
-        "batch": 1,
-        "market_group_id": 725,
-        "meta": 2,
-        "name": "Supplemental Gravimetric ECCM Scanning Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "7870": {
-        "batch": 1,
-        "market_group_id": 728,
-        "meta": 2,
-        "name": "Supplemental Omni ECCM Scanning Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "7887": {
-        "batch": 1,
-        "market_group_id": 729,
-        "meta": 2,
-        "name": "Supplemental Radar ECCM Scanning Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "7889": {
-        "batch": 1,
-        "market_group_id": 727,
-        "meta": 2,
-        "name": "Supplemental Magnetometric ECCM Scanning Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "7892": {
-        "batch": 1,
-        "market_group_id": 729,
-        "meta": 4,
-        "name": "Prototype ECCM Radar Sensor Cluster",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "7893": {
-        "batch": 1,
-        "market_group_id": 726,
-        "meta": 4,
-        "name": "Prototype ECCM Ladar Sensor Cluster",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "7895": {
-        "batch": 1,
-        "market_group_id": 725,
-        "meta": 4,
-        "name": "Prototype ECCM Gravimetric Sensor Cluster",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "7896": {
-        "batch": 1,
-        "market_group_id": 728,
-        "meta": 4,
-        "name": "Prototype ECCM Omni Sensor Cluster",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "7914": {
-        "batch": 1,
-        "market_group_id": 727,
-        "meta": 4,
-        "name": "Prototype ECCM Magnetometric Sensor Cluster",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "7917": {
-        "batch": 1,
-        "market_group_id": 729,
-        "meta": 1,
-        "name": "Alumel Radar ECCM Sensor Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "7918": {
-        "batch": 1,
-        "market_group_id": 726,
-        "meta": 1,
-        "name": "Alumel Ladar ECCM Sensor Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "7922": {
-        "batch": 1,
-        "market_group_id": 725,
-        "meta": 1,
-        "name": "Alumel Gravimetric ECCM Sensor Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "7926": {
-        "batch": 1,
-        "market_group_id": 728,
-        "meta": 1,
-        "name": "Alumel Omni ECCM Sensor Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "7937": {
-        "batch": 1,
-        "market_group_id": 727,
-        "meta": 1,
-        "name": "Alumel Magnetometric ECCM Sensor Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "7948": {
-        "batch": 1,
-        "market_group_id": 725,
-        "meta": 3,
-        "name": "Gravimetric Positional ECCM Sensor System I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "7964": {
-        "batch": 1,
-        "market_group_id": 729,
-        "meta": 3,
-        "name": "Radar Positional ECCM Sensor System I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "7965": {
-        "batch": 1,
-        "market_group_id": 728,
-        "meta": 3,
-        "name": "Omni Positional ECCM Sensor System I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "7966": {
-        "batch": 1,
-        "market_group_id": 726,
-        "meta": 3,
-        "name": "Ladar Positional ECCM Sensor System I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "7970": {
-        "batch": 1,
-        "market_group_id": 727,
-        "meta": 3,
-        "name": "Magnetometric Positional ECCM Sensor System I",
-        "skill_id": null,
-        "volume": 5.0
     },
     "7997": {
         "batch": 1,
@@ -17847,43 +16623,11 @@
         "skill_id": null,
         "volume": 20.0
     },
-    "9518": {
-        "batch": 1,
-        "market_group_id": 715,
-        "meta": 1,
-        "name": "Initiated Ion Field ECM I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "9519": {
-        "batch": 1,
-        "market_group_id": 717,
-        "meta": 1,
-        "name": "FZ-3 Subversive Spatial Destabilizer ECM",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "9520": {
-        "batch": 1,
-        "market_group_id": 718,
-        "meta": 1,
-        "name": "'Penumbra' White Noise ECM",
-        "skill_id": null,
-        "volume": 5.0
-    },
     "9521": {
         "batch": 1,
         "market_group_id": 719,
         "meta": 1,
-        "name": "Initiated Multispectral ECM I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "9522": {
-        "batch": 1,
-        "market_group_id": 716,
-        "meta": 1,
-        "name": "Faint Phase Inversion ECM I",
+        "name": "Initiated Enduring Multispectral ECM",
         "skill_id": null,
         "volume": 5.0
     },
@@ -18386,8 +17130,8 @@
     "10188": {
         "batch": 1,
         "market_group_id": 648,
-        "meta": null,
-        "name": "Basic Magnetic Field Stabilizer",
+        "meta": 6,
+        "name": "'Basic' Magnetic Field Stabilizer",
         "skill_id": null,
         "volume": 5.0
     },
@@ -18871,67 +17615,11 @@
         "skill_id": null,
         "volume": 0.01
     },
-    "11101": {
-        "batch": 1,
-        "market_group_id": 648,
-        "meta": 2,
-        "name": "Linear Flux Stabilizer I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "11103": {
-        "batch": 1,
-        "market_group_id": 648,
-        "meta": 1,
-        "name": "Insulated Stabilizer Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
     "11105": {
         "batch": 1,
         "market_group_id": 648,
-        "meta": 4,
-        "name": "Magnetic Vortex Stabilizer I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "11107": {
-        "batch": 1,
-        "market_group_id": 648,
-        "meta": 3,
-        "name": "Gauss Field Balancer I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "11109": {
-        "batch": 1,
-        "market_group_id": 648,
-        "meta": null,
-        "name": "Linear Flux Stabilizer",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "11111": {
-        "batch": 1,
-        "market_group_id": 648,
-        "meta": null,
-        "name": "Insulated Stabilizer Array",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "11113": {
-        "batch": 1,
-        "market_group_id": 648,
-        "meta": null,
-        "name": "Magnetic Vortex Stabilizer",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "11115": {
-        "batch": 1,
-        "market_group_id": 648,
-        "meta": null,
-        "name": "Gauss Field Balancer",
+        "meta": 1,
+        "name": "Vortex Compact Magnetic Field Stabilizer",
         "skill_id": null,
         "volume": 5.0
     },
@@ -20601,7 +19289,7 @@
     },
     "11584": {
         "batch": 1,
-        "market_group_id": 365,
+        "market_group_id": 2152,
         "meta": null,
         "name": "Anchoring",
         "skill_id": null,
@@ -20687,51 +19375,11 @@
         "skill_id": null,
         "volume": 0.01
     },
-    "11622": {
-        "batch": 1,
-        "market_group_id": 1575,
-        "meta": null,
-        "name": "ECCM - Gravimetric I Blueprint",
-        "skill_id": null,
-        "volume": 0.01
-    },
-    "11623": {
-        "batch": 1,
-        "market_group_id": 1575,
-        "meta": null,
-        "name": "ECCM - Ladar I Blueprint",
-        "skill_id": null,
-        "volume": 0.01
-    },
-    "11624": {
-        "batch": 1,
-        "market_group_id": 1575,
-        "meta": null,
-        "name": "ECCM - Magnetometric I Blueprint",
-        "skill_id": null,
-        "volume": 0.01
-    },
-    "11625": {
-        "batch": 1,
-        "market_group_id": 1575,
-        "meta": null,
-        "name": "ECCM - Radar I Blueprint",
-        "skill_id": null,
-        "volume": 0.01
-    },
-    "11626": {
-        "batch": 1,
-        "market_group_id": 1575,
-        "meta": null,
-        "name": "ECCM - Omni I Blueprint",
-        "skill_id": null,
-        "volume": 0.01
-    },
     "11628": {
         "batch": 1,
         "market_group_id": 1567,
         "meta": null,
-        "name": "ECM - Ion Field Projector I Blueprint",
+        "name": "Magnetometric ECM I Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -20739,7 +19387,7 @@
         "batch": 1,
         "market_group_id": 1567,
         "meta": null,
-        "name": "ECM - Multispectral Jammer I Blueprint",
+        "name": "Multispectral ECM I Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -20747,7 +19395,7 @@
         "batch": 1,
         "market_group_id": 1567,
         "meta": null,
-        "name": "ECM - Phase Inverter I Blueprint",
+        "name": "Ladar ECM I Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -20755,7 +19403,7 @@
         "batch": 1,
         "market_group_id": 1567,
         "meta": null,
-        "name": "ECM - Spatial Destabilizer I Blueprint",
+        "name": "Gravimetric ECM I Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -20763,7 +19411,7 @@
         "batch": 1,
         "market_group_id": 1567,
         "meta": null,
-        "name": "ECM - White Noise Generator I Blueprint",
+        "name": "Radar ECM I Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -20982,14 +19630,6 @@
         "name": "R.Db - Lai Dai",
         "skill_id": null,
         "volume": 0.04
-    },
-    "11770": {
-        "batch": 1,
-        "market_group_id": 1577,
-        "meta": null,
-        "name": "ECCM Projector I Blueprint",
-        "skill_id": null,
-        "volume": 0.01
     },
     "11798": {
         "batch": 1,
@@ -24442,7 +23082,7 @@
     "13935": {
         "batch": 1,
         "market_group_id": 645,
-        "meta": 7,
+        "meta": 8,
         "name": "Domination Ballistic Control System",
         "skill_id": null,
         "volume": 5.0
@@ -24450,7 +23090,7 @@
     "13937": {
         "batch": 1,
         "market_group_id": 645,
-        "meta": 12,
+        "meta": 8,
         "name": "Dread Guristas Ballistic Control System",
         "skill_id": null,
         "volume": 5.0
@@ -25786,7 +24426,7 @@
     "14242": {
         "batch": 1,
         "market_group_id": 1935,
-        "meta": 7,
+        "meta": 8,
         "name": "Dark Blood Warp Disruptor",
         "skill_id": null,
         "volume": 5.0
@@ -25802,7 +24442,7 @@
     "14246": {
         "batch": 1,
         "market_group_id": 1935,
-        "meta": 7,
+        "meta": 8,
         "name": "Dread Guristas Warp Disruptor",
         "skill_id": null,
         "volume": 5.0
@@ -25810,7 +24450,7 @@
     "14248": {
         "batch": 1,
         "market_group_id": 1935,
-        "meta": 7,
+        "meta": 8,
         "name": "True Sansha Warp Disruptor",
         "skill_id": null,
         "volume": 5.0
@@ -25818,7 +24458,7 @@
     "14250": {
         "batch": 1,
         "market_group_id": 1935,
-        "meta": 7,
+        "meta": 8,
         "name": "Shadow Serpentis Warp Disruptor",
         "skill_id": null,
         "volume": 5.0
@@ -25842,7 +24482,7 @@
     "14256": {
         "batch": 1,
         "market_group_id": 1936,
-        "meta": 7,
+        "meta": 8,
         "name": "Dread Guristas Warp Scrambler",
         "skill_id": null,
         "volume": 5.0
@@ -25858,7 +24498,7 @@
     "14260": {
         "batch": 1,
         "market_group_id": 1936,
-        "meta": 7,
+        "meta": 8,
         "name": "Shadow Serpentis Warp Scrambler",
         "skill_id": null,
         "volume": 5.0
@@ -25866,7 +24506,7 @@
     "14262": {
         "batch": 1,
         "market_group_id": 683,
-        "meta": 9,
+        "meta": 8,
         "name": "Dark Blood Stasis Webifier",
         "skill_id": null,
         "volume": 5.0
@@ -25874,7 +24514,7 @@
     "14264": {
         "batch": 1,
         "market_group_id": 683,
-        "meta": 9,
+        "meta": 8,
         "name": "Domination Stasis Webifier",
         "skill_id": null,
         "volume": 5.0
@@ -25890,7 +24530,7 @@
     "14268": {
         "batch": 1,
         "market_group_id": 683,
-        "meta": 9,
+        "meta": 8,
         "name": "True Sansha Stasis Webifier",
         "skill_id": null,
         "volume": 5.0
@@ -26642,7 +25282,7 @@
     "14528": {
         "batch": 1,
         "market_group_id": 645,
-        "meta": 11,
+        "meta": 13,
         "name": "Hakim's Modified Ballistic Control System",
         "skill_id": null,
         "volume": 5.0
@@ -26658,7 +25298,7 @@
     "14532": {
         "batch": 1,
         "market_group_id": 645,
-        "meta": 11,
+        "meta": 15,
         "name": "Gotan's Modified Ballistic Control System",
         "skill_id": null,
         "volume": 5.0
@@ -26666,7 +25306,7 @@
     "14534": {
         "batch": 1,
         "market_group_id": 645,
-        "meta": 11,
+        "meta": 17,
         "name": "Tobias' Modified Ballistic Control System",
         "skill_id": null,
         "volume": 5.0
@@ -26682,7 +25322,7 @@
     "14538": {
         "batch": 1,
         "market_group_id": 646,
-        "meta": 12,
+        "meta": 13,
         "name": "Hakim's Modified Gyrostabilizer",
         "skill_id": null,
         "volume": 5.0
@@ -26690,7 +25330,7 @@
     "14540": {
         "batch": 1,
         "market_group_id": 646,
-        "meta": 13,
+        "meta": 15,
         "name": "Gotan's Modified Gyrostabilizer",
         "skill_id": null,
         "volume": 5.0
@@ -26698,7 +25338,7 @@
     "14542": {
         "batch": 1,
         "market_group_id": 646,
-        "meta": 14,
+        "meta": 17,
         "name": "Tobias' Modified Gyrostabilizer",
         "skill_id": null,
         "volume": 5.0
@@ -26954,7 +25594,7 @@
     "14642": {
         "batch": 1,
         "market_group_id": 707,
-        "meta": 12,
+        "meta": 13,
         "name": "Hakim's Modified Tracking Enhancer",
         "skill_id": null,
         "volume": 5.0
@@ -26962,7 +25602,7 @@
     "14644": {
         "batch": 1,
         "market_group_id": 707,
-        "meta": 13,
+        "meta": 15,
         "name": "Gotan's Modified Tracking Enhancer",
         "skill_id": null,
         "volume": 5.0
@@ -26970,7 +25610,7 @@
     "14646": {
         "batch": 1,
         "market_group_id": 707,
-        "meta": 14,
+        "meta": 17,
         "name": "Tobias' Modified Tracking Enhancer",
         "skill_id": null,
         "volume": 5.0
@@ -26986,7 +25626,7 @@
     "14650": {
         "batch": 1,
         "market_group_id": 683,
-        "meta": 12,
+        "meta": 13,
         "name": "Hakim's Modified Stasis Webifier",
         "skill_id": null,
         "volume": 5.0
@@ -26994,7 +25634,7 @@
     "14652": {
         "batch": 1,
         "market_group_id": 683,
-        "meta": 13,
+        "meta": 15,
         "name": "Gotan's Modified Stasis Webifier",
         "skill_id": null,
         "volume": 5.0
@@ -27002,7 +25642,7 @@
     "14654": {
         "batch": 1,
         "market_group_id": 683,
-        "meta": 14,
+        "meta": 17,
         "name": "Tobias' Modified Stasis Webifier",
         "skill_id": null,
         "volume": 5.0
@@ -27011,31 +25651,31 @@
         "batch": 1,
         "market_group_id": 1935,
         "meta": 11,
-        "name": "Mizuro's Modified Warp Disruptor",
+        "name": "Mizuro's Modified Heavy Warp Disruptor",
         "skill_id": null,
         "volume": 5.0
     },
     "14658": {
         "batch": 1,
         "market_group_id": 1935,
-        "meta": 12,
-        "name": "Hakim's Modified Warp Disruptor",
+        "meta": 13,
+        "name": "Hakim's Modified Heavy Warp Disruptor",
         "skill_id": null,
         "volume": 5.0
     },
     "14660": {
         "batch": 1,
         "market_group_id": 1935,
-        "meta": 13,
-        "name": "Gotan's Modified Warp Disruptor",
+        "meta": 15,
+        "name": "Gotan's Modified Heavy Warp Disruptor",
         "skill_id": null,
         "volume": 5.0
     },
     "14662": {
         "batch": 1,
         "market_group_id": 1935,
-        "meta": 14,
-        "name": "Tobias' Modified Warp Disruptor",
+        "meta": 17,
+        "name": "Tobias' Modified Heavy Warp Disruptor",
         "skill_id": null,
         "volume": 5.0
     },
@@ -27043,31 +25683,31 @@
         "batch": 1,
         "market_group_id": 1936,
         "meta": 11,
-        "name": "Mizuro's Modified Warp Scrambler",
+        "name": "Mizuro's Modified Heavy Warp Scrambler",
         "skill_id": null,
         "volume": 5.0
     },
     "14666": {
         "batch": 1,
         "market_group_id": 1936,
-        "meta": 12,
-        "name": "Hakim's Modified Warp Scrambler",
+        "meta": 13,
+        "name": "Hakim's Modified Heavy Warp Scrambler",
         "skill_id": null,
         "volume": 5.0
     },
     "14668": {
         "batch": 1,
         "market_group_id": 1936,
-        "meta": 13,
-        "name": "Gotan's Modified Warp Scrambler",
+        "meta": 15,
+        "name": "Gotan's Modified Heavy Warp Scrambler",
         "skill_id": null,
         "volume": 5.0
     },
     "14670": {
         "batch": 1,
         "market_group_id": 1936,
-        "meta": 14,
-        "name": "Tobias' Modified Warp Scrambler",
+        "meta": 17,
+        "name": "Tobias' Modified Heavy Warp Scrambler",
         "skill_id": null,
         "volume": 5.0
     },
@@ -27138,7 +25778,7 @@
     "14684": {
         "batch": 1,
         "market_group_id": 645,
-        "meta": 13,
+        "meta": 11,
         "name": "Kaikka's Modified Ballistic Control System",
         "skill_id": null,
         "volume": 5.0
@@ -27154,7 +25794,7 @@
     "14688": {
         "batch": 1,
         "market_group_id": 645,
-        "meta": 14,
+        "meta": 15,
         "name": "Vepas' Modified Ballistic Control System",
         "skill_id": null,
         "volume": 5.0
@@ -27162,7 +25802,7 @@
     "14690": {
         "batch": 1,
         "market_group_id": 645,
-        "meta": 14,
+        "meta": 17,
         "name": "Estamel's Modified Ballistic Control System",
         "skill_id": null,
         "volume": 5.0
@@ -27730,7 +26370,7 @@
     "14804": {
         "batch": 1,
         "market_group_id": 647,
-        "meta": 12,
+        "meta": 13,
         "name": "Selynne's Modified Heat Sink",
         "skill_id": null,
         "volume": 5.0
@@ -27738,7 +26378,7 @@
     "14806": {
         "batch": 1,
         "market_group_id": 647,
-        "meta": 12,
+        "meta": 13,
         "name": "Raysere's Modified Heat Sink",
         "skill_id": null,
         "volume": 5.0
@@ -27746,7 +26386,7 @@
     "14808": {
         "batch": 1,
         "market_group_id": 647,
-        "meta": 13,
+        "meta": 15,
         "name": "Vizan's Modified Heat Sink",
         "skill_id": null,
         "volume": 5.0
@@ -27754,7 +26394,7 @@
     "14810": {
         "batch": 1,
         "market_group_id": 647,
-        "meta": 13,
+        "meta": 15,
         "name": "Ahremen's Modified Heat Sink",
         "skill_id": null,
         "volume": 5.0
@@ -27762,7 +26402,7 @@
     "14812": {
         "batch": 1,
         "market_group_id": 647,
-        "meta": 14,
+        "meta": 17,
         "name": "Chelm's Modified Heat Sink",
         "skill_id": null,
         "volume": 5.0
@@ -27770,7 +26410,7 @@
     "14814": {
         "batch": 1,
         "market_group_id": 647,
-        "meta": 14,
+        "meta": 17,
         "name": "Draclira's Modified Heat Sink",
         "skill_id": null,
         "volume": 5.0
@@ -29130,7 +27770,7 @@
     "15146": {
         "batch": 1,
         "market_group_id": 648,
-        "meta": 12,
+        "meta": 13,
         "name": "Tuvan's Modified Magnetic Field Stabilizer",
         "skill_id": null,
         "volume": 5.0
@@ -29138,7 +27778,7 @@
     "15148": {
         "batch": 1,
         "market_group_id": 648,
-        "meta": 13,
+        "meta": 15,
         "name": "Setele's Modified Magnetic Field Stabilizer",
         "skill_id": null,
         "volume": 5.0
@@ -29146,7 +27786,7 @@
     "15150": {
         "batch": 1,
         "market_group_id": 648,
-        "meta": 14,
+        "meta": 17,
         "name": "Cormack's Modified Magnetic Field Stabilizer",
         "skill_id": null,
         "volume": 5.0
@@ -29674,7 +28314,7 @@
     "15278": {
         "batch": 1,
         "market_group_id": 671,
-        "meta": 12,
+        "meta": 13,
         "name": "Tuvan's Modified Sensor Booster",
         "skill_id": null,
         "volume": 5.0
@@ -29682,7 +28322,7 @@
     "15280": {
         "batch": 1,
         "market_group_id": 671,
-        "meta": 13,
+        "meta": 15,
         "name": "Setele's Modified Sensor Booster",
         "skill_id": null,
         "volume": 5.0
@@ -29690,7 +28330,7 @@
     "15282": {
         "batch": 1,
         "market_group_id": 671,
-        "meta": 14,
+        "meta": 17,
         "name": "Cormack's Modified Sensor Booster",
         "skill_id": null,
         "volume": 5.0
@@ -29706,7 +28346,7 @@
     "15286": {
         "batch": 1,
         "market_group_id": 706,
-        "meta": 12,
+        "meta": 13,
         "name": "Tuvan's Modified Tracking Computer",
         "skill_id": null,
         "volume": 5.0
@@ -29714,7 +28354,7 @@
     "15288": {
         "batch": 1,
         "market_group_id": 706,
-        "meta": 13,
+        "meta": 15,
         "name": "Setele's Modified Tracking Computer",
         "skill_id": null,
         "volume": 5.0
@@ -29722,7 +28362,7 @@
     "15290": {
         "batch": 1,
         "market_group_id": 706,
-        "meta": 14,
+        "meta": 17,
         "name": "Cormack's Modified Tracking Computer",
         "skill_id": null,
         "volume": 5.0
@@ -30706,7 +29346,7 @@
     "15681": {
         "batch": 1,
         "market_group_id": 645,
-        "meta": 12,
+        "meta": 8,
         "name": "Caldari Navy Ballistic Control System",
         "skill_id": null,
         "volume": 5.0
@@ -30714,7 +29354,7 @@
     "15683": {
         "batch": 1,
         "market_group_id": 645,
-        "meta": 7,
+        "meta": 8,
         "name": "Republic Fleet Ballistic Control System",
         "skill_id": null,
         "volume": 5.0
@@ -31770,7 +30410,7 @@
     "15887": {
         "batch": 1,
         "market_group_id": 1936,
-        "meta": 7,
+        "meta": 8,
         "name": "Caldari Navy Warp Scrambler",
         "skill_id": null,
         "volume": 5.0
@@ -31778,7 +30418,7 @@
     "15889": {
         "batch": 1,
         "market_group_id": 1935,
-        "meta": 7,
+        "meta": 8,
         "name": "Caldari Navy Warp Disruptor",
         "skill_id": null,
         "volume": 5.0
@@ -33571,31 +32211,7 @@
         "batch": 1,
         "market_group_id": 645,
         "meta": 1,
-        "name": "Cross-linked Bolt Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "16459": {
-        "batch": 1,
-        "market_group_id": 645,
-        "meta": 2,
-        "name": "Muon Coil Bolt Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "16461": {
-        "batch": 1,
-        "market_group_id": 645,
-        "meta": 3,
-        "name": "Multiphasic Bolt Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "16463": {
-        "batch": 1,
-        "market_group_id": 645,
-        "meta": 4,
-        "name": "'Pandemonium' Ballistic Enhancement",
+        "name": "Crosslink Compact Ballistic Control System",
         "skill_id": null,
         "volume": 5.0
     },
@@ -36330,7 +34946,7 @@
     "17559": {
         "batch": 1,
         "market_group_id": 683,
-        "meta": 9,
+        "meta": 8,
         "name": "Federation Navy Stasis Webifier",
         "skill_id": null,
         "volume": 5.0
@@ -37003,7 +35619,7 @@
         "batch": 1,
         "market_group_id": 479,
         "meta": null,
-        "name": "Citadel Torpedo Battery",
+        "name": "XL Torpedo Battery",
         "skill_id": null,
         "volume": 5000.0
     },
@@ -37187,7 +35803,7 @@
         "batch": 100,
         "market_group_id": 1193,
         "meta": null,
-        "name": "Mjolnir Citadel Torpedo",
+        "name": "Mjolnir XL Torpedo",
         "skill_id": null,
         "volume": 0.3
     },
@@ -37195,7 +35811,7 @@
         "batch": 1,
         "market_group_id": 617,
         "meta": null,
-        "name": "Mjolnir Citadel Torpedo Blueprint",
+        "name": "Mjolnir XL Torpedo Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -37203,7 +35819,7 @@
         "batch": 100,
         "market_group_id": 1193,
         "meta": null,
-        "name": "Scourge Citadel Torpedo",
+        "name": "Scourge XL Torpedo",
         "skill_id": null,
         "volume": 0.3
     },
@@ -37211,7 +35827,7 @@
         "batch": 1,
         "market_group_id": 617,
         "meta": null,
-        "name": "Scourge Citadel Torpedo Blueprint",
+        "name": "Scourge XL Torpedo Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -37219,7 +35835,7 @@
         "batch": 100,
         "market_group_id": 1193,
         "meta": null,
-        "name": "Inferno Citadel Torpedo",
+        "name": "Inferno XL Torpedo",
         "skill_id": null,
         "volume": 0.3
     },
@@ -37227,7 +35843,7 @@
         "batch": 1,
         "market_group_id": 617,
         "meta": null,
-        "name": "Inferno Citadel Torpedo Blueprint",
+        "name": "Inferno XL Torpedo Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -37235,7 +35851,7 @@
         "batch": 100,
         "market_group_id": 1193,
         "meta": null,
-        "name": "Nova Citadel Torpedo",
+        "name": "Nova XL Torpedo",
         "skill_id": null,
         "volume": 0.3
     },
@@ -37243,7 +35859,7 @@
         "batch": 1,
         "market_group_id": 617,
         "meta": null,
-        "name": "Nova Citadel Torpedo Blueprint",
+        "name": "Nova XL Torpedo Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -41687,35 +40303,27 @@
         "skill_id": null,
         "volume": 5.0
     },
-    "19808": {
-        "batch": 1,
-        "market_group_id": 757,
-        "meta": 1,
-        "name": "Partial Weapon Navigation",
-        "skill_id": null,
-        "volume": 5.0
-    },
     "19810": {
         "batch": 1,
         "market_group_id": 757,
-        "meta": 2,
-        "name": "Peripheral Weapon Navigation Diameter",
+        "meta": 1,
+        "name": "Peripheral Compact Target Painter",
         "skill_id": null,
         "volume": 5.0
     },
     "19812": {
         "batch": 1,
         "market_group_id": 757,
-        "meta": 3,
-        "name": "Parallel Weapon Navigation Transmitter",
+        "meta": 1,
+        "name": "Parallel Enduring Target Painter",
         "skill_id": null,
         "volume": 5.0
     },
     "19814": {
         "batch": 1,
         "market_group_id": 757,
-        "meta": 4,
-        "name": "Phased Weapon Navigation Array Generation Extron",
+        "meta": 1,
+        "name": "Phased Scoped Target Painter",
         "skill_id": null,
         "volume": 5.0
     },
@@ -41738,120 +40346,112 @@
     "19923": {
         "batch": 1,
         "market_group_id": 715,
-        "meta": 2,
-        "name": "Induced Ion Field ECM I",
+        "meta": 1,
+        "name": "Morpheus Enduring Magnetometric ECM",
         "skill_id": null,
         "volume": 5.0
     },
     "19925": {
         "batch": 1,
         "market_group_id": 715,
-        "meta": 3,
-        "name": "Compulsive Ion Field ECM I",
+        "meta": 1,
+        "name": "Aergia Compact Magnetometric ECM",
         "skill_id": null,
         "volume": 5.0
     },
     "19927": {
         "batch": 1,
         "market_group_id": 715,
-        "meta": 4,
-        "name": "'Hypnos' Ion Field ECM I",
+        "meta": 1,
+        "name": "Hypnos Scoped Magnetometric ECM",
         "skill_id": null,
         "volume": 5.0
     },
     "19929": {
         "batch": 1,
         "market_group_id": 719,
-        "meta": 2,
-        "name": "Induced Multispectral ECM I",
+        "meta": 1,
+        "name": "Induced Compact Multispectral ECM",
         "skill_id": null,
         "volume": 5.0
     },
     "19931": {
         "batch": 1,
         "market_group_id": 719,
-        "meta": 3,
-        "name": "Compulsive Multispectral ECM I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "19933": {
-        "batch": 1,
-        "market_group_id": 719,
-        "meta": 4,
-        "name": "'Hypnos' Multispectral ECM I",
+        "meta": 1,
+        "name": "Compulsive Scoped Multispectral ECM",
         "skill_id": null,
         "volume": 5.0
     },
     "19935": {
         "batch": 1,
         "market_group_id": 716,
-        "meta": 2,
-        "name": "Languid Phase Inversion ECM I",
+        "meta": 1,
+        "name": "Languid Enduring Ladar ECM",
         "skill_id": null,
         "volume": 5.0
     },
     "19937": {
         "batch": 1,
         "market_group_id": 716,
-        "meta": 3,
-        "name": "Halting Phase Inversion ECM I",
+        "meta": 1,
+        "name": "Halting Compact Ladar ECM",
         "skill_id": null,
         "volume": 5.0
     },
     "19939": {
         "batch": 1,
         "market_group_id": 716,
-        "meta": 4,
-        "name": "Enfeebling Phase Inversion ECM I",
+        "meta": 1,
+        "name": "Enfeebling Scoped Ladar ECM",
         "skill_id": null,
         "volume": 5.0
     },
     "19942": {
         "batch": 1,
         "market_group_id": 717,
-        "meta": 2,
-        "name": "FZ-3a Disruptive Spatial Destabilizer ECM",
+        "meta": 1,
+        "name": "FZ-3a Enduring Gravimetric ECM",
         "skill_id": null,
         "volume": 5.0
     },
     "19944": {
         "batch": 1,
         "market_group_id": 717,
-        "meta": 3,
-        "name": "CZ-4 Concussive Spatial Destabilizer ECM",
+        "meta": 1,
+        "name": "CZ-4 Compact Gravimetric ECM",
         "skill_id": null,
         "volume": 5.0
     },
     "19946": {
         "batch": 1,
         "market_group_id": 717,
-        "meta": 4,
-        "name": "BZ-5 Neutralizing Spatial Destabilizer ECM",
+        "meta": 1,
+        "name": "BZ-5 Scoped Gravimetric ECM",
         "skill_id": null,
         "volume": 5.0
     },
     "19948": {
         "batch": 1,
         "market_group_id": 718,
-        "meta": 2,
-        "name": "'Gloom' White Noise ECM",
+        "meta": 1,
+        "name": "Gloom Enduring Radar ECM",
         "skill_id": null,
         "volume": 5.0
     },
     "19950": {
         "batch": 1,
         "market_group_id": 718,
-        "meta": 3,
-        "name": "'Shade' White Noise ECM",
+        "meta": 1,
+        "name": "Shade Compact Radar ECM",
         "skill_id": null,
         "volume": 5.0
     },
     "19952": {
         "batch": 1,
         "market_group_id": 718,
-        "meta": 4,
-        "name": "'Umbra' White Noise ECM",
+        "meta": 1,
+        "name": "Umbra Scoped Radar ECM",
         "skill_id": null,
         "volume": 5.0
     },
@@ -42522,8 +41122,8 @@
     "20199": {
         "batch": 1,
         "market_group_id": 719,
-        "meta": 9,
-        "name": "Dread Guristas ECM Multispectral Jammer",
+        "meta": 8,
+        "name": "Dread Guristas Multispectral ECM",
         "skill_id": null,
         "volume": 5.0
     },
@@ -42531,31 +41131,31 @@
         "batch": 1,
         "market_group_id": 719,
         "meta": 11,
-        "name": "Kaikka's Modified ECM Multispectral Jammer",
+        "name": "Kaikka's Modified Multispectral ECM",
         "skill_id": null,
         "volume": 5.0
     },
     "20203": {
         "batch": 1,
         "market_group_id": 719,
-        "meta": 12,
-        "name": "Thon's Modified ECM Multispectral Jammer",
+        "meta": 13,
+        "name": "Thon's Modified Multispectral ECM",
         "skill_id": null,
         "volume": 5.0
     },
     "20205": {
         "batch": 1,
         "market_group_id": 719,
-        "meta": 13,
-        "name": "Vepas' Modified ECM Multispectral Jammer",
+        "meta": 15,
+        "name": "Vepas' Modified Multispectral ECM",
         "skill_id": null,
         "volume": 5.0
     },
     "20207": {
         "batch": 1,
         "market_group_id": 719,
-        "meta": 14,
-        "name": "Estamel's Modified ECM Multispectral Jammer",
+        "meta": 17,
+        "name": "Estamel's Modified Multispectral ECM",
         "skill_id": null,
         "volume": 5.0
     },
@@ -42598,198 +41198,6 @@
         "name": "Torpedo Specialization",
         "skill_id": null,
         "volume": 0.01
-    },
-    "20214": {
-        "batch": 1,
-        "market_group_id": 729,
-        "meta": 2,
-        "name": "Extra Radar ECCM Scanning Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "20216": {
-        "batch": 1,
-        "market_group_id": 729,
-        "meta": 3,
-        "name": "Incremental Radar ECCM Scanning Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "20218": {
-        "batch": 1,
-        "market_group_id": 729,
-        "meta": 4,
-        "name": "Conjunctive Radar ECCM Scanning Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "20220": {
-        "batch": 1,
-        "market_group_id": 726,
-        "meta": 2,
-        "name": "Extra Ladar ECCM Scanning Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "20222": {
-        "batch": 1,
-        "market_group_id": 726,
-        "meta": 3,
-        "name": "Incremental Ladar ECCM Scanning Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "20224": {
-        "batch": 1,
-        "market_group_id": 726,
-        "meta": 4,
-        "name": "Conjunctive Ladar ECCM Scanning Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "20226": {
-        "batch": 1,
-        "market_group_id": 725,
-        "meta": 2,
-        "name": "Extra Gravimetric ECCM Scanning Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "20228": {
-        "batch": 1,
-        "market_group_id": 725,
-        "meta": 3,
-        "name": "Incremental Gravimetric ECCM Scanning Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "20230": {
-        "batch": 1,
-        "market_group_id": 725,
-        "meta": 4,
-        "name": "Conjunctive Gravimetric ECCM Scanning Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "20232": {
-        "batch": 1,
-        "market_group_id": 727,
-        "meta": 2,
-        "name": "Extra Magnetometric ECCM Scanning Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "20234": {
-        "batch": 1,
-        "market_group_id": 727,
-        "meta": 3,
-        "name": "Incremental Magnetometric ECCM Scanning Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "20236": {
-        "batch": 1,
-        "market_group_id": 727,
-        "meta": 4,
-        "name": "Conjunctive Magnetometric ECCM Scanning Array I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "20238": {
-        "batch": 1,
-        "market_group_id": 720,
-        "meta": 2,
-        "name": "Secure Gravimetric Backup Cluster I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "20240": {
-        "batch": 1,
-        "market_group_id": 720,
-        "meta": 3,
-        "name": "Shielded Gravimetric Backup Cluster I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "20242": {
-        "batch": 1,
-        "market_group_id": 720,
-        "meta": 4,
-        "name": "Warded Gravimetric Backup Cluster I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "20244": {
-        "batch": 1,
-        "market_group_id": 721,
-        "meta": 2,
-        "name": "Secure Ladar Backup Cluster I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "20246": {
-        "batch": 1,
-        "market_group_id": 721,
-        "meta": 3,
-        "name": "Shielded Ladar Backup Cluster I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "20248": {
-        "batch": 1,
-        "market_group_id": 721,
-        "meta": 4,
-        "name": "Warded Ladar Backup Cluster I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "20250": {
-        "batch": 1,
-        "market_group_id": 723,
-        "meta": 2,
-        "name": "Secure Magnetometric Backup Cluster I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "20252": {
-        "batch": 1,
-        "market_group_id": 723,
-        "meta": 3,
-        "name": "Shielded Magnetometric Backup Cluster I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "20254": {
-        "batch": 1,
-        "market_group_id": 723,
-        "meta": 4,
-        "name": "Warded Magnetometric Backup Cluster I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "20260": {
-        "batch": 1,
-        "market_group_id": 722,
-        "meta": 2,
-        "name": "Secure Radar Backup Cluster I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "20262": {
-        "batch": 1,
-        "market_group_id": 722,
-        "meta": 3,
-        "name": "Shielded Radar Backup Cluster I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "20264": {
-        "batch": 1,
-        "market_group_id": 722,
-        "meta": 4,
-        "name": "Warded Radar Backup Cluster I",
-        "skill_id": null,
-        "volume": 5.0
     },
     "20280": {
         "batch": 1,
@@ -43387,7 +41795,7 @@
         "batch": 1,
         "market_group_id": 777,
         "meta": null,
-        "name": "Citadel Torpedo Launcher I",
+        "name": "XL Torpedo Launcher I",
         "skill_id": null,
         "volume": 4000.0
     },
@@ -43395,7 +41803,7 @@
         "batch": 1,
         "market_group_id": 340,
         "meta": null,
-        "name": "Citadel Torpedo Launcher I Blueprint",
+        "name": "XL Torpedo Launcher I Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -43467,7 +41875,7 @@
         "batch": 1,
         "market_group_id": 715,
         "meta": 6,
-        "name": "'Marshall' Ion Field Projector",
+        "name": "'Marshall' Magnetometric ECM",
         "skill_id": null,
         "volume": 5.0
     },
@@ -43475,7 +41883,7 @@
         "batch": 1,
         "market_group_id": 716,
         "meta": 6,
-        "name": "'Gambler' Phase Inverter",
+        "name": "'Gambler' Ladar ECM",
         "skill_id": null,
         "volume": 5.0
     },
@@ -43483,7 +41891,7 @@
         "batch": 1,
         "market_group_id": 717,
         "meta": 6,
-        "name": "'Plunderer' Spatial Destabilizer",
+        "name": "'Plunderer' Gravimetric ECM",
         "skill_id": null,
         "volume": 5.0
     },
@@ -43491,7 +41899,7 @@
         "batch": 1,
         "market_group_id": 718,
         "meta": 6,
-        "name": "'Heist' White Noise Generator",
+        "name": "'Heist' Radar ECM",
         "skill_id": null,
         "volume": 5.0
     },
@@ -43499,7 +41907,7 @@
         "batch": 1,
         "market_group_id": 678,
         "meta": 6,
-        "name": "'Ghost' ECM Burst",
+        "name": "'Ghost' Burst Jammer",
         "skill_id": null,
         "volume": 5.0
     },
@@ -46367,19 +44775,11 @@
         "skill_id": null,
         "volume": 10.0
     },
-    "21482": {
-        "batch": 1,
-        "market_group_id": 645,
-        "meta": 6,
-        "name": "Ballistic 'Purge' Targeting System I",
-        "skill_id": null,
-        "volume": 5.0
-    },
     "21484": {
         "batch": 1,
         "market_group_id": 645,
         "meta": 6,
-        "name": "'Full Duplex' Ballistic Targeting System",
+        "name": "'Full Duplex' Ballistic Control System",
         "skill_id": null,
         "volume": 5.0
     },
@@ -46387,15 +44787,7 @@
         "batch": 1,
         "market_group_id": 646,
         "meta": 6,
-        "name": "'Kindred' Stabilization Actuator I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "21488": {
-        "batch": 1,
-        "market_group_id": 646,
-        "meta": 6,
-        "name": "Monophonic Stabilization Actuator I",
+        "name": "'Kindred' Gyrostabilizer",
         "skill_id": null,
         "volume": 5.0
     },
@@ -46467,7 +44859,7 @@
         "batch": 1,
         "market_group_id": 1935,
         "meta": 6,
-        "name": "Process-Interruptive Warp Disruptor",
+        "name": "'Interruptive' Warp Disruptor",
         "skill_id": null,
         "volume": 5.0
     },
@@ -46479,45 +44871,13 @@
         "skill_id": null,
         "volume": 5.0
     },
-    "21521": {
-        "batch": 1,
-        "market_group_id": 720,
-        "meta": 6,
-        "name": "Gravimetric Firewall",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "21523": {
-        "batch": 1,
-        "market_group_id": 721,
-        "meta": 6,
-        "name": "Ladar Firewall",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "21525": {
-        "batch": 1,
-        "market_group_id": 723,
-        "meta": 6,
-        "name": "Magnetometric Firewall",
-        "skill_id": null,
-        "volume": 5.0
-    },
     "21527": {
         "batch": 1,
         "market_group_id": 724,
         "meta": 6,
-        "name": "Multi Sensor Firewall",
+        "name": "'Firewall' Signal Amplifier",
         "skill_id": null,
         "volume": 20.0
-    },
-    "21529": {
-        "batch": 1,
-        "market_group_id": 722,
-        "meta": 6,
-        "name": "RADAR Firewall",
-        "skill_id": null,
-        "volume": 5.0
     },
     "21532": {
         "batch": 1,
@@ -46555,7 +44915,7 @@
         "batch": 1,
         "market_group_id": 757,
         "meta": 6,
-        "name": "'Inception' Target Painter I",
+        "name": "'Inception' Target Painter",
         "skill_id": null,
         "volume": 5.0
     },
@@ -46867,7 +45227,7 @@
         "batch": 1,
         "market_group_id": 373,
         "meta": null,
-        "name": "Citadel Torpedoes",
+        "name": "XL Torpedoes",
         "skill_id": null,
         "volume": 0.01
     },
@@ -48751,27 +47111,11 @@
         "skill_id": null,
         "volume": 50.0
     },
-    "22893": {
-        "batch": 1,
-        "market_group_id": 615,
-        "meta": 6,
-        "name": "'Gonzo' Damage Control I",
-        "skill_id": null,
-        "volume": 5.0
-    },
     "22895": {
         "batch": 1,
         "market_group_id": 725,
         "meta": 6,
-        "name": "'Shady' ECCM - Gravimetric I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "22897": {
-        "batch": 1,
-        "market_group_id": 727,
-        "meta": 6,
-        "name": "'Forger' ECCM - Magnetometric I",
+        "name": "'Shady' Sensor Booster",
         "skill_id": null,
         "volume": 5.0
     },
@@ -48847,19 +47191,11 @@
         "skill_id": null,
         "volume": 20.0
     },
-    "22917": {
-        "batch": 1,
-        "market_group_id": 648,
-        "meta": 6,
-        "name": "'Capitalist' Magnetic Field Stabilizer I",
-        "skill_id": null,
-        "volume": 5.0
-    },
     "22919": {
         "batch": 1,
         "market_group_id": 648,
         "meta": 6,
-        "name": "'Monopoly' Magnetic Field Stabilizer I",
+        "name": "'Monopoly' Magnetic Field Stabilizer",
         "skill_id": null,
         "volume": 5.0
     },
@@ -48867,23 +47203,15 @@
         "batch": 1,
         "market_group_id": 686,
         "meta": 6,
-        "name": "'Bootleg' ECCM Projector I",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "22927": {
-        "batch": 1,
-        "market_group_id": 706,
-        "meta": 6,
-        "name": "'Economist' Tracking Computer I",
+        "name": "'Bootleg' Remote Sensor Booster",
         "skill_id": null,
         "volume": 5.0
     },
     "22929": {
         "batch": 1,
         "market_group_id": 706,
-        "meta": 7,
-        "name": "'Marketeer' Tracking Computer I",
+        "meta": 6,
+        "name": "'Marketeer' Tracking Computer",
         "skill_id": null,
         "volume": 5.0
     },
@@ -48903,51 +47231,19 @@
         "skill_id": null,
         "volume": 5.0
     },
-    "22935": {
-        "batch": 1,
-        "market_group_id": 708,
-        "meta": 6,
-        "name": "'Tycoon' Remote Tracking Computer",
-        "skill_id": null,
-        "volume": 5.0
-    },
     "22937": {
         "batch": 1,
         "market_group_id": 708,
-        "meta": 7,
+        "meta": 6,
         "name": "'Enterprise' Remote Tracking Computer",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "22939": {
-        "batch": 1,
-        "market_group_id": 673,
-        "meta": 6,
-        "name": "'Boss' Remote Sensor Booster",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "22941": {
-        "batch": 1,
-        "market_group_id": 673,
-        "meta": 6,
-        "name": "'Entrepreneur' Remote Sensor Booster",
-        "skill_id": null,
-        "volume": 5.0
-    },
-    "22943": {
-        "batch": 1,
-        "market_group_id": 679,
-        "meta": 6,
-        "name": "'Broker' Remote Sensor Dampener I",
         "skill_id": null,
         "volume": 5.0
     },
     "22945": {
         "batch": 1,
         "market_group_id": 679,
-        "meta": 7,
-        "name": "'Executive' Remote Sensor Dampener I",
+        "meta": 6,
+        "name": "'Executive' Remote Sensor Dampener",
         "skill_id": null,
         "volume": 5.0
     },
@@ -50058,8 +48354,8 @@
     "23418": {
         "batch": 1,
         "market_group_id": 615,
-        "meta": 7,
-        "name": "'Radical' Damage Control I",
+        "meta": 6,
+        "name": "'Radical' Damage Control",
         "skill_id": null,
         "volume": 5.0
     },
@@ -50675,7 +48971,7 @@
         "batch": 1,
         "market_group_id": 703,
         "meta": 6,
-        "name": "'Crucible' Small Capacitor Battery I",
+        "name": "'Crucible' Small Cap Battery",
         "skill_id": null,
         "volume": 5.0
     },
@@ -50683,7 +48979,7 @@
         "batch": 1,
         "market_group_id": 704,
         "meta": 6,
-        "name": "'Censer' Medium Capacitor Battery I",
+        "name": "'Censer' Medium Cap Battery",
         "skill_id": null,
         "volume": 10.0
     },
@@ -50691,7 +48987,7 @@
         "batch": 1,
         "market_group_id": 705,
         "meta": 6,
-        "name": "'Thurifer' Large Capacitor Battery I",
+        "name": "'Thurifer' Large Cap Battery",
         "skill_id": null,
         "volume": 15.0
     },
@@ -50919,18 +49215,10 @@
         "skill_id": null,
         "volume": 5.0
     },
-    "23900": {
-        "batch": 1,
-        "market_group_id": 647,
-        "meta": 6,
-        "name": "'Mangonel' Heat Sink I",
-        "skill_id": null,
-        "volume": 5.0
-    },
     "23902": {
         "batch": 1,
         "market_group_id": 647,
-        "meta": 7,
+        "meta": 6,
         "name": "'Trebuchet' Heat Sink I",
         "skill_id": null,
         "volume": 5.0
@@ -57187,7 +55475,7 @@
         "batch": 1,
         "market_group_id": 479,
         "meta": null,
-        "name": "Guristas Citadel Torpedo Battery",
+        "name": "Guristas XL Torpedo Battery",
         "skill_id": null,
         "volume": 5000.0
     },
@@ -57195,7 +55483,7 @@
         "batch": 1,
         "market_group_id": 479,
         "meta": null,
-        "name": "Dread Guristas Citadel Torpedo Battery",
+        "name": "Dread Guristas XL Torpedo Battery",
         "skill_id": null,
         "volume": 5000.0
     },
@@ -59642,7 +57930,7 @@
     "28516": {
         "batch": 1,
         "market_group_id": 1935,
-        "meta": 7,
+        "meta": 8,
         "name": "Khanid Navy Warp Disruptor",
         "skill_id": null,
         "volume": 5.0
@@ -59650,7 +57938,7 @@
     "28518": {
         "batch": 1,
         "market_group_id": 1936,
-        "meta": 7,
+        "meta": 8,
         "name": "Khanid Navy Warp Scrambler",
         "skill_id": null,
         "volume": 5.0
@@ -59842,7 +58130,7 @@
     "28563": {
         "batch": 1,
         "market_group_id": 645,
-        "meta": 12,
+        "meta": 8,
         "name": "Khanid Navy Ballistic Control System",
         "skill_id": null,
         "volume": 5.0
@@ -60298,40 +58586,40 @@
     "28729": {
         "batch": 1,
         "market_group_id": 715,
-        "meta": 6,
-        "name": "Legion ECM Ion Field Projector",
+        "meta": 8,
+        "name": "Legion Magnetometric ECM",
         "skill_id": null,
         "volume": 5.0
     },
     "28731": {
         "batch": 1,
         "market_group_id": 719,
-        "meta": 6,
-        "name": "Legion ECM Multispectral Jammer",
+        "meta": 8,
+        "name": "Legion Multispectral ECM",
         "skill_id": null,
         "volume": 5.0
     },
     "28733": {
         "batch": 1,
         "market_group_id": 716,
-        "meta": 6,
-        "name": "Legion ECM Phase Inverter",
+        "meta": 8,
+        "name": "Legion Ladar ECM",
         "skill_id": null,
         "volume": 5.0
     },
     "28735": {
         "batch": 1,
         "market_group_id": 717,
-        "meta": 6,
-        "name": "Legion ECM Spatial Destabilizer",
+        "meta": 8,
+        "name": "Legion Gravimetric ECM",
         "skill_id": null,
         "volume": 5.0
     },
     "28737": {
         "batch": 1,
         "market_group_id": 718,
-        "meta": 6,
-        "name": "Legion ECM White Noise Generator",
+        "meta": 8,
+        "name": "Legion Radar ECM",
         "skill_id": null,
         "volume": 5.0
     },
@@ -61603,7 +59891,7 @@
         "batch": 100,
         "market_group_id": 1194,
         "meta": null,
-        "name": "Guristas Nova Citadel Torpedo",
+        "name": "Guristas Nova XL Torpedo",
         "skill_id": null,
         "volume": 0.3
     },
@@ -61611,7 +59899,7 @@
         "batch": 100,
         "market_group_id": 1194,
         "meta": null,
-        "name": "Guristas Inferno Citadel Torpedo",
+        "name": "Guristas Inferno XL Torpedo",
         "skill_id": null,
         "volume": 0.3
     },
@@ -61619,7 +59907,7 @@
         "batch": 100,
         "market_group_id": 1194,
         "meta": null,
-        "name": "Guristas Scourge Citadel Torpedo",
+        "name": "Guristas Scourge XL Torpedo",
         "skill_id": null,
         "volume": 0.3
     },
@@ -61627,7 +59915,7 @@
         "batch": 100,
         "market_group_id": 1194,
         "meta": null,
-        "name": "Guristas Mjolnir Citadel Torpedo",
+        "name": "Guristas Mjolnir XL Torpedo",
         "skill_id": null,
         "volume": 0.3
     },
@@ -68746,7 +67034,7 @@
     "31944": {
         "batch": 1,
         "market_group_id": 757,
-        "meta": 6,
+        "meta": 8,
         "name": "Republic Fleet Target Painter",
         "skill_id": null,
         "volume": 5.0
@@ -69794,7 +68082,7 @@
     "32414": {
         "batch": 1,
         "market_group_id": 757,
-        "meta": 9,
+        "meta": 8,
         "name": "Domination Target Painter",
         "skill_id": null,
         "volume": 5.0
@@ -69811,7 +68099,7 @@
         "batch": 1,
         "market_group_id": 373,
         "meta": null,
-        "name": "Citadel Cruise Missiles",
+        "name": "XL Cruise Missiles",
         "skill_id": null,
         "volume": 0.01
     },
@@ -69819,7 +68107,7 @@
         "batch": 100,
         "market_group_id": 1287,
         "meta": null,
-        "name": "Scourge Citadel Cruise Missile",
+        "name": "Scourge XL Cruise Missile",
         "skill_id": null,
         "volume": 0.3
     },
@@ -69827,7 +68115,7 @@
         "batch": 1,
         "market_group_id": 1286,
         "meta": null,
-        "name": "Scourge Citadel Cruise Missile Blueprint",
+        "name": "Scourge XL Cruise Missile Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -69835,7 +68123,7 @@
         "batch": 100,
         "market_group_id": 1287,
         "meta": null,
-        "name": "Nova Citadel Cruise Missile",
+        "name": "Nova XL Cruise Missile",
         "skill_id": null,
         "volume": 0.3
     },
@@ -69843,7 +68131,7 @@
         "batch": 1,
         "market_group_id": 1286,
         "meta": null,
-        "name": "Nova Citadel Cruise Missile Blueprint",
+        "name": "Nova XL Cruise Missile Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -69851,7 +68139,7 @@
         "batch": 100,
         "market_group_id": 1287,
         "meta": null,
-        "name": "Inferno Citadel Cruise Missile",
+        "name": "Inferno XL Cruise Missile",
         "skill_id": null,
         "volume": 0.3
     },
@@ -69859,7 +68147,7 @@
         "batch": 1,
         "market_group_id": 1286,
         "meta": null,
-        "name": "Inferno Citadel Cruise Missile Blueprint",
+        "name": "Inferno XL Cruise Missile Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -69867,7 +68155,7 @@
         "batch": 100,
         "market_group_id": 1287,
         "meta": null,
-        "name": "Mjolnir Citadel Cruise Missile",
+        "name": "Mjolnir XL Cruise Missile",
         "skill_id": null,
         "volume": 0.3
     },
@@ -69875,7 +68163,7 @@
         "batch": 1,
         "market_group_id": 1286,
         "meta": null,
-        "name": "Mjolnir Citadel Cruise Missile Blueprint",
+        "name": "Mjolnir XL Cruise Missile Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -69883,7 +68171,7 @@
         "batch": 1,
         "market_group_id": 777,
         "meta": null,
-        "name": "Citadel Cruise Launcher I",
+        "name": "XL Cruise Launcher I",
         "skill_id": null,
         "volume": 4000.0
     },
@@ -69891,7 +68179,7 @@
         "batch": 1,
         "market_group_id": 340,
         "meta": null,
-        "name": "Citadel Cruise Launcher I Blueprint",
+        "name": "XL Cruise Launcher I Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -70506,7 +68794,7 @@
     "32921": {
         "batch": 1,
         "market_group_id": 938,
-        "meta": 12,
+        "meta": 13,
         "name": "Unit F-435454's Modified Drone Damage Amplifier",
         "skill_id": null,
         "volume": 5.0
@@ -70514,7 +68802,7 @@
     "32923": {
         "batch": 1,
         "market_group_id": 938,
-        "meta": 13,
+        "meta": 15,
         "name": "Unit P-343554's Modified Drone Damage Amplifier",
         "skill_id": null,
         "volume": 5.0
@@ -70522,7 +68810,7 @@
     "32925": {
         "batch": 1,
         "market_group_id": 938,
-        "meta": 14,
+        "meta": 17,
         "name": "Unit W-634's Modified Drone Damage Amplifier",
         "skill_id": null,
         "volume": 5.0
@@ -70570,7 +68858,7 @@
     "32937": {
         "batch": 1,
         "market_group_id": 938,
-        "meta": 12,
+        "meta": 13,
         "name": "Unit F-435454's Modified Omnidirectional Tracking Link",
         "skill_id": null,
         "volume": 5.0
@@ -70578,7 +68866,7 @@
     "32939": {
         "batch": 1,
         "market_group_id": 938,
-        "meta": 13,
+        "meta": 15,
         "name": "Unit P-343554's Modified Omnidirectional Tracking Link",
         "skill_id": null,
         "volume": 5.0
@@ -70586,7 +68874,7 @@
     "32941": {
         "batch": 1,
         "market_group_id": 938,
-        "meta": 14,
+        "meta": 17,
         "name": "Unit W-634's Modified Omnidirectional Tracking Link",
         "skill_id": null,
         "volume": 5.0
@@ -74026,7 +72314,7 @@
     "33836": {
         "batch": 1,
         "market_group_id": 938,
-        "meta": 12,
+        "meta": 13,
         "name": "Unit F-435454's Modified Omnidirectional Tracking Enhancer",
         "skill_id": null,
         "volume": 5.0
@@ -74034,7 +72322,7 @@
     "33838": {
         "batch": 1,
         "market_group_id": 938,
-        "meta": 13,
+        "meta": 15,
         "name": "Unit P-343554's Modified Omnidirectional Tracking Enhancer",
         "skill_id": null,
         "volume": 5.0
@@ -74042,7 +72330,7 @@
     "33840": {
         "batch": 1,
         "market_group_id": 938,
-        "meta": 14,
+        "meta": 17,
         "name": "Unit W-634's Modified Omnidirectional Tracking Enhancer",
         "skill_id": null,
         "volume": 5.0
@@ -81291,7 +79579,7 @@
         "batch": 1,
         "market_group_id": 1913,
         "meta": null,
-        "name": "Structure Telescope Lens Blueprint",
+        "name": "Structure Electromagnetic Sensor Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
@@ -81315,7 +79603,7 @@
         "batch": 1,
         "market_group_id": 1865,
         "meta": null,
-        "name": "Structure Telescope Lens",
+        "name": "Structure Electromagnetic Sensor",
         "skill_id": null,
         "volume": 100000.0
     },
@@ -82461,7 +80749,7 @@
         "meta": null,
         "name": "Apostle",
         "skill_id": null,
-        "volume": 1.0
+        "volume": 19500000.0
     },
     "37605": {
         "batch": 1,
@@ -82469,7 +80757,7 @@
         "meta": null,
         "name": "Minokawa",
         "skill_id": null,
-        "volume": 1.0
+        "volume": 17250000.0
     },
     "37606": {
         "batch": 1,
@@ -82477,15 +80765,15 @@
         "meta": null,
         "name": "Lif",
         "skill_id": null,
-        "volume": 1.0
+        "volume": 16500000.0
     },
     "37607": {
         "batch": 1,
         "market_group_id": 820,
         "meta": null,
-        "name": "Sekhmet",
+        "name": "Ninazu",
         "skill_id": null,
-        "volume": 1.0
+        "volume": 18550000.0
     },
     "37608": {
         "batch": 1,
@@ -82622,6 +80910,38 @@
         "name": "Corpus X-Type Heavy Energy Neutralizer",
         "skill_id": null,
         "volume": 50.0
+    },
+    "37796": {
+        "batch": 1,
+        "market_group_id": 2152,
+        "meta": null,
+        "name": "Structure Missile Systems",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37797": {
+        "batch": 1,
+        "market_group_id": 2152,
+        "meta": null,
+        "name": "Structure Defensive Systems",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37798": {
+        "batch": 1,
+        "market_group_id": 2152,
+        "meta": null,
+        "name": "Structure Electronic Systems",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "37799": {
+        "batch": 1,
+        "market_group_id": 2152,
+        "meta": null,
+        "name": "Structure Engineering Systems",
+        "skill_id": null,
+        "volume": 0.01
     },
     "37805": {
         "batch": 1,
@@ -83119,6 +81439,38 @@
         "skill_id": null,
         "volume": 0.01
     },
+    "40348": {
+        "batch": 1,
+        "market_group_id": 1676,
+        "meta": null,
+        "name": "25000mm Steel Plates I",
+        "skill_id": null,
+        "volume": 4000.0
+    },
+    "40349": {
+        "batch": 1,
+        "market_group_id": 1676,
+        "meta": null,
+        "name": "25000mm Crystalline Carbonide Restrained Plates",
+        "skill_id": null,
+        "volume": 4000.0
+    },
+    "40350": {
+        "batch": 1,
+        "market_group_id": 1676,
+        "meta": null,
+        "name": "25000mm Rolled Tungsten Compact Plates",
+        "skill_id": null,
+        "volume": 4000.0
+    },
+    "40351": {
+        "batch": 1,
+        "market_group_id": 1676,
+        "meta": null,
+        "name": "25000mm Steel Plates II",
+        "skill_id": null,
+        "volume": 4000.0
+    },
     "40456": {
         "batch": 1,
         "market_group_id": 20,
@@ -83567,6 +81919,14 @@
         "skill_id": null,
         "volume": 0.01
     },
+    "40541": {
+        "batch": 1,
+        "market_group_id": 2013,
+        "meta": null,
+        "name": "Jovian DNA Strand",
+        "skill_id": null,
+        "volume": 0.1
+    },
     "40548": {
         "batch": 1,
         "market_group_id": 20,
@@ -83980,6 +82340,670 @@
         "market_group_id": 2096,
         "meta": null,
         "name": "Rhea Matigu Seabeast SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40631": {
+        "batch": 1,
+        "market_group_id": 912,
+        "meta": null,
+        "name": "Doomsday_Beam",
+        "skill_id": null,
+        "volume": 8000.0
+    },
+    "40632": {
+        "batch": 1,
+        "market_group_id": 912,
+        "meta": null,
+        "name": "Doomsday_Slash",
+        "skill_id": null,
+        "volume": 8000.0
+    },
+    "40633": {
+        "batch": 1,
+        "market_group_id": 912,
+        "meta": null,
+        "name": "Doomsday_Cone",
+        "skill_id": null,
+        "volume": 8000.0
+    },
+    "40634": {
+        "batch": 1,
+        "market_group_id": 912,
+        "meta": null,
+        "name": "Doomsday_HOG",
+        "skill_id": null,
+        "volume": 8000.0
+    },
+    "40635": {
+        "batch": 1,
+        "market_group_id": 912,
+        "meta": null,
+        "name": "Superweapon_AOEWeb",
+        "skill_id": null,
+        "volume": 8000.0
+    },
+    "40636": {
+        "batch": 1,
+        "market_group_id": 912,
+        "meta": null,
+        "name": "Superweapon_AOENeut",
+        "skill_id": null,
+        "volume": 8000.0
+    },
+    "40690": {
+        "batch": 1,
+        "market_group_id": 678,
+        "meta": 8,
+        "name": "Sentient Burst Jammer",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "40691": {
+        "batch": 1,
+        "market_group_id": 678,
+        "meta": 11,
+        "name": "Unit D-34343's Modified Burst Jammer",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "40692": {
+        "batch": 1,
+        "market_group_id": 678,
+        "meta": 13,
+        "name": "Unit F-435454's Modified Burst Jammer",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "40693": {
+        "batch": 1,
+        "market_group_id": 678,
+        "meta": 15,
+        "name": "Unit P-343554's Modified Burst Jammer",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "40694": {
+        "batch": 1,
+        "market_group_id": 678,
+        "meta": 17,
+        "name": "Unit W-634's Modified Burst Jammer",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "40695": {
+        "batch": 1,
+        "market_group_id": 1967,
+        "meta": null,
+        "name": "Typhoon IGC Victory SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40701": {
+        "batch": 1,
+        "market_group_id": 20,
+        "meta": null,
+        "name": "Subcompact TEBS Interface",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40770": {
+        "batch": 1,
+        "market_group_id": 2003,
+        "meta": null,
+        "name": "Bantam Guristas SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40771": {
+        "batch": 1,
+        "market_group_id": 2003,
+        "meta": null,
+        "name": "Merlin Guristas SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40772": {
+        "batch": 1,
+        "market_group_id": 1991,
+        "meta": null,
+        "name": "Moa Guristas SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "40773": {
+        "batch": 1,
+        "market_group_id": 1965,
+        "meta": null,
+        "name": "Scorpion Guristas SKIN (Permanent)",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "41023": {
+        "batch": 1,
+        "market_group_id": 20,
+        "meta": null,
+        "name": "Convoy Hawk 6 Escort Roster",
+        "skill_id": null,
+        "volume": 0.1
+    },
+    "41024": {
+        "batch": 1,
+        "market_group_id": 20,
+        "meta": null,
+        "name": "Audio Log Backup \u0096 115/11/11 A-0477",
+        "skill_id": null,
+        "volume": 0.1
+    },
+    "41025": {
+        "batch": 1,
+        "market_group_id": 20,
+        "meta": null,
+        "name": "Audio Log Backup \u0096 117/07/01 G-6640",
+        "skill_id": null,
+        "volume": 0.1
+    },
+    "41026": {
+        "batch": 1,
+        "market_group_id": 20,
+        "meta": null,
+        "name": "Manifest \u0096 Cargo 118/01/06 \u0096 CLEARENCE 1B",
+        "skill_id": null,
+        "volume": 0.1
+    },
+    "41027": {
+        "batch": 1,
+        "market_group_id": 20,
+        "meta": null,
+        "name": "Secure Comms Uplink ALPHA-6",
+        "skill_id": null,
+        "volume": 0.1
+    },
+    "41028": {
+        "batch": 1,
+        "market_group_id": 20,
+        "meta": null,
+        "name": "Medical Report 0401A \u0096 117/01/19",
+        "skill_id": null,
+        "volume": 0.1
+    },
+    "41029": {
+        "batch": 1,
+        "market_group_id": 20,
+        "meta": null,
+        "name": "Progress Report 0466B \u0096 117/02/28",
+        "skill_id": null,
+        "volume": 0.1
+    },
+    "41031": {
+        "batch": 1,
+        "market_group_id": 938,
+        "meta": 1,
+        "name": "AML Compact Omnidirectional Tracking Link",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "41032": {
+        "batch": 1,
+        "market_group_id": 938,
+        "meta": 1,
+        "name": "Denny Enduring Omnidirectional Tracking Link",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "41033": {
+        "batch": 1,
+        "market_group_id": 938,
+        "meta": 1,
+        "name": "N-JM Compact Omnidirectional Tracking Enhancer",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "41034": {
+        "batch": 1,
+        "market_group_id": 938,
+        "meta": 1,
+        "name": "AE-K Compact Drone Damage Amplifier",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "41035": {
+        "batch": 1,
+        "market_group_id": 1661,
+        "meta": null,
+        "name": "???????",
+        "skill_id": null,
+        "volume": 3.0
+    },
+    "41036": {
+        "batch": 1,
+        "market_group_id": 1836,
+        "meta": null,
+        "name": "Men's 'Boneweld' Facial Augmentation",
+        "skill_id": null,
+        "volume": 0.1
+    },
+    "41038": {
+        "batch": 1,
+        "market_group_id": 683,
+        "meta": 8,
+        "name": "Republic Fleet Stasis Webifier",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "41040": {
+        "batch": 1,
+        "market_group_id": 2154,
+        "meta": null,
+        "name": "Heavy Stasis Grappler I",
+        "skill_id": null,
+        "volume": 50.0
+    },
+    "41043": {
+        "batch": 1,
+        "market_group_id": 1836,
+        "meta": null,
+        "name": "Men's 'Wirepoise' Facial Augmentation",
+        "skill_id": null,
+        "volume": 0.1
+    },
+    "41044": {
+        "batch": 1,
+        "market_group_id": 1836,
+        "meta": null,
+        "name": "Men's 'Circuitrun' Facial Augmentation",
+        "skill_id": null,
+        "volume": 0.1
+    },
+    "41045": {
+        "batch": 1,
+        "market_group_id": 1836,
+        "meta": null,
+        "name": "Men's 'Twinswitch' Facial Augmentation",
+        "skill_id": null,
+        "volume": 0.1
+    },
+    "41046": {
+        "batch": 1,
+        "market_group_id": 1836,
+        "meta": null,
+        "name": "Men's 'Setcouple' Facial Augmentation",
+        "skill_id": null,
+        "volume": 0.1
+    },
+    "41047": {
+        "batch": 1,
+        "market_group_id": 1836,
+        "meta": null,
+        "name": "Men's 'Bridgestat' Facial Augmentation",
+        "skill_id": null,
+        "volume": 0.1
+    },
+    "41048": {
+        "batch": 1,
+        "market_group_id": 1836,
+        "meta": null,
+        "name": "Women's 'Tripoint' Facial Augmentation",
+        "skill_id": null,
+        "volume": 0.1
+    },
+    "41049": {
+        "batch": 1,
+        "market_group_id": 1836,
+        "meta": null,
+        "name": "Women's 'Crossgrid' Facial Augmentation",
+        "skill_id": null,
+        "volume": 0.1
+    },
+    "41050": {
+        "batch": 1,
+        "market_group_id": 1836,
+        "meta": null,
+        "name": "Women's 'Guidemask' Facial Augmentation",
+        "skill_id": null,
+        "volume": 0.1
+    },
+    "41051": {
+        "batch": 1,
+        "market_group_id": 1836,
+        "meta": null,
+        "name": "Women's 'Waveform' Facial Augmentation",
+        "skill_id": null,
+        "volume": 0.1
+    },
+    "41052": {
+        "batch": 1,
+        "market_group_id": 1836,
+        "meta": null,
+        "name": "Women's 'Sparkgap' Facial Augmentation",
+        "skill_id": null,
+        "volume": 0.1
+    },
+    "41053": {
+        "batch": 1,
+        "market_group_id": 1836,
+        "meta": null,
+        "name": "Women's 'Openyagi' Facial Augmentation",
+        "skill_id": null,
+        "volume": 0.1
+    },
+    "41054": {
+        "batch": 1,
+        "market_group_id": 2154,
+        "meta": 1,
+        "name": "Heavy Gunnar Compact Stasis Grappler",
+        "skill_id": null,
+        "volume": 50.0
+    },
+    "41055": {
+        "batch": 1,
+        "market_group_id": 2154,
+        "meta": 1,
+        "name": "Heavy Karelin Scoped Stasis Grappler",
+        "skill_id": null,
+        "volume": 50.0
+    },
+    "41056": {
+        "batch": 1,
+        "market_group_id": 2154,
+        "meta": 1,
+        "name": "Heavy Jigoro Enduring Stasis Grappler",
+        "skill_id": null,
+        "volume": 50.0
+    },
+    "41057": {
+        "batch": 1,
+        "market_group_id": 2154,
+        "meta": 5,
+        "name": "Heavy Stasis Grappler II",
+        "skill_id": null,
+        "volume": 50.0
+    },
+    "41058": {
+        "batch": 1,
+        "market_group_id": 2154,
+        "meta": 8,
+        "name": "Heavy Shadow Serpentis Stasis Grappler",
+        "skill_id": null,
+        "volume": 50.0
+    },
+    "41059": {
+        "batch": 1,
+        "market_group_id": 2154,
+        "meta": 8,
+        "name": "Heavy Domination Stasis Grappler",
+        "skill_id": null,
+        "volume": 50.0
+    },
+    "41061": {
+        "batch": 1,
+        "market_group_id": 1936,
+        "meta": 8,
+        "name": "Federation Navy Warp Scrambler",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "41062": {
+        "batch": 1,
+        "market_group_id": 1935,
+        "meta": 8,
+        "name": "Federation Navy Warp Disruptor",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "41155": {
+        "batch": 1,
+        "market_group_id": 1094,
+        "meta": null,
+        "name": "ECCM Script",
+        "skill_id": null,
+        "volume": 1.0
+    },
+    "41191": {
+        "batch": 1,
+        "market_group_id": 671,
+        "meta": 8,
+        "name": "Sentient Sensor Booster",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "41192": {
+        "batch": 1,
+        "market_group_id": 671,
+        "meta": 11,
+        "name": "Unit D-34343's Modified Sensor Booster",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "41193": {
+        "batch": 1,
+        "market_group_id": 671,
+        "meta": 13,
+        "name": "Unit F-435454's Modified Sensor Booster",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "41194": {
+        "batch": 1,
+        "market_group_id": 671,
+        "meta": 15,
+        "name": "Unit P-343554's Modified Sensor Booster",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "41195": {
+        "batch": 1,
+        "market_group_id": 671,
+        "meta": 17,
+        "name": "Unit W-634's Modified Sensor Booster",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "41196": {
+        "batch": 1,
+        "market_group_id": 669,
+        "meta": 8,
+        "name": "Sentient Signal Amplifier",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "41197": {
+        "batch": 1,
+        "market_group_id": 669,
+        "meta": 8,
+        "name": "Syndicate Signal Amplifier",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "41198": {
+        "batch": 1,
+        "market_group_id": 673,
+        "meta": 8,
+        "name": "Sentient Remote Sensor Booster",
+        "skill_id": null,
+        "volume": 25.0
+    },
+    "41199": {
+        "batch": 1,
+        "market_group_id": 673,
+        "meta": 8,
+        "name": "Shadow Serpentis Remote Sensor Booster",
+        "skill_id": null,
+        "volume": 25.0
+    },
+    "41200": {
+        "batch": 1,
+        "market_group_id": 615,
+        "meta": 8,
+        "name": "Shadow Serpentis Damage Control",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "41201": {
+        "batch": 1,
+        "market_group_id": 615,
+        "meta": 8,
+        "name": "Syndicate Damage Control",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "41202": {
+        "batch": 1,
+        "market_group_id": 615,
+        "meta": 8,
+        "name": "Sentient Damage Control",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "41203": {
+        "batch": 1,
+        "market_group_id": 615,
+        "meta": 11,
+        "name": "Brynn's Modified Damage Control",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "41204": {
+        "batch": 1,
+        "market_group_id": 615,
+        "meta": 11,
+        "name": "Unit D-34343's Modified Damage Control",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "41205": {
+        "batch": 1,
+        "market_group_id": 615,
+        "meta": 13,
+        "name": "Tuvan's Modified Damage Control",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "41206": {
+        "batch": 1,
+        "market_group_id": 615,
+        "meta": 13,
+        "name": "Unit F-435454's Modified Damage Control",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "41207": {
+        "batch": 1,
+        "market_group_id": 615,
+        "meta": 15,
+        "name": "Setele's Modified Damage Control",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "41208": {
+        "batch": 1,
+        "market_group_id": 615,
+        "meta": 15,
+        "name": "Unit P-343554's Modified Damage Control",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "41210": {
+        "batch": 1,
+        "market_group_id": 615,
+        "meta": 17,
+        "name": "Cormack's Modified Damage Control",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "41211": {
+        "batch": 1,
+        "market_group_id": 615,
+        "meta": 17,
+        "name": "Unit W-634's Modified Damage Control",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "41212": {
+        "batch": 1,
+        "market_group_id": 703,
+        "meta": 8,
+        "name": "Republic Fleet Small Cap Battery",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "41213": {
+        "batch": 1,
+        "market_group_id": 703,
+        "meta": 8,
+        "name": "Domination Small Cap Battery",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "41214": {
+        "batch": 1,
+        "market_group_id": 703,
+        "meta": 8,
+        "name": "Thukker Small Cap Battery",
+        "skill_id": null,
+        "volume": 5.0
+    },
+    "41215": {
+        "batch": 1,
+        "market_group_id": 704,
+        "meta": 8,
+        "name": "Republic Fleet Medium Cap Battery",
+        "skill_id": null,
+        "volume": 10.0
+    },
+    "41216": {
+        "batch": 1,
+        "market_group_id": 704,
+        "meta": 8,
+        "name": "Domination Medium Cap Battery",
+        "skill_id": null,
+        "volume": 10.0
+    },
+    "41217": {
+        "batch": 1,
+        "market_group_id": 704,
+        "meta": 8,
+        "name": "Thukker Medium Cap Battery",
+        "skill_id": null,
+        "volume": 10.0
+    },
+    "41218": {
+        "batch": 1,
+        "market_group_id": 705,
+        "meta": 8,
+        "name": "Republic Fleet Large Cap Battery",
+        "skill_id": null,
+        "volume": 15.0
+    },
+    "41219": {
+        "batch": 1,
+        "market_group_id": 705,
+        "meta": 8,
+        "name": "Domination Large Cap Battery",
+        "skill_id": null,
+        "volume": 15.0
+    },
+    "41220": {
+        "batch": 1,
+        "market_group_id": 705,
+        "meta": 8,
+        "name": "Thukker Large Cap Battery",
+        "skill_id": null,
+        "volume": 15.0
+    },
+    "41221": {
+        "batch": 1,
+        "market_group_id": 2153,
+        "meta": null,
+        "name": "Heavy Stasis Grappler I Blueprint",
+        "skill_id": null,
+        "volume": 0.01
+    },
+    "41230": {
+        "batch": 1,
+        "market_group_id": 1105,
+        "meta": null,
+        "name": "ECCM Script Blueprint",
         "skill_id": null,
         "volume": 0.01
     },
