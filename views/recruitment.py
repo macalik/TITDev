@@ -66,8 +66,16 @@ def form(key):
                         insert[key_split[0]] = value.strip()
             app_info = g.mongo.db.applications.find_one_and_update({"_id": ObjectId(key)},
                                                                    {"$set": {"questions": insert,
-                                                                             "submitted": True}},
+                                                                             "submitted": True,
+                                                                             "status": "Submitted"}},
                                                                    return_document=ReturnDocument.AFTER)
+            # Discord Integration
+            g.redis.publish('titdev-recruitment',
+                            "@everyone: {0} has submitted a recruitment form: {1}".format(
+                                session["CharacterName"],
+                                url_for("recruitment.form", key=key, _external=True)
+                            ))
+
             if request.form.get("submitted") == "True":
                 flash("Application edited", "success")
             else:
