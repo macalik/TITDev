@@ -231,6 +231,7 @@ def auth_crest(code, refresh=False):
         auth_token = auth_response.json()
         if not auth_token.get("access_token"):
             print(auth_token)
+            return None, None
     except ValueError:
         auth_token = None
         if not refresh:
