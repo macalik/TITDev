@@ -46,13 +46,20 @@ def api_validation():
         error_wait = 300
         counter = 0
         for api_group in g.mongo.db.api_keys.find():
-            # Refresh Crest
-            auth_crest(api_group["_id"], True)
-
             user_api_list = set()
             if not api_group.get("keys") and api_group["_id"] == "unassociated":
                 pass
             else:
+                print("ID: {0}".format(api_group["_id"]))
+                # Refresh Crest
+                try:
+                    temp1, temp2 = auth_crest(api_group["_id"], True)
+                except KeyError:
+                    print("Failed at {0}".format(api_group["_id"]))
+                else:
+                    if not temp1 or not temp2:
+                        print("Failed at {0}".format(api_group["_id"]))
+
                 for api_key_item in api_group["keys"]:
                     counter += 1
                     if not counter % rate_limit:
@@ -63,6 +70,7 @@ def api_validation():
                         time.sleep(error_wait)
                     user_api_list.add((api_key_item["key_id"], api_key_item["vcode"]))
                 api_keys(list(user_api_list), dashboard_id=api_group["_id"])
+        print("Finished at api {0}.".format(counter))
 
         g.mongo.db.preferences.update_one({"_id": "updates"}, {
             "$set": {"api_validation": datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")}})
