@@ -5,7 +5,7 @@ import calendar
 from flask import Blueprint, render_template, g, redirect, url_for, request, flash
 from pymongo import ReturnDocument
 
-from views.auth import requires_sso
+from views.auth import requires_sso, auth_crest
 from helpers import caches, background
 
 security = Blueprint("security", __name__, template_folder="templates")
@@ -192,6 +192,8 @@ def user(site_id=""):
         return redirect(url_for("security.home"))
     else:
         site_id = site_id.strip()
+        if request.form.get("action") == "refresh":
+            auth_crest(site_id, True)
 
     error_list = []
     # Users

@@ -200,6 +200,91 @@ def forum_edit(current_user, action, *parameters):
                          params=api_payload)
 
 
+def auth_crest(code, refresh=False):
+
+    # SSO Authentication
+    auth_headers = {
+        "Authorization": "Basic " + str(base64.b64encode(
+            bytes(secrets["client_id"] + ":" + secrets["secret_key"], "utf8")))[2:-1],
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Host": "login.eveonline.com"
+    }
+    if not refresh:
+        auth_payload = {
+            "grant_type": "authorization_code",
+            "code": code
+        }
+    else:
+        given_user = g.mongo.db.users.find_one({"_id": code})
+        if given_user:
+            auth_payload = {
+                "grant_type": "refresh_token",
+                "refresh_token": given_user["refresh_token"]
+            }
+        else:
+            return None, None
+
+    auth_response = requests.post("https://login.eveonline.com/oauth/token",
+                                  data=auth_payload, headers=auth_headers)
+    # Abort on EVE API server errors
+    try:
+        auth_token = auth_response.json()
+        if not auth_token.get("access_token"):
+            print(auth_token)
+    except ValueError:
+        auth_token = None
+        abort(400)
+
+    # CREST Authentication
+    character_headers = {
+        "User-Agent": "TiT Corp Website by Kazuki Ishikawa",
+        "Authorization": "Bearer " + auth_token["access_token"],
+        "Host": "login.eveonline.com"
+    }
+    crest_char_response = requests.get("https://login.eveonline.com/oauth/verify", headers=character_headers)
+    crest_char = crest_char_response.json()
+
+    # Check user cache
+    db_user = g.mongo.db.users.find_one({"_id": crest_char["CharacterOwnerHash"]})
+
+    # Update character info if cache has finished or character doesn't exist.
+    if not db_user or db_user["cached_until"] < time.time():
+        # XML Character
+        xml_char_payload = {
+            "characterID": crest_char["CharacterID"]
+        }
+        xml_char_headers = {
+            "User-Agent": "TiT Corp Website by Kazuki Ishikawa"
+        }
+        xml_char_response = requests.get("https://api.eveonline.com/eve/CharacterInfo.xml.aspx",
+                                         data=xml_char_payload, headers=xml_char_headers)
+        # XML Parse
+        xml_tree = ElementTree.fromstring(xml_char_response.text)
+
+        # Update Database
+        xml_time_pattern = "%Y-%m-%d %H:%M:%S"
+        g.mongo.db.users.update({"_id": crest_char["CharacterOwnerHash"]},
+                                {
+                                    "$set": {
+                                        "character_id": crest_char["CharacterID"],
+                                        "character_name": crest_char["CharacterName"],
+                                        "corporation_id": int(xml_tree[1][7].text),
+                                        "corporation_name": xml_tree[1][8].text.strip(),
+                                        "alliance_id": int(float(xml_tree[1][10].text)),
+                                        "alliance_name": xml_tree[1][11].text.strip(),
+                                        "refresh_token": auth_token["refresh_token"],
+                                        "last_sign_on": int(time.time()),
+                                        "cached_until": int(calendar.timegm(time.strptime(xml_tree[2].text,
+                                                                                          xml_time_pattern)))
+                                    }
+                                }, upsert=True)
+
+        # Refresh current user
+        db_user = g.mongo.db.users.find_one({"_id": crest_char["CharacterOwnerHash"]})
+
+    return db_user, crest_char
+
+
 @auth.route("/")
 def sso_redirect():
     return redirect("https://login.eveonline.com/oauth/authorize" +
@@ -215,74 +300,7 @@ def sso_response():
     if request.args.get("state") == state:  # Check against returned state
         code = request.args.get("code")
 
-        # SSO Authentication
-        auth_headers = {
-            "Authorization": "Basic " + str(base64.b64encode(
-                bytes(secrets["client_id"] + ":" + secrets["secret_key"], "utf8")))[2:-1],
-            "Content-Type": "application/x-www-form-urlencoded",
-            "Host": "login.eveonline.com"
-        }
-        auth_payload = {
-            "grant_type": "authorization_code",
-            "code": code
-        }
-        auth_response = requests.post("https://login.eveonline.com/oauth/token",
-                                      data=auth_payload, headers=auth_headers)
-        # Abort on EVE API server errors
-        try:
-            auth_token = auth_response.json()
-            if not auth_token.get("access_token"):
-                print(auth_token)
-        except ValueError:
-            auth_token = None
-            abort(400)
-
-        # CREST Authentication
-        character_headers = {
-            "User-Agent": "TiT Corp Website by Kazuki Ishikawa",
-            "Authorization": "Bearer " + auth_token["access_token"],
-            "Host": "login.eveonline.com"
-        }
-        crest_char_response = requests.get("https://login.eveonline.com/oauth/verify", headers=character_headers)
-        crest_char = crest_char_response.json()
-
-        # Check user cache
-        db_user = g.mongo.db.users.find_one({"_id": crest_char["CharacterOwnerHash"]})
-
-        # Update character info if cache has finished or character doesn't exist.
-        if not db_user or db_user["cached_until"] < time.time():
-            # XML Character
-            xml_char_payload = {
-                "characterID": crest_char["CharacterID"]
-            }
-            xml_char_headers = {
-                "User-Agent": "TiT Corp Website by Kazuki Ishikawa"
-            }
-            xml_char_response = requests.get("https://api.eveonline.com/eve/CharacterInfo.xml.aspx",
-                                             data=xml_char_payload, headers=xml_char_headers)
-            # XML Parse
-            xml_tree = ElementTree.fromstring(xml_char_response.text)
-
-            # Update Database
-            xml_time_pattern = "%Y-%m-%d %H:%M:%S"
-            g.mongo.db.users.update({"_id": crest_char["CharacterOwnerHash"]},
-                                    {
-                                        "$set": {
-                                            "character_id": crest_char["CharacterID"],
-                                            "character_name": crest_char["CharacterName"],
-                                            "corporation_id": int(xml_tree[1][7].text),
-                                            "corporation_name": xml_tree[1][8].text.strip(),
-                                            "alliance_id": int(float(xml_tree[1][10].text)),
-                                            "alliance_name": xml_tree[1][11].text.strip(),
-                                            "refresh_token": auth_token["refresh_token"],
-                                            "last_sign_on": int(time.time()),
-                                            "cached_until": int(calendar.timegm(time.strptime(xml_tree[2].text,
-                                                                                              xml_time_pattern)))
-                                        }
-                                    }, upsert=True)
-
-            # Refresh current user
-            db_user = g.mongo.db.users.find_one({"_id": crest_char["CharacterOwnerHash"]})
+        db_user, crest_char = auth_crest(code)
 
         # Update Session
         session["CharacterName"] = crest_char["CharacterName"]

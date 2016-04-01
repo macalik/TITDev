@@ -6,6 +6,7 @@ from functools import wraps
 from celery_app import celery, app, g, app_mongo
 
 from helpers.caches import contracts, api_keys
+from views.auth import auth_crest
 
 
 def needs_database():
@@ -45,6 +46,9 @@ def api_validation():
         error_wait = 300
         counter = 0
         for api_group in g.mongo.db.api_keys.find():
+            # Refresh Crest
+            auth_crest(api_group["_id"], True)
+            
             user_api_list = set()
             if not api_group.get("keys") and api_group["_id"] == "unassociated":
                 pass
