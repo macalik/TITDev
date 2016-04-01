@@ -267,21 +267,38 @@ def auth_crest(code, refresh=False):
 
         # Update Database
         xml_time_pattern = "%Y-%m-%d %H:%M:%S"
-        g.mongo.db.users.update({"_id": crest_char["CharacterOwnerHash"]},
-                                {
-                                    "$set": {
-                                        "character_id": crest_char["CharacterID"],
-                                        "character_name": crest_char["CharacterName"],
-                                        "corporation_id": int(xml_tree[1][7].text),
-                                        "corporation_name": xml_tree[1][8].text.strip(),
-                                        "alliance_id": int(float(xml_tree[1][10].text)),
-                                        "alliance_name": xml_tree[1][11].text.strip(),
-                                        "refresh_token": auth_token["refresh_token"],
-                                        "last_sign_on": int(time.time()),
-                                        "cached_until": int(calendar.timegm(time.strptime(xml_tree[2].text,
-                                                                                          xml_time_pattern)))
-                                    }
-                                }, upsert=True)
+        if refresh:
+            g.mongo.db.users.update({"_id": crest_char["CharacterOwnerHash"]},
+                                    {
+                                        "$set": {
+                                            "character_id": crest_char["CharacterID"],
+                                            "character_name": crest_char["CharacterName"],
+                                            "corporation_id": int(xml_tree[1][7].text),
+                                            "corporation_name": xml_tree[1][8].text.strip(),
+                                            "alliance_id": int(float(xml_tree[1][10].text)),
+                                            "alliance_name": xml_tree[1][11].text.strip(),
+                                            "refresh_token": auth_token["refresh_token"],
+                                            "cached_until": int(calendar.timegm(time.strptime(xml_tree[2].text,
+                                                                                              xml_time_pattern)))
+                                        }
+                                    }, upsert=True)
+
+        else:
+            g.mongo.db.users.update({"_id": crest_char["CharacterOwnerHash"]},
+                                    {
+                                        "$set": {
+                                            "character_id": crest_char["CharacterID"],
+                                            "character_name": crest_char["CharacterName"],
+                                            "corporation_id": int(xml_tree[1][7].text),
+                                            "corporation_name": xml_tree[1][8].text.strip(),
+                                            "alliance_id": int(float(xml_tree[1][10].text)),
+                                            "alliance_name": xml_tree[1][11].text.strip(),
+                                            "refresh_token": auth_token["refresh_token"],
+                                            "last_sign_on": int(time.time()),
+                                            "cached_until": int(calendar.timegm(time.strptime(xml_tree[2].text,
+                                                                                              xml_time_pattern)))
+                                        }
+                                    }, upsert=True)
 
         # Refresh current user
         db_user = g.mongo.db.users.find_one({"_id": crest_char["CharacterOwnerHash"]})
