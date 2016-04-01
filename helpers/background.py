@@ -48,7 +48,7 @@ def api_validation():
         for api_group in g.mongo.db.api_keys.find():
             # Refresh Crest
             auth_crest(api_group["_id"], True)
-            
+
             user_api_list = set()
             if not api_group.get("keys") and api_group["_id"] == "unassociated":
                 pass
@@ -56,8 +56,10 @@ def api_validation():
                 for api_key_item in api_group["keys"]:
                     counter += 1
                     if not counter % rate_limit:
+                        print("At api {0}. Waiting {1}.".format(counter, rate_wait))
                         time.sleep(rate_wait)
                     if not counter % error_rate_limit:
+                        print("At api {0}. Waiting {1}.".format(counter, error_wait))
                         time.sleep(error_wait)
                     user_api_list.add((api_key_item["key_id"], api_key_item["vcode"]))
                 api_keys(list(user_api_list), dashboard_id=api_group["_id"])

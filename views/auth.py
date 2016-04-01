@@ -233,7 +233,10 @@ def auth_crest(code, refresh=False):
             print(auth_token)
     except ValueError:
         auth_token = None
-        abort(400)
+        if not refresh:
+            abort(400)
+        else:
+            return None, None
 
     # CREST Authentication
     character_headers = {
