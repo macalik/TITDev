@@ -7,11 +7,10 @@ from flask import Blueprint, render_template, session, g, request, redirect, url
 
 from bson.objectid import ObjectId
 import bson.errors
-import requests
 
 from views.auth import requires_sso, auth_check
 from helpers.eve_central import market_hub_prices
-from helpers import conversions, caches
+from helpers import conversions
 
 ordering = Blueprint("ordering", __name__, template_folder="templates")
 
@@ -168,12 +167,12 @@ def home(item=""):
                                   "[Fit] " + selected_fit["name"],
                                   current_cart["items"][str(selected_fit["_id"])],
                                   "{:,.02f}".format(selected_fit["volume"]),
-                                  "{:,.02f}".format(selected_fit["price"] * (1 + order_tax/100)),
+                                  "{:,.02f}".format(selected_fit["price"] * (1 + order_tax / 100)),
                                   "{:,.02f}".format(selected_fit["volume"] *
                                                     current_cart["items"][str(selected_fit["_id"])]),
                                   "{:,.02f}".format(selected_fit["price"] *
                                                     current_cart["items"][str(selected_fit["_id"])] *
-                                                    (1 + order_tax/100))
+                                                    (1 + order_tax / 100))
                                   ])
             sell_price += selected_fit["price"] * current_cart["items"][str(selected_fit["_id"])]
             for fit_item in fit_item_list:
@@ -201,10 +200,10 @@ def home(item=""):
             db_item["name"],
             cart_item_list[str(db_item["_id"])],
             "{:,.02f}".format(db_item["volume"]),
-            "{:,.02f}".format(prices[db_item["_id"]]["sell"] * (1 + order_tax/100)),
+            "{:,.02f}".format(prices[db_item["_id"]]["sell"] * (1 + order_tax / 100)),
             "{:,.02f}".format(db_item["volume"] * cart_item_list[str(db_item["_id"])]),
             "{:,.02f}".format(prices[db_item["_id"]]["sell"] * cart_item_list[str(db_item["_id"])] *
-                              (1 + order_tax/100))
+                              (1 + order_tax / 100))
         ])
         full_cart[str(db_item["_id"])] = {
             "name": db_item["name"],
@@ -224,10 +223,10 @@ def home(item=""):
             db_item_breakdown["name"],
             fittings_breakdown[str(db_item_breakdown["_id"])],
             "{:,.02f}".format(db_item_breakdown["volume"]),
-            "{:,.02f}".format(prices[int(db_item_breakdown["_id"])]["sell"] * (1 + order_tax/100)),
+            "{:,.02f}".format(prices[int(db_item_breakdown["_id"])]["sell"] * (1 + order_tax / 100)),
             "{:,.02f}".format(db_item_breakdown["volume"] * fittings_breakdown[str(db_item_breakdown["_id"])]),
             "{:,.02f}".format(prices[int(db_item_breakdown["_id"])]["sell"] *
-                              fittings_breakdown[str(db_item_breakdown["_id"])] * (1 + order_tax/100))
+                              fittings_breakdown[str(db_item_breakdown["_id"])] * (1 + order_tax / 100))
         ])
         total_volume += db_item_breakdown["volume"] * fittings_breakdown[str(db_item_breakdown["_id"])]
         if full_cart.get(str(db_item_breakdown["_id"])):
@@ -376,8 +375,8 @@ def home(item=""):
 def search():
     if request.args.get("id"):
         return redirect(url_for("ordering.home",
-                                item=request.args.get("id") + ";" +
-                                request.args.get("qty-" + request.args.get("id"), 1)))
+                                item=request.args.get("id") + ";" + request.args.get("qty-" +
+                                                                                     request.args.get("id"), 1)))
     elif not request.args.get("name"):
         return redirect(url_for("ordering.home"))
 
@@ -406,6 +405,7 @@ def search():
 @requires_sso("alliance")
 def invoice(invoice_id=""):
     timestamp = None
+    current_time = None
 
     with open("configs/base.json") as base_config_file:
         base_config = json.load(base_config_file)
@@ -440,18 +440,21 @@ def invoice(invoice_id=""):
     ordering_marketeer = auth_check("ordering_marketeer")
     editor = True if ordering_admin or ordering_marketeer else False
     can_delete = True if status == "Submitted" and (
-            cart.get("user") == session["CharacterOwnerHash"] or ordering_admin) else False
+        cart.get("user") == session["CharacterOwnerHash"] or ordering_admin) else False
     can_edit = True if ordering_admin or (
         cart.get("marketeer") == session["CharacterName"] or status == "Submitted") else False
     if request.method == "POST":
+        # Not Processed, Failed, Processing, Submitted, Hold, Rejected
         if request.form.get("action") == "delete" and can_delete:
             g.mongo.db.invoices.remove({"_id": ObjectId(invoice_id)})
             return redirect(url_for("account.home"))
         elif request.form.get("action") == "reject" and status in ["Not Processed", "Failed",
-                                                                   "Processing", "Submitted"] and editor:
+                                                                   "Processing", "Submitted", "Hold"] and editor:
+            current_time = int(time.time())
             g.mongo.db.invoices.update({"_id": ObjectId(invoice_id)}, {"$set": {"status": "Rejected",
                                                                                 "marketeer": session["CharacterName"],
-                                                                                "reason": request.form.get("reason")
+                                                                                "reason": request.form.get("reason"),
+                                                                                "finish_time": current_time
                                                                                 }})
             # Discord Integration
             g.redis.publish('titdev-marketeer',
@@ -460,41 +463,64 @@ def invoice(invoice_id=""):
                                 url_for("ordering.invoice", invoice_id=invoice_id, _external=True)
                             ))
         elif request.form.get("action") == "process" and status in ["Not Processed", "Failed", "Rejected",
-                                                                    "Submitted"] and editor:
+                                                                    "Submitted", "Hold"] and editor:
             g.mongo.db.invoices.update({"_id": ObjectId(invoice_id)}, {"$set": {"status": "Processing",
                                                                                 "marketeer": session["CharacterName"]
                                                                                 },
                                                                        "$unset": {
                                                                            "reason": request.form.get("reason")}})
-        elif request.form.get("action") == "release" and status in ["Processing", "Failed", "Rejected"] and (
-            cart.get("marketeer") == session["CharacterName"] or ordering_admin
+        elif request.form.get("action") == "release" and status in ["Processing", "Failed", "Rejected", "Hold"] and (
+                        cart.get("marketeer") == session["CharacterName"] or ordering_admin
         ):
             g.mongo.db.invoices.update({"_id": ObjectId(invoice_id)}, {"$unset": {"marketeer": session["CharacterName"],
                                                                                   "reason": request.form.get("reason")
                                                                                   },
                                                                        "$set": {"status": "Submitted"}})
+        elif request.form.get("action") == "hold" and status in ["Failed", "Processing", "Submitted", "Rejected"]:
+            if g.mongo.db.invoices.find_one({"_id": ObjectId(invoice_id)}).get("status") != "Hold":
+                g.mongo.db.invoices.update({"_id": ObjectId(invoice_id)},
+                                           {
+                                               "$set": {"status": "Hold",
+                                                        "marketeer": session["CharacterName"],
+                                                        "reason": request.form.get("reason")}
+                                           })
+                # Discord Integration
+                g.redis.publish('titdev-marketeer',
+                                "@everyone: {0} has put an invoice on hold: {1} for the following reason: {2}".format(
+                                    session["CharacterName"],
+                                    url_for("ordering.invoice", invoice_id=invoice_id, _external=True),
+                                    request.form.get("reason")
+                                ))
         elif request.form.get("action") == "fail" and editor:
+            current_time = int(time.time())
             g.mongo.db.invoices.update({"_id": ObjectId(invoice_id)}, {"$set": {"status": "Failed",
                                                                                 "marketeer": session["CharacterName"],
-                                                                                "reason": request.form.get("reason")
+                                                                                "reason": request.form.get("reason"),
+                                                                                "finish_time": current_time
                                                                                 }})
             # Discord Integration
             g.redis.publish('titdev-marketeer',
-                            "{0} has failed an invoice: {1}".format(
+                            "{0} has failed an invoice: {1} for the following reason: {2}".format(
                                 session["CharacterName"],
-                                url_for("ordering.invoice", invoice_id=invoice_id, _external=True)
+                                url_for("ordering.invoice", invoice_id=invoice_id, _external=True),
+                                request.form.get("reason")
                             ))
         elif request.form.get("action") == "complete" and editor:
-            g.mongo.db.invoices.update({"_id": ObjectId(invoice_id)}, {"$set": {"status": "Completed",
-                                                                                "marketeer": session["CharacterName"]},
-                                                                       "$unset": {
-                                                                           "reason": request.form.get("reason")}})
-            # Discord Integration
-            g.redis.publish('titdev-marketeer',
-                            "{0} has completed an invoice: {1}".format(
-                                session["CharacterName"],
-                                url_for("ordering.invoice", invoice_id=invoice_id, _external=True)
-                            ))
+            if g.mongo.db.invoices.find_one({"_id": ObjectId(invoice_id)}).get("status") != "Completed":
+                current_time = int(time.time())
+                g.mongo.db.invoices.update({"_id": ObjectId(invoice_id)},
+                                           {
+                                               "$set": {"status": "Completed",
+                                                        "marketeer": session["CharacterName"],
+                                                        "finish_time": current_time},
+                                               "$unset": {"reason": request.form.get("reason")}
+                                           })
+                # Discord Integration
+                g.redis.publish('titdev-marketeer',
+                                "{0} has completed an invoice: {1}".format(
+                                    session["CharacterName"],
+                                    url_for("ordering.invoice", invoice_id=invoice_id, _external=True)
+                                ))
         elif request.form.get("action") == "shipping" and editor:
             g.mongo.db.invoices.update({"_id": ObjectId(invoice_id)}, {"$set": {
                 "external": not cart.get("external", False)}})
@@ -521,6 +547,11 @@ def invoice(invoice_id=""):
     # Round order total
     cart["order_total"] = round(cart["order_total"] + 50000, -5)
 
+    # Formatting
+    finish_time = cart.get("finish_time", current_time)
+    if finish_time:
+        finish_time = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(finish_time))
+
     return render_template("ordering_invoice.html", invoice_info=invoice_info, market_hub_name=market_hub_name,
                            prices_usable=cart["prices_usable"], total_volume="{:,.02f}".format(cart["volume"]),
                            sell_price="{:,.02f}".format(cart["sell_price"]),
@@ -532,13 +563,13 @@ def invoice(invoice_id=""):
                            timestamp=timestamp, can_delete=can_delete, editor=editor,
                            status=status, button=button, marketeer=cart.get("marketeer"), reason=cart.get("reason"),
                            external=cart.get("external", False), can_edit=can_edit, character=cart.get("character"),
-                           contract_to=cart.get("contract_to"), notes=cart.get("notes"), invoice_id=invoice_id)
+                           contract_to=cart.get("contract_to"), notes=cart.get("notes"), invoice_id=invoice_id,
+                           finish_time=finish_time)
 
 
 @ordering.route("/admin", methods=["GET", "POST"])
 @requires_sso("ordering_marketeer", "ordering_admin")
 def admin():
-
     # Auth Check
     is_admin = auth_check("ordering_admin")
     if request.form.get("action") == "tax" and request.form.get("tax") and is_admin:
@@ -564,12 +595,22 @@ def admin():
             invoice_color = "primary"
         elif invoice_status == "Processing" or invoice_status.startswith("Shipping"):
             invoice_color = "warning"
-        elif invoice_status in ["Failed", "Rejected"]:
+        elif invoice_status in ["Failed", "Rejected", "Hold"]:
             invoice_color = "danger"
         elif invoice_status == "Completed":
             invoice_color = "success"
 
-        invoice_row = [invoice_color, invoice_timestamp, invoice_db["_id"], invoice_db["jf_end"],
+        finish_time = invoice_db.get("finish_time")
+        if finish_time:
+            time_to_delivery = finish_time - int(ObjectId(invoice_db["_id"]).generation_time.timestamp())
+            ttd_days = time_to_delivery // (60 * 60 * 24)
+            ttd_hours = time_to_delivery % (60 * 60 * 24) // (60 * 60)
+            ttd_minutes = time_to_delivery % (60 * 60 * 24) % (60 * 60) // 60
+            ttd_format = "{0}D{1}H{2}M".format(ttd_days, ttd_hours, ttd_minutes)
+        else:
+            ttd_format = "N/A"
+
+        invoice_row = [invoice_color, invoice_timestamp, ttd_format, invoice_db["_id"], invoice_db["jf_end"],
                        "{:,.02f}".format(invoice_db["order_total"]), invoice_db.get("character"),
                        invoice_db.get("marketeer"), invoice_status]
 

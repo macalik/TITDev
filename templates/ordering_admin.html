@@ -36,6 +36,7 @@
                     <thead>
                         <tr>
                             <th>Creation Date</th>
+                            <th>Finish Time</th>
                             <th>ID</th>
                             <th>Destination</th>
                             <th>Price</th>
@@ -52,7 +53,7 @@
                             <td class="{{invoice[0]}}">{{info}}</td>
                             {% endfor %}
                             <td class="{{invoice[0]}}">
-                                <form action="{{url_for('ordering.invoice', invoice_id=invoice[2])}}" method="get">
+                                <form action="{{url_for('ordering.invoice', invoice_id=invoice[3])}}" method="get">
                                     <button type="submit" class="btn btn-success">Link</button>
                                 </form>
                             </td>
@@ -69,6 +70,7 @@
                     <thead>
                         <tr>
                             <th>Creation Date</th>
+                            <th>Finish Time</th>
                             <th>ID</th>
                             <th>Destination</th>
                             <th>Price</th>
@@ -85,7 +87,7 @@
                             <td class="{{invoice[0]}}">{{info}}</td>
                             {% endfor %}
                             <td class="{{invoice[0]}}">
-                                <form action="{{url_for('ordering.invoice', invoice_id=invoice[2])}}" method="get">
+                                <form action="{{url_for('ordering.invoice', invoice_id=invoice[3])}}" method="get">
                                     <button type="submit" class="btn btn-success">Link</button>
                                 </form>
                             </td>
@@ -102,6 +104,7 @@
                     <thead>
                         <tr>
                             <th>Creation Date</th>
+                            <th>Finish Time</th>
                             <th>ID</th>
                             <th>Destination</th>
                             <th>Price</th>
@@ -118,7 +121,7 @@
                             <td class="{{invoice[0]}}">{{info}}</td>
                             {% endfor %}
                             <td class="{{invoice[0]}}">
-                                <form action="{{url_for('ordering.invoice', invoice_id=invoice[2])}}" method="get">
+                                <form action="{{url_for('ordering.invoice', invoice_id=invoice[3])}}" method="get">
                                     <button type="submit" class="btn btn-success">Link</button>
                                 </form>
                             </td>

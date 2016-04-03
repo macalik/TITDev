@@ -22,6 +22,7 @@
             <h3>ID: {{invoice_id}}</h3>
             <h3>Date: {{timestamp}} UTC</h3>
             <h3>Character: {{character}}</h3>
+            <h3>Finish Time: {{finish_time}}</h3>
             {% else %}
             <h2>Confirm Purchase</h2>
             {% endif %}
@@ -59,12 +60,14 @@
                         <button type="submit" class="btn btn-danger" name="action" value="reject">Reject</button>
                         <button type="submit" class="btn btn-primary" name="action" value="{{button.lower()}}">{{button}}</button>
                         <button type="submit" class="btn btn-warning" name="action" value="shipping">Change Shipper</button>
+                        <button type="submit" class="btn btn-warning" name="action" value="hold">Hold</button>
                         <button type="submit" class="btn btn-success" name="action" value="complete">Complete</button>
                         <button type="submit" class="btn btn-danger" name="action" value="fail">Fail</button>
                         {% else %}
                         <button type="submit" class="btn btn-danger" name="action" value="reject" disabled>Reject</button>
                         <button type="submit" class="btn btn-primary" name="action" value="{{button.lower()}}" disabled>{{button}}</button>
                         <button type="submit" class="btn btn-warning" name="action" value="shipping" disabled>Change Shipper</button>
+                        <button type="submit" class="btn btn-warning" name="action" value="hold" disabled>Hold</button>
                         <button type="submit" class="btn btn-success" name="action" value="complete" disabled>Complete</button>
                         <button type="submit" class="btn btn-danger" name="action" value="fail" disabled>Fail</button>
                         {% endif %}
