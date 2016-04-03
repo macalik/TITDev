@@ -175,7 +175,6 @@ def home(item=""):
                                                     current_cart["items"][str(selected_fit["_id"])] *
                                                     (1 + order_tax/100))
                                   ])
-            total_volume += selected_fit["volume"] * current_cart["items"][str(selected_fit["_id"])]
             sell_price += selected_fit["price"] * current_cart["items"][str(selected_fit["_id"])]
             for fit_item in fit_item_list:
                 if fit_item:
@@ -230,6 +229,7 @@ def home(item=""):
             "{:,.02f}".format(prices[int(db_item_breakdown["_id"])]["sell"] *
                               fittings_breakdown[str(db_item_breakdown["_id"])] * (1 + order_tax/100))
         ])
+        total_volume += db_item_breakdown["volume"] * fittings_breakdown[str(db_item_breakdown["_id"])]
         if full_cart.get(str(db_item_breakdown["_id"])):
             full_cart[str(db_item_breakdown["_id"])]["qty"] += fittings_breakdown[str(db_item_breakdown["_id"])]
             full_cart[str(db_item_breakdown["_id"])]["volume_total"] += (db_item_breakdown["volume"] *
