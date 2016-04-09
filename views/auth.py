@@ -11,12 +11,16 @@ import requests
 auth = Blueprint("auth", __name__, template_folder="templates")
 
 state = "TiTEveWebV1"
+user_agent = "TiT Corp Website by Kazuki Ishikawa"
 
 if os.environ.get("EXTERNAL"):
     secrets = {
         "client_id": os.environ["client_id"],
         "secret_key": os.environ["secret_key"],
-        "redirect_uri": os.environ["redirect_uri"]
+        "redirect_uri": os.environ["redirect_uri"],
+        "discord_client_id": os.environ["discord_client_id"],
+        "discord_secret_key": os.environ["discord_secret_key"],
+        "discord_redirect_uri": os.environ["discord_redirect_uri"]
     }
 else:
     with open("../Other-Secrets/TITDev.json") as secrets_file:
@@ -58,7 +62,7 @@ def requires_sso(*roles):
                     "characterID": db_user["character_id"]
                 }
                 xml_char_headers = {
-                    "User-Agent": "TiT Corp Website by Kazuki Ishikawa"
+                    "User-Agent": user_agent
                 }
                 xml_char_response = requests.get("https://api.eveonline.com/eve/CharacterInfo.xml.aspx",
                                                  data=xml_char_payload, headers=xml_char_headers)
@@ -241,7 +245,7 @@ def auth_crest(code, refresh=False):
 
     # CREST Authentication
     character_headers = {
-        "User-Agent": "TiT Corp Website by Kazuki Ishikawa",
+        "User-Agent": user_agent,
         "Authorization": "Bearer " + auth_token["access_token"],
         "Host": "login.eveonline.com"
     }
@@ -258,7 +262,7 @@ def auth_crest(code, refresh=False):
             "characterID": crest_char["CharacterID"]
         }
         xml_char_headers = {
-            "User-Agent": "TiT Corp Website by Kazuki Ishikawa"
+            "User-Agent": user_agent
         }
         xml_char_response = requests.get("https://api.eveonline.com/eve/CharacterInfo.xml.aspx",
                                          data=xml_char_payload, headers=xml_char_headers)

@@ -10,9 +10,10 @@ import requests
 from pymongo.errors import BulkWriteError
 
 from helpers import conversions, error_handling
+from views.auth import user_agent
 
 xml_headers = {
-    "User-Agent": "TiT Corp Website by Kazuki Ishikawa"
+    "User-Agent": user_agent
 }
 
 if os.environ.get("EXTERNAL"):
