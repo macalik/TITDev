@@ -235,12 +235,32 @@ def auth_crest(code, refresh=False):
         auth_token = auth_response.json()
         if not auth_token.get("access_token"):
             print(auth_token)
+            g.mongo.db.users.update({"_id": code},
+                                    {
+                                        "$set": {
+                                            "corporation_id": 0,
+                                            "corporation_name": "",
+                                            "alliance_id": 0,
+                                            "alliance_name": "",
+                                            "cached_until": 0
+                                        }
+                                    })
             return None, None
     except ValueError:
         auth_token = None
         if not refresh:
             abort(400)
         else:
+            g.mongo.db.users.update({"_id": code},
+                                    {
+                                        "$set": {
+                                            "corporation_id": 0,
+                                            "corporation_name": "",
+                                            "alliance_id": 0,
+                                            "alliance_name": "",
+                                            "cached_until": 0
+                                        }
+                                    })
             return None, None
 
     # CREST Authentication
@@ -310,6 +330,105 @@ def auth_crest(code, refresh=False):
     return db_user, crest_char
 
 
+def auth_discord(user, code=None):
+    # No code means use refresh code
+    auth_headers = {
+        "Authorization": "Basic " + str(base64.b64encode(
+            bytes(secrets["discord_client_id"] + ":" + secrets["discord_secret_key"], "utf8")))[2:-1],
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Host": "discordapp.com"
+    }
+    if code:
+        auth_payload = {
+            "grant_type": "authorization_code",
+            "code": code,
+            "redirect_uri": secrets["discord_redirect_uri"]
+        }
+    else:
+        given_user = g.mongo.db.users.find_one({"_id": user})
+        if given_user and given_user.get("discord_refresh_token"):
+            auth_payload = {
+                "grant_type": "refresh_token",
+                "refresh_token": given_user["discord_refresh_token"]
+            }
+        else:
+            return
+    auth_response = requests.post("https://discordapp.com/api/oauth2/token",
+                                  data=auth_payload, headers=auth_headers)
+
+    try:
+        auth_token = auth_response.json()
+        if not auth_token.get("access_token"):
+            print(auth_token)
+            return
+    except ValueError:
+        auth_token = None
+        if code:
+            abort(400)
+        else:
+            g.mongo.db.users.update({"_id": user},
+                                    {
+                                        "$set": {
+                                            "discord_refresh_token": None
+                                        }
+                                    })
+            return
+    else:
+        if code:
+            g.mongo.db.users.update({"_id": user},
+                                    {
+                                        "$set": {
+                                            "discord_refresh_token": auth_token["refresh_token"]
+                                        }
+                                    })
+
+    # Check if has joined guild
+    with open("configs/base.json", "r") as base_config_file:
+        base_config = json.load(base_config_file)
+    info_headers = {
+        "User-Agent": user_agent,
+        "Authorization": "Bearer " + auth_token["access_token"],
+        "Host": "discordapp.com"
+    }
+    discord_guilds_response = requests.get("https://discordapp.com/api/users/@me/guilds",
+                                           headers=info_headers)
+    guild_list = discord_guilds_response.json()
+    joined = False
+    for guild in guild_list:
+        if guild["id"] == str(base_config["discord_server_id"]):
+            joined = True
+    if not joined:
+        discord_prefs = g.mongo.db.preferences.find_one({"_id": "discord"})
+        if discord_prefs and discord_prefs.get("invite_id"):
+            requests.post("https://discordapp.com/api/invites/" +
+                          discord_prefs.get("invite_id"), headers=info_headers)
+
+    # Get ID
+    discord_id_response = requests.get("https://discordapp.com/api/users/@me", headers=info_headers)
+    discord_id = discord_id_response.json()["id"].strip()
+    g.mongo.db.users.update({"_id": user},
+                            {
+                                "$set": {
+                                    "discord_id": discord_id
+                                }
+                            })
+
+    # Refresh roles
+    all_roles = []
+    applicable_roles = []
+    super_admin = False
+    for role in g.mongo.db.eve_auth.find():
+        all_roles.append(role["_id"])
+        if role["_id"] != "super_admin" and user in role["users"]:
+            applicable_roles.append(role["_id"])
+        elif role["_id"] == "super_admin" and user in role["users"]:
+            super_admin = True
+    if super_admin:
+        g.redis.publish('titdev-auth', " ".join([discord_id] + all_roles))
+    else:
+        g.redis.publish('titdev-auth', " ".join([discord_id] + applicable_roles))
+
+
 @auth.route("/")
 def sso_redirect():
     return redirect("https://login.eveonline.com/oauth/authorize" +
@@ -370,6 +489,26 @@ def sso_response():
 
     else:
         abort(400)
+
+
+@auth.route("/discord_redirect")
+def discord_redirect():
+    return redirect("https://discordapp.com/api/oauth2/authorize" +
+                    "?response_type=code" +
+                    "&redirect_uri=" + secrets["discord_redirect_uri"] +
+                    "&client_id=" + secrets["discord_client_id"] +
+                    "&scope=identify guilds guilds.join" +
+                    "&state=" + state)
+
+
+@auth.route("/discord_endpoint")
+def discord_response():
+    if request.args.get("state") == state:  # Check against returned state
+        code = request.args.get("code")
+
+        auth_discord(session["CharacterOwnerHash"], code)
+
+    return redirect(url_for("account.home"))
 
 
 @auth.route("/log_out")

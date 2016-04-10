@@ -6,6 +6,25 @@ from views.auth import requires_sso
 admin = Blueprint("admin", __name__, template_folder="templates")
 
 
+def discord_sync(user_id):
+    db_user = g.mongo.db.users.find_one({"_id": user_id})
+    if db_user and db_user.get("discord_id"):
+        applicable_roles = []
+        for role in g.mongo.db.eve_auth.find():
+            if user_id in role["users"]:
+                applicable_roles.append(role["_id"])
+        g.redis.publish("titdev-auth", " ".join([db_user["discord_id"]] + applicable_roles))
+
+
+def discord_full_sync():
+    user_set = set()
+    for role in g.mongo.db.eve_auth.find():
+        for user in role["users"]:
+            user_set.add(user)
+    for user in user_set:
+        discord_sync(user)
+
+
 @admin.route("/", methods=["GET", "POST"])
 @requires_sso("user_admin")
 def roles():
@@ -23,6 +42,7 @@ def roles():
                                                    "users": request.form.get("_id")
                                                }
                                        })
+            discord_sync(request.form.get("_id"))
         elif request.form.get("action") == "delete":
             g.mongo.db.eve_auth.update({"_id": request.form.get("role").strip()},
                                        {
@@ -31,6 +51,20 @@ def roles():
                                                    "users": request.form.get("_id")
                                                }
                                        })
+            discord_sync(request.form.get("_id"))
+        elif request.form.get("action") == "sync_roles":
+            message = "!" + " ".join([x["_id"] for x in g.mongo.db.eve_auth.find()])
+            g.redis.publish("titdev-auth", message)
+        elif request.form.get("action") == "sync_users":
+            discord_full_sync()
+        elif request.form.get("action") == "discord_invite":
+            new_invite_id = request.form.get("invite_id")
+            g.mongo.db.preferences.update_one({"_id": "discord"},
+                                              {
+                                                  "$set": {
+                                                      "invite_id": new_invite_id if new_invite_id else None
+                                                  }
+                                              }, upsert=True)
 
     # All Users List
     for user in g.mongo.db.users.find():
@@ -40,8 +74,8 @@ def roles():
         role_list.append([role["_id"], [(x, g.mongo.db.users.find_one({"_id": x}).get("character_name"))
                                         for x in role["users"] if g.mongo.db.users.find_one({"_id": x})]])
 
-    role_list1 = role_list[:int(len(role_list)/2)]
-    role_list2 = role_list[int(len(role_list)/2):]
+    role_list1 = role_list[:int(len(role_list) / 2)]
+    role_list2 = role_list[int(len(role_list) / 2):]
 
     # Corp API Keys
     all_keys = []
@@ -54,5 +88,8 @@ def roles():
         for key in user["keys"]:
             all_keys.append([db_name, key["character_id"], key["character_name"], key["key_id"], key["vcode"]])
 
+    db_discord = g.mongo.db.preferences.find_one({"_id": "discord"})
+    invite_id = db_discord.get("invite_id") if db_discord else None
+
     return render_template("site_admin.html", user_list=user_list, role_list1=role_list1, role_list2=role_list2,
-                           all_keys=all_keys)
+                           all_keys=all_keys, invite_id=invite_id)

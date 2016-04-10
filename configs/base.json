@@ -11,5 +11,6 @@
   "default_ship_to": "3KNA-N II - Naughty Nurse Academy",
   "home_station": 61000712,
   "forum_url": "http://rhitgaming.com",
-  "dashboard_url": "http://localhost:5000"
+  "dashboard_url": "http://localhost:5000",
+  "discord_server_id": 131107691211784192
 }

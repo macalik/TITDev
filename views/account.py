@@ -83,7 +83,7 @@ def home():
     db_user_info = g.mongo.db.users.find_one({"_id": session["CharacterOwnerHash"]})
     user_info = [db_user_info["_id"], db_user_info["character_name"], db_user_info["corporation_name"],
                  db_user_info["alliance_name"], db_user_info.get("email"), db_user_info.get("mumble"),
-                 db_user_info.get("im")]
+                 db_user_info.get("discord_id")]
 
     # Images
     with open("configs/base.json", "r") as base_config_file:

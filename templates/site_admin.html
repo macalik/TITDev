@@ -7,6 +7,22 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-md-12">
+                <form class="form-group" method="post">
+                    <div class="form-inline">
+                        <button name="action" type="submit" class="btn btn-warning" value="sync_users">Sync Discord Roles for All Users</button>
+                        <button name="action" type="submit" class="btn btn-danger" value="sync_roles">Recreate Discord Role Types</button>
+                        <div class="input-group">
+                            <span class="input-group-addon">Discord Invite ID</span>
+                            <input class="form-control" placeholder="GetOut" name="invite_id">
+                        </div>
+                        <button name="action" type="submit" class="btn btn-warning" value="discord_invite">Edit</button>
+                        <b>Current Discord ID: </b> {{invite_id}}
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-6">
                 {% for role in role_list1 %}
                 <div class="panel panel-default">
