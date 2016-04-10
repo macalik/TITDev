@@ -218,6 +218,7 @@ def forum_edit(current_user, action, *parameters):
 
 
 def auth_crest(code, refresh=False):
+    # Code is CharacterOwnerHash on refresh and actual authorization code on non-refresh
 
     # SSO Authentication
     auth_headers = {
@@ -451,6 +452,7 @@ def auth_discord(user, code=None):
         g.redis.publish('titdev-auth', " ".join([discord_id] + all_roles))
     else:
         g.redis.publish('titdev-auth', " ".join([discord_id] + applicable_roles))
+    g.redis.publish("titdev-auth", "#" + discord_id + " " + highest_auth(user))
 
 
 @auth.route("/")
