@@ -5,7 +5,7 @@ import time
 import calendar
 from functools import wraps
 from defusedxml import ElementTree
-from flask import redirect, request, Blueprint, abort, g, session, url_for
+from flask import redirect, request, Blueprint, abort, g, session, url_for, flash
 import requests
 
 auth = Blueprint("auth", __name__, template_folder="templates")
@@ -534,6 +534,7 @@ def discord_response():
 
         auth_discord(session["CharacterOwnerHash"], code)
 
+        flash("Discord connection successful")
     return redirect(url_for("account.home"))
 
 

@@ -1,7 +1,7 @@
 import json
 import datetime
 
-from flask import Blueprint, render_template, session, request, g
+from flask import Blueprint, render_template, session, request, g, flash
 from bson.objectid import ObjectId
 
 from views.auth import requires_sso, forum_edit
@@ -64,6 +64,25 @@ def home():
                 error_list = caches.api_keys(list(key_validation))
                 if not error_list:
                     message = "All api keys are valid."
+        elif request.form.get("action") == "nsfw":
+            if request.form.get("nsfw") == "True":
+                g.mongo.db.users.update({"_id": session["CharacterOwnerHash"]},
+                                        {
+                                            "$set": {
+                                                "nsfw": False
+                                            }
+                                        })
+                g.redis.publish("titdev-auth", "&" + request.form.get("discord_id", "") + " nsfw False")
+                flash("NSFW Disabled")
+            else:
+                g.mongo.db.users.update({"_id": session["CharacterOwnerHash"]},
+                                        {
+                                            "$set": {
+                                                "nsfw": True
+                                            }
+                                        })
+                g.redis.publish("titdev-auth", "&" + request.form.get("discord_id", "") + " nsfw True")
+                flash("NSFW Enabled")
 
     # List of roles
     given_roles = []
@@ -156,8 +175,11 @@ def home():
     for form in application_list:
         recruitment_ids.append(form["_id"])
 
+    # NSFW
+    nsfw = db_user_info.get("nsfw")
+
     return render_template("account.html", error_list=error_list, given_roles=given_roles,
                            associated_keys=associated_keys, user_info=user_info, image_list=image_list,
                            vacation=vacation, vacation_text=vacation_text, keys=keys, access_mask=access_mask,
                            vacation_date=vacation_date, invoice_table=invoice_table, message=message,
-                           recruitment_ids=recruitment_ids)
+                           recruitment_ids=recruitment_ids, nsfw=nsfw)

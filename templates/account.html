@@ -20,6 +20,21 @@
                 {{message}}
             </div>
             {% endif %}
+            {% with flash_list = get_flashed_messages(with_categories=true) %}
+            {% if flash_list %}
+            {% for category, flash in flash_list %}
+            {% if category == "message" %}
+            <div class="alert alert-success" role="alert">
+                {{flash}}
+            </div>
+            {% else %}
+            <div class="alert alert-danger" role="alert">
+                {{flash}}
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
         </div>
     </div>
     <div class="row">
@@ -119,7 +134,16 @@
                 </form>
                 <form method="post" class="form-inline">
                     <div class="form-group">
+                        <input class="form-control" name="discord_id" type="hidden" value="{{user_info[6]}}">
+                        <input class="form-control" name="nsfw" type="hidden" value="{{nsfw}}">
                         <a class="btn btn-primary" href="{{url_for('auth.discord_redirect')}}" role="button">Connect Discord</a>
+                        {% if not user_info[6] %}
+                        <button name="action" type="submit" class="btn btn-warning" value="nsfw" disabled>Enable NSFW</button>
+                        {% elif nsfw %}
+                        <button name="action" type="submit" class="btn btn-warning" value="nsfw">Disable NSFW</button>
+                        {% else %}
+                        <button name="action" type="submit" class="btn btn-warning" value="nsfw">Enable NSFW</button>
+                        {% endif %}
                     </div>
                 </form>
             </div>
