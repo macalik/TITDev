@@ -448,7 +448,7 @@ def auth_discord(user, code=None):
         g.redis.publish('titdev-auth', " ".join([discord_id] + all_roles))
     else:
         g.redis.publish('titdev-auth', " ".join([discord_id] + applicable_roles))
-    g.redis.publish("titdev-auth", "#" + discord_id + " " + highest_auth(user))
+    g.redis.publish("titdev-auth", "#" + discord_id + " " + str(highest_auth(user)))
 
 
 @auth.route("/")
