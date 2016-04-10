@@ -96,8 +96,8 @@ def db_init():
     if session.get("default_css", True):
         app.extensions['bootstrap']['cdns']["theme"].baseurl = cdn_theme_url
     else:
-        cdn_theme_dark_url = "https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/slate/"
-        app.extensions['bootstrap']['cdns']["theme"].baseurl = cdn_theme_dark_url
+        cdn_theme_alt_url = "https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/sandstone/"
+        app.extensions['bootstrap']['cdns']["theme"].baseurl = cdn_theme_alt_url
 
     if os.environ.get("maintenance") == "True":
         return render_template("maintenance.html")

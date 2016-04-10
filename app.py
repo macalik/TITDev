@@ -38,7 +38,7 @@ else:
     app.secret_key = secrets["random_key"]
 
 Bootstrap(app)
-cdn_theme_url = "https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/sandstone/"
+cdn_theme_url = "https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/slate/"
 app.extensions['bootstrap']['cdns']["theme"] = WebCDN(cdn_theme_url)  # CDN Theme
 app_mongo = PyMongo(app)
 
