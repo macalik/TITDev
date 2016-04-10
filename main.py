@@ -2,10 +2,10 @@ import os
 import json
 
 from flask import render_template, g, session, redirect, url_for, request
+# noinspection PyPackageRequirements
 from bson.objectid import ObjectId
-import redis
 
-from app import app, app_mongo, cdn_theme_url
+from app import app, app_mongo, cdn_theme_url, app_redis
 
 from views.navigation import Navigation
 from views.auth import auth
@@ -82,6 +82,7 @@ def app_init():
 @app.before_request
 def db_init():
     g.mongo = app_mongo
+    g.redis = app_redis
 
     if request.path not in ["/settings"] and not any([
         request.path.endswith(".js"),
@@ -100,19 +101,6 @@ def db_init():
 
     if os.environ.get("maintenance") == "True":
         return render_template("maintenance.html")
-
-    # Redis
-    # read url
-    try:
-        redis_host = app.config["CELERY_BROKER_URL"][8:].split("@")[1].split(":")[0]
-        redis_password = app.config["CELERY_BROKER_URL"][9:].split("@")[0]
-    except IndexError:
-        redis_host = app.config["CELERY_BROKER_URL"][8:].split(":")[0]
-        redis_password = None
-    redis_port = int(app.config["CELERY_BROKER_URL"][9:].split(":")[1].split("/")[0])
-    redis_db = int(app.config["CELERY_BROKER_URL"][9:].split("/")[1])
-
-    g.redis = redis.StrictRedis(host=redis_host, port=redis_port, db=redis_db, password=redis_password)
 
 
 @app.teardown_request

@@ -1,5 +1,5 @@
 from flask import g
-from app import app, app_mongo
+from app import app, app_mongo, app_redis
 from celery import Celery
 
 celery = Celery(app.import_name, broker=app.config['CELERY_BROKER_URL'], backend=app.config["CELERY_RESULT_BACKEND"])
@@ -15,6 +15,7 @@ class ContextTask(task_base):
         with app.app_context():
             # Application context for databases
             g.mongo = app_mongo
+            g.redis = app_redis
 
             return task_base.__call__(self, *args, **kwargs)
 

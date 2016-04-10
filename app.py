@@ -5,6 +5,7 @@ import logging
 from flask import Flask
 from flask_bootstrap import Bootstrap, WebCDN
 from flask_pymongo import PyMongo
+import redis
 
 
 app = Flask(__name__)
@@ -40,3 +41,15 @@ Bootstrap(app)
 cdn_theme_url = "https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/sandstone/"
 app.extensions['bootstrap']['cdns']["theme"] = WebCDN(cdn_theme_url)  # CDN Theme
 app_mongo = PyMongo(app)
+
+# Redis
+# read url
+try:
+    redis_host = app.config["CELERY_BROKER_URL"][8:].split("@")[1].split(":")[0]
+    redis_password = app.config["CELERY_BROKER_URL"][9:].split("@")[0]
+except IndexError:
+    redis_host = app.config["CELERY_BROKER_URL"][8:].split(":")[0]
+    redis_password = None
+redis_port = int(app.config["CELERY_BROKER_URL"][9:].split(":")[1].split("/")[0])
+redis_db = int(app.config["CELERY_BROKER_URL"][9:].split("/")[1])
+app_redis = redis.StrictRedis(host=redis_host, port=redis_port, db=redis_db, password=redis_password)

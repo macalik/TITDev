@@ -146,6 +146,19 @@ def auth_check(role):
     return False
 
 
+def highest_auth(user_id):
+    db_user = g.mongo.db.users.find_one({"_id": user_id})
+
+    with open("configs/base.json", "r") as base_config_file:
+        base_config = json.load(base_config_file)
+    if db_user["corporation_id"] == base_config["corporation_id"]:
+        return "corporation"
+    elif db_user["alliance_id"] == base_config["alliance_id"]:
+        return "alliance"
+    else:
+        return None
+
+
 def forum_edit(current_user, action, *parameters):
     # current_user = g.mongo.db.users.find_one({"_id": session["CharacterOwnerHash"]})
     with open("configs/base.json", "r") as base_config_file:
@@ -214,6 +227,7 @@ def auth_crest(code, refresh=False):
         "Host": "login.eveonline.com"
     }
     if not refresh:
+        given_user = None
         auth_payload = {
             "grant_type": "authorization_code",
             "code": code
@@ -245,6 +259,8 @@ def auth_crest(code, refresh=False):
                                             "cached_until": 0
                                         }
                                     })
+            if given_user and given_user.get("discord_id"):
+                g.redis.publish("titdev-auth", "#" + given_user["discord_id"] + " None")
             return None, None
     except ValueError:
         auth_token = None
@@ -261,6 +277,8 @@ def auth_crest(code, refresh=False):
                                             "cached_until": 0
                                         }
                                     })
+            if given_user and given_user.get("discord_id"):
+                g.redis.publish("titdev-auth", "#" + given_user["discord_id"] + " None")
             return None, None
 
     # CREST Authentication
@@ -306,6 +324,9 @@ def auth_crest(code, refresh=False):
                                                                                               xml_time_pattern)))
                                         }
                                     }, upsert=True)
+            if db_user and db_user.get("discord_id"):
+                g.redis.publish("titdev-auth", "#" + db_user["discord_id"] + " " +
+                                highest_auth(crest_char["CharacterOwnerHash"]))
 
         else:
             g.mongo.db.users.update({"_id": crest_char["CharacterOwnerHash"]},
@@ -323,6 +344,9 @@ def auth_crest(code, refresh=False):
                                                                                               xml_time_pattern)))
                                         }
                                     }, upsert=True)
+            if db_user and db_user.get("discord_id"):
+                g.redis.publish("titdev-auth", "#" + db_user["discord_id"] + " " +
+                                highest_auth(crest_char["CharacterOwnerHash"]))
 
         # Refresh current user
         db_user = g.mongo.db.users.find_one({"_id": crest_char["CharacterOwnerHash"]})
