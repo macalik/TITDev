@@ -194,6 +194,9 @@ def user(site_id=""):
         site_id = site_id.strip()
         if request.form.get("action") == "refresh":
             auth_crest(site_id, True)
+            api_key_db = g.mongo.db.api_keys.find_one({"_id": site_id})
+            if api_key_db:
+                caches.api_keys([(x["key_id"], x["vcode"]) for x in api_key_db["keys"]], False, site_id)
 
     error_list = []
     # Users
@@ -265,7 +268,8 @@ def user(site_id=""):
                            site_log_in=time.strftime(time_format, time.gmtime(user_info.get("last_sign_on", 0))),
                            site_id=site_id, character_name=user_info["character_name"], location_table=location_table,
                            vacation_text=vacation_text, vacation_date=vacation_date,
-                           affiliation_table=affiliation_table, error_list=error_list)
+                           affiliation_table=affiliation_table, error_list=error_list,
+                           sso_alliance=user_info["alliance_name"], sso_corporation=user_info["corporation_name"])
 
 
 @security.route("/settings", methods=["GET", "POST"])

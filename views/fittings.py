@@ -245,6 +245,9 @@ def fit(fit_id=None):
         jf_total = 0
     order_total = jf_total + total_fit_isk
 
+    # Submission date
+    date_added = ObjectId(fit_id).generation_time.strftime("%Y-%m-%d %H:%M:%S")
+
     # Formatting
     total_fit_isk = "{:,.02f}".format(total_fit_isk)
     total_volume = "{:,.02f}".format(total_volume)
@@ -257,4 +260,5 @@ def fit(fit_id=None):
                            market_hub_name=market_hub_name, jf_rate=jf_rate, jf_total=jf_total, order_total=order_total,
                            dna_string=selected_fit["dna"], fit_name=selected_fit["name"], multiply=multiply,
                            can_delete=can_delete, notes=selected_fit["notes"], source=selected_fit.get("source"),
-                           admin=admin, doctrine=selected_fit["doctrine"], prices_usable=prices_usable)
+                           admin=admin, doctrine=selected_fit["doctrine"], prices_usable=prices_usable,
+                           category=selected_fit.get("category"), date_added=date_added)

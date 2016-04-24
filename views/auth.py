@@ -260,8 +260,11 @@ def auth_crest(code, refresh=False):
                                             "cached_until": 0
                                         }
                                     })
-            if given_user and given_user.get("discord_id"):
-                g.redis.publish("titdev-auth", "#" + given_user["discord_id"] + " None")
+            if given_user:
+                if given_user.get("discord_id"):
+                    g.redis.publish("titdev-auth", "#" + given_user["discord_id"] + " None")
+                if given_user.get("email"):
+                    forum_edit(given_user, "log_out")
             return None, None
     except ValueError:
         auth_token = None
@@ -278,8 +281,11 @@ def auth_crest(code, refresh=False):
                                             "cached_until": 0
                                         }
                                     })
-            if given_user and given_user.get("discord_id"):
-                g.redis.publish("titdev-auth", "#" + given_user["discord_id"] + " None")
+            if given_user:
+                if given_user.get("discord_id"):
+                    g.redis.publish("titdev-auth", "#" + given_user["discord_id"] + " None")
+                if given_user.get("email"):
+                    forum_edit(given_user, "log_out")
             return None, None
 
     # CREST Authentication
@@ -348,6 +354,9 @@ def auth_crest(code, refresh=False):
         if db_user and db_user.get("discord_id"):
             auth_discord(crest_char["CharacterOwnerHash"])
 
+    if db_user.get("email"):
+        forum_edit(db_user, "log_out")
+
     return db_user, crest_char
 
 
@@ -381,6 +390,13 @@ def auth_discord(user, code=None):
         auth_token = auth_response.json()
         if not auth_token.get("access_token"):
             print(auth_token)
+            g.mongo.db.users.update({"_id": user},
+                                    {
+                                        "$set": {
+                                            "discord_refresh_token": None
+                                        }
+                                    })
+            print("Discord refresh token deleted")
             return
     except ValueError:
         auth_token = None
