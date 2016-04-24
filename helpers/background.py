@@ -6,7 +6,7 @@ from functools import wraps
 from celery_app import celery, app, g, app_mongo
 
 from helpers.caches import contracts, api_keys
-from views.auth import auth_crest
+from views.auth import auth_crest, forum_edit
 
 
 def needs_database():
@@ -71,6 +71,12 @@ def api_validation():
                     user_api_list.add((api_key_item["key_id"], api_key_item["vcode"]))
                 api_keys(list(user_api_list), dashboard_id=api_group["_id"])
         print("Finished at api {0}.".format(counter))
+
+        print("Forcing forum log outs")
+        for user in g.mongo.db.users.find():
+            if user.get("email"):
+                forum_edit(user, "log_out")
+        print("Finished forcing forum log outs for all users")
 
         g.mongo.db.preferences.update_one({"_id": "updates"}, {
             "$set": {"api_validation": datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")}})
