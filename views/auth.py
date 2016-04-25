@@ -197,7 +197,7 @@ def forum_edit(current_user, action, *parameters):
             if len(forum_response.json()) == 1:
                 forum_id = forum_response.json()[0]["id"]
                 forum_username = forum_response.json()[0]["username"]
-                g.mongo.db.users.update({"_id": session["CharacterOwnerHash"]},
+                g.mongo.db.users.update({"_id": current_user["_id"]},
                                         {"$set": {"forum_id": forum_id, "forum_username": forum_username}})
                 used_forum = True
         except json.JSONDecodeError:
@@ -354,7 +354,7 @@ def auth_crest(code, refresh=False):
         if db_user and db_user.get("discord_id"):
             auth_discord(crest_char["CharacterOwnerHash"])
 
-    if db_user.get("email"):
+    if db_user.get("forum_id"):
         forum_edit(db_user, "log_out")
 
     return db_user, crest_char
