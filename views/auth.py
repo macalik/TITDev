@@ -352,8 +352,10 @@ def auth_crest(code, refresh=False):
         # Refresh current user
         db_user = g.mongo.db.users.find_one({"_id": crest_char["CharacterOwnerHash"]})
 
-    if db_user and db_user.get("discord_id"):
-        auth_discord(crest_char["CharacterOwnerHash"])
+        # Check only on refresh due to rate limits
+        if db_user and db_user.get("discord_id"):
+            auth_discord(crest_char["CharacterOwnerHash"])
+
     if db_user.get("forum_id"):
         forum_edit(db_user, "log_out")
 
@@ -479,6 +481,20 @@ def discord_sync(user_id, discord_id=None, character_name=None):
         g.redis.publish('titdev-auth', " ".join([discord_id] + all_roles))
     else:
         g.redis.publish('titdev-auth', " ".join([discord_id] + applicable_roles))
+    g.redis.publish("titdev-auth", "#" + discord_id + " " + str(highest_auth(user_id)))
+    if character_name:
+        g.redis.publish("titdev-auth", "@" + discord_id + " '" + character_name + "'")
+
+
+def discord_check(user_id, discord_id=None, character_name=None):
+    # Refresh roles
+    if not discord_id:
+        valid_user = g.mongo.db.users.find_one({"_id": user_id})
+        if valid_user:
+            discord_id = valid_user.get("discord_id")
+            character_name = valid_user.get("character_name")
+        if not discord_id:
+            return
     g.redis.publish("titdev-auth", "#" + discord_id + " " + str(highest_auth(user_id)))
     if character_name:
         g.redis.publish("titdev-auth", "@" + discord_id + " '" + character_name + "'")

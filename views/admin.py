@@ -2,14 +2,9 @@ import time
 
 from flask import Blueprint, render_template, g, request
 from views.auth import requires_sso, discord_sync
+from helpers import background
 
 admin = Blueprint("admin", __name__, template_folder="templates")
-
-
-def discord_full_sync():
-    for user in g.mongo.db.users.find():
-        if user.get("discord_id"):
-            discord_sync(user["_id"], user["discord_id"], user["character_name"])
 
 
 @admin.route("/", methods=["GET", "POST"])
@@ -43,7 +38,7 @@ def roles():
             message = "!" + " ".join([x["_id"] for x in g.mongo.db.eve_auth.find()])
             g.redis.publish("titdev-auth", message)
         elif request.form.get("action") == "sync_users":
-            discord_full_sync()
+            background.discord_check_all.delay()
         elif request.form.get("action") == "discord_invite":
             new_invite_id = request.form.get("invite_id")
             g.mongo.db.preferences.update_one({"_id": "discord"},

@@ -6,7 +6,7 @@ from functools import wraps
 from celery_app import celery, app, g, app_mongo, app_redis
 
 from helpers.caches import contracts, api_keys
-from views.auth import auth_crest, forum_edit
+from views.auth import auth_crest, forum_edit, discord_check
 
 
 def needs_database():
@@ -30,6 +30,26 @@ def add_together(a, b):
 @needs_database()
 def jf_update(*args, **kwargs):
     contracts(*args, **kwargs)
+
+
+@celery.task(ignore_result=True)
+@needs_database()
+def discord_check_all(*args, **kwargs):
+    user_list = []
+    for user in g.mongo.db.users.find():
+        if user.get("discord_id"):
+            user_list.append([user["_id"], user["discord_id"], user["character_name"]])
+    print("{0} users to adjust".format(len(user_list)))
+    for user_group in user_list:
+        print("Discord Sync: {0}".format(user_group[2]))
+        discord_check(*user_group)
+        time.sleep(25)
+
+
+@celery.task(ignore_result=True, rate_limit=10)
+@needs_database()
+def discord_check_wait(user_id, discord_id, character_name):
+    discord_check(user_id, discord_id, character_name)
 
 
 @celery.task(ignore_result=True)
