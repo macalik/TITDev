@@ -3,7 +3,7 @@ import datetime
 
 from functools import wraps
 
-from celery_app import celery, app, g, app_mongo
+from celery_app import celery, app, g, app_mongo, app_redis
 
 from helpers.caches import contracts, api_keys
 from views.auth import auth_crest, forum_edit
@@ -15,6 +15,7 @@ def needs_database():
         def decorated_function(*args, **kwargs):
             with app.app_context():
                 g.mongo = app_mongo
+                g.redis = app_redis
                 return function(*args, **kwargs)
         return decorated_function
     return decorator
