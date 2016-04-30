@@ -217,7 +217,7 @@ def forum_edit(current_user, action, *parameters):
                          params=api_payload)
 
 
-def auth_crest(code, refresh=False):
+def auth_crest(code, refresh=False, discord_roles=True):
     # Code is CharacterOwnerHash on refresh and actual authorization code on non-refresh
 
     # SSO Authentication
@@ -354,7 +354,7 @@ def auth_crest(code, refresh=False):
 
         # Check only on refresh due to rate limits
         if db_user and db_user.get("discord_id"):
-            auth_discord(crest_char["CharacterOwnerHash"])
+            auth_discord(crest_char["CharacterOwnerHash"], sync=discord_roles)
 
     if db_user.get("forum_id"):
         forum_edit(db_user, "log_out")
@@ -362,7 +362,7 @@ def auth_crest(code, refresh=False):
     return db_user, crest_char
 
 
-def auth_discord(user, code=None):
+def auth_discord(user, code=None, sync=True):
     # No code means use refresh code
     auth_headers = {
         "Authorization": "Basic " + str(base64.b64encode(
@@ -384,7 +384,10 @@ def auth_discord(user, code=None):
                 "refresh_token": given_user["discord_refresh_token"]
             }
         else:
-            discord_sync(user)
+            if sync:
+                discord_sync(user)
+            else:
+                discord_check(user)
             return
     auth_response = requests.post("https://discordapp.com/api/oauth2/token",
                                   data=auth_payload, headers=auth_headers)
@@ -401,7 +404,10 @@ def auth_discord(user, code=None):
                                                                })
             print("Discord refresh token deleted")
             if edited_user:
-                discord_sync(user, edited_user["discord_id"], edited_user["character_name"])
+                if sync:
+                    discord_sync(user, edited_user["discord_id"], edited_user["character_name"])
+                else:
+                    discord_check(user, edited_user["discord_id"], edited_user["character_name"])
             return
     except ValueError:
         auth_token = None
@@ -415,7 +421,10 @@ def auth_discord(user, code=None):
                                                       }
                                                   })
             if edited_user:
-                discord_sync(user, edited_user["discord_id"], edited_user["character_name"])
+                if sync:
+                    discord_sync(user, edited_user["discord_id"], edited_user["character_name"])
+                else:
+                    discord_check(user, edited_user["discord_id"], edited_user["character_name"])
             return
     else:
         if code:
@@ -456,7 +465,10 @@ def auth_discord(user, code=None):
                                                                 "discord_id": discord_id
                                                             }
                                                         })
-    discord_sync(user, discord_id, updated_user["character_name"])
+    if sync:
+        discord_sync(user, discord_id, updated_user["character_name"])
+    else:
+        discord_check(user, discord_id, updated_user["character_name"])
 
 
 def discord_sync(user_id, discord_id=None, character_name=None):

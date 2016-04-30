@@ -61,10 +61,16 @@ def api_validation():
         g.mongo.db.preferences.update_one({"_id": "updates"}, {
             "$set": {"api_validation": "running. Started at: {0}".format(
                     datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"))}}, upsert=True)
-        rate_limit = 30
-        rate_wait = 1
-        error_rate_limit = 300
-        error_wait = 300
+        # EVE:
+        # rate_limit = 30
+        # rate_wait = 1
+        # error_rate_limit = 300
+        # error_wait = 300
+        # Discord:
+        rate_limit = 1
+        rate_wait = 10
+        error_rate_limit = 120
+        error_wait = 60
         counter = 0
         for api_group in g.mongo.db.api_keys.find():
             user_api_list = set()
@@ -74,7 +80,7 @@ def api_validation():
                 print("ID: {0}".format(api_group["_id"]))
                 # Refresh Crest
                 try:
-                    temp1, temp2 = auth_crest(api_group["_id"], True)
+                    temp1, temp2 = auth_crest(api_group["_id"], True, True)
                 except KeyError:
                     print("Failed at {0}".format(api_group["_id"]))
                 else:
