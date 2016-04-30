@@ -68,7 +68,7 @@ def api_validation():
         # error_wait = 300
         # Discord:
         rate_limit = 1
-        rate_wait = 10
+        rate_wait = 25
         error_rate_limit = 120
         error_wait = 60
         counter = 0
