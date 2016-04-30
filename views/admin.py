@@ -1,28 +1,15 @@
 import time
 
 from flask import Blueprint, render_template, g, request
-from views.auth import requires_sso
+from views.auth import requires_sso, discord_sync
 
 admin = Blueprint("admin", __name__, template_folder="templates")
 
 
-def discord_sync(user_id):
-    db_user = g.mongo.db.users.find_one({"_id": user_id})
-    if db_user and db_user.get("discord_id"):
-        applicable_roles = []
-        for role in g.mongo.db.eve_auth.find():
-            if user_id in role["users"]:
-                applicable_roles.append(role["_id"])
-        g.redis.publish("titdev-auth", " ".join([db_user["discord_id"]] + applicable_roles))
-
-
 def discord_full_sync():
-    user_set = set()
-    for role in g.mongo.db.eve_auth.find():
-        for user in role["users"]:
-            user_set.add(user)
-    for user in user_set:
-        discord_sync(user)
+    for user in g.mongo.db.users.find():
+        if user.get("discord_id"):
+            discord_sync(user["_id"], user["discord_id"], user["character_name"])
 
 
 @admin.route("/", methods=["GET", "POST"])

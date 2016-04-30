@@ -351,9 +351,9 @@ def auth_crest(code, refresh=False):
 
         # Refresh current user
         db_user = g.mongo.db.users.find_one({"_id": crest_char["CharacterOwnerHash"]})
-        if db_user and db_user.get("discord_id"):
-            auth_discord(crest_char["CharacterOwnerHash"])
 
+    if db_user and db_user.get("discord_id"):
+        auth_discord(crest_char["CharacterOwnerHash"])
     if db_user.get("forum_id"):
         forum_edit(db_user, "log_out")
 
@@ -382,6 +382,7 @@ def auth_discord(user, code=None):
                 "refresh_token": given_user["discord_refresh_token"]
             }
         else:
+            discord_sync(user)
             return
     auth_response = requests.post("https://discordapp.com/api/oauth2/token",
                                   data=auth_payload, headers=auth_headers)
@@ -390,25 +391,29 @@ def auth_discord(user, code=None):
         auth_token = auth_response.json()
         if not auth_token.get("access_token"):
             print(auth_token)
-            g.mongo.db.users.update({"_id": user},
-                                    {
-                                        "$set": {
-                                            "discord_refresh_token": None
-                                        }
-                                    })
+            edited_user = g.mongo.db.users.find_one_and_update({"_id": user},
+                                                               {
+                                                                   "$set": {
+                                                                       "discord_refresh_token": None
+                                                                   }
+                                                               })
             print("Discord refresh token deleted")
+            if edited_user:
+                discord_sync(user, edited_user["discord_id"], edited_user["character_name"])
             return
     except ValueError:
         auth_token = None
         if code:
             abort(400)
         else:
-            g.mongo.db.users.update({"_id": user},
-                                    {
-                                        "$set": {
-                                            "discord_refresh_token": None
-                                        }
-                                    })
+            edited_user = g.mongo.db.users.update({"_id": user},
+                                                  {
+                                                      "$set": {
+                                                          "discord_refresh_token": None
+                                                      }
+                                                  })
+            if edited_user:
+                discord_sync(user, edited_user["discord_id"], edited_user["character_name"])
             return
     else:
         if code:
@@ -443,28 +448,40 @@ def auth_discord(user, code=None):
     # Get ID
     discord_id_response = requests.get("https://discordapp.com/api/users/@me", headers=info_headers)
     discord_id = discord_id_response.json()["id"].strip()
-    g.mongo.db.users.update({"_id": user},
-                            {
-                                "$set": {
-                                    "discord_id": discord_id
-                                }
-                            })
+    updated_user = g.mongo.db.users.find_one_and_update({"_id": user},
+                                                        {
+                                                            "$set": {
+                                                                "discord_id": discord_id
+                                                            }
+                                                        })
+    discord_sync(user, discord_id, updated_user["character_name"])
 
+
+def discord_sync(user_id, discord_id=None, character_name=None):
     # Refresh roles
     all_roles = []
     applicable_roles = []
     super_admin = False
+    if not discord_id:
+        valid_user = g.mongo.db.users.find_one({"_id": user_id})
+        if valid_user:
+            discord_id = valid_user.get("discord_id")
+            character_name = valid_user.get("character_name")
+        if not discord_id:
+            return
     for role in g.mongo.db.eve_auth.find():
         all_roles.append(role["_id"])
-        if role["_id"] != "super_admin" and user in role["users"]:
+        if role["_id"] != "super_admin" and user_id in role["users"]:
             applicable_roles.append(role["_id"])
-        elif role["_id"] == "super_admin" and user in role["users"]:
+        elif role["_id"] == "super_admin" and user_id in role["users"]:
             super_admin = True
     if super_admin:
         g.redis.publish('titdev-auth', " ".join([discord_id] + all_roles))
     else:
         g.redis.publish('titdev-auth', " ".join([discord_id] + applicable_roles))
-    g.redis.publish("titdev-auth", "#" + discord_id + " " + str(highest_auth(user)))
+    g.redis.publish("titdev-auth", "#" + discord_id + " " + str(highest_auth(user_id)))
+    if character_name:
+        g.redis.publish("titdev-auth", "@" + discord_id + " '" + character_name + "'")
 
 
 @auth.route("/")
