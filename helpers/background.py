@@ -68,6 +68,13 @@ def api_keys_wait(api_key_list, unassociated=False, dashboard_id=None):
 
 @celery.task(ignore_result=True)
 @needs_database()
+def time_wait(seconds):
+    print(">> Waiting {0} seconds".format(seconds))
+    time.sleep(seconds)
+
+
+@celery.task(ignore_result=True)
+@needs_database()
 def api_validation():
     # Check if something is running
     updates = g.mongo.db.preferences.find_one({"_id": "updates"})
@@ -103,8 +110,8 @@ def api_validation():
             counter += 1
             if not counter % 10:
                 print("At user {0}".format(counter))
-            auth_crest_wait.delay(*auth_crest_parameters)
-            api_keys_wait.delay(*api_keys_parameters)
+            auth_crest(*auth_crest_parameters)
+            api_keys(*api_keys_parameters)
             time.sleep(60)
 
         print("Finished at user {0}.".format(counter))
@@ -113,6 +120,7 @@ def api_validation():
         for user in g.mongo.db.users.find():
             if user.get("email"):
                 forum_edit(user, "log_out")
+                time.sleep(1)
         print("Finished forcing forum log outs for all users")
 
         g.mongo.db.preferences.update_one({"_id": "updates"}, {
