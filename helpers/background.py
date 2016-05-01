@@ -52,6 +52,20 @@ def discord_check_wait(user_id, discord_id, character_name):
     discord_check(user_id, discord_id, character_name)
 
 
+@celery.task(ignore_result=True, rate_limit="1/m")
+@needs_database()
+def auth_crest_wait(code, refresh=False, discord_roles=True):
+    print(">> Running Crest Auth")
+    auth_crest(code, refresh, discord_roles)
+
+
+@celery.task(ignore_result=True, rate_limit="50/m")
+@needs_database()
+def api_keys_wait(api_key_list, unassociated=False, dashboard_id=None):
+    print(">> Running API Key")
+    api_keys(api_key_list, unassociated, dashboard_id)
+
+
 @celery.task(ignore_result=True)
 @needs_database()
 def api_validation():
@@ -62,42 +76,38 @@ def api_validation():
             "$set": {"api_validation": "running. Started at: {0}".format(
                     datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"))}}, upsert=True)
         # EVE:
-        # rate_limit = 30
-        # rate_wait = 1
-        # error_rate_limit = 300
-        # error_wait = 300
-        # Discord:
-        rate_limit = 1
-        rate_wait = 25
-        error_rate_limit = 120
-        error_wait = 60
+        # General rate: 30 request / sec
+        # Error rate: 300 requests / 3 minutes (avg. 100/min, 5/3sec = 1.67/sec)
+        # Discord: 120 requests / minute (avg. 2/sec)
         counter = 0
+        auth_crest_list = []
+        api_keys_list = []
+
         for api_group in g.mongo.db.api_keys.find():
             user_api_list = set()
             if not api_group.get("keys") and api_group["_id"] == "unassociated":
                 pass
             else:
-                print("ID: {0}".format(api_group["_id"]))
                 # Refresh Crest
                 try:
-                    temp1, temp2 = auth_crest(api_group["_id"], True, True)
+                    auth_crest_list.append([api_group["_id"], True, True])
                 except KeyError:
                     print("Failed at {0}".format(api_group["_id"]))
-                else:
-                    if not temp1 or not temp2:
-                        print("Failed at {0}".format(api_group["_id"]))
 
                 for api_key_item in api_group["keys"]:
-                    counter += 1
-                    if not counter % rate_limit:
-                        print("At api {0}. Waiting {1}.".format(counter, rate_wait))
-                        time.sleep(rate_wait)
-                    if not counter % error_rate_limit:
-                        print("At api {0}. Waiting {1}.".format(counter, error_wait))
-                        time.sleep(error_wait)
                     user_api_list.add((api_key_item["key_id"], api_key_item["vcode"]))
-                api_keys(list(user_api_list), dashboard_id=api_group["_id"])
-        print("Finished at api {0}.".format(counter))
+                api_keys_list.append([list(user_api_list), False, api_group["_id"]])
+
+        # Run without database cursor connection
+        for auth_crest_parameters, api_keys_parameters in zip(auth_crest_list, api_keys_list):
+            counter += 1
+            if not counter % 10:
+                print("At user {0}".format(counter))
+            auth_crest_wait.delay(*auth_crest_parameters)
+            api_keys_wait.delay(*api_keys_parameters)
+            time.sleep(60)
+
+        print("Finished at user {0}.".format(counter))
 
         print("Forcing forum log outs")
         for user in g.mongo.db.users.find():

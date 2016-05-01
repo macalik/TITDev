@@ -22,7 +22,7 @@ if os.environ.get("EXTERNAL"):
     app.config["MONGO_URI"] = os.environ["MONGO_URI"]
     app.config["MONGO_CONNECT"] = False
     app.secret_key = os.environ["random_key"]
-    app.config["CELERY_BROKER_URL"] = os.environ["REDIS_URL"]
+    app.config["BROKER_URL"] = os.environ["REDIS_URL"]  # Celery
     app.config["CELERY_RESULT_BACKEND"] = os.environ["REDIS_URL"]
 else:
     with open("../Other-Secrets/TITDev.json") as secrets_file:
@@ -32,7 +32,7 @@ else:
     app.config["MONGO_USERNAME"] = secrets["mongo-user"]
     app.config["MONGO_PASSWORD"] = secrets["mongo-password"]
     app.config["MONGO_PORT"] = secrets["mongo-port"]
-    app.config["CELERY_BROKER_URL"] = secrets["redis-host"]
+    app.config["BROKER_URL"] = secrets["redis-host"]  # Celery
     app.config["CELERY_RESULT_BACKEND"] = secrets["redis-host"]
     app.config["MONGO_CONNECT"] = False
     app.secret_key = secrets["random_key"]
@@ -45,11 +45,11 @@ app_mongo = PyMongo(app)
 # Redis
 # read url
 try:
-    redis_host = app.config["CELERY_BROKER_URL"][8:].split("@")[1].split(":")[0]
-    redis_password = app.config["CELERY_BROKER_URL"][9:].split("@")[0]
+    redis_host = app.config["BROKER_URL"][8:].split("@")[1].split(":")[0]
+    redis_password = app.config["BROKER_URL"][9:].split("@")[0]
 except IndexError:
-    redis_host = app.config["CELERY_BROKER_URL"][8:].split(":")[0]
+    redis_host = app.config["BROKER_URL"][8:].split(":")[0]
     redis_password = None
-redis_port = int(app.config["CELERY_BROKER_URL"][9:].split(":")[1].split("/")[0])
-redis_db = int(app.config["CELERY_BROKER_URL"][9:].split("/")[1])
+redis_port = int(app.config["BROKER_URL"][9:].split(":")[1].split("/")[0])
+redis_db = int(app.config["BROKER_URL"][9:].split("/")[1])
 app_redis = redis.StrictRedis(host=redis_host, port=redis_port, db=redis_db, password=redis_password)

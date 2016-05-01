@@ -2,7 +2,7 @@ from flask import g
 from app import app, app_mongo, app_redis
 from celery import Celery
 
-celery = Celery(app.import_name, broker=app.config['CELERY_BROKER_URL'], backend=app.config["CELERY_RESULT_BACKEND"])
+celery = Celery(app.import_name)
 celery.conf.update(app.config)
 
 task_base = celery.Task
