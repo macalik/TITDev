@@ -106,9 +106,11 @@ def api_validation():
                 api_keys_list.append([list(user_api_list), False, api_group["_id"]])
 
         # Run without database cursor connection
+        if not auth_crest_list or not api_keys_list:
+            print("Empty verification lists")
         for auth_crest_parameters, api_keys_parameters in zip(auth_crest_list, api_keys_list):
             counter += 1
-            if not counter % 10:
+            if not counter % 10 or counter == 1:
                 print("At user {0}".format(counter))
             auth_crest(*auth_crest_parameters)
             api_keys(*api_keys_parameters)
