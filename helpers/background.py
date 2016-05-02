@@ -110,10 +110,12 @@ def api_validation():
             print("Empty verification lists")
         for auth_crest_parameters, api_keys_parameters in zip(auth_crest_list, api_keys_list):
             counter += 1
-            if not counter % 10 or counter == 1:
-                print("At user {0}".format(counter))
-            auth_crest(*auth_crest_parameters)
-            api_keys(*api_keys_parameters)
+            print("At user {0}".format(counter))
+            try:
+                auth_crest(*auth_crest_parameters)
+                api_keys(*api_keys_parameters)
+            except KeyError as unknown_error:
+                print(unknown_error)
             time.sleep(60)
 
         print("Finished at user {0}.".format(counter))

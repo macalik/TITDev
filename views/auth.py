@@ -235,11 +235,26 @@ def auth_crest(code, refresh=False, discord_roles=True):
         }
     else:
         given_user = g.mongo.db.users.find_one({"_id": code})
-        if given_user:
+        if given_user and given_user.get("refresh_token"):
             auth_payload = {
                 "grant_type": "refresh_token",
                 "refresh_token": given_user["refresh_token"]
             }
+        elif given_user and not given_user.get("refresh_token"):
+            # Resets users with invalid refresh tokens.
+            # Note to remove from code if refresh tokens become stale too often.
+            g.mongo.db.users.update({"_id": code},
+                                    {
+                                        "$set": {
+                                            "corporation_id": 0,
+                                            "corporation_name": "",
+                                            "alliance_id": 0,
+                                            "alliance_name": "",
+                                            "cached_until": 0,
+                                            "refresh_token": ""
+                                        }
+                                    })
+            return None, None
         else:
             return None, None
 
@@ -257,7 +272,8 @@ def auth_crest(code, refresh=False, discord_roles=True):
                                             "corporation_name": "",
                                             "alliance_id": 0,
                                             "alliance_name": "",
-                                            "cached_until": 0
+                                            "cached_until": 0,
+                                            "refresh_token": ""
                                         }
                                     })
             if given_user:
@@ -278,7 +294,8 @@ def auth_crest(code, refresh=False, discord_roles=True):
                                             "corporation_name": "",
                                             "alliance_id": 0,
                                             "alliance_name": "",
-                                            "cached_until": 0
+                                            "cached_until": 0,
+                                            "refresh_token": ""
                                         }
                                     })
             if given_user:
