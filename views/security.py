@@ -131,9 +131,9 @@ def home():
             evemail_lines = "Empty Message" if not evemail_lines.strip() else evemail_lines.strip()
 
             evemail_call = "CCPEVE.sendMail({0}, '{1}', '{2}')".format(
-                    corp_character["_id"],
-                    evemail_subject.strip(),
-                    "\\n".join([x.strip() for x in evemail_lines.format(character=corp_character["name"]).split("\n")])
+                corp_character["_id"],
+                evemail_subject.strip(),
+                "\\n".join([x.strip() for x in evemail_lines.format(character=corp_character["name"]).split("\n")])
             )
             inactivity_60_days.append(api_row + [evemail_call])
         elif corp_character["log_on_time"] < time.time() - 2592000:
@@ -211,8 +211,8 @@ def user(site_id=""):
     # Vacation
     if request.form.get("action") == "vacation":
         vacation_db = g.mongo.db.personals.find_one_and_update(
-                {"_id": site_id}, {"$unset": {"vacation": True, "vacation_date": True}},
-                return_document=ReturnDocument.AFTER)
+            {"_id": site_id}, {"$unset": {"vacation": True, "vacation_date": True}},
+            return_document=ReturnDocument.AFTER)
         flash("Vacation reset.", "success")
     else:
         vacation_db = g.mongo.db.personals.find_one({"_id": site_id})
@@ -232,10 +232,20 @@ def user(site_id=""):
                                                             },
                                                             return_document=ReturnDocument.AFTER)
         flash("Removed key id {0}".format(request.form.get("key_id")), "success")
+    elif request.form.get("action") == "remove_old":
+        user_apis = g.mongo.db.api_keys.find_one_and_update({"_id": site_id},
+                                                            {
+                                                                "$pull": {
+                                                                    "old_keys": {
+                                                                        "key_id": int(request.form.get("key_id"))}
+                                                                }
+                                                            }, return_document=ReturnDocument.AFTER)
+        flash("Removed old key id {0}".format(request.form.get("key_id")), "success")
     else:
         user_apis = g.mongo.db.api_keys.find_one({"_id": site_id})
 
     api_table = []
+    old_api_table = []
     id_list = []
     affiliation_table = []
     if user_apis:
@@ -244,6 +254,10 @@ def user(site_id=""):
                               api_key["cached_str"], api_key.get("valid", True)])
             id_list.append(api_key["character_id"])
             affiliation_table.append([api_key["character_name"], api_key["corporation_name"], api_key["alliance_name"]])
+        if user_apis.get("old_keys"):
+            for key in user_apis["old_keys"]:
+                old_api_table.append([key["key_id"], key["vcode"],
+                                      time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(key["delete_time"]))])
 
     vacation_text = vacation_db.get("vacation") if vacation_db else None
     vacation_date = vacation_db.get("vacation_date") if vacation_db else None
@@ -269,7 +283,8 @@ def user(site_id=""):
                            site_id=site_id, character_name=user_info["character_name"], location_table=location_table,
                            vacation_text=vacation_text, vacation_date=vacation_date,
                            affiliation_table=affiliation_table, error_list=error_list,
-                           sso_alliance=user_info["alliance_name"], sso_corporation=user_info["corporation_name"])
+                           sso_alliance=user_info["alliance_name"], sso_corporation=user_info["corporation_name"],
+                           old_api_table=old_api_table)
 
 
 @security.route("/settings", methods=["GET", "POST"])

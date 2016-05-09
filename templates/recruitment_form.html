@@ -36,9 +36,9 @@
                 <li class="list-group-item"><b>Recruitment Key:</b> {{app_key}}</li>
                 <li class="list-group-item"><b>Recruiter:</b> {{app_recruiter}}</li>
                 <li class="list-group-item"><b>Application Status:</b> {{app_status}}</li>
-                <li class="list-group-item"><b>Reason:</b> {{app_reason}}</li>
                 <li class="list-group-item"><b>Met Recruiter:</b> {{met_recruiter}}</li>
                 {% if role %}
+                <li class="list-group-item"><b>Reason:</b> {{app_reason}}</li>
                 <li class="list-group-item">
                     <form method="post">
                         <input type="hidden" name="submitted" value="{{submitted}}">
@@ -152,41 +152,84 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
-            <h2>All APIs</h2>
-            <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
-                <thead>
-                <tr>
-                    <th>Char ID</th>
-                    <th>Char Name</th>
-                    <th>Key ID</th>
-                    <th>vCode</th>
-                    <th>Cached Until</th>
-                    <th>Valid</th>
-                    {% if not role %}
-                    <th>Action</th>
-                    {% endif %}
-                </tr>
-                </thead>
-                <tbody>
-                {% for key in associated_keys %}
-                <tr class="{{'danger' if not key[-1]}}">
-                    {% for info in key %}
-                    <td>{{info}}</td>
-                    {% endfor %}
-                    {% if not role %}
-                    <td>
-                        <form method="post">
-                            <input class="form-control" name="key_id" type="hidden" value="{{key[2]}}">
-                            <input class="form-control" name="vcode" type="hidden" value="{{key[3]}}">
-                            <button name="action" type="submit" class="btn btn-danger" value="remove">Remove</button>
-                        </form>
-                    </td>
-                    {% endif %}
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#apis">APIs</a></li>
+            {% if role == "security_officer" %}
+            <li><a data-toggle="tab" href="#old">Old APIs</a></li>
+            {% endif %}
+        </ul>
+        <div class="tab-content">
+            <div id="apis" class="tab-pane active">
+                <div class="col-md-12">
+                    <h2>All APIs</h2>
+                    <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
+                        <thead>
+                        <tr>
+                            <th>Char ID</th>
+                            <th>Char Name</th>
+                            <th>Key ID</th>
+                            <th>vCode</th>
+                            <th>Cached Until</th>
+                            <th>Valid</th>
+                            {% if not role %}
+                            <th>Action</th>
+                            {% endif %}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for key in associated_keys %}
+                        <tr class="{{'danger' if not key[-1]}}">
+                            {% for info in key %}
+                            <td>{{info}}</td>
+                            {% endfor %}
+                            {% if not role %}
+                            <td>
+                                <form method="post">
+                                    <input class="form-control" name="key_id" type="hidden" value="{{key[2]}}">
+                                    <input class="form-control" name="vcode" type="hidden" value="{{key[3]}}">
+                                    <button name="action" type="submit" class="btn btn-danger" value="remove">Remove</button>
+                                </form>
+                            </td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% if role == "security_officer" %}
+            <div id="old" class="tab-pane">
+                <div class="col-md-12">
+                    <h2>Old APIs</h2>
+                    <table class="table table-hover table-condensed datatables dt-responsive" width="100%">
+                        <thead>
+                        <tr>
+                            <th>Key ID</th>
+                            <th>vCode</th>
+                            <th>Deletion Time</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for key in associated_old_keys %}
+                        <tr class="{{'danger' if not key[-1]}}">
+                            {% for info in key %}
+                            <td>{{info}}</td>
+                            {% endfor %}
+                            <td>
+                                <form method="post">
+                                    <input class="form-control" name="key_id" type="hidden" value="{{key[0]}}">
+                                    <input class="form-control" name="vcode" type="hidden" value="{{key[1]}}">
+                                    <button name="action" type="submit" class="btn btn-danger" value="remove_old">Remove</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% endif %}
         </div>
     </div>
     <div class="row">

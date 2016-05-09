@@ -1,4 +1,5 @@
 import json
+import time
 
 from flask import Blueprint, render_template, request, session, g, redirect, url_for, flash
 from pymongo import ReturnDocument
@@ -91,23 +92,31 @@ def form(key):
                 "release": "Submitted" if request.form.get("submitted") == "True" else "Not Submitted"
             }
             app_info = g.mongo.db.applications.find_one_and_update(
-                    {"_id": ObjectId(key)},
-                    {
-                        "$set": {
-                            "status": status_strings[request.form.get("action")],
-                            "reason": request.form.get("reason")
-                        }
-                    },
-                    return_document=ReturnDocument.AFTER)
+                {"_id": ObjectId(key)},
+                {
+                    "$set": {
+                        "status": status_strings[request.form.get("action")],
+                        "reason": request.form.get("reason")
+                    }
+                },
+                return_document=ReturnDocument.AFTER)
+            # Discord Integration
+            if request.form.get("action") not in ["process", "release"]:
+                g.redis.publish('titdev-recruitment',
+                                "@everyone: {0} has marked a form as {2}: {1}".format(
+                                    session["CharacterName"],
+                                    url_for("recruitment.form", key=key, _external=True),
+                                    status_strings[request.form.get("action")]
+                                ))
         elif request.form.get("action") == "flag" and role:
             app_info = g.mongo.db.applications.find_one_and_update(
-                    {"_id": ObjectId(key)},
-                    {
-                        "$set":
-                            {
-                                "met_recruiter": request.form.get("met_recruiter") == "False"
-                            }
-                    }, return_document=ReturnDocument.AFTER)
+                {"_id": ObjectId(key)},
+                {
+                    "$set":
+                        {
+                            "met_recruiter": request.form.get("met_recruiter") == "False"
+                        }
+                }, return_document=ReturnDocument.AFTER)
         elif request.form.get("action") == "delete" and role == "security_officer":
             if request.form.get("confirm") == key:
                 g.mongo.db.applications.delete_one({"_id": ObjectId(key)})
@@ -118,33 +127,33 @@ def form(key):
                 flash("Key doesn't match", "error")
         elif request.form.get("action") == "officer_edit" and role == "security_officer":
             app_info = g.mongo.db.applications.find_one_and_update(
-                    {"_id": ObjectId(key)},
-                    {
-                        "$set":
-                            {
-                                "officer_notes": request.form.get("officer_edit")
-                            }
-                    }, return_document=ReturnDocument.AFTER)
+                {"_id": ObjectId(key)},
+                {
+                    "$set":
+                        {
+                            "officer_notes": request.form.get("officer_edit")
+                        }
+                }, return_document=ReturnDocument.AFTER)
             flash("Officer Notes Edited", "success")
         elif request.form.get("action") == "recruiter_edit" and role:
             app_info = g.mongo.db.applications.find_one_and_update(
-                    {"_id": ObjectId(key)},
-                    {
-                        "$set":
-                            {
-                                "recruiter_notes": request.form.get("recruiter_edit")
-                            }
-                    }, return_document=ReturnDocument.AFTER)
+                {"_id": ObjectId(key)},
+                {
+                    "$set":
+                        {
+                            "recruiter_notes": request.form.get("recruiter_edit")
+                        }
+                }, return_document=ReturnDocument.AFTER)
             flash("Recruiter Notes Edited", "success")
         elif request.form.get("action") == "recruiter":
             app_info = g.mongo.db.applications.find_one_and_update(
-                    {"_id": ObjectId(key)},
-                    {
-                        "$set":
-                            {
-                                "recruiter": request.form.get("recruiter")
-                            }
-                    }, return_document=ReturnDocument.AFTER)
+                {"_id": ObjectId(key)},
+                {
+                    "$set":
+                        {
+                            "recruiter": request.form.get("recruiter")
+                        }
+                }, return_document=ReturnDocument.AFTER)
             flash("Recruiter Changed", "success")
         else:
             app_info = g.mongo.db.applications.find_one({"_id": ObjectId(key)})
@@ -184,14 +193,36 @@ def form(key):
                                                    "keys": {"key_id": int(request.form.get("key_id"))}
                                                }
                                            })
+            g.mongo.db.api_keys.update_one({"_id": key_owner},
+                                           {
+                                               "$push": {
+                                                   "old_keys": {
+                                                       "key_id": int(request.form.get("key_id")),
+                                                       "vcode": request.form.get("vcode"),
+                                                       "delete_time": int(time.time())
+                                                   }
+                                               }
+                                           })
+        elif request.form.get("action") == "remove_old" and role == "security_officer":
+            g.mongo.db.api_keys.update_one({"_id": key_owner},
+                                           {
+                                               "$pull": {
+                                                   "old_keys": {"key_id": int(request.form.get("key_id"))}
+                                               }
+                                           })
 
     associated_keys = []
+    associated_old_keys = []
     # List of characters
     db_key_doc = g.mongo.db.api_keys.find_one({"_id": key_owner})
     if db_key_doc:
         for key in db_key_doc["keys"]:
             associated_keys.append([key["character_id"], key["character_name"], key["key_id"], key["vcode"],
                                     key["cached_str"], key.get("valid", True)])
+        if db_key_doc.get("old_keys"):
+            for key in db_key_doc["old_keys"]:
+                associated_old_keys.append([key["key_id"], key["vcode"],
+                                            time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(key["delete_time"]))])
 
     # User Information
     db_user_info = g.mongo.db.users.find_one({"_id": key_owner})
@@ -234,7 +265,7 @@ def form(key):
     # Recruiters
     recruiter_users = g.mongo.db.eve_auth.find_one({"_id": "recruiter"})
     recruiter_list = [user["character_name"] for user in g.mongo.db.users.find(
-            {"_id": {"$in": recruiter_users["users"]}})]
+        {"_id": {"$in": recruiter_users["users"]}})]
 
     return render_template("recruitment_form.html", error_list=error_list, image_list=image_list,
                            access_mask=access_mask, user_info=user_info, associated_keys=associated_keys,
@@ -246,7 +277,8 @@ def form(key):
                            question_table=question_table,
                            met_recruiter=app_info.get("met_recruiter", False),
                            submitted=app_info.get("submitted", False),
-                           recruiter_list=recruiter_list, app_recruiter=app_info.get("recruiter"))
+                           recruiter_list=recruiter_list, app_recruiter=app_info.get("recruiter"),
+                           associated_old_keys=associated_old_keys)
 
 
 @recruitment.route("/admin", methods=["GET", "POST"])

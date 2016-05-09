@@ -587,7 +587,8 @@ def admin():
     invoice_table = []
     marketeer_invoice_table = []
     new_invoice_table = []
-    for invoice_db in g.mongo.db.invoices.find({"_id": {"$gt": one_month_oid}}):
+    for invoice_db in g.mongo.db.invoices.find({"$or": [{"_id": {"$gt": one_month_oid}},
+                                                        {"status": {"$not": re.compile("Completed")}}]}):
         invoice_status = invoice_db.get("status", "Not Processed")
         invoice_timestamp = ObjectId(invoice_db["_id"]).generation_time.strftime("%Y-%m-%d %H:%M:%S")
         invoice_color = ""

@@ -1,5 +1,6 @@
 import json
 import datetime
+import time
 
 from flask import Blueprint, render_template, session, request, g, flash
 from bson.objectid import ObjectId
@@ -27,6 +28,16 @@ def home():
                                                "keys": {"key_id": int(request.form.get("key_id"))}
                                            }
                                        })
+            g.mongo.db.api_keys.update_one({"_id": session["CharacterOwnerHash"]},
+                                           {
+                                               "$push": {
+                                                   "old_keys": {
+                                                       "key_id": int(request.form.get("key_id")),
+                                                       "vcode": request.form.get("vcode"),
+                                                       "delete_time": int(time.time())
+                                                   }
+                                               }
+                                           })
         elif request.form.get("action") == "email":
             pre_user = g.mongo.db.users.find_one({"_id": session["CharacterOwnerHash"]})
             g.mongo.db.users.update({"_id": session["CharacterOwnerHash"]},
