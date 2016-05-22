@@ -4,6 +4,7 @@ import datetime
 from functools import wraps
 
 from celery_app import celery, app, g, app_mongo, app_redis
+import requests
 
 from helpers.caches import contracts, api_keys
 from views.auth import auth_crest, forum_edit, discord_check
@@ -91,19 +92,24 @@ def api_validation():
         api_keys_list = []
 
         for api_group in g.mongo.db.api_keys.find():
-            user_api_list = set()
-            if not api_group.get("keys") and api_group["_id"] == "unassociated":
-                pass
-            else:
-                # Refresh Crest
-                try:
-                    auth_crest_list.append([api_group["_id"], True, True])
-                except KeyError:
-                    print("Failed at {0}".format(api_group["_id"]))
+            try:
+                user_api_list = set()
+                if not api_group.get("keys") and api_group["_id"] == "unassociated":
+                    pass
+                else:
+                    # Refresh Crest
+                    try:
+                        auth_crest_list.append([api_group["_id"], True, True])
+                    except KeyError:
+                        print("Failed at {0}".format(api_group["_id"]))
 
-                for api_key_item in api_group["keys"]:
-                    user_api_list.add((api_key_item["key_id"], api_key_item["vcode"]))
-                api_keys_list.append([list(user_api_list), False, api_group["_id"]])
+                    for api_key_item in api_group["keys"]:
+                        user_api_list.add((api_key_item["key_id"], api_key_item["vcode"]))
+                    api_keys_list.append([list(user_api_list), False, api_group["_id"]])
+            except requests.ConnectionError as e:
+                print("Skipping {0} due to connection error".format(api_group["_id"]))
+                print(e)
+                continue
 
         # Run without database cursor connection
         if not auth_crest_list or not api_keys_list:
@@ -123,8 +129,13 @@ def api_validation():
         print("Forcing forum log outs")
         for user in g.mongo.db.users.find():
             if user.get("email"):
-                forum_edit(user, "log_out")
-                time.sleep(1)
+                try:
+                    forum_edit(user, "log_out")
+                    time.sleep(1)
+                except requests.ConnectionError as e:
+                    print("Failed forum logout for {0}".format(user["_id"]))
+                    print(e)
+                    continue
         print("Finished forcing forum log outs for all users")
 
         g.mongo.db.preferences.update_one({"_id": "updates"}, {
