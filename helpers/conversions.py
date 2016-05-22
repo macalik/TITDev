@@ -236,6 +236,23 @@ def invalidate_key(key_list, user):
                                    {"$set": {"keys": user_apis["keys"]}})
 
 
+def validate_key(key_list, user, expired=False):
+    g.mongo.db.api_keys.update({"_id": {"$ne": user}},
+                               {"$pull": {"keys": {"key_id": {"$in": key_list}}}}, multi=True)
+    # Read document, update, push because cannot query against array elements that match condition
+    user_apis = g.mongo.db.api_keys.find_one({"_id": user})
+    if user_apis:
+        for key in user_apis["keys"]:
+            if key["key_id"] in key_list:
+                key["valid"] = True
+                if expired:
+                    key["expired"] = True
+                else:
+                    key["expired"] = False
+        g.mongo.db.api_keys.update({"_id": user},
+                                   {"$set": {"keys": user_apis["keys"]}})
+
+
 def xml_time(text):
     xml_time_pattern = "%Y-%m-%d %H:%M:%S"
     return int(calendar.timegm(time.strptime(text, xml_time_pattern)))

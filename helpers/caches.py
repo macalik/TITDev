@@ -230,9 +230,10 @@ def contracts(keys=None, celery_time=0):
     return list(invalid_apis)
 
 
-def api_keys(api_key_list, unassociated=False, dashboard_id=None):
+def api_keys(api_key_list, unassociated=False, dashboard_id=None, verify_mask=True):
     """
 
+    :param verify_mask: Choose whether to reject or expire non-conforming access masks
     :param api_key_list: [(key_id, vcode), (), ...]
     :param unassociated: True to add to unassociated API keys
     :param dashboard_id: Set the associated dashboard id. Defaults to the session variable.
@@ -279,13 +280,17 @@ def api_keys(api_key_list, unassociated=False, dashboard_id=None):
             # Store in database
             xml_time_pattern = "%Y-%m-%d %H:%M:%S"
             failed = False
+            expired = False
             if xml_api_key_tree[1].tag == "error":
                 errors_list.append("CCP gave an error for key with id " +
                                    "{}. Ensure the key is not expired and is valid.".format(key_id))
                 failed = True
             elif xml_api_key_tree[1][0].attrib["accessMask"] != str(base_config["access_mask"]):
                 errors_list.append("Key with id {} is not (or no longer) a full API key.".format(key_id))
-                failed = True
+                if verify_mask:
+                    failed = True
+                else:
+                    expired = True
             elif xml_api_key_tree[1][0].attrib["type"] != "Account":
                 errors_list.append("Key with id {} is not an Account API key.".format(key_id))
                 failed = True
@@ -297,6 +302,8 @@ def api_keys(api_key_list, unassociated=False, dashboard_id=None):
             if failed:
                 conversions.invalidate_key([key_id], api_owner)
                 continue
+            else:
+                conversions.validate_key([key_id], api_owner, expired)
 
             # If same character is input, remove old keys first
             bulk_op.find({"_id": api_owner}).upsert().update(
