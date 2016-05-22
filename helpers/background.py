@@ -105,7 +105,7 @@ def api_validation():
 
                     for api_key_item in api_group["keys"]:
                         user_api_list.add((api_key_item["key_id"], api_key_item["vcode"]))
-                    api_keys_list.append([list(user_api_list), False, api_group["_id"]])
+                    api_keys_list.append([list(user_api_list), False, api_group["_id"], False])
             except requests.ConnectionError as e:
                 print("Skipping {0} due to connection error".format(api_group["_id"]))
                 print(e)
