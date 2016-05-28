@@ -192,35 +192,39 @@ def eft_parsing(input_string):
 
 def manual_parsing(input_string):
     error_list = []
-    item_names = [x.split("\t")[0].strip() if x.find("\t") != -1
-                  else (" ".join(x.split(" ")[:-1]).strip() if is_a_number(x.split(" ")[-1])
-                        else x.strip())
-                  for x in input_string.splitlines()]
-    item_input = [re.compile("^" + x.strip().split("\t")[0].strip() + "$", re.IGNORECASE) if x.strip().find("\t") != -1
-                  else re.compile("^" + " ".join(x.strip().split(" ")[:-1]).strip() + "$"
-                                  if is_a_number(x.strip().split(" ")[-1]) else
-                                  "^" + x.strip() + "$", re.IGNORECASE)
+    item_names = [split_parsing(x)[0] for x in input_string.splitlines()]
+    item_input = [re.compile("^" + split_parsing(x)[0] + "$", re.IGNORECASE)
                   for x in input_string.splitlines()]
     item_qty = {}
     for input_line in input_string.splitlines():
-        input_line = input_line.strip()
         try:
-            if input_line.find("\t") != -1:
-                input_split = [y.strip() for y in input_line.split("\t")]
-            elif is_a_number(input_line.split(" ")[-1]):
-                input_split = [" ".join(input_line.split(" ")[:-1]).strip(), input_line.split(" ")[-1]]
-            else:
-                input_split = [input_line.strip(), "1"]
+            input_split = split_parsing(input_line)
             item_qty.setdefault(input_split[0].upper(), 0)
-            try:
-                qty_clean = int(input_split[1].strip().replace(",", "")) if len(input_split) > 1 else 1
-            except ValueError:
-                qty_clean = int(input_split[2].strip().replace(",", "")) if len(input_split) > 2 else 1
-            item_qty[input_split[0].upper()] += qty_clean
+            item_qty[input_split[0].upper()] += input_split[1]
         except (IndexError, ValueError):
             error_list.append("The line '{}' could not be processed.".format(input_line))
 
     return item_names, item_input, item_qty, error_list
+
+
+def split_parsing(input_line):
+    input_line = input_line.strip()
+    if input_line.find("\t") != -1:
+        tab_split = input_line.split("\t")
+        try:
+            if not tab_split[1].strip():
+                qty_clean = 1
+            else:
+                qty_clean = int(tab_split[1].strip().replace(",", "")) if len(tab_split) > 1 else 1
+        except ValueError:
+            qty_clean = int(tab_split[2].strip().replace(",", "")) if len(tab_split) > 2 else 1
+        return tab_split[0].strip(), qty_clean
+    elif input_line.split(" ")[0].endswith("x") and is_a_number(input_line.split(" ")[0][:-1]):
+        return " ".join(input_line.split(" ")[1:]).strip(), int(input_line.split(" ")[0][:-1])
+    elif is_a_number(input_line.split(" ")[-1]):
+        return " ".join(input_line.split(" ")[:-1]).strip(), int(input_line.split(" ")[-1].strip().replace(",", ""))
+    else:
+        return input_line.strip(), 1
 
 
 def invalidate_key(key_list, user):
