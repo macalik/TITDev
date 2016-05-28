@@ -50,7 +50,10 @@ def app_init():
     app_mongo.db.items.drop()
     with open("resources/invTypes.json", "r") as invTypes_file:
         items_list = json.load(invTypes_file)
-    # Adjust packed volumes of ships
+    # Volumes by market group
+    with open("resources/invPackaged.json", "r") as invPackaged_file:
+        package_list = json.load(invPackaged_file)
+    # Fallback packed volumes of ships
     with open("resources/invVolumes.json", "r") as invVolumes_file:
         volumes_list = json.load(invVolumes_file)
     # Open refine amounts
@@ -59,11 +62,18 @@ def app_init():
 
     adjusted_items_list = []
     for key, value in items_list.items():
-        corrected_volume = volumes_list[key] if volumes_list.get(key) else value["volume"]
+        if package_list.get(str(value["ship_group_id"])):
+            # Adjust for strategic cruisers
+            if value["name"] in ["Legion", "Tengu", "Proteus", "Loki"]:
+                corrected_volume = 5000
+            else:
+                corrected_volume = package_list.get(str(value["ship_group_id"]))
+        else:
+            corrected_volume = volumes_list[key] if volumes_list.get(key) else value["volume"]
         adjusted_items_list.append({"_id": int(key), "name": value["name"], "volume": corrected_volume,
                                     "meta": value["meta"], "materials": materials_list.get(key, []),
                                     "market_group_id": value["market_group_id"], "skill_id": value["skill_id"],
-                                    "batch": value["batch"]})
+                                    "batch": value["batch"], "ship_group_id": value["ship_group_id"]})
     app_mongo.db.items.insert(adjusted_items_list)
 
     # Check if roles are loaded

@@ -23,17 +23,39 @@ def ccp_sde():
 
     for row in cursor.execute(
             (
-            "SELECT inv.typeID, inv.typeName, inv.volume, meta, img.marketGroupID, dtaRefine.valueInt, inv.portionSize"
-            " FROM invTypes inv"
-            " left JOIN invMarketGroups img ON img.marketGroupID = inv.marketGroupID"
-            " left JOIN (select coalesce(valueFloat, valueInt) meta, typeID from dgmTypeAttributes "
-            " where attributeID = 633) dtaMeta On dtaMeta.typeID = inv.typeID"
-            " left JOIN (select typeID, valueInt, attributeID from dgmTypeAttributes where attributeID = 790) dtaRefine"
-            " ON dtaRefine.typeID = inv.typeID"
-            " where inv.marketGroupID NOTNULL"
-            )):
-        marketable_items[int(row[0])] = {"name": row[1], "volume": row[2], "meta": int(row[3]) if row[3] else None,
-                                         "market_group_id": row[4], "skill_id": row[5], "batch": row[6]}
+            "SELECT inv.typeID, inv.typeName, inv.volume, meta, img.marketGroupID, dtaRefine.valueInt, inv.portionSize,"
+            " InM.baseShipMarketID"
+            " FROM invGroups AS ing"
+            " LEFT JOIN invTypes AS inv ON ing.groupID = inv.groupID"
+            " LEFT JOIN invMarketGroups img ON img.marketGroupID = inv.marketGroupID"
+            " LEFT JOIN (SELECT *,"
+            " (CASE WHEN InMP3.parentGroupID IS NULL"
+            " THEN CASE WHEN InMP2.parentGroupID IS NULL"
+            " THEN InMP1.marketGroupID"
+            " ELSE InMP2.marketGroupID END"
+            " ELSE InMP3.marketGroupID END) AS baseShipMarketID"
+            " FROM invGroups"
+            " LEFT JOIN invTypes ON invGroups.groupID = invTypes.groupID"
+            " LEFT JOIN invMarketGroups AS InM ON invTypes.marketGroupID = InM.marketGroupID"
+            " LEFT JOIN invMarketGroups AS InMP1 ON InM.parentGroupID = InMP1.marketGroupID"
+            " LEFT JOIN invMarketGroups AS InMP2 ON InMP1.parentGroupID = InMP2.marketGroupID"
+            " LEFT JOIN invMarketGroups AS InMP3 ON InMP2.parentGroupID = InMP3.marketGroupID"
+            " WHERE invGroups.categoryID = 6) AS InM ON img.marketGroupID = InM.marketGroupID"
+            " AND InM.typeName = inv.typeName"
+            " LEFT JOIN (select coalesce(valueFloat, valueInt) meta, typeID"
+            " from dgmTypeAttributes where attributeID = 633) dtaMeta On dtaMeta.typeID = inv.typeID"
+            " LEFT JOIN (select typeID, valueInt, attributeID"
+            " from dgmTypeAttributes where attributeID = 790) dtaRefine ON dtaRefine.typeID = inv.typeID"
+            " WHERE inv.marketGroupID IS NOT NULL"
+            )
+    ):
+        marketable_items[int(row[0])] = {"name": row[1],
+                                         "volume": row[2],
+                                         "meta": int(row[3]) if row[3] else None,
+                                         "market_group_id": row[4],
+                                         "skill_id": row[5],
+                                         "batch": row[6],
+                                         "ship_group_id": row[7]}
 
     for row in cursor.execute("SELECT typeID, typeName FROM invTypes WHERE invTypes.groupID IN " +
                               "(SELECT groupID FROM invGroups WHERE invGroups.categoryID = 16)"):
