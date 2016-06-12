@@ -196,7 +196,7 @@ def user(site_id=""):
             auth_crest(site_id, True)
             api_key_db = g.mongo.db.api_keys.find_one({"_id": site_id})
             if api_key_db:
-                caches.api_keys([(x["key_id"], x["vcode"]) for x in api_key_db["keys"]], False, site_id)
+                caches.api_keys([(x["key_id"], x["vcode"]) for x in api_key_db["keys"]], False, site_id, False)
 
     error_list = []
     # Users
